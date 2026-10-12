@@ -31,6 +31,19 @@ O repositório é a fonte da verdade: https://github.com/marcoslimadomingues/ven
 
 Nada de credencial vai para o repositório: `.ftp.env` e `logs/` estão no `.gitignore`.
 
+## Associar um domínio
+
+1. No cPanel, adicione o domínio (domínio adicional): a raiz de documentos costuma ser `/public_html/<dominio>`.
+2. No GitHub, em *Settings > Secrets and variables > Actions > Variables*, crie:
+   `SITE_URL` (ex.: `https://www.seudominio.com.br`), `FTP_REMOTO` (a raiz de documentos do passo 1;
+   o script recusa `/public_html` puro, para nunca apagar outros sites) e, quando o conteúdo for real,
+   `EXIGIR_DADOS_REAIS=true`.
+3. Rode `python tools/pre_publicacao.py`: lista o que ainda é provisório (vídeos, telefone, CNPJ, CRECI,
+   fotos, perfis, og:image). Com `EXIGIR_DADOS_REAIS=true` o workflow não publica enquanto houver pendência.
+4. Depois de publicar: Search Console (propriedade do domínio + `sitemap.xml`), SSL "Full (strict)" no
+   Cloudflare, "Block AI bots" e "Managed robots.txt" desligados, e um 301 de
+   `marcoslima.com.br/altopadrao/` para o domínio novo, para não duplicar conteúdo.
+
 ## Cidade
 
 O site está configurado para **Fortaleza (CE)**. Cidade, faixa de preço (`limiar_texto`), período dos
