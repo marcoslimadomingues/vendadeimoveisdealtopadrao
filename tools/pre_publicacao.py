@@ -38,6 +38,8 @@ VERIFICACOES = [
     ("Imóveis ilustrativos na carteira (marcados \"ilustrativo\": true)", "data/imoveis.json",
      r"\"ilustrativo\": true",
      "imóvel de demonstração com preço publicado como se fosse oferta real; remova o registro ao entrar o imóvel real"),
+    ("Marcadores [PREENCHER: ...] em guias e páginas", "data/*.json", r"\[PREENCHER",
+     "texto público com lacuna visível: falta o dado com fonte (ou apague a frase)"),
     ("Aviso de dados ilustrativos no site.json", "data/site.json", r"DADOS ILUSTRATIVOS",
      "marcador de que o conteúdo ainda é de demonstração"),
     ("og:image em SVG (WhatsApp, Facebook e LinkedIn não exibem)", "templates/base.html", r"og-default\.svg",

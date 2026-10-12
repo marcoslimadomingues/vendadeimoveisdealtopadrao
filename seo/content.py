@@ -6,6 +6,7 @@ calculados aqui, uma única vez, para que HTML, JSON-LD e FAQ nunca divirjam.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from . import pilares as _pilares
@@ -20,6 +21,54 @@ def _load(path: Path):
 
 def _index(items: list[dict]) -> dict[str, dict]:
     return {item["slug"]: item for item in items}
+
+
+# Imóvel que saiu da carteira. Sem exclusividade, a página nunca diz que a venda foi nossa:
+# só "não está mais disponível". `vendido` -> Offer SoldOut; `indisponivel` -> Offer OutOfStock.
+ENCERRADOS = ("vendido", "indisponivel")
+CAMPO_DATA = {"vendido": "data_venda", "indisponivel": "data_saida"}
+
+# Tokens nos textos dos guias de um pilar: o número vem sempre dos indicadores do pilar (fonte e data).
+#   {m2:ID} {m2ant:ID} {ref:ID} {acima:A:B} {acimaant:A:B} {dif:A:B} {total:ID:AREA} {veiculo:FONTE} {dataf:FONTE}
+#   (`ant` = valor_anterior do indicador, de julho: mesma fonte e mês de outro recorte)
+TOKEN = re.compile(r"\{(m2|m2ant|ref|acima|acimaant|dif|total|veiculo|dataf):([a-z0-9_]+)(?::([a-z0-9_]+))?\}")
+
+
+def _token(m: re.Match, pilar: dict) -> str:
+    kind, a, b = m.groups()
+    ind = {i["id"]: i for i in pilar["indicadores"]}
+    if kind in ("veiculo", "dataf"):
+        f = pilar["fontes"][a]
+        return f["veiculo"] if kind == "veiculo" else data_extenso(f["publicado"])
+    if a not in ind or (kind in ("acima", "acimaant", "dif") and b not in ind):
+        raise ValueError(f"token {m[0]} aponta para indicador inexistente no pilar {pilar['slug']}")
+    va = ind[a]["valor"]
+    if kind == "m2":
+        return brl(va)
+    if kind == "m2ant":
+        return brl(ind[a]["valor_anterior"])
+    if kind == "acimaant":  # A (mês de referência) sobre o valor anterior de B
+        return pct((va / ind[b]["valor_anterior"] - 1) * 100)
+    if kind == "ref":
+        return _pilares.mes_ano(ind[a]["referencia"])
+    if kind == "acima":
+        return pct((va / ind[b]["valor"] - 1) * 100)
+    if kind == "dif":
+        return brl(abs(va - ind[b]["valor"]))
+    return brl(va * int(b))  # total: m² × área (b é a área em m², número)
+
+
+def _expandir_tokens(no, pilar: dict):
+    """Expande os tokens em todas as strings de um guia, no lugar."""
+    if isinstance(no, dict):
+        for k, v in no.items():
+            no[k] = _expandir_tokens(v, pilar)
+    elif isinstance(no, list):
+        for n, v in enumerate(no):
+            no[n] = _expandir_tokens(v, pilar)
+    elif isinstance(no, str) and "{" in no:
+        return TOKEN.sub(lambda m: _token(m, pilar), no)
+    return no
 
 
 class Repo:
@@ -43,11 +92,18 @@ class Repo:
                 erros.append(f"imóvel {i['slug']}: bairro '{i['bairro']}' inexistente")
             if self._tem_ficha(i) and i["consultor"] not in self.pessoas:
                 erros.append(f"imóvel {i['slug']}: consultor '{i['consultor']}' inexistente")
-            if self._tem_ficha(i) and i["status"] == "vendido":
-                if not i.get("data_venda"):
-                    erros.append(f"imóvel {i['slug']}: vendido com ficha completa exige data_venda")
+            if i["status"] not in ("ativo", *ENCERRADOS):
+                erros.append(f"imóvel {i['slug']}: status '{i['status']}' inválido (ativo, vendido ou indisponivel)")
+            if i.get("redirecionar_para_bairro") and i["status"] not in ENCERRADOS:
+                erros.append(f"imóvel {i['slug']}: redirecionar_para_bairro só vale para vendido ou indisponivel")
+            if self._tem_ficha(i) and i["status"] in ENCERRADOS:
+                campo = CAMPO_DATA[i["status"]]
+                if not i.get(campo):
+                    erros.append(f"imóvel {i['slug']}: {i['status']} com ficha completa exige {campo}")
                 if i.get("preco_venda_autorizado") and not i.get("preco_venda"):
                     erros.append(f"imóvel {i['slug']}: preco_venda_autorizado sem preco_venda")
+                if i["status"] == "indisponivel" and i.get("preco_venda"):
+                    erros.append(f"imóvel {i['slug']}: preco_venda não se aplica a imóvel indisponivel")
         for a in self.artigos.values():
             if a["autor"] not in self.pessoas:
                 erros.append(f"artigo {a['slug']}: autor '{a['autor']}' inexistente")
@@ -58,6 +114,10 @@ class Repo:
             for s in a.get("bairros_relacionados", []):
                 if s not in self.bairros:
                     erros.append(f"artigo {a['slug']}: bairro '{s}' inexistente")
+            if a.get("pilar") and a["pilar"] not in self.pilares:
+                erros.append(f"artigo {a['slug']}: pilar '{a['pilar']}' inexistente")
+            if a.get("url_sob_pilar") and not a.get("pilar"):
+                erros.append(f"artigo {a['slug']}: url_sob_pilar exige o campo pilar")
         for p in self.pilares.values():
             for b in p["bairros"]:
                 if b not in self.bairros:
@@ -88,7 +148,12 @@ class Repo:
         for p in self.pessoas.values():
             p["path"] = f"/especialistas/{p['slug']}/"
         for a in self.artigos.values():
-            a["path"] = f"/guias/{a['slug']}/"
+            a["path"] = (f"/{a['pilar']}/{a['slug']}/" if a.get("url_sob_pilar") else f"/guias/{a['slug']}/")
+            if a.get("pilar"):
+                _expandir_tokens(a, self.pilares[a["pilar"]])
+                if "imoveis_relacionados" not in a:  # imóveis no ar, nos bairros do pilar
+                    a["imoveis_relacionados"] = [
+                        i["slug"] for i in self.ativos() if i["bairro"] in self.pilares[a["pilar"]]["bairros"]]
             a.setdefault("videos", [])
             for v in a["videos"]:
                 v.setdefault("apresentador", a["autor"])
@@ -99,8 +164,8 @@ class Repo:
             i["path"] = f"/imoveis/{i['slug']}/"
             if self._tem_ficha(i):
                 self._enriquecer_imovel(i)
-                if i["status"] == "vendido":
-                    self._enriquecer_vendido(i)
+                if i["status"] in ENCERRADOS:
+                    self._enriquecer_encerrado(i)
         for p in self.pilares.values():
             _pilares.enriquecer(self, p, self._data_dir)
 
@@ -208,51 +273,57 @@ class Repo:
 
     @staticmethod
     def _tem_ficha(i: dict) -> bool:
-        """Ficha no ar: ativo, ou vendido que manteve a ficha completa (a URL segue no ar, marcada como vendida).
+        """Ficha no ar: ativo, ou encerrado (vendido/indisponivel) que manteve a ficha completa.
 
         Só vai ao ar com `publicacao_autorizada: true` (exatamente o booleano). Sem isso é rascunho: não tem
-        página, não entra no sitemap nem no llms.txt. Vendido só com código/título/data (registro mínimo)
-        continua como 404 real.
+        página, não entra no sitemap nem no llms.txt. Com `redirecionar_para_bairro` a ficha dá lugar a uma
+        página de redirecionamento. Encerrado só com código/título/data (registro mínimo) é 404 real.
         """
-        completo = i["status"] == "ativo" or (i["status"] == "vendido" and "resumo" in i)
-        return completo and i.get("publicacao_autorizada") is True
+        completo = i["status"] == "ativo" or (i["status"] in ENCERRADOS and "resumo" in i)
+        return (completo and i.get("publicacao_autorizada") is True
+                and not i.get("redirecionar_para_bairro"))
 
-    def _enriquecer_vendido(self, i: dict) -> None:
-        """Ficha vendida: sem preço anunciado, sem oferta, com situação, prazo e (se autorizado) valor da venda.
+    def _enriquecer_encerrado(self, i: dict) -> None:
+        """Ficha de imóvel que saiu da carteira: sem preço anunciado e sem alegar a venda como nossa.
 
-        Preço de venda e % do pedido só saem com `preco_venda_autorizado: true`: quando o preço anunciado
-        foi público, o percentual revela o valor da venda do mesmo jeito.
+        Texto sempre "não está mais disponível": sem exclusividade, o imóvel pode ter sido vendido por
+        terceiros ou retirado. Valor da venda e % do pedido só com `preco_venda_autorizado: true` (e só em
+        `vendido`): com o preço anunciado já público, o percentual revela o valor da venda do mesmo jeito.
         """
         b, s = self.bairros[i["bairro"]], self.site
-        ref, data = i["referencia"], data_extenso(i["data_venda"])
+        ref = i["referencia"]
+        i["data_encerramento"] = i[CAMPO_DATA[i["status"]]]
+        data = data_extenso(i["data_encerramento"])
         dias = i.get("dias_no_mercado")
-        autorizado = bool(i.get("preco_venda_autorizado") and i.get("preco_venda"))
-        i["vendido"] = True
+        autorizado = bool(i["status"] == "vendido" and i.get("preco_venda_autorizado") and i.get("preco_venda"))
+        i["encerrado"] = True
         i["preco_venda_publico"] = i["preco_venda"] if autorizado else None
         i["pct_do_pedido"] = round(i["preco_venda"] / i["preco"] * 100, 1) if autorizado else None
-        prazo = f" após {num(dias)} dias no mercado" if dias else ""
-        i["resumo_vendido"] = (
-            f"{_cap(ref)} foi vendido em {data}{prazo}. O imóvel tem {num(i['area_privativa'])} m², "
+        prazo = f" Ficou {num(dias)} dias no mercado." if dias else ""
+        i["resumo_encerrado"] = (
+            f"{_cap(ref)} não está mais disponível desde {data}.{prazo} O imóvel tem {num(i['area_privativa'])} m², "
             f"{i['suites']} suítes e {i['vagas']} vagas, fica {b['em']} e foi entregue em {i['ano_construcao']}. "
             f"A {s['nome']} mantém imóveis semelhantes disponíveis {b['em']} e em bairros vizinhos."
         )
         situacao = [
             {"grupo": "Situação do imóvel", "q": f"{_cap(ref)} ainda está disponível?",
-             "a": f"Não. {_cap(ref)} foi vendido em {data}. Veja os imóveis parecidos disponíveis na carteira da {s['nome']}."},
+             "a": (f"Não. {_cap(ref)} não está mais disponível desde {data}. Veja os imóveis parecidos "
+                   f"disponíveis na carteira da {s['nome']}.")},
         ]
         if dias:
             situacao.append({
                 "grupo": "Situação do imóvel",
-                "q": f"Quanto tempo levou para vender {ref}?",
-                "a": (f"{num(dias)} dias no mercado, contra prazo médio de {b['tempo_medio_venda']} dias dos imóveis "
+                "q": f"Quanto tempo {ref} ficou no mercado?",
+                "a": (f"{num(dias)} dias, contra prazo médio de venda de {b['tempo_medio_venda']} dias dos imóveis "
                       f"acima de {s['limiar_texto']} {b['em']} {s['periodo_texto']}."),
             })
-        situacao.append({
-            "grupo": "Situação do imóvel",
-            "q": f"Por quanto {ref} foi vendido?",
-            "a": (f"{brl(i['preco_venda'])}, {pct(i['pct_do_pedido'])} do preço anunciado de {brl(i['preco'])}."
-                  if autorizado else "O valor da venda não é divulgado."),
-        })
+        if i["status"] == "vendido":
+            situacao.append({
+                "grupo": "Situação do imóvel",
+                "q": f"Por quanto {ref} foi vendido?",
+                "a": (f"{brl(i['preco_venda'])}, {pct(i['pct_do_pedido'])} do preço anunciado de {brl(i['preco'])}."
+                      if autorizado else "O valor da venda não é divulgado."),
+            })
         # preço, ITBI e prazos de compra deixam de valer; medições técnicas e perguntas próprias ficam
         i["faq"] = situacao + [q for q in i["faq"]
                                if q["grupo"] not in ("Preço e custos", "Tributos e prazos da compra")]
@@ -268,16 +339,23 @@ class Repo:
                  if i["status"] == "ativo" and self._tem_ficha(i) and (bairro is None or i["bairro"] == bairro)]
         return sorted(itens, key=lambda i: i["preco"], reverse=True)
 
-    def vendidos(self) -> list[dict]:
-        """Vendidos com ficha mantida no ar, do mais recente para o mais antigo."""
-        itens = [i for i in self.imoveis.values() if i.get("vendido")]
-        return sorted(itens, key=lambda i: i["data_venda"], reverse=True)
+    def encerrados(self) -> list[dict]:
+        """Imóveis que saíram da carteira e mantêm a ficha no ar, do mais recente para o mais antigo."""
+        itens = [i for i in self.imoveis.values() if i.get("encerrado")]
+        return sorted(itens, key=lambda i: i["data_encerramento"], reverse=True)
+
+    def redirecionados(self) -> dict[str, dict]:
+        """slug -> bairro de destino dos imóveis marcados com `redirecionar_para_bairro`."""
+        return {i["slug"]: self.bairros[i["bairro"]] for i in self.imoveis.values()
+                if i.get("redirecionar_para_bairro") and i["status"] in ENCERRADOS}
 
     def imovel(self, slug: str) -> dict | None:
         """Registro do imóvel; None se não existe ou é rascunho (ficha completa sem autorização)."""
         i = self.imoveis.get(slug)
         if i is None:
             return None
+        if slug in self.redirecionados():
+            return i
         if i["status"] == "ativo" or "resumo" in i:
             return i if self._tem_ficha(i) else None
         return i  # registro mínimo de vendido/retirado: o app responde 404 informativo
@@ -351,9 +429,13 @@ class Repo:
         paginas = [("/", max(ult_imovel, ult_artigo)), ("/imoveis/", ult_imovel),
                    ("/guias/", ult_artigo), ("/especialistas/", None), ("/sobre/", None), ("/contato/", None)]
         paginas += [(i["path"], i["data_atualizacao"]) for i in self.ativos()]
-        paginas += [(i["path"], i["data_venda"]) for i in self.vendidos()]
+        paginas += [(i["path"], i["data_encerramento"]) for i in self.encerrados()]
         paginas += [(b["path"], ult_imovel) for b in self.bairros.values()]
         paginas += [(a["path"], a["atualizado"]) for a in self.artigos_recentes()]
         paginas += [(p["path"], None) for p in self.pessoas.values()]
         paginas += [(p["path"], p["atualizado"]) for p in self.pilares.values()]
         return paginas
+
+    def paginas_redirecionadas(self) -> list[str]:
+        """URLs que respondem com a página de redirecionamento (fora do sitemap e do llms.txt)."""
+        return [self.imoveis[s]["path"] for s in self.redirecionados()]

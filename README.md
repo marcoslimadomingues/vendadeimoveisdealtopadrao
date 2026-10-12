@@ -85,6 +85,26 @@ tests/                  testes de contrato (HTTP, JSON-LD, mobile, publicação,
   derruba o build com mensagem clara. Não grave nome de imobiliária, proprietário ou contrato nos dados: o
   repositório é público. Os 4 imóveis de demonstração levam `"ilustrativo": true`; o checklist os acusa até
   serem removidos.
+- **Imóvel que saiu da carteira (sem exclusividade):** o imóvel pode ser vendido por terceiros ou retirado,
+  então a página nunca diz que a venda foi nossa: só "não está mais disponível". Dois caminhos:
+  1. **Manter a ficha (preferido, mantém prova social):** troque `status` para `"vendido"` (com `data_venda`) ou
+     `"indisponivel"` (com `data_saida`); o resto da ficha fica. A URL segue em 200, indexável e no sitemap,
+     com selo, FAQ de situação, imóveis parecidos e captação. JSON-LD: `Offer` com `availability`
+     `SoldOut` (vendido) ou `OutOfStock` (indisponivel), sem preço. Opcionais: `dias_no_mercado` e, só em
+     `vendido` e com autorização do proprietário, `preco_venda` + `preco_venda_autorizado: true` (mostra o
+     valor e o % do preço anunciado; o percentual revela o valor, por isso segue a mesma autorização).
+  2. **Redirecionar ao bairro:** acrescente `"redirecionar_para_bairro": true` (em `vendido`/`indisponivel`,
+     com ou sem ficha). O GitHub Pages não faz 301: a página vira meta refresh imediato + `canonical` para
+     `/bairros/<bairro>/` (o Google trata o refresh instantâneo como redirecionamento), sai do sitemap,
+     do `llms.txt` e das listas, e continua exportada como arquivo. Guia que cita o imóvel precisa perder o
+     vínculo (`imoveis_relacionados`), senão o build falha com mensagem clara.
+- **Imóvel retirado (sem ficha):** `status: "vendido"` só com `codigo`, `titulo`, `bairro` e `data_venda`
+  (sem `resumo`) devolve 404 real e sai do sitemap.
+- **Trava de publicação:** imóvel só vai ao ar com `"publicacao_autorizada": true` (o booleano, não texto).
+  Sem isso é rascunho: sem página, sem sitemap, sem `llms.txt`, e o checklist o lista. Guia que cita rascunho
+  derruba o build com mensagem clara. Não grave nome de imobiliária, proprietário ou contrato nos dados: o
+  repositório é público. Os 4 imóveis de demonstração levam `"ilustrativo": true`; o checklist os acusa até
+  serem removidos.
 - **Imóvel vendido (ficha mantida):** troque `status` para `"vendido"` e acrescente `data_venda`; o resto da
   ficha fica como está. A URL segue em 200, indexável e no sitemap, com selo "Vendido", sem preço anunciado,
   sem `Offer` no JSON-LD, FAQ de situação e alternativas. Opcionais: `dias_no_mercado` e, só com autorização
@@ -115,6 +135,19 @@ exigem dado verificado.
 - **SXO:** CTA de WhatsApp na abertura da home, barra fixa no celular, `/contato/` com endereço e "Como chegar".
 - **Compartilhamento:** `og:image` em PNG 1200×630 (`static/img/og-marca.png`, gerado de `og-marca.svg`); SVG
   de página cai na marca pelo filtro `og_png`. Tags `twitter:*`, `hreflang` e `geo.*` em todas as páginas.
+
+### Clusters de autoridade (pilar → satélites)
+
+O pilar e seus satélites são o ativo permanente do site; a ficha de imóvel é a camada volátil por cima.
+
+- **Satélite de pilar:** em `data/artigos.json`, `"pilar": "<slug-do-pilar>"` (e opcional `"url_sob_pilar": true`
+  para a URL `/<pilar>/<slug>/`). Entra sozinho em sitemap e `llms.txt`, ganha o banner "Parte do pilar" e
+  mostra os imóveis do pilar. Acrescente o slug em `guias` do pilar (`data/pilares.json`) para o link de volta.
+- **Números só dos indicadores:** nos textos do satélite use `{m2:ID}`, `{m2ant:ID}`, `{ref:ID}`, `{acima:A:B}`,
+  `{acimaant:A:B}`, `{dif:A:B}`, `{total:ID:AREA}`, `{veiculo:FONTE}`, `{dataf:FONTE}`. Token que aponta para
+  indicador inexistente falha o build; valor, fonte e data nunca divergem do pilar.
+- **Lacuna de dado:** marque `[PREENCHER: ...]`; o checklist o acusa e o site fica `noindex` até sair.
+- `titulo_seo` (opcional) é o `<title>`; o `titulo` é o H1.
 
 ### Celular (mobile-first)
 

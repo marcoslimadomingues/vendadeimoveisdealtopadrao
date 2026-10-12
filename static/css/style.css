@@ -105,8 +105,8 @@ tfoot th, tfoot td { font-weight: 700; border-top: 2px solid var(--tinta); }
 .ficha__imagem { margin: 1rem 0 0; }
 .ficha__imagem img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--raio); background: var(--ouro-claro); }
 .ficha__imagem figcaption { font-size: .85rem; color: var(--tinta-suave); margin-top: .4rem; }
-.selo-vendido { display: inline-block; margin: 0 0 .6rem; padding: .25rem .7rem; background: var(--tinta); color: #fff; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border-radius: var(--raio); }
-.card--vendido img { filter: grayscale(.35); }
+.selo-encerrado { display: inline-block; margin: 0 0 .6rem; padding: .25rem .7rem; background: var(--tinta); color: #fff; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border-radius: var(--raio); }
+.card--encerrado img { filter: grayscale(.35); }
 .contato { margin-top: 2.5rem; padding: 1.4rem; background: var(--tinta); color: #f3eee4; border-radius: var(--raio); }
 .contato h2 { margin-top: 0; color: #fff; }
 .contato a:not(.botao) { color: #e6cfa4; }

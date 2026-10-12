@@ -67,7 +67,7 @@ def test_imovel_vendido_informa_venda_com_status_404(ctx):
     client, _, _ = ctx
     r = client.get("/imoveis/cobertura-meireles-410m2/")
     assert r.status_code == 404
-    assert "imóvel vendido" in r.get_data(as_text=True)
+    assert "não está mais disponível" in r.get_data(as_text=True)
 
 
 def test_sem_javascript_e_sem_conteudo_oculto(ctx):
@@ -154,7 +154,7 @@ def test_jsonld_artigo_conectado_a_organizacao_e_pessoa(ctx):
     for a in repo.artigos.values():
         nodes = grafo(client.get(a["path"]).get_data(as_text=True))
         artigo = por_tipo(nodes, "Article")[0]
-        org = por_tipo(nodes, "Organization")[0]
+        org = por_tipo(nodes, "RealEstateAgent")[0]
         pessoa = por_tipo(nodes, "Person")[0]
         assert artigo["publisher"]["@id"] == org["@id"]
         assert artigo["author"]["@id"] == pessoa["@id"]

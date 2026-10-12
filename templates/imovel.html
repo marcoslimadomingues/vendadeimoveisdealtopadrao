@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
-{% set contato_msg = ('Tenho um imóvel parecido com o ' ~ imovel.codigo ~ ' (' ~ imovel.titulo ~ ') e gostaria de avaliar a venda.') if imovel.vendido else ('Tenho interesse no imóvel ' ~ imovel.codigo ~ ' (' ~ imovel.titulo ~ ').') %}
+{% set contato_msg = ('Tenho um imóvel parecido com o ' ~ imovel.codigo ~ ' (' ~ imovel.titulo ~ ') e gostaria de avaliar a venda.') if imovel.encerrado else ('Tenho interesse no imóvel ' ~ imovel.codigo ~ ' (' ~ imovel.titulo ~ ').') %}
 {% block og_type %}article{% endblock %}
 {% block og_image %}{{ imovel.imagem|og_png }}{% endblock %}
 {% block conteudo %}
@@ -8,11 +8,11 @@
 <article class="ficha" aria-labelledby="titulo-imovel">
   <header class="cabecalho-pagina">
     <p class="card__tipo">{{ i.tipo }} · <a href="{{ bairro.path }}">{{ bairro.nome }}</a>, {{ bairro.zona }} {{ site.cidade.de }} · Código {{ i.codigo }}</p>
-    {% if i.vendido %}<p class="selo-vendido">Vendido em <time datetime="{{ i.data_venda }}">{{ i.data_venda|data_extenso }}</time></p>{% endif %}
-    <h1 id="titulo-imovel">{{ i.titulo }}{% if i.vendido %} (vendido){% endif %}</h1>
-    <p class="lead">{{ i.resumo_vendido if i.vendido else i.resumo }}</p>
-    {% if i.vendido %}
-    <p class="meta">Anunciado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · vendido em <time datetime="{{ i.data_venda }}">{{ i.data_venda|data_extenso }}</time> · consultor responsável: <a href="{{ consultor.path }}">{{ consultor.nome }}</a></p>
+    {% if i.encerrado %}<p class="selo-encerrado">Não está mais disponível desde <time datetime="{{ i.data_encerramento }}">{{ i.data_encerramento|data_extenso }}</time></p>{% endif %}
+    <h1 id="titulo-imovel">{{ i.titulo }}{% if i.encerrado %} (indisponível){% endif %}</h1>
+    <p class="lead">{{ i.resumo_encerrado if i.encerrado else i.resumo }}</p>
+    {% if i.encerrado %}
+    <p class="meta">Anunciado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · indisponível desde <time datetime="{{ i.data_encerramento }}">{{ i.data_encerramento|data_extenso }}</time> · consultor responsável: <a href="{{ consultor.path }}">{{ consultor.nome }}</a></p>
     {% else %}
     <p class="meta">Publicado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · atualizado em <time datetime="{{ i.data_atualizacao }}">{{ i.data_atualizacao|data_extenso }}</time> · consultor responsável: <a href="{{ consultor.path }}">{{ consultor.nome }}</a></p>
     {% endif %}
@@ -26,8 +26,8 @@
   <section aria-labelledby="dados-principais">
     <h2 id="dados-principais">Dados principais</h2>
     <dl class="fatos fatos--grande">
-      {% if i.vendido %}
-      <div><dt>Situação</dt><dd>Vendido em {{ i.data_venda|data_extenso }}</dd></div>
+      {% if i.encerrado %}
+      <div><dt>Situação</dt><dd>Não está mais disponível desde {{ i.data_encerramento|data_extenso }}</dd></div>
       {% if i.dias_no_mercado %}<div><dt>Tempo no mercado</dt><dd>{{ i.dias_no_mercado|num }} dias</dd></div>{% endif %}
       {% if i.preco_venda_publico %}
       <div><dt>Valor da venda</dt><dd>{{ i.preco_venda_publico|brl }}</dd></div>
@@ -93,7 +93,7 @@
     </div>
   </section>
 
-  {% if not i.vendido %}
+  {% if not i.encerrado %}
   <section aria-labelledby="custos">
     <h2 id="custos">Custos mensais e anuais</h2>
     <p>O custo fixo mensal d{{ i.referencia }} é de {{ i.custo_mensal|brl }}.</p>
@@ -141,12 +141,12 @@
   {% if i.videos %}{{ m.videos(i.videos, "videos", "Vídeos: tour e análise técnica d" ~ i.referencia) }}{% endif %}
 
   {{ m.perguntas(i.faq, "perguntas", "Perguntas frequentes sobre " ~ i.referencia) }}
-  {% if i.vendido %}<p class="fonte">Esta ficha permanece no ar como registro de uma venda concluída. Os dados refletem o imóvel na data da venda.</p>{% endif %}
+  {% if i.encerrado %}<p class="fonte">Esta ficha permanece no ar como registro. Os dados refletem o imóvel na data em que saiu da carteira.</p>{% endif %}
 
-  {% if i.vendido %}
+  {% if i.encerrado %}
   <aside class="contato" aria-labelledby="contato">
     <h2 id="contato">Tem um imóvel parecido para vender?</h2>
-    <p>{{ i.referencia|cap }} foi vendido em {{ i.data_venda|data_extenso }}. Se você tem um imóvel de padrão semelhante {{ bairro.em }} ou na região, <a href="{{ consultor.path }}">{{ consultor.nome }}</a> ({{ consultor.credencial.nome }}) faz uma avaliação com base nos preços de mercado por bairro e fonte.</p>
+    <p>{{ i.referencia|cap }} não está mais disponível desde {{ i.data_encerramento|data_extenso }}. Se você tem um imóvel de padrão semelhante {{ bairro.em }} ou na região, <a href="{{ consultor.path }}">{{ consultor.nome }}</a> ({{ consultor.credencial.nome }}) faz uma avaliação com base nos preços de mercado por bairro e fonte.</p>
     <ul class="acoes">
       <li><a class="botao" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Tenho um imóvel parecido com o ' ~ i.codigo ~ ' e gostaria de avaliar a venda.')|urlencode }}">Avaliar meu imóvel no WhatsApp</a></li>
       <li><a class="botao botao--sec" href="tel:{{ site.telefone_link }}">{{ site.telefone|tel }}</a></li>
@@ -166,14 +166,14 @@
   {% endif %}
 </article>
 
-{% if imovel.vendido %}
+{% if imovel.encerrado %}
 {% set outros = repo.ativos(bairro.slug) or repo.ativos() %}
 {% else %}
 {% set outros = repo.ativos()|rejectattr("slug", "equalto", imovel.slug)|list %}
 {% endif %}
 {% if outros %}
 <section aria-labelledby="outros-imoveis">
-  <h2 id="outros-imoveis">{% if imovel.vendido %}Imóveis parecidos disponíveis agora{% else %}Compare com outros imóveis de altíssimo padrão{% endif %}</h2>
+  <h2 id="outros-imoveis">{% if imovel.encerrado %}Imóveis parecidos disponíveis agora{% else %}Compare com outros imóveis de altíssimo padrão{% endif %}</h2>
   <div class="grade">{% for o in outros %}{{ m.card_imovel(o) }}{% endfor %}</div>
 </section>
 {% endif %}

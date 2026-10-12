@@ -27,9 +27,9 @@
 
 {% for i in imoveis %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): {{ i.preco|brl }} · {{ i.area_privativa|num }} m² · {{ i.preco_m2|brl }}/m²
 {% endfor %}
-{% if vendidos %}## Vendidos recentemente
+{% if encerrados %}## Imóveis que saíram da carteira
 
-{% for i in vendidos %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): vendido em {{ i.data_venda|data_extenso }}{% if i.dias_no_mercado %} após {{ i.dias_no_mercado|num }} dias no mercado{% endif %}
+{% for i in encerrados %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): não está mais disponível desde {{ i.data_encerramento|data_extenso }}{% if i.dias_no_mercado %}; ficou {{ i.dias_no_mercado|num }} dias no mercado{% endif %}
 {% endfor %}
 {% endif %}## Guias
 

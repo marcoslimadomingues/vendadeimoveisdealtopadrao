@@ -3,8 +3,8 @@
 {% block conteudo %}
 <header class="cabecalho-pagina">
   {% if vendido %}
-  <h1>{{ vendido.titulo }}: imóvel vendido</h1>
-  <p class="lead">O imóvel {{ vendido.codigo }} foi vendido{% if vendido.data_venda %} em <time datetime="{{ vendido.data_venda }}">{{ vendido.data_venda|data_extenso }}</time>{% endif %} e não está mais disponível.</p>
+  <h1>{{ vendido.titulo }}: imóvel indisponível</h1>
+  <p class="lead">O imóvel {{ vendido.codigo }} não está mais disponível{% if vendido.data_venda or vendido.data_saida %} desde <time datetime="{{ vendido.data_venda or vendido.data_saida }}">{{ (vendido.data_venda or vendido.data_saida)|data_extenso }}</time>{% endif %}.</p>
   {% else %}
   <h1>Página não encontrada</h1>
   <p class="lead">O endereço solicitado não existe ou foi removido.</p>

@@ -43,7 +43,8 @@ def exportar(saida: Path) -> list[str]:
     saida.mkdir(parents=True)
     gerados = []
 
-    for path, _ in repo.paginas_indexaveis():
+    todas = [p for p, _ in repo.paginas_indexaveis()] + repo.paginas_redirecionadas()
+    for path in todas:
         resp = client.get(path)
         if resp.status_code != 200:
             raise SystemExit(f"{path} respondeu {resp.status_code}; exportação abortada")

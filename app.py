@@ -96,14 +96,21 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         return pagina("imoveis.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
                       jsonld=graph.colecao(path, titulo, descricao, crumbs,
                                            [(i["titulo"], i["path"]) for i in lista]),
-                      imoveis=lista, bairros=repo.bairros_por_liquidez(), vendidos=repo.vendidos())
+                      imoveis=lista, bairros=repo.bairros_por_liquidez(), encerrados=repo.encerrados())
 
     @app.get("/imoveis/<slug>/")
     def imovel(slug: str):
         i = repo.imovel(slug)
         if i is None:
             abort(404)
-        if i["status"] != "ativo" and not i.get("vendido"):
+        if slug in repo.redirecionados():
+            # GitHub Pages não faz 301: meta refresh imediato + canonical para o bairro (o Google trata
+            # o refresh instantâneo como redirecionamento). Fica fora do sitemap e do llms.txt.
+            b = repo.redirecionados()[slug]
+            return render_template("redirect.html", destino=base + b["path"], destino_path=b["path"], bairro=b,
+                                   titulo=f"Imóvel indisponível: imóveis de alto padrão {b['em']}",
+                                   canonical=base + b["path"])
+        if i["status"] != "ativo" and not i.get("encerrado"):
             # Vendido com ficha completa segue no ar (200, marcado como vendido). Vendido só com registro
             # mínimo ou removido: HTTP 404 real (nunca soft 404), com alternativas úteis.
             return pagina("404.html", path=request.path, titulo="Imóvel vendido", descricao="",
@@ -112,7 +119,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         b = repo.bairros[i["bairro"]]
         crumbs = [("Início", "/"), ("Imóveis à venda", "/imoveis/"), (b["nome"], b["path"]), (i["titulo"], i["path"])]
         return pagina("imovel.html", path=i["path"], titulo=titulos[i["path"]],
-                      descricao=(i.get("resumo_vendido") or i["resumo"])[:300], crumbs=crumbs,
+                      descricao=(i.get("resumo_encerrado") or i["resumo"])[:300], crumbs=crumbs,
                       jsonld=graph.imovel(i, crumbs),
                       imovel=i, bairro=b, consultor=repo.pessoas[i["consultor"]],
                       artigos=repo.artigos_sobre_imovel(slug))
@@ -144,12 +151,26 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
     @app.get("/guias/<slug>/")
     def artigo(slug: str):
         a = repo.artigos.get(slug)
-        if a is None:
+        if a is None or a.get("url_sob_pilar"):  # satélite sob o pilar tem uma única URL
             abort(404)
-        crumbs = [("Início", "/"), ("Guias e análises", "/guias/"), (a["titulo"], a["path"])]
+        return render_artigo(a)
+
+    @app.get("/<pilar_slug>/<slug>/")
+    def satelite(pilar_slug: str, slug: str):
+        a = repo.artigos.get(slug)
+        if a is None or not a.get("url_sob_pilar") or a["pilar"] != pilar_slug:
+            abort(404)
+        return render_artigo(a)
+
+    def render_artigo(a: dict):
+        pl = repo.pilares.get(a.get("pilar", ""))
+        if a.get("url_sob_pilar"):
+            crumbs = [("Início", "/"), (pl["nome"], pl["path"]), (a["titulo"], a["path"])]
+        else:
+            crumbs = [("Início", "/"), ("Guias e análises", "/guias/"), (a["titulo"], a["path"])]
         return pagina("artigo.html", path=a["path"], titulo=titulos[a["path"]], descricao=a["descricao"],
                       crumbs=crumbs, jsonld=graph.artigo(a, crumbs), artigo=a,
-                      autor=repo.pessoas[a["autor"]],
+                      autor=repo.pessoas[a["autor"]], pilar=pl,
                       relacionados=[repo.imoveis[s] for s in a.get("imoveis_relacionados", [])])
 
     # ------------------------------------------------------ E-E-A-T / Pessoas
@@ -214,7 +235,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         """Resumo em texto para agentes de IA (convenção llmstxt.org): quem somos, fatos e páginas-chave."""
         return Response(render_template("llms.txt", paginas=repo.paginas_indexaveis(), pilares=repo.pilares.values(),
                                         bairros=repo.bairros_por_liquidez(), imoveis=repo.ativos(),
-                                        vendidos=repo.vendidos(),
+                                        encerrados=repo.encerrados(),
                                         artigos=repo.artigos_recentes(), faq=repo.faq_institucional()),
                         mimetype="text/plain")
 

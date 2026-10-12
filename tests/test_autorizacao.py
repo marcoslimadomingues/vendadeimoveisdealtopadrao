@@ -81,7 +81,7 @@ def test_vendido_com_ficha_sem_autorizacao_volta_a_ser_404(tmp_path):
 
     client, repo = montar(tmp_path, editar)
     assert client.get(f"/imoveis/{slug}/").status_code == 404
-    assert repo.vendidos() == []
+    assert repo.encerrados() == []
 
 
 def test_guia_que_cita_rascunho_falha_o_build_com_mensagem_clara(tmp_path):

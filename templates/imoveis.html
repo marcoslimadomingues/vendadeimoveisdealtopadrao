@@ -57,11 +57,11 @@
 </section>
 {% endif %}
 
-{% if vendidos %}
-<section aria-labelledby="vendidos">
-  <h2 id="vendidos">Vendidos recentemente {{ site.cidade.em }}</h2>
-  <p>Imóveis da carteira da {{ site.nome }} que já foram vendidos. As fichas permanecem no ar com os dados técnicos e o tempo de venda.</p>
-  <div class="grade">{% for i in vendidos %}{{ m.card_vendido(i) }}{% endfor %}</div>
+{% if encerrados %}
+<section aria-labelledby="encerrados">
+  <h2 id="encerrados">Imóveis que saíram da carteira {{ site.cidade.em }}</h2>
+  <p>Imóveis que a {{ site.nome }} apresentou e que não estão mais disponíveis. As fichas permanecem no ar com os dados técnicos.</p>
+  <div class="grade">{% for i in encerrados %}{{ m.card_encerrado(i) }}{% endfor %}</div>
 </section>
 {% endif %}
 

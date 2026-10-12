@@ -8,6 +8,7 @@
   <header class="cabecalho-pagina">
     <p class="card__tipo">{{ a.categoria }} · leitura de {{ a.tempo_leitura }} minutos</p>
     <h1 id="titulo-artigo">{{ a.titulo }}</h1>
+    {% if pilar %}<p class="meta">Parte do pilar <a href="{{ pilar.path }}">{{ pilar.nome }}: {{ pilar.subtitulo }}</a></p>{% endif %}
     <p class="meta">Por <a href="{{ autor.path }}" rel="author">{{ autor.nome }}</a>, {{ autor.cargo|lower }} ({{ autor.credencial.nome }}) · publicado em <time datetime="{{ a.publicado }}">{{ a.publicado|data_extenso }}</time> · atualizado em <time datetime="{{ a.atualizado }}">{{ a.atualizado|data_extenso }}</time></p>
   </header>
 

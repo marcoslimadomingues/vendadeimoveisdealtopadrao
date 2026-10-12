@@ -68,7 +68,7 @@ class Graph:
     def _organizacao(self) -> dict:
         s, e = self.site, self.site["endereco"]
         return {
-            "@type": ["Organization", "RealEstateAgent"],
+            "@type": "RealEstateAgent",
             **self.org,
             "name": s["nome"],
             "legalName": s["razao_social"],
@@ -134,7 +134,9 @@ class Graph:
 
     def _entidade_central(self) -> dict:
         ec = self.site["entidade_central"]
-        return {"@type": "Thing", **self.entidade, "name": ec["nome"], "description": ec["descricao"]}
+        return {"@type": "Service", **self.entidade, "name": ec["nome"], "description": ec["descricao"],
+                "serviceType": "Intermediação de imóveis de alto padrão", "provider": self.org,
+                "areaServed": self.cidade()}
 
     # ------------------------------------------------------ nós reutilizáveis
     def pagina(self, tipo, path: str, nome: str, descricao: str, crumbs=None, **extra) -> dict:
@@ -283,8 +285,8 @@ class Graph:
         path, b = i["path"], self.repo.bairros[i["bairro"]]
         consultor = self.repo.pessoas[i["consultor"]]
         imagem = self.url(i["imagem"])
-        vendido = bool(i.get("vendido"))
-        resumo = i["resumo_vendido"] if vendido else i["resumo"]
+        encerrado = bool(i.get("encerrado"))
+        resumo = i["resumo_encerrado"] if encerrado else i["resumo"]
 
         residencia = {
             "@type": i["schema_type"],
@@ -320,11 +322,11 @@ class Graph:
                     ("Área do terreno", i.get("area_terreno"), "m²"),
                     ("Condomínio mensal", i.get("condominio_mensal"), "BRL"),
                     ("IPTU anual", i["iptu_anual"], "BRL"),
-                    ("Situação", "Vendido" if vendido else None, None),
-                    ("Data da venda", i["data_venda"] if vendido else None, None),
-                    ("Dias no mercado", i.get("dias_no_mercado") if vendido else None, "dias"),
-                    ("Valor da venda", i.get("preco_venda_publico") if vendido else None, "BRL"),
-                    ("Preço por m²", None if vendido else i["preco_m2"], "BRL/m²"),
+                    ("Situação", "Não está mais disponível" if encerrado else None, None),
+                    ("Indisponível desde", i["data_encerramento"] if encerrado else None, None),
+                    ("Dias no mercado", i.get("dias_no_mercado") if encerrado else None, "dias"),
+                    ("Valor da venda", i.get("preco_venda_publico") if encerrado else None, "BRL"),
+                    ("Preço por m²", None if encerrado else i["preco_m2"], "BRL/m²"),
                     ("Isolamento acústico das esquadrias (Rw)", i["tecnico"]["rw_db"], "dB"),
                     ("Nível de blindagem da portaria (ABNT NBR 15000)", i["tecnico"]["blindagem_nivel"], None),
                     ("Potência do gerador", i["tecnico"]["gerador_kva"], "kVA"),
@@ -340,9 +342,9 @@ class Graph:
             "@type": "Offer",
             **self.ref(path, "oferta"),
             "url": self.url(path),
-            "price": i["preco"],
-            "priceCurrency": "BRL",
-            "availability": "https://schema.org/InStock",
+            **({} if encerrado else {"price": i["preco"], "priceCurrency": "BRL"}),
+            "availability": ("https://schema.org/SoldOut" if i["status"] == "vendido" else
+                             "https://schema.org/OutOfStock") if encerrado else "https://schema.org/InStock",
             "businessFunction": "http://purl.org/goodrelations/v1#Sell",
             "validFrom": i["data_publicacao"],
             "itemOffered": self.ref(path, "imovel"),
@@ -352,16 +354,14 @@ class Graph:
 
         extra = {
             "datePosted": i["data_publicacao"],
-            "dateModified": i["data_venda"] if vendido else i["data_atualizacao"],
+            "dateModified": i["data_encerramento"] if encerrado else i["data_atualizacao"],
             "image": imagem,
             "mainEntity": self.ref(path, "imovel"),
+            "offers": self.ref(path, "oferta"),
             "accountablePerson": self.ref(consultor["path"], "pessoa"),
             "hasPart": [{"@id": q["@id"]} for q in self.perguntas(path, i["faq"])],
         }
-        if not vendido:  # vendido não tem oferta: nada de Offer, preço ou disponibilidade
-            extra["offers"] = self.ref(path, "oferta")
-        nodes = [residencia, *([] if vendido else [oferta]), self.lugar(b), self.pessoa(consultor),
-                 *self.perguntas(path, i["faq"])]
+        nodes = [residencia, oferta, self.lugar(b), self.pessoa(consultor), *self.perguntas(path, i["faq"])]
         if i["videos"]:
             video_nodes, extra["video"] = self.videos(path, i["videos"], {consultor["slug"]})
             nodes += video_nodes

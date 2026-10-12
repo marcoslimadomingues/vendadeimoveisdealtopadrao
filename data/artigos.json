@@ -10,13 +10,29 @@
     "tempo_leitura": 7,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "O Mucuripe é o bairro de alto padrão com maior liquidez em Fortaleza: imóveis acima de R$ 3 milhões venderam em 118 dias, em média, entre julho de 2025 e junho de 2026. O Guararapes teve a menor liquidez, com 196 dias. Os apartamentos com vista frontal para o mar no Meireles registraram a maior valorização do período: 15,1% em 12 meses.",
-    "bairros_relacionados": ["mucuripe", "meireles", "coco", "aldeota", "guararapes"],
-    "imoveis_relacionados": ["cobertura-duplex-mucuripe-480m2", "apartamento-meireles-beira-mar-320m2", "apartamento-aldeota-260m2", "casa-guararapes-condominio-720m2"],
+    "bairros_relacionados": [
+      "mucuripe",
+      "meireles",
+      "coco",
+      "aldeota",
+      "guararapes"
+    ],
+    "imoveis_relacionados": [
+      "cobertura-duplex-mucuripe-480m2",
+      "apartamento-meireles-beira-mar-320m2",
+      "apartamento-aldeota-260m2",
+      "casa-guararapes-condominio-720m2"
+    ],
     "videos": [
-      {"youtube_id": "SUBSTITUA13", "tipo": "Análise de mercado", "apresentador": "helena-duarte",
-       "titulo": "Liquidez por bairro em Fortaleza 2025–2026: análise de Helena Duarte",
-       "descricao": "Análise de 9 minutos sobre tempo médio de venda, desconto de negociação e valorização em 5 bairros de alto padrão de Fortaleza.",
-       "duracao": "PT9M40S", "data_upload": "2026-07-17"}
+      {
+        "youtube_id": "SUBSTITUA13",
+        "tipo": "Análise de mercado",
+        "apresentador": "helena-duarte",
+        "titulo": "Liquidez por bairro em Fortaleza 2025–2026: análise de Helena Duarte",
+        "descricao": "Análise de 9 minutos sobre tempo médio de venda, desconto de negociação e valorização em 5 bairros de alto padrão de Fortaleza.",
+        "duracao": "PT9M40S",
+        "data_upload": "2026-07-17"
+      }
     ],
     "secoes": [
       {
@@ -36,8 +52,14 @@
           "O desconto de negociação é a diferença percentual entre o último preço anunciado e o preço efetivo de fechamento. A valorização em 12 meses compara o preço médio por m² de junho de 2026 com o de junho de 2025."
         ],
         "respostas_rapidas": [
-          {"q": "Os custos de transação entram no desconto de negociação?", "a": "Não. O desconto compara apenas o último preço anunciado e o preço de fechamento. ITBI, escritura, registro e comissão são custos adicionais ao preço."},
-          {"q": "O tempo médio de venda inclui imóveis retirados do mercado?", "a": "Não. A média considera apenas imóveis que chegaram à assinatura do compromisso de compra e venda no período."}
+          {
+            "q": "Os custos de transação entram no desconto de negociação?",
+            "a": "Não. O desconto compara apenas o último preço anunciado e o preço de fechamento. ITBI, escritura, registro e comissão são custos adicionais ao preço."
+          },
+          {
+            "q": "O tempo médio de venda inclui imóveis retirados do mercado?",
+            "a": "Não. A média considera apenas imóveis que chegaram à assinatura do compromisso de compra e venda no período."
+          }
         ]
       },
       {
@@ -73,15 +95,30 @@
           "A estrutura de compra também altera o resultado financeiro de longo prazo. O guia <a href=\"/guias/holding-familiar-imoveis-alto-padrao/\">holding familiar para imóveis de alto padrão no Ceará</a> compara a tributação de aluguel, venda e sucessão."
         ],
         "respostas_rapidas": [
-          {"q": "Quanto custa o ITBI de um imóvel de R$ 5 milhões em Fortaleza?", "a": "R$ 150.000 pela alíquota geral de 3%, ou R$ 100.000 se o imposto for pago antecipadamente nos prazos da Lei Complementar municipal 159/2013, que reduz a alíquota para 2%."},
-          {"q": "Quanto tempo leva para registrar a compra após a escritura?", "a": "O Cartório de Registro de Imóveis tem prazo legal de até 10 dias úteis, contados do protocolo do título (art. 188 da Lei 6.015/1973, com redação da Lei 14.382/2022)."}
+          {
+            "q": "Quanto custa o ITBI de um imóvel de R$ 5 milhões em Fortaleza?",
+            "a": "R$ 150.000 pela alíquota geral de 3%, ou R$ 100.000 se o imposto for pago antecipadamente nos prazos da Lei Complementar municipal 159/2013, que reduz a alíquota para 2%."
+          },
+          {
+            "q": "Quanto tempo leva para registrar a compra após a escritura?",
+            "a": "O Cartório de Registro de Imóveis tem prazo legal de até 10 dias úteis, contados do protocolo do título (art. 188 da Lei 6.015/1973, com redação da Lei 14.382/2022)."
+          }
         ]
       }
     ],
     "faq": [
-      {"q": "Quanto tempo leva para vender um imóvel de luxo em Fortaleza?", "a": "Imóveis acima de R$ 3 milhões levaram de 118 a 196 dias para vender em Fortaleza entre julho de 2025 e junho de 2026, conforme o bairro. Na carteira exclusiva da Alto Padrão Imóveis, o prazo médio foi de 104 dias."},
-      {"q": "Qual o desconto médio na compra de imóveis de alto padrão em Fortaleza?", "a": "O desconto médio de negociação variou de 4,9% no Mucuripe a 8,4% no Guararapes entre julho de 2025 e junho de 2026."},
-      {"q": "Qual bairro de Fortaleza tem o metro quadrado mais caro no alto padrão?", "a": "O Mucuripe tem o maior preço médio da base: R$ 16.800 por m² entre julho de 2025 e junho de 2026."}
+      {
+        "q": "Quanto tempo leva para vender um imóvel de luxo em Fortaleza?",
+        "a": "Imóveis acima de R$ 3 milhões levaram de 118 a 196 dias para vender em Fortaleza entre julho de 2025 e junho de 2026, conforme o bairro. Na carteira exclusiva da Alto Padrão Imóveis, o prazo médio foi de 104 dias."
+      },
+      {
+        "q": "Qual o desconto médio na compra de imóveis de alto padrão em Fortaleza?",
+        "a": "O desconto médio de negociação variou de 4,9% no Mucuripe a 8,4% no Guararapes entre julho de 2025 e junho de 2026."
+      },
+      {
+        "q": "Qual bairro de Fortaleza tem o metro quadrado mais caro no alto padrão?",
+        "a": "O Mucuripe tem o maior preço médio da base: R$ 16.800 por m² entre julho de 2025 e junho de 2026."
+      }
     ]
   },
   {
@@ -97,16 +134,30 @@
     "resumo": "A holding familiar é uma pessoa jurídica que recebe imóveis como capital social para organizar a gestão e a sucessão do patrimônio. No Ceará, o ITCD é progressivo, de 2% a 8%, e patrimônios de alto padrão transmitidos por herança ficam na faixa máxima de 8%. A holding no lucro presumido reduz a tributação de aluguéis de até 27,5% (pessoa física) para cerca de 11,33% da receita, mas não reduz automaticamente o imposto na venda: o ganho de capital na holding é tributado em até 34%.",
     "aviso": "Conteúdo informativo. Não substitui parecer jurídico ou contábil individual. Confirme alíquotas, faixas em Ufirce e regras vigentes na data da operação.",
     "bairros_relacionados": [],
-    "imoveis_relacionados": ["casa-guararapes-condominio-720m2", "cobertura-duplex-mucuripe-480m2", "apartamento-meireles-beira-mar-320m2"],
+    "imoveis_relacionados": [
+      "casa-guararapes-condominio-720m2",
+      "cobertura-duplex-mucuripe-480m2",
+      "apartamento-meireles-beira-mar-320m2"
+    ],
     "videos": [
-      {"youtube_id": "SUBSTITUA05", "tipo": "Entrevista", "apresentador": "carolina-ribeiro",
-       "titulo": "Entrevista: holding familiar para imóveis de alto padrão no Ceará",
-       "descricao": "Entrevista de 18 minutos com a advogada tributarista Carolina Ribeiro sobre ITBI em Fortaleza, ITCD progressivo do Ceará e tributação de aluguéis na holding familiar.",
-       "duracao": "PT18M30S", "data_upload": "2026-05-20"},
-      {"youtube_id": "SUBSTITUA11", "tipo": "Análise jurídica", "apresentador": "carolina-ribeiro",
-       "titulo": "ITCD do Ceará na prática: herança × doação de quotas com reserva de usufruto",
-       "descricao": "A advogada tributarista Carolina Ribeiro compara, em 12 minutos, as faixas do ITCD na herança e na doação, a imunidade do ITBI na integralização e os prazos de cada etapa.",
-       "duracao": "PT12M10S", "data_upload": "2026-09-12"}
+      {
+        "youtube_id": "SUBSTITUA05",
+        "tipo": "Entrevista",
+        "apresentador": "carolina-ribeiro",
+        "titulo": "Entrevista: holding familiar para imóveis de alto padrão no Ceará",
+        "descricao": "Entrevista de 18 minutos com a advogada tributarista Carolina Ribeiro sobre ITBI em Fortaleza, ITCD progressivo do Ceará e tributação de aluguéis na holding familiar.",
+        "duracao": "PT18M30S",
+        "data_upload": "2026-05-20"
+      },
+      {
+        "youtube_id": "SUBSTITUA11",
+        "tipo": "Análise jurídica",
+        "apresentador": "carolina-ribeiro",
+        "titulo": "ITCD do Ceará na prática: herança × doação de quotas com reserva de usufruto",
+        "descricao": "A advogada tributarista Carolina Ribeiro compara, em 12 minutos, as faixas do ITCD na herança e na doação, a imunidade do ITBI na integralização e os prazos de cada etapa.",
+        "duracao": "PT12M10S",
+        "data_upload": "2026-09-12"
+      }
     ],
     "secoes": [
       {
@@ -126,10 +177,22 @@
           "O Supremo Tribunal Federal limitou a imunidade no Tema 796 (RE 796.376): o valor dos imóveis que exceder o capital social integralizado está sujeito ao ITBI."
         ],
         "respostas_rapidas": [
-          {"q": "Qual a alíquota do ITBI em Fortaleza?", "a": "3% sobre o valor da transação, reduzida para 2% com pagamento antecipado nos prazos da Lei Complementar municipal 159/2013."},
-          {"q": "Quem paga o ITBI e em que momento?", "a": "O comprador. Pelo Tema 1.124 do STF, o fato gerador do ITBI é o registro da transferência; em Fortaleza, o pagamento antecipado, antes do fato gerador, dá direito à alíquota reduzida de 2%."},
-          {"q": "Qual a base de cálculo do ITBI?", "a": "O valor declarado da transação, conforme o Tema 1.113 do STJ, e não um valor de referência fixado unilateralmente pela prefeitura."},
-          {"q": "Sobre qual valor a integralização na holding paga ITBI?", "a": "Sobre nenhum valor até o capital subscrito, pela imunidade do art. 156, § 2º, I, da Constituição. O valor que exceder o capital integralizado paga ITBI (Tema 796 do STF)."}
+          {
+            "q": "Qual a alíquota do ITBI em Fortaleza?",
+            "a": "3% sobre o valor da transação, reduzida para 2% com pagamento antecipado nos prazos da Lei Complementar municipal 159/2013."
+          },
+          {
+            "q": "Quem paga o ITBI e em que momento?",
+            "a": "O comprador. Pelo Tema 1.124 do STF, o fato gerador do ITBI é o registro da transferência; em Fortaleza, o pagamento antecipado, antes do fato gerador, dá direito à alíquota reduzida de 2%."
+          },
+          {
+            "q": "Qual a base de cálculo do ITBI?",
+            "a": "O valor declarado da transação, conforme o Tema 1.113 do STJ, e não um valor de referência fixado unilateralmente pela prefeitura."
+          },
+          {
+            "q": "Sobre qual valor a integralização na holding paga ITBI?",
+            "a": "Sobre nenhum valor até o capital subscrito, pela imunidade do art. 156, § 2º, I, da Constituição. O valor que exceder o capital integralizado paga ITBI (Tema 796 do STF)."
+          }
         ]
       },
       {
@@ -141,10 +204,22 @@
           "Na doação, as faixas também vão de 2% a 8%, mas são mais largas: a alíquota de 2% vale até 25.000 Ufirces, contra 10.000 Ufirces na herança. Por isso, doações planejadas em vida, como a doação de quotas da holding com reserva de usufruto, podem ser tributadas em faixas menores do que a herança do mesmo patrimônio."
         ],
         "respostas_rapidas": [
-          {"q": "Qual a alíquota do ITCD no Ceará?", "a": "De 2% a 8%, progressiva conforme o valor transmitido em Ufirce. Na herança, a faixa de 8% começa acima de 40.000 Ufirces."},
-          {"q": "ITCD e ITCMD são o mesmo imposto?", "a": "Sim. A Secretaria da Fazenda do Ceará (SEFAZ-CE) usa a sigla ITCD; ITCMD é o nome usado na Constituição e em outros estados."},
-          {"q": "Qual a base de cálculo do ITCD na doação de quotas?", "a": "O valor das quotas apurado em balanço. A SEFAZ-CE pode exigir a avaliação dos imóveis da holding a valor de mercado na apuração."},
-          {"q": "Qual o prazo para abrir inventário?", "a": "60 dias a partir do óbito (art. 611 do Código de Processo Civil). O atraso pode gerar multa sobre o ITCD, conforme a legislação do Ceará."}
+          {
+            "q": "Qual a alíquota do ITCD no Ceará?",
+            "a": "De 2% a 8%, progressiva conforme o valor transmitido em Ufirce. Na herança, a faixa de 8% começa acima de 40.000 Ufirces."
+          },
+          {
+            "q": "ITCD e ITCMD são o mesmo imposto?",
+            "a": "Sim. A Secretaria da Fazenda do Ceará (SEFAZ-CE) usa a sigla ITCD; ITCMD é o nome usado na Constituição e em outros estados."
+          },
+          {
+            "q": "Qual a base de cálculo do ITCD na doação de quotas?",
+            "a": "O valor das quotas apurado em balanço. A SEFAZ-CE pode exigir a avaliação dos imóveis da holding a valor de mercado na apuração."
+          },
+          {
+            "q": "Qual o prazo para abrir inventário?",
+            "a": "60 dias a partir do óbito (art. 611 do Código de Processo Civil). O atraso pode gerar multa sobre o ITCD, conforme a legislação do Ceará."
+          }
         ]
       },
       {
@@ -157,13 +232,37 @@
         ],
         "tabela": {
           "caption": "Comparativo tributário em Fortaleza: pessoa física × holding familiar (lucro presumido)",
-          "cabecalho": ["Evento", "Pessoa física", "Holding familiar"],
+          "cabecalho": [
+            "Evento",
+            "Pessoa física",
+            "Holding familiar"
+          ],
           "linhas": [
-            ["Entrada do imóvel", "Não se aplica", "Imune ao ITBI, exceto atividade imobiliária preponderante"],
-            ["Compra de imóvel", "ITBI de 3% (2% com pagamento antecipado)", "ITBI de 3% (2% com pagamento antecipado)"],
-            ["Receita de aluguel", "Até 27,5% (carnê-leão)", "Cerca de 11,33% da receita"],
-            ["Venda do imóvel", "15% a 22,5% sobre o ganho de capital", "Até 34% sobre o ganho de capital (IRPJ + CSLL)"],
-            ["Sucessão", "ITCD de até 8% na herança e inventário dos imóveis", "ITCD sobre a doação de quotas, em faixas mais largas, sem inventário dos imóveis"]
+            [
+              "Entrada do imóvel",
+              "Não se aplica",
+              "Imune ao ITBI, exceto atividade imobiliária preponderante"
+            ],
+            [
+              "Compra de imóvel",
+              "ITBI de 3% (2% com pagamento antecipado)",
+              "ITBI de 3% (2% com pagamento antecipado)"
+            ],
+            [
+              "Receita de aluguel",
+              "Até 27,5% (carnê-leão)",
+              "Cerca de 11,33% da receita"
+            ],
+            [
+              "Venda do imóvel",
+              "15% a 22,5% sobre o ganho de capital",
+              "Até 34% sobre o ganho de capital (IRPJ + CSLL)"
+            ],
+            [
+              "Sucessão",
+              "ITCD de até 8% na herança e inventário dos imóveis",
+              "ITCD sobre a doação de quotas, em faixas mais largas, sem inventário dos imóveis"
+            ]
           ]
         }
       },
@@ -176,9 +275,18 @@
           "Para imóveis mantidos por mais de 10 anos, como a <a href=\"/imoveis/casa-guararapes-condominio-720m2/\">casa de 720 m² no Guararapes</a> ou a <a href=\"/imoveis/cobertura-duplex-mucuripe-480m2/\">cobertura duplex de 480 m² no Mucuripe</a>, a holding é avaliada pelo ganho sucessório, e não pelo imposto na venda."
         ],
         "respostas_rapidas": [
-          {"q": "Quais as alíquotas de ganho de capital na pessoa física?", "a": "15% sobre ganhos até R$ 5 milhões, 17,5% de R$ 5 milhões a R$ 10 milhões, 20% de R$ 10 milhões a R$ 30 milhões e 22,5% acima de R$ 30 milhões (Lei 13.259/2016)."},
-          {"q": "Qual o prazo para pagar o imposto sobre ganho de capital?", "a": "Até o último dia útil do mês seguinte ao da venda, por DARF com o código 4600."},
-          {"q": "Existe isenção de ganho de capital na venda de imóvel residencial?", "a": "Sim. A pessoa física que usa o valor da venda para comprar outro imóvel residencial em até 180 dias fica isenta sobre o valor reinvestido (art. 39 da Lei 11.196/2005)."}
+          {
+            "q": "Quais as alíquotas de ganho de capital na pessoa física?",
+            "a": "15% sobre ganhos até R$ 5 milhões, 17,5% de R$ 5 milhões a R$ 10 milhões, 20% de R$ 10 milhões a R$ 30 milhões e 22,5% acima de R$ 30 milhões (Lei 13.259/2016)."
+          },
+          {
+            "q": "Qual o prazo para pagar o imposto sobre ganho de capital?",
+            "a": "Até o último dia útil do mês seguinte ao da venda, por DARF com o código 4600."
+          },
+          {
+            "q": "Existe isenção de ganho de capital na venda de imóvel residencial?",
+            "a": "Sim. A pessoa física que usa o valor da venda para comprar outro imóvel residencial em até 180 dias fica isenta sobre o valor reinvestido (art. 39 da Lei 11.196/2005)."
+          }
         ]
       },
       {
@@ -190,18 +298,48 @@
         ],
         "tabela": {
           "caption": "Prazos de referência da transferência patrimonial para holding familiar no Ceará",
-          "cabecalho": ["Etapa", "Prazo de referência", "Base"],
+          "cabecalho": [
+            "Etapa",
+            "Prazo de referência",
+            "Base"
+          ],
           "linhas": [
-            ["Constituição da holding (contrato social e CNPJ)", "5 a 15 dias úteis", "Prática da Junta Comercial do Estado do Ceará (JUCEC)"],
-            ["Registro da integralização na matrícula", "Até 10 dias úteis após o protocolo", "Art. 188 da Lei 6.015/1973"],
-            ["Registro da compra e venda após a escritura", "Até 10 dias úteis após o protocolo", "Art. 188 da Lei 6.015/1973"],
-            ["Doação de quotas com reserva de usufruto", "ITCD recolhido antes do registro da alteração contratual", "Lei estadual 15.812/2015"],
-            ["Abertura de inventário", "Até 60 dias após o óbito", "Art. 611 do Código de Processo Civil"]
+            [
+              "Constituição da holding (contrato social e CNPJ)",
+              "5 a 15 dias úteis",
+              "Prática da Junta Comercial do Estado do Ceará (JUCEC)"
+            ],
+            [
+              "Registro da integralização na matrícula",
+              "Até 10 dias úteis após o protocolo",
+              "Art. 188 da Lei 6.015/1973"
+            ],
+            [
+              "Registro da compra e venda após a escritura",
+              "Até 10 dias úteis após o protocolo",
+              "Art. 188 da Lei 6.015/1973"
+            ],
+            [
+              "Doação de quotas com reserva de usufruto",
+              "ITCD recolhido antes do registro da alteração contratual",
+              "Lei estadual 15.812/2015"
+            ],
+            [
+              "Abertura de inventário",
+              "Até 60 dias após o óbito",
+              "Art. 611 do Código de Processo Civil"
+            ]
           ]
         },
         "respostas_rapidas": [
-          {"q": "Quanto tempo leva para transferir um imóvel para a holding?", "a": "De 30 a 90 dias, incluindo constituição da sociedade, integralização e registro na matrícula do imóvel."},
-          {"q": "O inventário pode ser feito em cartório?", "a": "Sim, pelo inventário extrajudicial, quando os herdeiros concordam com a partilha. A Resolução 571/2024 do CNJ passou a admiti-lo também com herdeiros menores, com participação do Ministério Público."}
+          {
+            "q": "Quanto tempo leva para transferir um imóvel para a holding?",
+            "a": "De 30 a 90 dias, incluindo constituição da sociedade, integralização e registro na matrícula do imóvel."
+          },
+          {
+            "q": "O inventário pode ser feito em cartório?",
+            "a": "Sim, pelo inventário extrajudicial, quando os herdeiros concordam com a partilha. A Resolução 571/2024 do CNJ passou a admiti-lo também com herdeiros menores, com participação do Ministério Público."
+          }
         ]
       },
       {
@@ -214,9 +352,18 @@
       }
     ],
     "faq": [
-      {"q": "Holding familiar paga IPTU em Fortaleza?", "a": "Sim. O IPTU incide sobre a propriedade do imóvel, independentemente de o proprietário ser pessoa física ou holding."},
-      {"q": "Uma holding pode financiar a compra de um imóvel?", "a": "Sim. Bancos financiam imóveis para pessoas jurídicas, em geral com prazos menores e exigência de garantia dos sócios."},
-      {"q": "Quanto tempo leva para constituir uma holding familiar?", "a": "A constituição de uma holding familiar leva de 30 a 90 dias, incluindo o registro na Junta Comercial e a averbação da integralização na matrícula de cada imóvel."}
+      {
+        "q": "Holding familiar paga IPTU em Fortaleza?",
+        "a": "Sim. O IPTU incide sobre a propriedade do imóvel, independentemente de o proprietário ser pessoa física ou holding."
+      },
+      {
+        "q": "Uma holding pode financiar a compra de um imóvel?",
+        "a": "Sim. Bancos financiam imóveis para pessoas jurídicas, em geral com prazos menores e exigência de garantia dos sócios."
+      },
+      {
+        "q": "Quanto tempo leva para constituir uma holding familiar?",
+        "a": "A constituição de uma holding familiar leva de 30 a 90 dias, incluindo o registro na Junta Comercial e a averbação da integralização na matrícula de cada imóvel."
+      }
     ]
   },
   {
@@ -231,16 +378,31 @@
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "Quatro especificações técnicas separam um imóvel de alto padrão em Fortaleza de um imóvel apenas caro: proteção contra maresia nas esquadrias e ferragens, isolamento acústico Rw igual ou superior a 42 dB, portaria blindada com nível mínimo III-A pela ABNT NBR 15000 e gerador que atende 100% da carga elétrica. As 4 especificações podem ser verificadas por laudo técnico antes da compra.",
     "bairros_relacionados": [],
-    "imoveis_relacionados": ["cobertura-duplex-mucuripe-480m2", "apartamento-meireles-beira-mar-320m2", "apartamento-aldeota-260m2", "casa-guararapes-condominio-720m2"],
+    "imoveis_relacionados": [
+      "cobertura-duplex-mucuripe-480m2",
+      "apartamento-meireles-beira-mar-320m2",
+      "apartamento-aldeota-260m2",
+      "casa-guararapes-condominio-720m2"
+    ],
     "videos": [
-      {"youtube_id": "SUBSTITUA06", "tipo": "Medição em campo", "apresentador": "marina-albuquerque",
-       "titulo": "Medição de ruído na orla: vidro comum × isolamento acústico europeu",
-       "descricao": "Vídeo de 7 minutos com medição de decibéis em noite de evento na Avenida Beira Mar, comparando uma esquadria comum e uma esquadria Rw 45 dB na mesma fachada.",
-       "duracao": "PT7M10S", "data_upload": "2026-06-05"},
-      {"youtube_id": "SUBSTITUA12", "tipo": "Análise técnica", "apresentador": "marina-albuquerque",
-       "titulo": "Maresia em imóveis de luxo: como avaliar esquadrias, ferragens e ar-condicionado",
-       "descricao": "A arquiteta Marina Albuquerque explica, em 10 minutos, como a maresia de Fortaleza corrói esquadrias e equipamentos e quais especificações exigir no laudo de compra.",
-       "duracao": "PT10M20S", "data_upload": "2026-09-14"}
+      {
+        "youtube_id": "SUBSTITUA06",
+        "tipo": "Medição em campo",
+        "apresentador": "marina-albuquerque",
+        "titulo": "Medição de ruído na orla: vidro comum × isolamento acústico europeu",
+        "descricao": "Vídeo de 7 minutos com medição de decibéis em noite de evento na Avenida Beira Mar, comparando uma esquadria comum e uma esquadria Rw 45 dB na mesma fachada.",
+        "duracao": "PT7M10S",
+        "data_upload": "2026-06-05"
+      },
+      {
+        "youtube_id": "SUBSTITUA12",
+        "tipo": "Análise técnica",
+        "apresentador": "marina-albuquerque",
+        "titulo": "Maresia em imóveis de luxo: como avaliar esquadrias, ferragens e ar-condicionado",
+        "descricao": "A arquiteta Marina Albuquerque explica, em 10 minutos, como a maresia de Fortaleza corrói esquadrias e equipamentos e quais especificações exigir no laudo de compra.",
+        "duracao": "PT10M20S",
+        "data_upload": "2026-09-14"
+      }
     ],
     "secoes": [
       {
@@ -252,9 +414,18 @@
           "A Alto Padrão Imóveis exige, nos imóveis a menos de 500 m do mar, esquadrias de alumínio com camada anódica de 25 µm ou pintura com certificação para ambiente marinho e ferragens em aço inox 316. A <a href=\"/imoveis/cobertura-duplex-mucuripe-480m2/\">cobertura duplex de 480 m² no Mucuripe</a> e o <a href=\"/imoveis/apartamento-meireles-beira-mar-320m2/\">apartamento de 320 m² na Beira Mar do Meireles</a> seguem essa especificação."
         ],
         "respostas_rapidas": [
-          {"q": "Qual a diferença entre aço inox 304 e 316 na orla?", "a": "O aço inox 316 contém molibdênio, que aumenta a resistência à corrosão por cloretos. Em ferragens, guarda-corpos e parafusos expostos à maresia, o 316 é o especificado; o 304 tende a apresentar pontos de corrosão."},
-          {"q": "Qual espessura de anodização é indicada para ambiente marinho?", "a": "Camada anódica de 25 µm, a classe mais espessa usada em arquitetura, indicada para exposição marinha severa. Camadas de 10 a 15 µm são adequadas apenas para ambientes internos ou pouco agressivos."},
-          {"q": "A maresia também afeta o ar-condicionado?", "a": "Sim. Condensadoras expostas à maresia precisam de aletas com tratamento anticorrosivo e limpeza periódica; sem isso, a vida útil do equipamento cai de forma significativa."}
+          {
+            "q": "Qual a diferença entre aço inox 304 e 316 na orla?",
+            "a": "O aço inox 316 contém molibdênio, que aumenta a resistência à corrosão por cloretos. Em ferragens, guarda-corpos e parafusos expostos à maresia, o 316 é o especificado; o 304 tende a apresentar pontos de corrosão."
+          },
+          {
+            "q": "Qual espessura de anodização é indicada para ambiente marinho?",
+            "a": "Camada anódica de 25 µm, a classe mais espessa usada em arquitetura, indicada para exposição marinha severa. Camadas de 10 a 15 µm são adequadas apenas para ambientes internos ou pouco agressivos."
+          },
+          {
+            "q": "A maresia também afeta o ar-condicionado?",
+            "a": "Sim. Condensadoras expostas à maresia precisam de aletas com tratamento anticorrosivo e limpeza periódica; sem isso, a vida útil do equipamento cai de forma significativa."
+          }
         ]
       },
       {
@@ -267,18 +438,47 @@
         ],
         "tabela": {
           "caption": "Referência de isolamento acústico por configuração de esquadria",
-          "cabecalho": ["Configuração da esquadria", "Rw aproximado", "Classificação"],
+          "cabecalho": [
+            "Configuração da esquadria",
+            "Rw aproximado",
+            "Classificação"
+          ],
           "linhas": [
-            ["Vidro simples de 6 mm", "31 dB", "Padrão comum"],
-            ["Vidro laminado de 10 mm", "36 dB", "Intermediário"],
-            ["Vidro laminado duplo com câmara de 12 mm", "42 a 45 dB", "Isolamento Acústico Europeu"],
-            ["Vidro laminado acústico duplo com câmara de 16 mm", "46 a 50 dB", "Isolamento Acústico Europeu superior"]
+            [
+              "Vidro simples de 6 mm",
+              "31 dB",
+              "Padrão comum"
+            ],
+            [
+              "Vidro laminado de 10 mm",
+              "36 dB",
+              "Intermediário"
+            ],
+            [
+              "Vidro laminado duplo com câmara de 12 mm",
+              "42 a 45 dB",
+              "Isolamento Acústico Europeu"
+            ],
+            [
+              "Vidro laminado acústico duplo com câmara de 16 mm",
+              "46 a 50 dB",
+              "Isolamento Acústico Europeu superior"
+            ]
           ]
         },
         "respostas_rapidas": [
-          {"q": "Como o índice Rw é medido?", "a": "Em laboratório, pela ISO 10140-2, em 16 bandas de 1/3 de oitava entre 100 Hz e 3.150 Hz. A EN ISO 717-1 converte a curva em número único, deslocando a curva de referência até a soma dos desvios desfavoráveis ficar em no máximo 32 dB."},
-          {"q": "O que significam os termos C e Ctr?", "a": "São correções espectrais da EN ISO 717-1: C ajusta o índice para ruídos de média e alta frequência, como conversa; Ctr ajusta para tráfego urbano e música com graves. Uma esquadria Rw (C; Ctr) = 45 (−1; −4) dB isola 41 dB contra tráfego."},
-          {"q": "Quantos decibéis de diferença o ouvido percebe?", "a": "3 dB é a menor diferença perceptível, 5 dB é claramente perceptível e 10 dB soa como metade do volume."}
+          {
+            "q": "Como o índice Rw é medido?",
+            "a": "Em laboratório, pela ISO 10140-2, em 16 bandas de 1/3 de oitava entre 100 Hz e 3.150 Hz. A EN ISO 717-1 converte a curva em número único, deslocando a curva de referência até a soma dos desvios desfavoráveis ficar em no máximo 32 dB."
+          },
+          {
+            "q": "O que significam os termos C e Ctr?",
+            "a": "São correções espectrais da EN ISO 717-1: C ajusta o índice para ruídos de média e alta frequência, como conversa; Ctr ajusta para tráfego urbano e música com graves. Uma esquadria Rw (C; Ctr) = 45 (−1; −4) dB isola 41 dB contra tráfego."
+          },
+          {
+            "q": "Quantos decibéis de diferença o ouvido percebe?",
+            "a": "3 dB é a menor diferença perceptível, 5 dB é claramente perceptível e 10 dB soa como metade do volume."
+          }
         ]
       },
       {
@@ -289,8 +489,14 @@
           "Um laudo de compra confiável deve incluir as 2 medições: o Rw do fabricante da esquadria e a medição em campo da fachada. A medição em campo revela falhas de instalação, como frestas e caixas de persiana sem vedação."
         ],
         "respostas_rapidas": [
-          {"q": "Como é feita a medição acústica em campo da fachada?", "a": "Pela ISO 16283-3: um alto-falante emite ruído a 2 m da fachada e medidores registram o nível dentro e fora do ambiente. O resultado, corrigido pelo tempo de reverberação, é o índice D2m,nT,w."},
-          {"q": "Qual o nível de ruído de referência para dormitórios?", "a": "35 dB(A), valor de referência da ABNT NBR 10152:2017 para dormitórios."}
+          {
+            "q": "Como é feita a medição acústica em campo da fachada?",
+            "a": "Pela ISO 16283-3: um alto-falante emite ruído a 2 m da fachada e medidores registram o nível dentro e fora do ambiente. O resultado, corrigido pelo tempo de reverberação, é o índice D2m,nT,w."
+          },
+          {
+            "q": "Qual o nível de ruído de referência para dormitórios?",
+            "a": "35 dB(A), valor de referência da ABNT NBR 10152:2017 para dormitórios."
+          }
         ]
       },
       {
@@ -302,7 +508,10 @@
           "A eclusa completa a portaria blindada: 2 portões intertravados que nunca abrem ao mesmo tempo, para pedestres e para veículos. A <a href=\"/imoveis/casa-guararapes-condominio-720m2/\">casa de 720 m² no Guararapes</a> fica em condomínio com portaria blindada e eclusa de veículos."
         ],
         "respostas_rapidas": [
-          {"q": "Como a blindagem nível III-A é testada?", "a": "Pela ABNT NBR 15000, com disparos de munição 9 mm e .44 Magnum em velocidade controlada contra amostras do material. O painel é aprovado se nenhum projétil ou fragmento atravessar a amostra."}
+          {
+            "q": "Como a blindagem nível III-A é testada?",
+            "a": "Pela ABNT NBR 15000, com disparos de munição 9 mm e .44 Magnum em velocidade controlada contra amostras do material. O painel é aprovado se nenhum projétil ou fragmento atravessar a amostra."
+          }
         ]
       },
       {
@@ -315,8 +524,14 @@
         ],
         "tabela_dinamica": "tecnico",
         "respostas_rapidas": [
-          {"q": "Como se dimensiona a potência de um gerador total?", "a": "Divide-se a demanda máxima medida, em kW, pelo fator de potência (em geral 0,8) e soma-se margem de 20% a 25%. Uma demanda de 100 kW exige cerca de 150 kVA a 156 kVA."},
-          {"q": "Qual o tempo máximo aceitável de transferência do QTA?", "a": "Até 15 segundos. Circuitos críticos com nobreak (UPS) não sofrem nenhuma interrupção durante a transferência."}
+          {
+            "q": "Como se dimensiona a potência de um gerador total?",
+            "a": "Divide-se a demanda máxima medida, em kW, pelo fator de potência (em geral 0,8) e soma-se margem de 20% a 25%. Uma demanda de 100 kW exige cerca de 150 kVA a 156 kVA."
+          },
+          {
+            "q": "Qual o tempo máximo aceitável de transferência do QTA?",
+            "a": "Até 15 segundos. Circuitos críticos com nobreak (UPS) não sofrem nenhuma interrupção durante a transferência."
+          }
         ]
       },
       {
@@ -329,9 +544,251 @@
       }
     ],
     "faq": [
-      {"q": "Imóvel a quantos metros do mar sofre com maresia em Fortaleza?", "a": "A agressividade é maior nas primeiras quadras da orla e diminui com a distância e com as barreiras de edifícios. A Alto Padrão Imóveis exige especificação para ambiente marinho em imóveis a menos de 500 m do mar."},
-      {"q": "O gerador total atende o ar-condicionado?", "a": "Sim. Por definição, o gerador total atende 100% da carga elétrica, incluindo climatização, elevadores e bombas."},
-      {"q": "Isolamento acústico europeu é obrigatório por lei?", "a": "Não. A norma ABNT NBR 15575 define o desempenho acústico mínimo de fachadas no Brasil; o isolamento acústico europeu é uma especificação superior, adotada por escolha do incorporador ou do proprietário."}
+      {
+        "q": "Imóvel a quantos metros do mar sofre com maresia em Fortaleza?",
+        "a": "A agressividade é maior nas primeiras quadras da orla e diminui com a distância e com as barreiras de edifícios. A Alto Padrão Imóveis exige especificação para ambiente marinho em imóveis a menos de 500 m do mar."
+      },
+      {
+        "q": "O gerador total atende o ar-condicionado?",
+        "a": "Sim. Por definição, o gerador total atende 100% da carga elétrica, incluindo climatização, elevadores e bombas."
+      },
+      {
+        "q": "Isolamento acústico europeu é obrigatório por lei?",
+        "a": "Não. A norma ABNT NBR 15575 define o desempenho acústico mínimo de fachadas no Brasil; o isolamento acústico europeu é uma especificação superior, adotada por escolha do incorporador ou do proprietário."
+      }
+    ]
+  },
+  {
+    "slug": "preco-m2-beira-mar",
+    "pilar": "milha-de-ouro-fortaleza",
+    "url_sob_pilar": true,
+    "titulo": "Preço do m² na Beira Mar de Fortaleza em 2026",
+    "titulo_seo": "Preço do m² na Beira Mar em Fortaleza | Alto Padrão Imóveis",
+    "descricao": "Quanto custa o m² na Avenida Beira Mar de Fortaleza: {m2:beira_mar} em {ref:beira_mar}, e a comparação com Meireles, Mucuripe e a média da cidade.",
+    "categoria": "Milha de ouro",
+    "autor": "helena-duarte",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 4,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "O metro quadrado na Avenida Beira Mar, em Fortaleza, foi de {m2:beira_mar} em {ref:beira_mar}, o maior valor do ranking do Sinduscon-CE, segundo {veiculo:op}. Em {ref:meireles}, o Mucuripe marcou {m2:mucuripe} e o Meireles {m2:meireles}, contra {m2:fortaleza} da média de Fortaleza.",
+    "aviso": "[PREENCHER: série mensal do m² da Beira Mar nos boletins anteriores do Sinduscon-CE (meses antes de julho de 2026), com fonte e data de cada valor.]",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA14",
+        "tipo": "Análise de mercado",
+        "apresentador": "helena-duarte",
+        "titulo": "Preço do m² na Beira Mar de Fortaleza: como ler os números do Sinduscon-CE",
+        "descricao": "[PREENCHER: vídeo gravado explicando a tabela do m² por recorte e mês de referência.]",
+        "duracao": "PT5M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "valores",
+        "h2": "Quanto custa o m² na Avenida Beira Mar e nos bairros vizinhos?",
+        "paragrafos": [
+          "Os valores abaixo vêm do Sinduscon-CE e foram divulgados por {veiculo:op} em {dataf:op}. A Avenida Beira Mar aparece com {m2:beira_mar} em {ref:beira_mar}, {acima:beira_mar:fortaleza} acima da média de Fortaleza ({m2:fortaleza} em {ref:fortaleza}).",
+          "Os recortes não têm o mesmo mês de referência: a Beira Mar é de {ref:beira_mar} e os bairros são de {ref:meireles}. A comparação entre as linhas deve considerar a data de cada uma."
+        ],
+        "tabela": {
+          "caption": "Preço médio do m² privativo por recorte, com o mês de referência (Sinduscon-CE)",
+          "cabecalho": [
+            "Recorte",
+            "Preço do m²",
+            "Mês de referência",
+            "Acima da média de Fortaleza"
+          ],
+          "linhas": [
+            [
+              "Avenida Beira Mar",
+              "{m2:beira_mar}",
+              "{ref:beira_mar}",
+              "{acima:beira_mar:fortaleza}"
+            ],
+            [
+              "Praia de Iracema",
+              "{m2:praia_iracema}",
+              "{ref:praia_iracema}",
+              "{acima:praia_iracema:fortaleza}"
+            ],
+            [
+              "Mucuripe",
+              "{m2:mucuripe}",
+              "{ref:mucuripe}",
+              "{acima:mucuripe:fortaleza}"
+            ],
+            [
+              "Meireles",
+              "{m2:meireles}",
+              "{ref:meireles}",
+              "{acima:meireles:fortaleza}"
+            ],
+            [
+              "Média de Fortaleza",
+              "{m2:fortaleza}",
+              "{ref:fortaleza}",
+              "—"
+            ]
+          ]
+        },
+        "respostas_rapidas": [
+          {
+            "q": "Qual o preço do m² na Avenida Beira Mar em Fortaleza?",
+            "a": "{m2:beira_mar} em {ref:beira_mar}, segundo o Sinduscon-CE, divulgado por {veiculo:op}."
+          }
+        ]
+      },
+      {
+        "id": "milha-25-mil",
+        "h2": "A milha de ouro chega a R$ 25 mil por m²?",
+        "paragrafos": [
+          "A coluna do {veiculo:dn}, de {dataf:dn}, escreve que o m² no eixo Meireles/Beira Mar se aproxima de {m2:milha}. Esse recorte não aparece no levantamento de agosto do Sinduscon-CE: é um valor aproximado de reportagem, não de boletim.",
+          "O valor da coluna é uma referência de mercado, não um preço de tabela. O recorte, as ruas e o mapa da faixa estão no pilar <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza: Avenida Beira Mar entre Meireles e Mucuripe</a>."
+        ]
+      },
+      {
+        "id": "imovel-300m2",
+        "h2": "Quanto custa um imóvel de 300 m² na Beira Mar?",
+        "paragrafos": [
+          "Multiplicando a área privativa pelo valor médio do m² em {ref:beira_mar}, um apartamento de 300 m² teria referência de {total:beira_mar:300} na Avenida Beira Mar. É uma ordem de grandeza, não uma avaliação: andar, vista, idade do edifício e acabamento mudam o valor.",
+          "O mesmo cálculo com o m² do Meireles ({m2:meireles}) resulta em {total:meireles:300}, e com o do Mucuripe ({m2:mucuripe}), em {total:mucuripe:300}."
+        ]
+      },
+      {
+        "id": "como-usar",
+        "h2": "Como usar o preço do m² ao avaliar um imóvel?",
+        "paragrafos": [
+          "Compare o preço por m² do imóvel com o valor do recorte e confira a data da referência: valores de meses diferentes não são diretamente comparáveis. Os imóveis da carteira estão em <a href=\"/imoveis/\">imóveis de altíssimo padrão à venda em Fortaleza</a>. Os dois bairros da faixa têm página própria: <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>.",
+          "Para entender prazo de venda por bairro, leia <a href=\"/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/\">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>. Para comparar os dois bairros da faixa, veja <a href=\"/guias/meireles-ou-mucuripe-investir/\">Meireles ou Mucuripe: onde investir em imóvel de alto padrão em Fortaleza</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qual bairro de Fortaleza tem o m² mais caro?",
+        "a": "Em {ref:praia_iracema}, a Praia de Iracema assumiu o topo do ranking de bairros, com {m2:praia_iracema} por m², segundo o Sinduscon-CE divulgado por {veiculo:op}. O Mucuripe ({m2:mucuripe}) e o Meireles ({m2:meireles}) compõem, com a Beira Mar, a milha de ouro."
+      },
+      {
+        "q": "O m² da Beira Mar é maior que o do Meireles?",
+        "a": "Sim. Em {ref:beira_mar}, a Avenida Beira Mar marcou {m2:beira_mar} e o Meireles {m2ant:meireles}, na mesma fonte e no mesmo mês: a Beira Mar ficou {acimaant:beira_mar:meireles} acima."
+      },
+      {
+        "q": "O preço do m² da Beira Mar é um valor oficial?",
+        "a": "Não. É um levantamento de mercado do Sinduscon-CE com a Comissão de Pesquisa de Mercado Imobiliário (Cpes), divulgado pela imprensa, e não uma tabela oficial de preços."
+      }
+    ]
+  },
+  {
+    "slug": "meireles-ou-mucuripe-investir",
+    "pilar": "milha-de-ouro-fortaleza",
+    "titulo": "Meireles ou Mucuripe: onde investir em imóvel de alto padrão em Fortaleza",
+    "titulo_seo": "Meireles ou Mucuripe: onde investir | Alto Padrão Imóveis",
+    "descricao": "Meireles ou Mucuripe: compare o m² ({m2:meireles} e {m2:mucuripe} em {ref:mucuripe}), a distância para a média de Fortaleza e o que o preço não mostra.",
+    "categoria": "Milha de ouro",
+    "autor": "helena-duarte",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 4,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "Meireles e Mucuripe têm preços do m² quase iguais: {m2:meireles} e {m2:mucuripe} em {ref:mucuripe}, segundo o Sinduscon-CE. A diferença é de {dif:mucuripe:meireles}, ou {acima:mucuripe:meireles}. Os dois ficam {acima:meireles:fortaleza} e {acima:mucuripe:fortaleza} acima da média de Fortaleza. A escolha depende de critérios que o m² não mostra.",
+    "aviso": "[PREENCHER: tempo médio de venda, desconto de negociação e valorização em 12 meses de Meireles e Mucuripe, com fonte e período. Sem esses dados, o guia compara apenas o preço do m².]",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA15",
+        "tipo": "Análise de mercado",
+        "apresentador": "helena-duarte",
+        "titulo": "Meireles ou Mucuripe: o que comparar além do preço do m²",
+        "descricao": "[PREENCHER: vídeo gravado comparando os dois bairros com dados de liquidez e valorização.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "preco",
+        "h2": "Qual bairro tem o m² mais caro, Meireles ou Mucuripe?",
+        "paragrafos": [
+          "Em {ref:mucuripe}, o m² privativo médio foi de {m2:mucuripe} no Mucuripe e de {m2:meireles} no Meireles, segundo o Sinduscon-CE, divulgado por {veiculo:op}. O Mucuripe ficou {dif:mucuripe:meireles} acima, uma diferença de {acima:mucuripe:meireles}.",
+          "Os dois bairros ficam bem acima da média de Fortaleza, de {m2:fortaleza}: o Meireles {acima:meireles:fortaleza} e o Mucuripe {acima:mucuripe:fortaleza}."
+        ],
+        "tabela": {
+          "caption": "Meireles e Mucuripe: preço do m² e distância para a média de Fortaleza (Sinduscon-CE)",
+          "cabecalho": [
+            "Bairro",
+            "Preço do m²",
+            "Mês de referência",
+            "Acima da média de Fortaleza"
+          ],
+          "linhas": [
+            [
+              "Mucuripe",
+              "{m2:mucuripe}",
+              "{ref:mucuripe}",
+              "{acima:mucuripe:fortaleza}"
+            ],
+            [
+              "Meireles",
+              "{m2:meireles}",
+              "{ref:meireles}",
+              "{acima:meireles:fortaleza}"
+            ],
+            [
+              "Média de Fortaleza",
+              "{m2:fortaleza}",
+              "{ref:fortaleza}",
+              "—"
+            ]
+          ]
+        }
+      },
+      {
+        "id": "o-que-o-m2-nao-mostra",
+        "h2": "O que o preço do m² não mostra?",
+        "paragrafos": [
+          "O preço do m² é uma média: não separa vista mar de vista lateral, andar, idade do edifício nem acabamento. Para investir, duas informações pesam além do preço: o prazo para vender e a variação do valor ao longo do tempo.",
+          "[PREENCHER: tempo médio de venda e valorização em 12 meses do Meireles e do Mucuripe, com fonte e período.]",
+          "Enquanto esses dados não estão publicados com fonte, o guia <a href=\"/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/\">liquidez de imóveis de alto padrão por bairro em Fortaleza</a> traz os indicadores da base interna da Alto Padrão Imóveis, que usam metodologia própria."
+        ]
+      },
+      {
+        "id": "como-decidir",
+        "h2": "Como decidir entre Meireles e Mucuripe?",
+        "paragrafos": [
+          "Compare o mesmo tipo de imóvel nos dois bairros: a mesma metragem, o mesmo número de vagas e a mesma posição em relação ao mar. Confira o preço por m² do imóvel com a data do valor de referência.",
+          "Verifique os custos fixos mensais, como condomínio e IPTU, e as especificações técnicas: proteção contra maresia, isolamento acústico, portaria blindada e gerador, descritos em <a href=\"/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/\">maresia, isolamento acústico, portaria blindada e gerador em imóveis de luxo em Fortaleza</a>."
+        ]
+      },
+      {
+        "id": "onde-ver-imoveis",
+        "h2": "Onde ver imóveis no Meireles e no Mucuripe?",
+        "paragrafos": [
+          "As páginas <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a> reúnem os imóveis da carteira em cada bairro. O mapa e as ruas da faixa estão no pilar <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza</a>, e o valor do m² na avenida está em <a href=\"/milha-de-ouro-fortaleza/preco-m2-beira-mar/\">preço do m² na Beira Mar de Fortaleza em 2026</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Meireles ou Mucuripe: qual é mais caro por m²?",
+        "a": "O Mucuripe, por {dif:mucuripe:meireles}, ou {acima:mucuripe:meireles}: {m2:mucuripe} contra {m2:meireles} em {ref:mucuripe}, segundo o Sinduscon-CE."
+      },
+      {
+        "q": "Meireles e Mucuripe fazem parte da milha de ouro?",
+        "a": "Sim. A milha de ouro de Fortaleza é a faixa da Avenida Beira Mar entre o Meireles e o Mucuripe."
+      },
+      {
+        "q": "O preço do m² é suficiente para decidir onde comprar?",
+        "a": "Não. O m² é uma média por bairro: vista, andar, idade do edifício, custos mensais e prazo de venda mudam o resultado. Compare imóveis equivalentes nos dois bairros."
+      }
     ]
   }
 ]
