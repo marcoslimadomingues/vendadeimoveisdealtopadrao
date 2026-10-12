@@ -115,6 +115,13 @@ jobs:
           API: https://api.github.com/repos/${{ github.repository }}/pages
         run: |
           h=(-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json")
+          # se a origem já é "GitHub Actions" (ex.: você trocou em Settings > Pages), segue direto
+          atual=$(curl -sS "${h[@]}" "$API" | jq -r '.build_type // empty' || true)
+          if [ "$atual" = "workflow" ]; then
+            echo "A origem do Pages já é GitHub Actions."
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           # 204 = atualizado; 404 = Pages ainda não existe (cria); 409/422 costumam indicar que já está assim
           code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' -X PUT "${h[@]}" "$API" -d '{"build_type":"workflow"}' || echo 000)
           if [ "$code" = "404" ]; then
@@ -126,7 +133,7 @@ jobs:
             *)
               echo "ok=false" >> "$GITHUB_OUTPUT"
               cat /tmp/pages.json; echo
-              echo "::error::Não consegui trocar a origem do Pages (HTTP $code). Faça uma vez: Settings > Pages > Build and deployment > Source = GitHub Actions."
+              echo "::error::O token do workflow não pode alterar o Pages (HTTP $code). Faça uma vez em https://github.com/${{ github.repository }}/settings/pages : Build and deployment > Source = GitHub Actions. Depois, Actions > este run > Re-run failed jobs."
               exit 1 ;;
           esac
 
