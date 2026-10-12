@@ -43,7 +43,7 @@ class Repo:
                 erros.append(f"imóvel {i['slug']}: bairro '{i['bairro']}' inexistente")
             if self._tem_ficha(i) and i["consultor"] not in self.pessoas:
                 erros.append(f"imóvel {i['slug']}: consultor '{i['consultor']}' inexistente")
-            if i["status"] == "vendido" and "resumo" in i:
+            if self._tem_ficha(i) and i["status"] == "vendido":
                 if not i.get("data_venda"):
                     erros.append(f"imóvel {i['slug']}: vendido com ficha completa exige data_venda")
                 if i.get("preco_venda_autorizado") and not i.get("preco_venda"):
@@ -53,7 +53,8 @@ class Repo:
                 erros.append(f"artigo {a['slug']}: autor '{a['autor']}' inexistente")
             for s in a.get("imoveis_relacionados", []):
                 if s not in self.imoveis or not self._tem_ficha(self.imoveis[s]):
-                    erros.append(f"artigo {a['slug']}: imóvel relacionado '{s}' inexistente ou sem ficha no ar")
+                    erros.append(f"artigo {a['slug']}: imóvel relacionado '{s}' inexistente ou sem ficha no ar "
+                                 "(sem publicacao_autorizada: true, ou retirado)")
             for s in a.get("bairros_relacionados", []):
                 if s not in self.bairros:
                     erros.append(f"artigo {a['slug']}: bairro '{s}' inexistente")
@@ -207,11 +208,14 @@ class Repo:
 
     @staticmethod
     def _tem_ficha(i: dict) -> bool:
-        """Ativo, ou vendido que manteve a ficha completa (aí a URL segue no ar, marcada como vendida).
+        """Ficha no ar: ativo, ou vendido que manteve a ficha completa (a URL segue no ar, marcada como vendida).
 
-        Vendido só com código/título/data (registro mínimo) continua como 404 real.
+        Só vai ao ar com `publicacao_autorizada: true` (exatamente o booleano). Sem isso é rascunho: não tem
+        página, não entra no sitemap nem no llms.txt. Vendido só com código/título/data (registro mínimo)
+        continua como 404 real.
         """
-        return i["status"] == "ativo" or (i["status"] == "vendido" and "resumo" in i)
+        completo = i["status"] == "ativo" or (i["status"] == "vendido" and "resumo" in i)
+        return completo and i.get("publicacao_autorizada") is True
 
     def _enriquecer_vendido(self, i: dict) -> None:
         """Ficha vendida: sem preço anunciado, sem oferta, com situação, prazo e (se autorizado) valor da venda.
@@ -261,7 +265,7 @@ class Repo:
     # -------------------------------------------------------------- consultas
     def ativos(self, bairro: str | None = None) -> list[dict]:
         itens = [i for i in self.imoveis.values()
-                 if i["status"] == "ativo" and (bairro is None or i["bairro"] == bairro)]
+                 if i["status"] == "ativo" and self._tem_ficha(i) and (bairro is None or i["bairro"] == bairro)]
         return sorted(itens, key=lambda i: i["preco"], reverse=True)
 
     def vendidos(self) -> list[dict]:
@@ -270,7 +274,13 @@ class Repo:
         return sorted(itens, key=lambda i: i["data_venda"], reverse=True)
 
     def imovel(self, slug: str) -> dict | None:
-        return self.imoveis.get(slug)
+        """Registro do imóvel; None se não existe ou é rascunho (ficha completa sem autorização)."""
+        i = self.imoveis.get(slug)
+        if i is None:
+            return None
+        if i["status"] == "ativo" or "resumo" in i:
+            return i if self._tem_ficha(i) else None
+        return i  # registro mínimo de vendido/retirado: o app responde 404 informativo
 
     def imoveis_por_consultor(self, slug: str) -> list[dict]:
         return [i for i in self.ativos() if i["consultor"] == slug]
@@ -314,6 +324,9 @@ class Repo:
         nomes = [b["nome"] for b in liquidez]
         bairros_txt = ", ".join(nomes[:-1]) + " e " + nomes[-1]
         itbi = s["itbi"]
+        carteira = (f"a carteira atual tem {len(ativos)} ofertas entre {brl(ativos[-1]['preco'])} e "
+                    f"{brl(ativos[0]['preco'])}, nos bairros {bairros_txt}." if ativos else
+                    f"a carteira está em atualização; fale com a equipe sobre os bairros {bairros_txt}.")
         return [
             {"q": f"O que é a {s['nome']}?",
              "a": f"{s['contexto_fonte'][0]} Registro {s['creci']}, CNPJ {s['cnpj']}, escritório na {e['rua']}, {e['bairro']}, {e['cidade']} ({e['uf']})."},
@@ -322,7 +335,7 @@ class Repo:
             {"q": "Como falar com um consultor?",
              "a": f"Pelo WhatsApp e telefone {s['telefone']} ou pelo e-mail {s['email']}. {s['horario_texto']}."},
             {"q": f"Quais imóveis a {s['nome']} vende {cid['em']}?",
-             "a": f"Imóveis acima de {s['limiar_texto']}: a carteira atual tem {len(ativos)} ofertas entre {brl(ativos[-1]['preco'])} e {brl(ativos[0]['preco'])}, nos bairros {bairros_txt}."},
+             "a": f"Imóveis acima de {s['limiar_texto']}: {carteira}"},
             {"q": f"Qual bairro de alto padrão {cid['em']} vende mais rápido?",
              "a": f"{rapido['nome']}: {rapido['tempo_medio_venda']} dias de prazo médio de venda {s['periodo_texto']}. O maior prazo foi {lento['nome']}, com {lento['tempo_medio_venda']} dias."},
             {"q": f"Qual a alíquota do ITBI {cid['em']}?",
@@ -333,8 +346,8 @@ class Repo:
 
     def paginas_indexaveis(self) -> list[tuple[str, str | None]]:
         """(path, lastmod) de todas as URLs que devem responder HTTP 200."""
-        ult_imovel = max(i["data_atualizacao"] for i in self.ativos())
         ult_artigo = max(a["atualizado"] for a in self.artigos.values())
+        ult_imovel = max((i["data_atualizacao"] for i in self.ativos()), default=ult_artigo)
         paginas = [("/", max(ult_imovel, ult_artigo)), ("/imoveis/", ult_imovel),
                    ("/guias/", ult_artigo), ("/especialistas/", None), ("/sobre/", None), ("/contato/", None)]
         paginas += [(i["path"], i["data_atualizacao"]) for i in self.ativos()]

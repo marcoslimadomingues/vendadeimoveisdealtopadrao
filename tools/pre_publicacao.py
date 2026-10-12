@@ -11,6 +11,7 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -34,6 +35,9 @@ VERIFICACOES = [
      "o endereço entra no JSON-LD e no rodapé"),
     ("Imagens placeholder em uso", "data/*.json", r"/static/img/(?:imovel|artigo|pessoa)-placeholder\.svg",
      "o desenho aparece no lugar da foto do imóvel, da pessoa e na prévia ao compartilhar"),
+    ("Imóveis ilustrativos na carteira (marcados \"ilustrativo\": true)", "data/imoveis.json",
+     r"\"ilustrativo\": true",
+     "imóvel de demonstração com preço publicado como se fosse oferta real; remova o registro ao entrar o imóvel real"),
     ("Aviso de dados ilustrativos no site.json", "data/site.json", r"DADOS ILUSTRATIVOS",
      "marcador de que o conteúdo ainda é de demonstração"),
     ("og:image em SVG (WhatsApp, Facebook e LinkedIn não exibem)", "templates/base.html", r"og-default\.svg",
@@ -74,6 +78,14 @@ def main() -> int:
                 print(f"    - {arq}: {n}")
         else:
             print(f"✓ {descricao}")
+
+    # Informativo: rascunhos ficam fora do site e não contam como pendência.
+    imoveis = json.loads((ROOT / "data" / "imoveis.json").read_text(encoding="utf-8"))
+    rascunhos = [i["slug"] for i in imoveis
+                 if (i["status"] == "ativo" or "resumo" in i) and i.get("publicacao_autorizada") is not True]
+    print(f"\n## Imóveis em rascunho (fora do site): {len(rascunhos)}")
+    for slug in rascunhos:
+        print(f"  - {slug}: sem \"publicacao_autorizada\": true")
 
     print("\n## Revisão manual (não detectável por máquina)")
     for item in MANUAIS:

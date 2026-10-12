@@ -2,6 +2,8 @@
   {
     "slug": "cobertura-duplex-mucuripe-480m2",
     "status": "ativo",
+    "publicacao_autorizada": true,
+    "ilustrativo": true,
     "codigo": "AP-2031",
     "tipo": "Cobertura duplex",
     "schema_type": "Apartment",
@@ -89,6 +91,8 @@
   {
     "slug": "apartamento-meireles-beira-mar-320m2",
     "status": "ativo",
+    "publicacao_autorizada": true,
+    "ilustrativo": true,
     "codigo": "AP-2044",
     "tipo": "Apartamento",
     "schema_type": "Apartment",
@@ -169,6 +173,8 @@
   {
     "slug": "casa-guararapes-condominio-720m2",
     "status": "ativo",
+    "publicacao_autorizada": true,
+    "ilustrativo": true,
     "codigo": "AP-2052",
     "tipo": "Casa em condomínio",
     "schema_type": "SingleFamilyResidence",
@@ -248,6 +254,8 @@
   {
     "slug": "apartamento-aldeota-260m2",
     "status": "ativo",
+    "publicacao_autorizada": true,
+    "ilustrativo": true,
     "codigo": "AP-2060",
     "tipo": "Apartamento",
     "schema_type": "Apartment",

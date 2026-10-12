@@ -39,7 +39,7 @@
   {% if imoveis %}
   <div class="grade">{% for i in imoveis %}{{ m.card_imovel(i) }}{% endfor %}</div>
   {% else %}
-  <p>A {{ site.nome }} não tem imóveis ativos {{ b.em }} nesta data. Veja os <a href="/imoveis/">{{ repo.ativos()|length }} imóveis à venda em outros bairros</a>.</p>
+  <p>A {{ site.nome }} não tem imóveis ativos {{ b.em }} nesta data. {% if repo.ativos() %}Veja os <a href="/imoveis/">{{ repo.ativos()|length }} imóveis à venda em outros bairros</a>.{% else %}<a href="/contato/">Fale com a equipe</a> para saber das próximas ofertas.{% endif %}</p>
   {% endif %}
 </section>
 

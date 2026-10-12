@@ -3,10 +3,10 @@
 {% block conteudo %}
 <section class="abertura" aria-labelledby="titulo-pagina">
   <h1 id="titulo-pagina">{{ site.entidade_central.nome }}</h1>
-  <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }} A carteira atual reúne {{ imoveis|length }} imóveis entre {{ (imoveis|last).preco|brl }} e {{ (imoveis|first).preco|brl }}. A {{ site.nome }} monitora preço, valorização e liquidez em {{ bairros|length }} bairros: {% for b in bairros %}{{ b.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
+  <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }} {% if imoveis %}A carteira atual reúne {{ imoveis|length }} imóveis entre {{ (imoveis|last).preco|brl }} e {{ (imoveis|first).preco|brl }}.{% else %}A carteira está em atualização: fale com a equipe sobre os imóveis disponíveis.{% endif %} A {{ site.nome }} monitora preço, valorização e liquidez em {{ bairros|length }} bairros: {% for b in bairros %}{{ b.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
   <p>{{ site.intencao_central }}</p>
   <ul class="acoes">
-    <li><a class="botao" href="/imoveis/">Ver os {{ imoveis|length }} imóveis à venda</a></li>
+    <li><a class="botao" href="/imoveis/">{% if imoveis %}Ver os {{ imoveis|length }} imóveis à venda{% else %}Ver imóveis e vendidos recentes{% endif %}</a></li>
     <li><a class="botao botao--sec" href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">Liquidez por bairro 2025–2026</a></li>
     <li><a class="botao botao--sec" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Olá! Vim pelo site da ' ~ site.nome ~ ' e gostaria de falar com um consultor.')|urlencode }}">Falar com um consultor no WhatsApp</a></li>
   </ul>

@@ -31,7 +31,7 @@
     {% for p in s.paragrafos %}<p>{{ p|safe }}</p>{% endfor %}
     {% if s.tabela %}{{ m.tabela(s.tabela) }}{% endif %}
     {% if s.tabela_dinamica == "bairros" %}{{ m.tabela_bairros(repo.bairros_por_liquidez(), "Liquidez de imóveis acima de " ~ site.limiar_texto ~ " por bairro " ~ site.cidade.em ~ " (" ~ site.periodo_curto ~ ")") }}{% endif %}
-    {% if s.tabela_dinamica == "tecnico" %}{{ m.tabela_tecnica(repo.ativos(), "Acústica, blindagem, gerador e maresia dos imóveis da carteira " ~ site.nome) }}{% endif %}
+    {% if s.tabela_dinamica == "tecnico" and repo.ativos() %}{{ m.tabela_tecnica(repo.ativos(), "Acústica, blindagem, gerador e maresia dos imóveis da carteira " ~ site.nome) }}{% endif %}
     {% if s.respostas_rapidas %}{{ m.respostas_rapidas(s.respostas_rapidas) }}{% endif %}
   </section>
   {% endfor %}

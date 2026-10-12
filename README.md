@@ -80,6 +80,11 @@ tests/                  testes de contrato (HTTP, JSON-LD, mobile, publicação,
 
 - **Novo imóvel:** `data/imoveis.json` (`referencia`, `tecnico`, `amenidades` com as 3 obrigatórias).
   Preço/m², custos, ITBI e FAQ são calculados; o teste confere o resumo.
+- **Trava de publicação:** imóvel só vai ao ar com `"publicacao_autorizada": true` (o booleano, não texto).
+  Sem isso é rascunho: sem página, sem sitemap, sem `llms.txt`, e o checklist o lista. Guia que cita rascunho
+  derruba o build com mensagem clara. Não grave nome de imobiliária, proprietário ou contrato nos dados: o
+  repositório é público. Os 4 imóveis de demonstração levam `"ilustrativo": true`; o checklist os acusa até
+  serem removidos.
 - **Imóvel vendido (ficha mantida):** troque `status` para `"vendido"` e acrescente `data_venda`; o resto da
   ficha fica como está. A URL segue em 200, indexável e no sitemap, com selo "Vendido", sem preço anunciado,
   sem `Offer` no JSON-LD, FAQ de situação e alternativas. Opcionais: `dias_no_mercado` e, só com autorização
