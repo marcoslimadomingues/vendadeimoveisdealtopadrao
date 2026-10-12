@@ -58,15 +58,17 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--remoto", required=True, help="pasta remota, ex.: /public_html/altopadrao")
     ap.add_argument("--simular", action="store_true")
+    ap.add_argument("--origem", default=str(LOCAL), help="pasta local a publicar (padrão: build/public_html)")
     args = ap.parse_args()
 
     remoto = "/" + args.remoto.strip("/")
     if not remoto.startswith("/public_html/") or remoto.count("/") < 2:
         raise SystemExit("--remoto deve ser uma subpasta de /public_html/ (ex.: /public_html/altopadrao)")
-    if not (LOCAL / "index.html").exists():
-        raise SystemExit("build/public_html não existe: rode tools/build_cpanel.py antes")
+    origem = Path(args.origem)
+    if not (origem / "index.html").exists():
+        raise SystemExit(f"{origem} não existe ou não tem index.html: rode a build antes")
 
-    locais = {f"{remoto}/{p.relative_to(LOCAL).as_posix()}": p for p in LOCAL.rglob("*") if p.is_file()}
+    locais = {f"{remoto}/{p.relative_to(origem).as_posix()}": p for p in origem.rglob("*") if p.is_file()}
     cfg = credenciais()
     ftp = ftplib.FTP_TLS(cfg["FTP_HOST"], timeout=60)
     ftp.login(cfg["FTP_USER"], cfg["FTP_PASS"])

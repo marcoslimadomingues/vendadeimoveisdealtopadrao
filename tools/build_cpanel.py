@@ -33,7 +33,7 @@ def main() -> None:
     origem = f"https://{url.netloc}{prefixo}"
     os.environ["SITE_URL"] = origem
 
-    from app import CSP, INDEXAVEL
+    from app import CSP, valor_robots
     from tools.export_static import exportar
 
     build = ROOT / "build" / "public_html"
@@ -45,7 +45,7 @@ def main() -> None:
 
     htaccess = (ROOT / "deploy" / "htaccess.template").read_text(encoding="utf-8").format(
         origem=origem, host=url.netloc, host_regex=re.escape(url.netloc), prefixo=prefixo,
-        csp=CSP, robots=INDEXAVEL)
+        csp=CSP, robots=valor_robots())
     (build / ".htaccess").write_text(htaccess, encoding="utf-8", newline="\n")
 
     saida = Path(args.saida)

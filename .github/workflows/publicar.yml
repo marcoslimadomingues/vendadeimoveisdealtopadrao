@@ -1,7 +1,16 @@
 name: Testar, compilar e publicar
 
-# A cada push na main: roda os testes, gera o site estático e, se os segredos FTP existirem,
-# publica na hospedagem por FTPS. Sem os segredos, só testa e compila (nada é publicado).
+# A cada push na main: testa, confere dados provisórios, gera o site estático e, se os segredos FTP
+# e a variável FTP_REMOTO existirem, publica na hospedagem por FTPS.
+#
+# Segredos (Settings > Secrets and variables > Actions > Secrets):
+#   FTP_HOST, FTP_USER, FTP_PASS
+# Variáveis (… > Variables):
+#   FTP_REMOTO          pasta do domínio na hospedagem, ex.: /public_html/vendadeimoveisdealtopadrao.com.br
+#   SITE_URL            opcional; padrão https://vendadeimoveisdealtopadrao.com.br
+#   EXIGIR_DADOS_REAIS  "true": bloqueia a publicação enquanto houver dado provisório
+#   FORCAR_INDEXACAO    "true": libera indexação mesmo com dado provisório (padrão: noindex automático)
+#   REDIRECIONAR_ANTIGO "true": publica o 301 do endereço antigo (FTP_REMOTO_ANTIGO) para o domínio novo
 on:
   push:
     branches: [main]
@@ -17,6 +26,8 @@ concurrency:
 jobs:
   site:
     runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://vendadeimoveisdealtopadrao.com.br' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -31,27 +42,57 @@ jobs:
       - name: Testes
         run: python -m pytest -q
 
-      # Variáveis do repositório (Settings > Secrets and variables > Actions > Variables):
-      #   SITE_URL            domínio final, ex.: https://www.seudominio.com.br (padrão: subpasta atual)
-      #   FTP_REMOTO          pasta de destino, ex.: /public_html/seudominio.com.br
-      #   EXIGIR_DADOS_REAIS  "true" bloqueia a publicação enquanto houver dado provisório
       - name: Checklist de pré-publicação
-        run: python tools/pre_publicacao.py ${{ vars.EXIGIR_DADOS_REAIS == 'true' && '--estrito' || '' }}
+        id: checklist
+        env:
+          EXIGIR: ${{ vars.EXIGIR_DADOS_REAIS }}
+        run: |
+          pend=0
+          python tools/pre_publicacao.py --estrito || pend=1
+          echo "pendencias=$pend" >> "$GITHUB_OUTPUT"
+          if [ "$pend" = "1" ] && [ "$EXIGIR" = "true" ]; then
+            echo "::error::Há dado provisório e EXIGIR_DADOS_REAIS=true: publicação bloqueada."
+            exit 1
+          fi
 
       - name: Compilar o site estático
         env:
-          SITE_URL: ${{ vars.SITE_URL || 'https://marcoslima.com.br/altopadrao' }}
-        run: python tools/build_cpanel.py --dominio "$SITE_URL"
+          # com dado provisório o site vai ao ar com noindex; FORCAR_INDEXACAO=true libera
+          SITE_NOINDEX: ${{ steps.checklist.outputs.pendencias == '1' && vars.FORCAR_INDEXACAO != 'true' && '1' || '0' }}
+        run: |
+          echo "SITE_URL=$SITE_URL  SITE_NOINDEX=$SITE_NOINDEX"
+          python tools/build_cpanel.py --dominio "$SITE_URL"
 
       - name: Publicar na hospedagem (FTPS)
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASS: ${{ secrets.FTP_PASS }}
-          FTP_REMOTO: ${{ vars.FTP_REMOTO || '/public_html/altopadrao' }}
+          FTP_REMOTO: ${{ vars.FTP_REMOTO }}
         run: |
           if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ]; then
             echo "::notice::Segredos FTP_HOST, FTP_USER e FTP_PASS não configurados: testes e build OK, publicação ignorada."
             exit 0
           fi
+          if [ -z "$FTP_REMOTO" ]; then
+            echo "::notice::Variável FTP_REMOTO não definida: publicação ignorada (não adivinho a pasta do domínio)."
+            exit 0
+          fi
           python tools/publicar_ftps.py --remoto "$FTP_REMOTO"
+
+      - name: Redirecionar o endereço antigo (301)
+        if: ${{ vars.REDIRECIONAR_ANTIGO == 'true' }}
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASS }}
+          FTP_REMOTO: ${{ vars.FTP_REMOTO }}
+          ANTIGO: ${{ vars.FTP_REMOTO_ANTIGO || '/public_html/altopadrao' }}
+        run: |
+          # só redireciona se o site novo foi (ou pode ser) publicado: evita apontar para um domínio vazio
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ] || [ -z "$FTP_REMOTO" ]; then
+            echo "::notice::Sem segredos FTP ou FTP_REMOTO: redirecionamento ignorado."
+            exit 0
+          fi
+          python tools/build_redirecionamento.py --destino "$SITE_URL" --saida build/redirecionamento
+          python tools/publicar_ftps.py --remoto "$ANTIGO" --origem build/redirecionamento

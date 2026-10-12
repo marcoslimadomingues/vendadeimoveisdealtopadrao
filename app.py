@@ -25,6 +25,12 @@ from seo.titulos import aplicar_titulos, rotular_tabelas, titulos_paginas
 
 ROOT = Path(__file__).resolve().parent
 INDEXAVEL = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+NAO_INDEXAVEL = "noindex, nofollow"
+
+
+def valor_robots() -> str:
+    """Diretiva de indexação: SITE_NOINDEX=1 publica o site sem permitir indexação (conteúdo provisório)."""
+    return NAO_INDEXAVEL if os.environ.get("SITE_NOINDEX") == "1" else INDEXAVEL
 CSP = ("default-src 'self'; img-src 'self' https://i.ytimg.com data:; "
        "frame-src https://www.youtube-nocookie.com; style-src 'self'; script-src 'none'; "
        "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'")
@@ -34,6 +40,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
     app = Flask(__name__)
     repo = Repo(data_dir)
     base = os.environ.get("SITE_URL", repo.site["base_url"]).rstrip("/")
+    diretiva_robots = valor_robots()
     # Site publicado em subpasta (ex.: https://dominio.com.br/altopadrao): links root-relative
     # do HTML recebem o prefixo. Rotas internas do Flask continuam sem prefixo.
     prefixo = urlparse(base).path.rstrip("/")
@@ -53,7 +60,8 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
 
     @app.context_processor
     def contexto_global():
-        return {"site": repo.site, "repo": repo, "base": base, "ano": date.today().year, "static_v": static_v}
+        return {"site": repo.site, "repo": repo, "base": base, "ano": date.today().year, "static_v": static_v,
+                "meta_robots": diretiva_robots}
 
     def pagina(template: str, *, path: str, titulo: str, descricao: str, jsonld: str | None,
                crumbs: list[tuple[str, str]] | None = None, status: int = 200, **ctx):
@@ -216,7 +224,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
             resp.headers["Content-Security-Policy"] = CSP
         if resp.status_code == 200 and resp.mimetype == "text/html":
             # Declaração explícita de indexação. O servidor NUNCA emite noindex em página 200.
-            resp.headers["X-Robots-Tag"] = INDEXAVEL
+            resp.headers["X-Robots-Tag"] = diretiva_robots
         if resp.status_code >= 500:
             resp.headers["Cache-Control"] = "no-store"  # CDN não pode cachear erro de origem
         elif resp.status_code == 404:

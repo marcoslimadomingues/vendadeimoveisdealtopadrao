@@ -32,7 +32,7 @@ HEADERS_CDN = """/*
 
 
 def exportar(saida: Path) -> list[str]:
-    from app import CSP, INDEXAVEL, create_app
+    from app import CSP, create_app, valor_robots
 
     app = create_app(bot_log=Path(tempfile.gettempdir()) / "export_bot_log.jsonl")
     client = app.test_client()
@@ -61,7 +61,7 @@ def exportar(saida: Path) -> list[str]:
 
     shutil.copytree(ROOT / "static", saida / "static")
     # _headers: formato aceito por Cloudflare Pages e Netlify.
-    (saida / "_headers").write_text(HEADERS_CDN.format(csp=CSP, robots=INDEXAVEL), encoding="utf-8")
+    (saida / "_headers").write_text(HEADERS_CDN.format(csp=CSP, robots=valor_robots()), encoding="utf-8")
     return gerados
 
 

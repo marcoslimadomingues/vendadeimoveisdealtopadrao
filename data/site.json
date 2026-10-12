@@ -1,6 +1,6 @@
 {
   "_aviso": "DADOS ILUSTRATIVOS. Substitua empresa, CRECI, CNPJ, métricas, preços, perfis sociais e IDs de vídeo por dados reais e verificáveis antes de publicar. Dados fictícios publicados como reais destroem os sinais de E-E-A-T.",
-  "base_url": "https://www.altopadrao.example",
+  "base_url": "https://vendadeimoveisdealtopadrao.com.br",
   "nome": "Alto Padrão Imóveis",
   "razao_social": "Alto Padrão Negócios Imobiliários Ltda.",
   "descricao": "Imobiliária especializada em imóveis de altíssimo padrão em Fortaleza, com atuação exclusiva em coberturas, apartamentos à beira-mar e casas em condomínio acima de R$ 3 milhões.",
@@ -43,7 +43,10 @@
     "cep": "60165-121",
     "pais": "BR"
   },
-  "geo": {"lat": -3.7253, "lng": -38.4960},
+  "geo": {
+    "lat": -3.7253,
+    "lng": -38.496
+  },
   "sameAs": [
     "https://www.linkedin.com/company/exemplo-alto-padrao",
     "https://www.youtube.com/@exemplo-alto-padrao",
@@ -61,11 +64,26 @@
     "A consultoria jurídica da Alto Padrão Imóveis estrutura compras por holding familiar e planejamento sucessório sob as regras do ITCD do Ceará."
   ],
   "metricas": [
-    {"rotulo": "Ano de fundação", "valor": "2011"},
-    {"rotulo": "Transações concluídas", "valor": "284"},
-    {"rotulo": "VGV acumulado", "valor": "R$ 1,6 bilhão"},
-    {"rotulo": "Ticket médio por transação", "valor": "R$ 5,6 milhões"},
-    {"rotulo": "Prazo médio de venda da carteira exclusiva", "valor": "104 dias"}
+    {
+      "rotulo": "Ano de fundação",
+      "valor": "2011"
+    },
+    {
+      "rotulo": "Transações concluídas",
+      "valor": "284"
+    },
+    {
+      "rotulo": "VGV acumulado",
+      "valor": "R$ 1,6 bilhão"
+    },
+    {
+      "rotulo": "Ticket médio por transação",
+      "valor": "R$ 5,6 milhões"
+    },
+    {
+      "rotulo": "Prazo médio de venda da carteira exclusiva",
+      "valor": "104 dias"
+    }
   ],
   "fonte_dados": "Base interna Alto Padrão Imóveis: ofertas e transações de imóveis acima de R$ 3 milhões em Fortaleza, de julho de 2025 a junho de 2026.",
   "periodo_dados": "2025-07/2026-06",

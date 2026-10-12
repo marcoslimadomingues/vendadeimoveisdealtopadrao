@@ -2,15 +2,15 @@
 
 1. Conecta por FTPS (TLS) e baixa os arquivos mensais que o cPanel mantém em ~/logs
    (<dominio>-ssl_log-<Mês>-<Ano>.gz e <dominio>-<Mês>-<Ano>.gz), atualizados 1x por dia.
-2. Extrai só as requisições ao diretório do site (padrão: /altopadrao/), sem duplicar linhas.
-3. Acumula em logs/servidor/altopadrao.log (formato combined) — histórico local permanente,
+2. Extrai só as requisições ao diretório do site (padrão: o domínio inteiro), sem duplicar linhas.
+3. Acumula em logs/servidor/raiz.log (formato combined) — histórico local permanente,
    mesmo depois que o cPanel descarta arquivos antigos.
 4. Gera o relatório de varredura (tools/bot_report.py) em logs/servidor/relatorio-AAAA-MM-DD.md.
 
 Credenciais (nunca no código): variáveis FTP_HOST, FTP_USER, FTP_PASS ou arquivo .ftp.env na
 raiz do projeto (ignorado pelo git), uma variável por linha: FTP_PASS=...
 
-Uso:  python tools/coletar_logs.py [--dominio marcoslima.com.br] [--prefixo /altopadrao] [--meses 2]
+Uso:  python tools/coletar_logs.py [--dominio vendadeimoveisdealtopadrao.com.br] [--prefixo /subpasta] [--meses 2]
 Agendamento diário no Windows: deploy/agendar_coleta_logs.cmd
 """
 from __future__ import annotations
@@ -81,8 +81,8 @@ def baixar(cfg: dict, dominio: str, meses: list[str]) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--dominio", default="marcoslima.com.br")
-    parser.add_argument("--prefixo", default="/altopadrao")
+    parser.add_argument("--dominio", default="vendadeimoveisdealtopadrao.com.br")
+    parser.add_argument("--prefixo", default="", help="subpasta publicada; vazio = raiz do domínio")
     parser.add_argument("--meses", type=int, default=2, help="meses de arquivo a baixar (padrão: atual e anterior)")
     parser.add_argument("--dias", type=int, default=30, help="janela do relatório")
     args = parser.parse_args()

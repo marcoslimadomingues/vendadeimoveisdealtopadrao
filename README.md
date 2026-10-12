@@ -31,18 +31,30 @@ O repositório é a fonte da verdade: https://github.com/marcoslimadomingues/ven
 
 Nada de credencial vai para o repositório: `.ftp.env` e `logs/` estão no `.gitignore`.
 
-## Associar um domínio
+## Domínio: vendadeimoveisdealtopadrao.com.br
 
-1. No cPanel, adicione o domínio (domínio adicional): a raiz de documentos costuma ser `/public_html/<dominio>`.
-2. No GitHub, em *Settings > Secrets and variables > Actions > Variables*, crie:
-   `SITE_URL` (ex.: `https://www.seudominio.com.br`), `FTP_REMOTO` (a raiz de documentos do passo 1;
-   o script recusa `/public_html` puro, para nunca apagar outros sites) e, quando o conteúdo for real,
-   `EXIGIR_DADOS_REAIS=true`.
-3. Rode `python tools/pre_publicacao.py`: lista o que ainda é provisório (vídeos, telefone, CNPJ, CRECI,
-   fotos, perfis, og:image). Com `EXIGIR_DADOS_REAIS=true` o workflow não publica enquanto houver pendência.
-4. Depois de publicar: Search Console (propriedade do domínio + `sitemap.xml`), SSL "Full (strict)" no
-   Cloudflare, "Block AI bots" e "Managed robots.txt" desligados, e um 301 de
-   `marcoslima.com.br/altopadrao/` para o domínio novo, para não duplicar conteúdo.
+O site é compilado para a **raiz** do domínio (`data/site.json` → `base_url`; o workflow usa `SITE_URL`).
+
+**Uma vez só, na hospedagem:** adicione o domínio no cPanel (domínio adicional; a raiz de documentos
+costuma ser `/public_html/vendadeimoveisdealtopadrao.com.br`), aponte o DNS (A para o IP da hospedagem e
+CNAME `www`) e ative o SSL. O `.htaccess` gerado força HTTPS e o host sem `www`.
+
+**No GitHub** (Settings > Secrets and variables > Actions):
+
+| Tipo | Nome | Valor |
+|---|---|---|
+| Secret | `FTP_HOST`, `FTP_USER`, `FTP_PASS` | conta FTP (de preferência restrita à pasta do domínio) |
+| Variable | `FTP_REMOTO` | raiz de documentos do domínio, ex.: `/public_html/vendadeimoveisdealtopadrao.com.br` |
+| Variable | `EXIGIR_DADOS_REAIS` | `true` para bloquear a publicação com dado provisório |
+| Variable | `FORCAR_INDEXACAO` | `true` para indexar mesmo com dado provisório (não recomendado) |
+| Variable | `REDIRECIONAR_ANTIGO` | `true`, depois que o domínio novo estiver no ar, publica o 301 de `/public_html/altopadrao` |
+
+**Indexação automática:** `tools/pre_publicacao.py` roda a cada push. Enquanto houver dado provisório
+(vídeos, telefone, CNPJ, CRECI, fotos, perfis, og:image em SVG), o site é compilado com
+`noindex, nofollow` (meta e `X-Robots-Tag`). Quando a lista zera, a próxima publicação já sai indexável.
+
+**Depois de publicar:** Search Console (propriedade de domínio + `sitemap.xml`), Cloudflare com SSL
+"Full (strict)", "Block AI bots" e "Managed robots.txt" desligados.
 
 ## Cidade
 
