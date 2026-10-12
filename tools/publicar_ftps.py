@@ -38,12 +38,39 @@ def credenciais() -> dict[str, str]:
     return cfg
 
 
+# Nunca apagados no destino (SSL automático do cPanel, scripts e erros do servidor).
+PROTEGIDOS = {".well-known", "cgi-bin", "error_log", ".htpasswd"}
+# Se algum destes aparece em "/", a conta NÃO é restrita: "/" seria a casa inteira do usuário.
+RAIZES_DE_CONTA = {"public_html", "mail", "etc", "www", "logs", "ssl", "tmp", ".ssh"}
+
+
+def validar_remoto(valor: str) -> str:
+    """aceita /public_html/<pasta> ou "/" (somente para conta FTP restrita ao diretório do domínio)."""
+    remoto = "/" + valor.strip("/")
+    if any(parte in ("..", ".") for parte in remoto.split("/")):
+        raise SystemExit("--remoto não pode conter '.' ou '..'")
+    if remoto == "/":
+        return "/"
+    if not remoto.startswith("/public_html/") or remoto.count("/") < 2:
+        raise SystemExit("--remoto deve ser uma subpasta de /public_html/ (ex.: /public_html/seudominio.com.br), "
+                         "ou '/' em conta FTP restrita ao diretório do domínio")
+    return remoto
+
+
+def protegido(caminho: str) -> bool:
+    return any(parte in PROTEGIDOS for parte in caminho.split("/"))
+
+
+def conta_restrita(nomes_na_raiz) -> bool:
+    return not (set(nomes_na_raiz) & RAIZES_DE_CONTA)
+
+
 def arvore(ftp: ftplib.FTP_TLS, d: str) -> tuple[list[str], list[str]]:
     arquivos, dirs = [], []
     for nome, fatos in ftp.mlsd(d):
         if nome in (".", ".."):
             continue
-        caminho = f"{d}/{nome}"
+        caminho = f"{d.rstrip('/')}/{nome}"
         if fatos["type"] == "dir":
             dirs.append(caminho)
             a, s = arvore(ftp, caminho)
@@ -61,24 +88,30 @@ def main() -> int:
     ap.add_argument("--origem", default=str(LOCAL), help="pasta local a publicar (padrão: build/public_html)")
     args = ap.parse_args()
 
-    remoto = "/" + args.remoto.strip("/")
-    if not remoto.startswith("/public_html/") or remoto.count("/") < 2:
-        raise SystemExit("--remoto deve ser uma subpasta de /public_html/ (ex.: /public_html/altopadrao)")
+    remoto = validar_remoto(args.remoto)
+    base = "" if remoto == "/" else remoto
     origem = Path(args.origem)
     if not (origem / "index.html").exists():
         raise SystemExit(f"{origem} não existe ou não tem index.html: rode a build antes")
 
-    locais = {f"{remoto}/{p.relative_to(origem).as_posix()}": p for p in origem.rglob("*") if p.is_file()}
+    locais = {f"{base}/{p.relative_to(origem).as_posix()}": p for p in origem.rglob("*") if p.is_file()}
     cfg = credenciais()
     ftp = ftplib.FTP_TLS(cfg["FTP_HOST"], timeout=60)
     ftp.login(cfg["FTP_USER"], cfg["FTP_PASS"])
     ftp.prot_p()
 
+    if remoto == "/":
+        nomes = [n for n, _ in ftp.mlsd("/") if n not in (".", "..")]
+        if not conta_restrita(nomes):
+            ftp.quit()
+            raise SystemExit("A conta FTP não é restrita ('/' contém " + ", ".join(sorted(set(nomes) & RAIZES_DE_CONTA))
+                             + "). Use --remoto /public_html/<pasta> ou crie uma conta limitada ao diretório do domínio.")
+
     try:
-        remotos, dirs = arvore(ftp, remoto)
+        remotos, dirs = arvore(ftp, base or "/")
     except ftplib.error_perm:
         remotos, dirs = [], []
-    orfaos = sorted(set(remotos) - set(locais))
+    orfaos = sorted(o for o in set(remotos) - set(locais) if not protegido(o))
     print(f"{len(locais)} arquivos a enviar · {len(orfaos)} órfão(s) a remover em {remoto}")
     if args.simular:
         for o in orfaos:
@@ -87,9 +120,9 @@ def main() -> int:
         return 0
 
     criadas: set[str] = set()
-    for destino, origem in sorted(locais.items()):
-        atual = remoto
-        for parte in destino[len(remoto) + 1:].split("/")[:-1]:
+    for destino, arquivo in sorted(locais.items()):
+        atual = base
+        for parte in destino[len(base) + 1:].split("/")[:-1]:
             atual += "/" + parte
             if atual not in criadas:
                 try:
@@ -98,14 +131,14 @@ def main() -> int:
                     if not str(e).startswith("550"):
                         raise
                 criadas.add(atual)
-        with origem.open("rb") as fh:
+        with arquivo.open("rb") as fh:
             ftp.storbinary(f"STOR {destino}", fh)
     for o in orfaos:
-        assert o.startswith(remoto + "/")
+        assert o.startswith(base + "/") and not protegido(o)
         ftp.delete(o)
         print("  removido:", o)
     for d in sorted(dirs, key=len, reverse=True):
-        if not any(x.startswith(d + "/") for x in locais):
+        if not protegido(d) and not any(x.startswith(d + "/") for x in locais):
             ftp.rmd(d)
             print("  pasta removida:", d)
     ftp.quit()

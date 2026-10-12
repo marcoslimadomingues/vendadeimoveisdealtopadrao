@@ -56,6 +56,24 @@ CNAME `www`) e ative o SSL. O `.htaccess` gerado força HTTPS e o host sem `www`
 **Depois de publicar:** Search Console (propriedade de domínio + `sitemap.xml`), Cloudflare com SSL
 "Full (strict)", "Block AI bots" e "Managed robots.txt" desligados.
 
+### Preencher o ambiente `producao`
+
+GitHub > Settings > Environments > **New environment** > `producao`:
+
+| Campo | O que escolher |
+|---|---|
+| Deployment branches and tags | **Selected branches and tags** > *Add deployment branch or tag rule* > Ref type **Branch**, Name pattern **`main`** (não use "Protected branches only": a `main` não está protegida e a publicação seria recusada) |
+| Required reviewers | deixe desligado, a menos que queira aprovar cada publicação |
+| Environment secrets | `FTP_HOST`, `FTP_USER`, `FTP_PASS` |
+| Environment variables | `FTP_REMOTO` |
+
+- `FTP_HOST`: só o nome do servidor (sem `ftp://` e sem porta), o mesmo que aparece em cPanel > FTP Accounts >
+  *Configure FTP Client*. Use um nome cujo certificado TLS corresponda (o do servidor), não `ftp.<seu domínio>`.
+- `FTP_USER`: de preferência uma conta própria (cPanel > FTP Accounts) com diretório limitado ao domínio,
+  ex.: `deploy@vendadeimoveisdealtopadrao.com.br`. Nesse caso `FTP_REMOTO` é `/` (a conta é "trancada" na pasta).
+- `FTP_PASS`: gerada no cPanel (gerador de senhas), exclusiva desta conta. Nunca a senha principal do cPanel.
+- Com a conta principal, `FTP_REMOTO` é `/public_html/<pasta do domínio>`.
+
 ## Segurança
 
 - **Workflow em dois jobs:** `testar` (push e pull request, sem segredos) e `publicar` (só na `main`,

@@ -95,3 +95,22 @@ def test_dependabot_e_politica_de_seguranca():
     assert 'package-ecosystem: "pip"' in dep and 'package-ecosystem: "github-actions"' in dep
     seg = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
     assert "Report a vulnerability" in seg and "@" not in seg, "sem e-mail pessoal na política pública"
+
+
+def test_destino_ftp_aceita_subpasta_ou_conta_restrita():
+    import publicar_ftps as pf
+
+    assert pf.validar_remoto("/public_html/vendadeimoveisdealtopadrao.com.br/") == "/public_html/vendadeimoveisdealtopadrao.com.br"
+    assert pf.validar_remoto("/") == "/" and pf.validar_remoto("") == "/"
+    for ruim in ("/public_html", "/home/usuario", "/public_html/../etc", "/etc"):
+        with pytest.raises(SystemExit):
+            pf.validar_remoto(ruim)
+
+
+def test_conta_restrita_e_arquivos_protegidos():
+    import publicar_ftps as pf
+
+    assert pf.conta_restrita(["index.html", "static", ".htaccess", ".well-known"])
+    assert not pf.conta_restrita(["public_html", "mail", "etc"]), "raiz de conta inteira não é restrita"
+    assert pf.protegido("/.well-known/pki-validation/arquivo.txt") and pf.protegido("/cgi-bin/x")
+    assert not pf.protegido("/imoveis/index.html")
