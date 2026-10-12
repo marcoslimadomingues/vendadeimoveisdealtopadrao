@@ -12,16 +12,17 @@ canal e não a utilize.
 
 - Código-fonte e conteúdo de um site estático. **Os dados de empresa, pessoas, preços e vídeos são de
   demonstração** enquanto `tools/pre_publicacao.py` acusar pendências.
-- Nenhuma credencial é versionada: `.ftp.env`, `.env`, `logs/`, `build/` e `dist/` ficam fora do
-  repositório (`.gitignore`). A publicação usa segredos do GitHub Actions.
+- Nenhuma credencial é versionada: `.env`, `logs/`, `build/` e `dist/` ficam fora do repositório
+  (`.gitignore`). O site é publicado no GitHub Pages por workflow, sem senha de hospedagem.
 
 ## Práticas adotadas
 
 - Varredura de segredos e *push protection* ativos (GitHub).
 - Dependabot para `pip` e `github-actions`.
-- Workflow com permissões mínimas (`contents: read`) e publicação em job separado, com ambiente
-  `producao`.
-- Cabeçalhos de segurança e CSP restritiva (`script-src 'none'`) no site gerado.
+- Workflow com permissões mínimas (`contents: read`) e publicação em job separado
+  (`pages: write` só nele).
+- CSP restritiva (`script-src 'none'`) no site gerado, definida por `<meta>` (o Pages não aceita
+  cabeçalhos próprios).
 
 ## Versões suportadas
 

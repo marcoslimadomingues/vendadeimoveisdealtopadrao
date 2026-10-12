@@ -36,6 +36,10 @@ CSP = ("default-src 'self'; img-src 'self' https://i.ytimg.com data:; "
        "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'")
 
 
+# Em <meta http-equiv>, o navegador ignora frame-ancestors; o resto da política vale igual.
+CSP_META = "; ".join(d for d in CSP.split("; ") if not d.startswith("frame-ancestors"))
+
+
 def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = None) -> Flask:
     app = Flask(__name__)
     repo = Repo(data_dir)
@@ -61,7 +65,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
     @app.context_processor
     def contexto_global():
         return {"site": repo.site, "repo": repo, "base": base, "ano": date.today().year, "static_v": static_v,
-                "meta_robots": diretiva_robots}
+                "meta_robots": diretiva_robots, "meta_csp": CSP_META}
 
     def pagina(template: str, *, path: str, titulo: str, descricao: str, jsonld: str | None,
                crumbs: list[tuple[str, str]] | None = None, status: int = 200, **ctx):

@@ -1,203 +1,113 @@
-# Alto Padrão Imóveis — plataforma HTML5 SSR para AEO, GEO e SEO
+# Imóveis de Alto Padrão em Fortaleza
 
-Site de imobiliária de altíssimo padrão renderizado 100% no servidor (Flask + Jinja2), sem
-JavaScript no cliente. Pode rodar como app Python ou ser exportado como HTML5 estático.
+Site HTML5 renderizado no servidor (Flask + Jinja2), exportado como site estático e publicado no
+**GitHub Pages**. Sem JavaScript no navegador, sem banco de dados, sem hospedagem paga.
 
-> **ATENÇÃO — dados ilustrativos.** Empresa, CRECI, CNPJ, métricas, preços, pessoas, perfis do
-> LinkedIn/YouTube e IDs de vídeo (`SUBSTITUA01`…) são fictícios. Substitua tudo em `data/` por
-> dados reais e verificáveis antes de publicar. Dados inventados destroem o E-E-A-T.
+> **Dados ilustrativos.** Empresa, CRECI, CNPJ, pessoas, carteira, vídeos e perfis sociais são de
+> demonstração. `python tools/pre_publicacao.py` lista o que falta trocar; enquanto houver pendência, o
+> site é publicado com `noindex`.
 
-## Como rodar
+## Rodar localmente
 
 ```bash
 pip install -r requirements.txt
-python app.py                                   # http://127.0.0.1:8000
-python -m pytest -q                             # 24 testes de contrato
-python tools/export_static.py --site-url https://www.seudominio.com.br   # gera dist/
-waitress-serve --port=8000 --call app:create_app                         # produção
+python app.py                      # http://127.0.0.1:8000
+python -m pytest -q                # testes
+python tools/build_pages.py --dominio https://vendadeimoveisdealtopadrao.com.br   # gera build/pages
 ```
 
-Variáveis: `SITE_URL` (domínio canônico), `BOT_LOG` (caminho do log JSONL), `PORT`.
+## Publicação (GitHub Pages)
 
-## Fluxo de trabalho (GitHub)
+O repositório é a fonte da verdade. Um `push` na `main` dispara `.github/workflows/publicar.yml`:
 
-O repositório é a fonte da verdade: https://github.com/marcoslimadomingues/vendadeimoveisdealtopadrao
+1. **site**: testes, checklist de dados provisórios, descobre o endereço do Pages, gera `build/pages`.
+2. **publicar**: publica no Pages (só na `main`, só se o Pages estiver ativo). Pull requests só testam.
 
-1. Mudanças entram por commit na branch `main` (conteúdo em `data/`, layout em `templates/` e `static/`).
-2. `.github/workflows/publicar.yml` roda os testes, compila o site estático e, se os segredos
-   existirem, publica em `/public_html/altopadrao` por FTPS. Sem segredos, só testa e compila.
-3. Segredos (GitHub → Settings → Secrets and variables → Actions): `FTP_HOST`, `FTP_USER`, `FTP_PASS`.
-   Use uma conta FTP restrita à pasta do site, se a hospedagem permitir.
+**Uma vez só, no GitHub:** *Settings → Pages → Build and deployment → Source: **GitHub Actions***.
 
-Nada de credencial vai para o repositório: `.ftp.env` e `logs/` estão no `.gitignore`.
+### Domínio próprio (vendadeimoveisdealtopadrao.com.br)
 
-## Domínio: vendadeimoveisdealtopadrao.com.br
-
-O site é compilado para a **raiz** do domínio (`data/site.json` → `base_url`; o workflow usa `SITE_URL`).
-
-**Uma vez só, na hospedagem:** adicione o domínio no cPanel (domínio adicional; a raiz de documentos
-costuma ser `/public_html/vendadeimoveisdealtopadrao.com.br`), aponte o DNS (A para o IP da hospedagem e
-CNAME `www`) e ative o SSL. O `.htaccess` gerado força HTTPS e o host sem `www`.
-
-**No GitHub** (Settings > Secrets and variables > Actions):
+1. *Settings → Pages → Custom domain*: informe o domínio. Marque **Enforce HTTPS** quando liberar.
+2. *Settings (da conta) → Pages → Add a domain*: verifique o domínio (impede que outra conta o reivindique).
+3. No DNS do domínio (Registro.br, se for `.com.br`):
 
 | Tipo | Nome | Valor |
 |---|---|---|
-| Secret | `FTP_HOST`, `FTP_USER`, `FTP_PASS` | conta FTP (de preferência restrita à pasta do domínio) |
-| Variable | `FTP_REMOTO` | raiz de documentos do domínio, ex.: `/public_html/vendadeimoveisdealtopadrao.com.br` |
-| Variable | `EXIGIR_DADOS_REAIS` | `true` para bloquear a publicação com dado provisório |
-| Variable | `FORCAR_INDEXACAO` | `true` para indexar mesmo com dado provisório (não recomendado) |
-| Variable | `REDIRECIONAR_ANTIGO` | `true`, depois que o domínio novo estiver no ar, publica o 301 de `/public_html/altopadrao` |
+| A | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+| CNAME | `www` | `marcoslimadomingues.github.io` |
 
-**Indexação automática:** `tools/pre_publicacao.py` roda a cada push. Enquanto houver dado provisório
-(vídeos, telefone, CNPJ, CRECI, fotos, perfis, og:image em SVG), o site é compilado com
-`noindex, nofollow` (meta e `X-Robots-Tag`). Quando a lista zera, a próxima publicação já sai indexável.
+Confira os IPs na documentação do GitHub antes de gravar (podem mudar).
 
-**Depois de publicar:** Search Console (propriedade de domínio + `sitemap.xml`), Cloudflare com SSL
-"Full (strict)", "Block AI bots" e "Managed robots.txt" desligados.
+Sem domínio configurado, o site fica em `https://marcoslimadomingues.github.io/vendadeimoveisdealtopadrao/`:
+o build detecta o endereço sozinho (a URL vem da API do Pages) e prefixa os links.
 
-### Preencher o ambiente `producao`
+### Variáveis opcionais (*Settings → Secrets and variables → Actions → Variables*)
 
-GitHub > Settings > Environments > **New environment** > `producao`:
-
-| Campo | O que escolher |
+| Variável | Efeito |
 |---|---|
-| Deployment branches and tags | **Selected branches and tags** > *Add deployment branch or tag rule* > Ref type **Branch**, Name pattern **`main`** (não use "Protected branches only": a `main` não está protegida e a publicação seria recusada) |
-| Required reviewers | deixe desligado, a menos que queira aprovar cada publicação |
-| Environment secrets | `FTP_HOST`, `FTP_USER`, `FTP_PASS` |
-| Environment variables | `FTP_REMOTO` |
+| `SITE_URL` | força a URL de build |
+| `EXIGIR_DADOS_REAIS=true` | bloqueia a publicação enquanto `pre_publicacao.py` acusar pendência |
+| `FORCAR_INDEXACAO=true` | indexa mesmo com dado provisório (não recomendado) |
 
-- `FTP_HOST`: só o nome do servidor (sem `ftp://` e sem porta), o mesmo que aparece em cPanel > FTP Accounts >
-  *Configure FTP Client*. Use um nome cujo certificado TLS corresponda (o do servidor), não `ftp.<seu domínio>`.
-- `FTP_USER`: de preferência uma conta própria (cPanel > FTP Accounts) com diretório limitado ao domínio,
-  ex.: `deploy@vendadeimoveisdealtopadrao.com.br`. Nesse caso `FTP_REMOTO` é `/` (a conta é "trancada" na pasta).
-- `FTP_PASS`: gerada no cPanel (gerador de senhas), exclusiva desta conta. Nunca a senha principal do cPanel.
-- Com a conta principal, `FTP_REMOTO` é `/public_html/<pasta do domínio>`.
+### Indexação automática
 
-## Segurança
+`tools/pre_publicacao.py` roda a cada push. Com dado provisório (vídeos, telefone, CNPJ, CRECI, fotos,
+perfis, `og:image` em SVG) o site sai com `<meta name="robots" content="noindex, nofollow">`. Quando a
+lista zera, a próxima publicação já sai indexável.
 
-- **Workflow em dois jobs:** `testar` (push e pull request, sem segredos) e `publicar` (só na `main`,
-  no ambiente `producao`; único com acesso às credenciais de FTP).
-- **Ambiente `producao`:** em Settings > Environments, restrinja a branch `main` e mova `FTP_HOST`,
-  `FTP_USER` e `FTP_PASS` para lá.
-- **Dependabot** (`pip` e `github-actions`) e **SECURITY.md** (relato privado de vulnerabilidade).
-- **Varredura de segredos no histórico** (somente leitura, valores mascarados):
-  `python tools/varrer_segredos.py --usuario <usuario> --saida relatorio.md`.
-  Complementa, não substitui, o secret scanning do GitHub e ferramentas como gitleaks.
+### O que o Pages não faz (e como o projeto contorna)
 
-## Cidade
-
-O site está configurado para **Fortaleza (CE)**. Cidade, faixa de preço (`limiar_texto`), período dos
-indicadores e ITBI (alíquota geral, alíquota com pagamento antecipado) ficam em `data/site.json`;
-nenhum template tem cidade fixa. Para outra cidade, troque `site.json`, `bairros.json`, `imoveis.json`,
-`artigos.json` e `especialistas.json`. Pendências de SEO geográfico: `docs/PENDENTE-GEOTAG.md`.
-
-## Pilar "Milha de ouro"
-
-`/milha-de-ouro-fortaleza/`: Avenida Beira Mar entre Meireles e Mucuripe. Dados em `data/pilares.json`
-(indicadores com fonte, data de referência e URL; empreendimentos citados na imprensa) e `data/geo/`
-(OpenStreetMap). Todo número em texto corrido é gerado em `seo/pilares.py` a partir dos indicadores.
-
-- Novo valor de m²: adicione em `indicadores` com `fonte` cadastrada em `fontes`, `origem` e `referencia`
-  (`AAAA-MM`); o `Repo` recusa indicador sem fonte ou sem data.
-- Mapa e ruas: `python tools/mapa_milha_de_ouro.py gerar` (offline, usa `data/geo/raw/`);
-  `... baixar` refaz a consulta ao OpenStreetMap (Overpass).
-- Prédios reais: só entram em `empreendimentos_citados` com nome e fonte; preço, metragem e entrega
-  exigem dado verificado.
-- Cloudflare: e-mails ficam entre `<!--email_off-->` para a CDN não ofuscar (a CSP bloqueia o script dela).
-
-## Celular (mobile-first)
-
-- Tabelas com 3+ colunas viram cartões em telas até 40 rem: `seo/titulos.py::rotular_tabelas` põe
-  `data-label` em cada `<td>` e `class="empilhar"` na tabela; o CSS (`table.empilhar`) faz o resto.
-  Em telas largas continua uma tabela HTML nativa. Células com texto longo ganham `class="longo"`.
-- Menu em uma linha rolável; barra fixa "WhatsApp / Ligar" até 48 rem (usa `site.whatsapp` e
-  `site.telefone_link`; na ficha a mensagem cita o código do imóvel).
-- Mapa do pilar: figura inteira no desktop; no celular, duas metades empilhadas (oeste e leste).
-- Cache: `style.css?v=<hash>` e o mapa mudam de URL quando o arquivo muda.
-- Teste visual: `node tools/teste_mobile.mjs <tag> <url>...` (Chrome + Node 22+) emula 390×844, mede
-  overflow horizontal e salva capturas em `build/mobile/`. Não use `--window-size` do Chrome para isso:
-  ele impõe largura mínima de ~500 px.
-
-## Publicação por FTPS
-
-```bash
-python tools/build_cpanel.py --dominio https://marcoslima.com.br/altopadrao
-python tools/publicar_ftps.py --remoto /public_html/altopadrao --simular   # confere
-python tools/publicar_ftps.py --remoto /public_html/altopadrao
-```
-Credenciais: variáveis `FTP_USER`/`FTP_PASS` ou `.ftp.env`. No Git Bash, use `MSYS_NO_PATHCONV=1`.
-
-## Deploy em cPanel (Apache)
-
-```bash
-python tools/build_cpanel.py --dominio https://www.seudominio.com.br   # gera site-cpanel.zip
-```
-
-Gerenciador de Arquivos → `public_html/` → Carregar o zip → Extrair (mostrar arquivos ocultos para ver o `.htaccess`).
-O `.htaccess` força HTTPS + host canônico, mantém 404 real (`ErrorDocument`), aplica os cabeçalhos
-(`X-Robots-Tag` só em 2xx, CSP, cache) e compressão. Bot Access Logs no cPanel: Métricas → Acesso bruto
-(formato combined) → `python tools/bot_report.py --combined arquivo.log`.
+| Limitação | Solução |
+|---|---|
+| Sem cabeçalhos HTTP próprios | CSP e robots vão em `<meta>` (`script-src 'none'` continua valendo) |
+| Sem `.htaccess` | o Pages já força HTTPS, `www` → domínio e responde 404 real com `404.html` |
+| Sem logs de acesso | telemetria de bots: Search Console (estatísticas de rastreamento) ou CDN com analytics |
 
 ## Estrutura
 
 ```
-app.py                  rotas SSR, status HTTP, cabeçalhos, Bot Access Log
-seo/content.py          carrega data/, valida referências, calcula preço/m², custos e FAQ derivado
-seo/jsonld.py           gerador do @graph Schema.org por tipo de página
-seo/bots.py             identificação de crawlers/agentes de IA + logger JSONL
-seo/formatting.py       formatação pt-BR (R$, %, datas)
-data/*.json             conteúdo: site, bairros, imóveis, artigos, especialistas
-templates/              HTML5 semântico (base, home, imóvel, bairro, artigo, perfil, 404, robots, sitemap)
-static/css/style.css    CSS único, sem webfont, responsivo
-tools/export_static.py  exporta dist/ (HTML puro + 404.html + _headers para Cloudflare Pages/Netlify)
-tools/check_headers.py  diagnóstico HTTP/CDN: noindex, soft 404, canonical, JSON-LD, bloqueio de bots
-tools/bot_report.py     relatório de consideração por URL e por agente de IA
-tools/semantic_audit.py similaridade de cosseno, densidade factual, adjetivos vagos
-deploy/nginx.conf       entrega estática ou proxy, 404 real, log dedicado de bots
-tests/test_site.py      testes de contrato
+app.py                  rotas SSR, cabeçalhos, modo noindex
+seo/                    conteúdo, JSON-LD, títulos em links, tabelas em cartões, pilar
+data/                   site, bairros, imóveis, guias, especialistas, pilar, geo (OpenStreetMap)
+templates/ static/      HTML5 semântico e CSS único (sem JS, sem webfont)
+tools/                  build_pages, pre_publicacao, varrer_segredos, mapa, auditorias, teste_mobile
+tests/                  testes de contrato (HTTP, JSON-LD, mobile, publicação, scanner)
+.github/                workflow do Pages, Dependabot
 ```
 
-## Como cada etapa do Prompt Master foi implementada
+## Conteúdo
 
-| Etapa | Implementação |
-|---|---|
-| **1.1 HTML5 SSR** | Todo conteúdo sai do Jinja2 na resposta inicial. Único `<script>` é o JSON-LD. CSP `script-src 'none'` impede JS. Teste `test_sem_javascript_e_sem_conteudo_oculto`. |
-| **1.2 Status HTTP / CDN** | URL inexistente e imóvel `status: "vendido"` → **HTTP 404 real** (página útil com alternativas, `noindex`). 200 recebe `X-Robots-Tag: index, follow…`; 5xx recebe `no-store` (CDN não cacheia erro); `s-maxage=600` faz imóvel vendido sair da borda em até 10 min. `tools/check_headers.py` detecta noindex injetado, soft 404, divergência CDN × origem e challenge para bots. |
-| **1.3 robots.txt** | `Allow: /` explícito para GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Bytespider etc. Nenhum `Disallow`. |
-| **1.4 Bot Access Logs** | `after_request` grava JSONL (bot, operador, finalidade, URL, status, IP real via `CF-Connecting-IP`). `bot_report.py` agrega por URL e lista URLs do sitemap **nunca** visitadas por IA. Nginx tem `access_log bots.log if=$bot_ia`. |
-| **2.1 Zero conteúdo oculto** | Sem abas, accordions, `<details>`, dropdowns. FAQ sempre aberto. Teste bloqueia `hidden`, `aria-expanded`, `role="tab"`. |
-| **2.2 Tabelas nativas** | `<table>/<caption>/<thead>/<tbody>/<tfoot>`, `scope` em `<th>`. Ficha técnica, custos, comparativo com bairro, liquidez e técnica. |
-| **2.3 Triplas / pirâmide invertida** | Resumo executivo no 1º parágrafo; frases Sujeito‑Predicado‑Objeto com números; entidade repetida em cada chunk (sem "Sim. A matrícula…" solto). |
-| **3 Topical Authority** | Entidade central + intenção central em `data/site.json`, no H1 da home, no `about` de todo WebPage. **Core**: `/imoveis/`, `/bairros/`. **Outdoor**: `/guias/`. Links contextuais Outdoor → Core dentro dos parágrafos (teste `test_outdoor_transfere_autoridade_para_core`). |
-| **4 Vetorial / fan-out / híbrido** | Cada H2 é uma pergunta derivada (fan-out) respondida na 1ª frase. Imóveis ganham FAQ calculado (preço/m² × bairro, custo mensal, liquidez). `semantic_audit.py` mede cosseno parágrafo × intenção e parágrafo × H2 (TF-IDF ou `--modelo` sentence-transformers). |
-| **5 JSON-LD** | `@graph` estático no `<head>`: Organization+RealEstateAgent, WebSite, entidade central, BreadcrumbList; imóvel = RealEstateListing + Offer (price, BRL) + SingleFamilyResidence/Apartment (floorSize MTK, amenityFeature LocationFeatureSpecification com Isolamento Acústico Europeu, Portaria Blindada, Gerador Total) + Place + VideoObject + Question; artigo = Article ↔ Person ↔ Organization (+ FAQPage); bairro = Place + Dataset; perfil = ProfilePage + Person com credencial e sameAs. |
-| **6 E-E-A-T** | Página por especialista (CRECI/CAU/OAB, anos, transações, LinkedIn/YouTube `rel="me"`); autoria e revisão em cada ficha e artigo; embeds YouTube (`youtube-nocookie`, `loading="lazy"`) com descrição textual visível. |
-| **7 Validação / CWV** | 22 páginas passam no `html-validate` (preset recommended). CSS único ~9 KB, sem webfont, imagens com `width/height` (CLS 0), `fetchpriority="high"` na imagem principal, zero JS (INP mínimo). |
+- **Novo imóvel:** `data/imoveis.json` (`referencia`, `tecnico`, `amenidades` com as 3 obrigatórias).
+  Preço/m², custos, ITBI e FAQ são calculados; o teste confere o resumo.
+- **Imóvel vendido:** `status: "vendido"` + `data_venda`: a URL passa a dar 404 e sai do sitemap.
+- **Vídeos:** `videos: [...]` com `youtube_id` (11 caracteres), `tipo`, `apresentador`, `duracao`
+  (ISO 8601) e `data_upload`. Os `SUBSTITUA..` são provisórios.
+- **Respostas rápidas:** `secoes[].respostas_rapidas` nos guias; viram `<dl>` visível e `Question` no JSON-LD.
+- **Cidade:** cidade, faixa de preço, período e ITBI ficam em `data/site.json`; nenhum template tem cidade fixa.
 
-## Operação
+### Pilar "Milha de ouro"
 
-- **Novo imóvel**: adicione em `data/imoveis.json` (`referencia`, `tecnico`, `amenidades` com as 3 obrigatórias). Preço/m², custos e FAQ numérico são calculados; o teste confere se o `resumo` bate com o preço/m² calculado.
-- **Imóvel vendido**: troque `status` para `"vendido"` e informe `data_venda`. A URL passa a responder 404, sai do sitemap e dos links.
-- **Após publicar**: `python tools/check_headers.py https://www.seudominio.com.br --origem https://origem…`; confira no Cloudflare que "Block AI bots"/"Managed robots.txt" estão desativados; valide URLs no Search Console (Inspeção de URL) e no Rich Results Test.
-- **Vídeos**: cada imóvel/guia tem `videos: [...]` com `youtube_id` (11 caracteres), `tipo`, `apresentador` (slug em `especialistas.json`), `duracao` ISO 8601 e `data_upload`. Os IDs `SUBSTITUA01`–`SUBSTITUA13` são placeholders: troque pelos IDs reais do YouTube.
-- **Respostas rápidas**: `secoes[].respostas_rapidas` nos guias vira bloco `<dl>` visível na seção e `Question` no JSON-LD. Nas fichas, ITBI, prazo de registro, método Rw, gerador e blindagem são calculados em `seo/content.py`.
+`/milha-de-ouro-fortaleza/`: `data/pilares.json` (indicadores com fonte, data e URL) e `data/geo/`.
+Todo número em texto corrido é gerado em `seo/pilares.py` a partir dos indicadores; o `Repo` recusa
+indicador sem fonte ou sem data. Mapa e ruas: `python tools/mapa_milha_de_ouro.py gerar` (offline) ou
+`baixar` (consulta o OpenStreetMap). Prédios reais só com nome e fonte; preço, metragem e entrega
+exigem dado verificado.
 
-## Rotina de Access Logs (cPanel)
+### Celular (mobile-first)
 
-O cPanel arquiva os logs 1x por dia em `~/logs/marcoslima.com.br-ssl_log-<Mês>-<Ano>.gz`.
-A tarefa agendada **"AltoPadrao - Coleta de Access Logs"** (diária, 11:30) roda `deploy/coletar_logs.cmd`:
+Tabelas com 3+ colunas viram cartões até 40 rem (`rotular_tabelas` + `table.empilhar`); menu em uma linha
+rolável; barra fixa WhatsApp/Ligar até 48 rem; mapa em duas metades. `node tools/teste_mobile.mjs <tag>
+<url>...` emula 390×844 e mede overflow horizontal (o `--window-size` do Chrome impõe largura mínima).
 
-1. baixa os arquivos por FTPS (`tools/coletar_logs.py`), filtra `/altopadrao/` e acumula em `logs/servidor/altopadrao.log`;
-2. gera `logs/servidor/relatorio-AAAA-MM-DD.md` e `varredura.csv` (`tools/bot_report.py`):
-   agentes, varredura de IA por seção (Core/Outdoor), URLs mais varridas e, para fichas e guias
-   com pouca varredura, links contextuais de entrada, profundidade de clique e páginas que deveriam linkar para elas.
+## Segurança
 
-Credenciais: copie `.ftp.env.exemplo` para `.ftp.env` (ignorado pelo git). Log da execução: `logs/servidor/coleta.log`.
-Reagendar: `deploy\agendar_coleta_logs.cmd`. Remover: `schtasks /Delete /TN "AltoPadrao - Coleta de Access Logs" /F`.
+- Workflow com `contents: read`; `pages: write` e `id-token: write` só no job de publicação.
+- Dependabot (`pip`, `github-actions`), `SECURITY.md` (relato privado de vulnerabilidade).
+- `python tools/varrer_segredos.py --usuario <usuario> --saida relatorio.md`: varre o histórico de todos
+  os repositórios (somente leitura, valores mascarados). Complementa o secret scanning do GitHub.
+- Nada de credencial no repositório; `.env`, `logs/`, `build/` e `dist/` estão no `.gitignore`.
 
-## Observações técnicas
+## Pendências de SEO geográfico
 
-- `Google-Extended` e `Applebot-Extended` são tokens de robots.txt, não User-Agents; o Google rastreia como Googlebot (inclusive para AI Overviews).
-- User-Agent pode ser falsificado. Para auditoria rigorosa, valide IPs por DNS reverso / faixas publicadas por cada operador.
-- Conteúdo tributário (holding, ITBI de Fortaleza, ITCD do Ceará, LC 214/2025) deve ser revisado por advogado antes de publicar; alíquotas mudam.
+Ver `docs/PENDENTE-GEOTAG.md`.
