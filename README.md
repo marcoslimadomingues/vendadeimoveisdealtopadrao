@@ -56,6 +56,17 @@ CNAME `www`) e ative o SSL. O `.htaccess` gerado força HTTPS e o host sem `www`
 **Depois de publicar:** Search Console (propriedade de domínio + `sitemap.xml`), Cloudflare com SSL
 "Full (strict)", "Block AI bots" e "Managed robots.txt" desligados.
 
+## Segurança
+
+- **Workflow em dois jobs:** `testar` (push e pull request, sem segredos) e `publicar` (só na `main`,
+  no ambiente `producao`; único com acesso às credenciais de FTP).
+- **Ambiente `producao`:** em Settings > Environments, restrinja a branch `main` e mova `FTP_HOST`,
+  `FTP_USER` e `FTP_PASS` para lá.
+- **Dependabot** (`pip` e `github-actions`) e **SECURITY.md** (relato privado de vulnerabilidade).
+- **Varredura de segredos no histórico** (somente leitura, valores mascarados):
+  `python tools/varrer_segredos.py --usuario <usuario> --saida relatorio.md`.
+  Complementa, não substitui, o secret scanning do GitHub e ferramentas como gitleaks.
+
 ## Cidade
 
 O site está configurado para **Fortaleza (CE)**. Cidade, faixa de preço (`limiar_texto`), período dos

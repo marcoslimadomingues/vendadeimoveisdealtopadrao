@@ -1,11 +1,13 @@
 name: Testar, compilar e publicar
 
-# A cada push na main: testa, confere dados provisórios, gera o site estático e, se os segredos FTP
-# e a variável FTP_REMOTO existirem, publica na hospedagem por FTPS.
+# testar   : roda em push e em pull request. Não usa segredos. Testa, confere dados provisórios
+#            e gera o site estático (artefato).
+# publicar : roda só em push/dispatch na main, no ambiente "producao". Único job com acesso
+#            aos segredos de FTP. Sem segredos ou sem FTP_REMOTO, ignora a publicação.
 #
-# Segredos (Settings > Secrets and variables > Actions > Secrets):
+# Segredos (Settings > Environments > producao, ou Secrets and variables > Actions):
 #   FTP_HOST, FTP_USER, FTP_PASS
-# Variáveis (… > Variables):
+# Variáveis (Settings > Secrets and variables > Actions > Variables):
 #   FTP_REMOTO          pasta do domínio na hospedagem, ex.: /public_html/vendadeimoveisdealtopadrao.com.br
 #   SITE_URL            opcional; padrão https://vendadeimoveisdealtopadrao.com.br
 #   EXIGIR_DADOS_REAIS  "true": bloqueia a publicação enquanto houver dado provisório
@@ -14,18 +16,22 @@ name: Testar, compilar e publicar
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: publicar
+  group: publicar-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  site:
+  testar:
     runs-on: ubuntu-latest
+    outputs:
+      pendencias: ${{ steps.checklist.outputs.pendencias }}
     env:
       SITE_URL: ${{ vars.SITE_URL || 'https://vendadeimoveisdealtopadrao.com.br' }}
     steps:
@@ -44,16 +50,10 @@ jobs:
 
       - name: Checklist de pré-publicação
         id: checklist
-        env:
-          EXIGIR: ${{ vars.EXIGIR_DADOS_REAIS }}
         run: |
           pend=0
           python tools/pre_publicacao.py --estrito || pend=1
           echo "pendencias=$pend" >> "$GITHUB_OUTPUT"
-          if [ "$pend" = "1" ] && [ "$EXIGIR" = "true" ]; then
-            echo "::error::Há dado provisório e EXIGIR_DADOS_REAIS=true: publicação bloqueada."
-            exit 1
-          fi
 
       - name: Compilar o site estático
         env:
@@ -63,12 +63,50 @@ jobs:
           echo "SITE_URL=$SITE_URL  SITE_NOINDEX=$SITE_NOINDEX"
           python tools/build_cpanel.py --dominio "$SITE_URL"
 
-      - name: Publicar na hospedagem (FTPS)
+      - name: Guardar o site compilado
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: build/public_html
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
+  publicar:
+    needs: testar
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: producao
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://vendadeimoveisdealtopadrao.com.br' }}
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+      FTP_USER: ${{ secrets.FTP_USER }}
+      FTP_PASS: ${{ secrets.FTP_PASS }}
+      FTP_REMOTO: ${{ vars.FTP_REMOTO }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Baixar o site compilado
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: build/public_html
+
+      - name: Trava de dados reais
         env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASS: ${{ secrets.FTP_PASS }}
-          FTP_REMOTO: ${{ vars.FTP_REMOTO }}
+          EXIGIR: ${{ vars.EXIGIR_DADOS_REAIS }}
+          PEND: ${{ needs.testar.outputs.pendencias }}
+        run: |
+          if [ "$PEND" = "1" ] && [ "$EXIGIR" = "true" ]; then
+            echo "::error::Há dado provisório e EXIGIR_DADOS_REAIS=true: publicação bloqueada."
+            exit 1
+          fi
+
+      - name: Publicar na hospedagem (FTPS)
         run: |
           if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ]; then
             echo "::notice::Segredos FTP_HOST, FTP_USER e FTP_PASS não configurados: testes e build OK, publicação ignorada."
@@ -83,10 +121,6 @@ jobs:
       - name: Redirecionar o endereço antigo (301)
         if: ${{ vars.REDIRECIONAR_ANTIGO == 'true' }}
         env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASS: ${{ secrets.FTP_PASS }}
-          FTP_REMOTO: ${{ vars.FTP_REMOTO }}
           ANTIGO: ${{ vars.FTP_REMOTO_ANTIGO || '/public_html/altopadrao' }}
         run: |
           # só redireciona se o site novo foi (ou pode ser) publicado: evita apontar para um domínio vazio

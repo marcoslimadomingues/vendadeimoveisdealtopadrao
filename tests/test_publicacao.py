@@ -77,3 +77,21 @@ def test_workflow_nao_adivinha_pasta_nem_publica_sem_segredos():
     assert "publicação ignorada" in wf
     assert "SITE_NOINDEX" in wf and "EXIGIR_DADOS_REAIS" in wf
     assert "Marcote" not in wf and "FTP_PASS: ${{ secrets.FTP_PASS }}" in wf
+
+
+def test_workflow_separa_teste_de_publicacao():
+    wf = (ROOT / ".github" / "workflows" / "publicar.yml").read_text(encoding="utf-8")
+    testar, publicar = wf.split("\n  publicar:\n")
+    assert "pull_request:" in wf
+    assert "secrets." not in testar, "o job que roda em PR não pode ver segredos"
+    assert "github.event_name != 'pull_request'" in publicar
+    assert "environment: producao" in publicar
+    assert "include-hidden-files: true" in testar, ".htaccess precisa ir no artefato"
+    assert "permissions:\n  contents: read" in wf
+
+
+def test_dependabot_e_politica_de_seguranca():
+    dep = (ROOT / ".github" / "dependabot.yml").read_text(encoding="utf-8")
+    assert 'package-ecosystem: "pip"' in dep and 'package-ecosystem: "github-actions"' in dep
+    seg = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
+    assert "Report a vulnerability" in seg and "@" not in seg, "sem e-mail pessoal na política pública"
