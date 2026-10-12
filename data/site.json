@@ -1,0 +1,73 @@
+{
+  "_aviso": "DADOS ILUSTRATIVOS. Substitua empresa, CRECI, CNPJ, métricas, preços, perfis sociais e IDs de vídeo por dados reais e verificáveis antes de publicar. Dados fictícios publicados como reais destroem os sinais de E-E-A-T.",
+  "base_url": "https://www.altopadrao.example",
+  "nome": "Alto Padrão Imóveis",
+  "razao_social": "Alto Padrão Negócios Imobiliários Ltda.",
+  "descricao": "Imobiliária especializada em imóveis de altíssimo padrão em Fortaleza, com atuação exclusiva em coberturas, apartamentos à beira-mar e casas em condomínio acima de R$ 3 milhões.",
+  "creci": "CRECI-CE J-0000",
+  "creci_orgao": "CRECI-CE",
+  "cnpj": "00.000.000/0001-00",
+  "fundacao": "2011",
+  "telefone": "+55 85 0000-0000",
+  "telefone_link": "+558500000000",
+  "whatsapp": "5585900000000",
+  "email": "contato@altopadrao.example",
+  "horario": "Mo-Fr 09:00-18:00",
+  "horario_texto": "Segunda a sexta, das 9h às 18h",
+  "faixa_preco": "R$ 3 milhões a R$ 15 milhões",
+  "cidade": {
+    "nome": "Fortaleza",
+    "uf": "CE",
+    "estado": "Ceará",
+    "em": "em Fortaleza",
+    "de": "de Fortaleza",
+    "por": "pela Prefeitura de Fortaleza",
+    "do_estado": "do Ceará",
+    "wikidata": "https://www.wikidata.org/wiki/Q43463"
+  },
+  "limiar_preco": 3000000,
+  "limiar_texto": "R$ 3 milhões",
+  "periodo_texto": "entre julho de 2025 e junho de 2026",
+  "periodo_curto": "jul/2025–jun/2026",
+  "itbi": {
+    "aliquota": 0.03,
+    "aliquota_antecipada": 0.02,
+    "aliquota_texto": "3%",
+    "regra_reducao": "Com o pagamento antecipado nos prazos da Lei Complementar municipal 159/2013 (Código Tributário de Fortaleza), a alíquota é reduzida para 2% e"
+  },
+  "endereco": {
+    "rua": "Avenida Beira Mar, 0000",
+    "bairro": "Meireles",
+    "cidade": "Fortaleza",
+    "uf": "CE",
+    "cep": "60165-121",
+    "pais": "BR"
+  },
+  "geo": {"lat": -3.7253, "lng": -38.4960},
+  "sameAs": [
+    "https://www.linkedin.com/company/exemplo-alto-padrao",
+    "https://www.youtube.com/@exemplo-alto-padrao",
+    "https://www.instagram.com/exemplo.altopadrao"
+  ],
+  "entidade_central": {
+    "nome": "Imóveis de Alto Padrão em Fortaleza",
+    "descricao": "Coberturas, apartamentos à beira-mar e casas em condomínio acima de R$ 3 milhões nos bairros Mucuripe, Meireles, Cocó, Aldeota e Guararapes, em Fortaleza, Ceará."
+  },
+  "intencao_central": "Comprar, avaliar e investir em imóveis de alto padrão em Fortaleza com base em dados verificáveis de preço, liquidez, vista mar e especificação técnica.",
+  "contexto_fonte": [
+    "A Alto Padrão Imóveis intermedeia exclusivamente imóveis acima de R$ 3 milhões em Fortaleza desde 2011.",
+    "A Alto Padrão Imóveis concluiu 284 transações, que somam R$ 1,6 bilhão em Valor Geral de Vendas (VGV).",
+    "A equipe técnica da Alto Padrão Imóveis inclui arquiteta registrada no CAU, que revisa laudos acústicos, de proteção contra maresia, de blindagem e de gerador de cada imóvel antes da divulgação.",
+    "A consultoria jurídica da Alto Padrão Imóveis estrutura compras por holding familiar e planejamento sucessório sob as regras do ITCD do Ceará."
+  ],
+  "metricas": [
+    {"rotulo": "Ano de fundação", "valor": "2011"},
+    {"rotulo": "Transações concluídas", "valor": "284"},
+    {"rotulo": "VGV acumulado", "valor": "R$ 1,6 bilhão"},
+    {"rotulo": "Ticket médio por transação", "valor": "R$ 5,6 milhões"},
+    {"rotulo": "Prazo médio de venda da carteira exclusiva", "valor": "104 dias"}
+  ],
+  "fonte_dados": "Base interna Alto Padrão Imóveis: ofertas e transações de imóveis acima de R$ 3 milhões em Fortaleza, de julho de 2025 a junho de 2026.",
+  "periodo_dados": "2025-07/2026-06",
+  "responsavel_tecnico": "marina-albuquerque"
+}

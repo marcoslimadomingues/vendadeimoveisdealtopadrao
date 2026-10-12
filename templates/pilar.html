@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}/static/img/mapa-milha-de-ouro.svg{% endblock %}
+{% block conteudo %}
+{% set p = pilar %}
+{% set g = p.geo %}
+<article class="artigo pilar" aria-labelledby="titulo-pilar">
+  <header class="cabecalho-pagina">
+    <p class="card__tipo">Pilar de mercado · {{ site.cidade.nome }}, {{ site.cidade.estado }}</p>
+    <h1 id="titulo-pilar">{{ p.titulo_h1 }}</h1>
+    <p class="meta">Por <a href="{{ autor.path }}" rel="author">{{ autor.nome }}</a>, {{ autor.cargo|lower }} · revisão técnica de <a href="{{ revisor.path }}">{{ revisor.nome }}</a>, {{ revisor.cargo|lower }} · publicado em <time datetime="{{ p.publicado }}">{{ p.publicado|data_extenso }}</time> · atualizado em <time datetime="{{ p.atualizado }}">{{ p.atualizado|data_extenso }}</time></p>
+  </header>
+
+  <section class="resumo" aria-labelledby="resumo-executivo">
+    <h2 id="resumo-executivo">Resumo executivo</h2>
+    <p class="lead">{{ p.resumo }}</p>
+  </section>
+
+  <nav class="sumario" aria-labelledby="sumario">
+    <h2 id="sumario">Nesta página</h2>
+    <ol>
+      <li><a href="#delimitacao">Onde fica a milha de ouro</a></li>
+      <li><a href="#mapa">Mapa e marcos de referência</a></li>
+      <li><a href="#ruas">Ruas e trechos</a></li>
+      <li><a href="#preco-m2">Preço do m² por fonte e data</a></li>
+      <li><a href="#indicadores-internos">Liquidez e valorização</a></li>
+      <li><a href="#imoveis">Imóveis da carteira na faixa</a></li>
+      <li><a href="#empreendimentos">Empreendimentos citados na imprensa</a></li>
+      <li><a href="#orla">Maresia e ruído na orla</a></li>
+      <li><a href="#perguntas">Perguntas e respostas</a></li>
+      <li><a href="#fontes">Fontes e metodologia</a></li>
+    </ol>
+  </nav>
+
+  <section aria-labelledby="delimitacao">
+    <h2 id="delimitacao">Onde fica a milha de ouro de Fortaleza?</h2>
+    {% for par in p.delimitacao %}<p>{{ par }}</p>{% endfor %}
+    <p>Os bairros da faixa têm páginas próprias com indicadores de liquidez e os imóveis à venda:
+      {% for b in bairros %}<a href="{{ b.path }}">{{ b.nome }}</a>{% if not loop.last %} e {% endif %}{% endfor %}.</p>
+  </section>
+
+  <section aria-labelledby="mapa">
+    <h2 id="mapa">Mapa e marcos de referência da Avenida Beira Mar</h2>
+    <figure class="mapa">
+      <img class="mapa__inteiro" src="/static/img/mapa-milha-de-ouro.svg?v={{ static_v }}" width="{{ g.mapa.largura }}" height="{{ g.mapa.altura }}" loading="lazy" decoding="async"
+           alt="Mapa esquemático da milha de ouro de Fortaleza: Avenida Beira Mar com {{ g.extensao_km|num(1) }} km entre os bairros Meireles e Mucuripe, rede de ruas e {{ g.pontos|length }} marcos numerados">
+      <div class="mapa__partes">
+        <div class="mapa__parte mapa__parte--oeste"><img src="/static/img/mapa-milha-de-ouro.svg?v={{ static_v }}" width="{{ g.mapa.largura }}" height="{{ g.mapa.altura }}" loading="lazy" decoding="async" alt="Mapa da milha de ouro de Fortaleza, metade oeste: trecho da Avenida Beira Mar no Meireles, com marcos numerados"></div>
+        <div class="mapa__parte mapa__parte--leste"><img src="/static/img/mapa-milha-de-ouro.svg?v={{ static_v }}" width="{{ g.mapa.largura }}" height="{{ g.mapa.altura }}" loading="lazy" decoding="async" alt="Mapa da milha de ouro de Fortaleza, metade leste: trecho da Avenida Beira Mar até o Mucuripe, com marcos numerados"></div>
+      </div>
+      <figcaption>Faixa de {{ g.extensao_km|num(1) }} km da Avenida Beira Mar, do limite oeste do Meireles ao fim do Mucuripe. Os números correspondem à tabela abaixo. Dados: © colaboradores do OpenStreetMap (ODbL), consulta em <time datetime="{{ g.consulta }}">{{ g.consulta|data_extenso }}</time>. <a href="https://www.openstreetmap.org/#map=15/{{ g.centro_aprox.lat }}/{{ g.centro_aprox.lon }}" rel="noopener">Abrir no OpenStreetMap</a>.</figcaption>
+    </figure>
+    <div class="tabela-rolagem">
+    <table>
+      <caption>Marcos de referência da faixa, de oeste para leste</caption>
+      <thead><tr><th scope="col">Marco</th><th scope="col">Tipo</th><th scope="col">Posição na faixa</th><th scope="col">Distância da Beira Mar</th><th scope="col">Bairro</th></tr></thead>
+      <tbody>
+        {% for pt in g.pontos %}
+        <tr><th scope="row">{{ pt.n }}. {{ pt.nome }}</th><td>{{ pt.tipo }}</td><td>km {{ pt.km|num(1) }}</td><td>{{ pt.distancia_m|num }} m</td><td>{{ pt.bairro or "—" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="fonte">A posição é medida ao longo da Avenida Beira Mar, a partir do limite oeste do Meireles (km 0). Distâncias calculadas sobre as coordenadas do OpenStreetMap e arredondadas a 10 m.</p>
+  </section>
+
+  <section aria-labelledby="ruas">
+    <h2 id="ruas">Quais ruas formam a milha de ouro?</h2>
+    {% set bs = g.transversais|map(attribute="bairro")|unique|list %}
+    <p>A Avenida Beira Mar tem {{ g.transversais|length }} transversais principais na faixa, todas {{ "no " ~ (bs|join(" e no ")) if bs|length > 0 else "" }}. As ruas paralelas mais próximas da orla são {% for r in g.paralelas[:3] %}{{ r.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
+    <div class="tabela-rolagem">
+    <table>
+      <caption>Ruas transversais que chegam à Avenida Beira Mar, de oeste para leste</caption>
+      <thead><tr><th scope="col">Rua</th><th scope="col">Posição na faixa</th><th scope="col">Bairro</th><th scope="col">Classe viária</th><th scope="col">Extensão na faixa</th></tr></thead>
+      <tbody>
+        {% for r in g.transversais %}
+        <tr><th scope="row">{{ r.nome }}</th><td>km {{ r.km|num(1) }}</td><td>{{ r.bairro }}</td><td>{{ r.classe }}</td><td>{{ r.extensao_m|num }} m</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <div class="tabela-rolagem">
+    <table>
+      <caption>Ruas paralelas à orla, da mais próxima da Beira Mar para a mais distante</caption>
+      <thead><tr><th scope="col">Rua</th><th scope="col">Distância típica da Beira Mar</th><th scope="col">Classe viária</th><th scope="col">Extensão na faixa</th></tr></thead>
+      <tbody>
+        {% for r in g.paralelas %}
+        <tr><th scope="row">{{ r.nome }}</th><td>{{ r.distancia_m|num }} m</td><td>{{ r.classe }}</td><td>{{ r.extensao_m|num }} m</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="fonte">Classe viária conforme a etiqueta do OpenStreetMap (arterial, coletora ou local), não a classificação oficial da Prefeitura. A distância típica é a mediana da distância dos trechos da rua à Beira Mar.</p>
+  </section>
+
+  <section aria-labelledby="preco-m2">
+    <h2 id="preco-m2">Quanto custa o metro quadrado na milha de ouro?</h2>
+    <p>Nenhum levantamento publica um valor oficial para a milha de ouro. A tabela reúne os valores disponíveis, cada um com a sua fonte e a sua data de referência; eles não são diretamente comparáveis entre meses e recortes.</p>
+    <div class="tabela-rolagem">
+    <table>
+      <caption>Preço médio do m² privativo por recorte, fonte e data de referência</caption>
+      <thead><tr><th scope="col">Recorte</th><th scope="col">Valor</th><th scope="col">Fonte</th><th scope="col">Referência</th><th scope="col">Publicado em</th><th scope="col">Observação</th></tr></thead>
+      <tbody>
+        {% for i in p.indicadores %}
+        <tr>
+          <th scope="row">{{ i.rotulo }}</th>
+          <td>{{ i.valor_txt }}</td>
+          <td>{{ i.origem }}, via <a href="{{ i.fonte_info.url }}" rel="noopener">{{ i.fonte_info.veiculo }}</a></td>
+          <td>{{ i.ref_txt }}</td>
+          <td><time datetime="{{ i.fonte_info.publicado }}">{{ i.fonte_info.publicado|data_extenso }}</time></td>
+          <td>{{ i.nota or "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="fonte">{{ p.metodo_sinduscon }}</p>
+    <h3>Comparações calculadas a partir dos valores publicados</h3>
+    <ul class="lista-fatos">
+      <li>Em agosto de 2026, o m² do Meireles ({{ p.indic.meireles.valor|brl }}) é {{ p.derivados.meireles_vs_cidade|pct }} maior que a média de Fortaleza ({{ p.indic.fortaleza.valor|brl }}).</li>
+      <li>Em agosto de 2026, o m² do Mucuripe ({{ p.indic.mucuripe.valor|brl }}) é {{ p.derivados.mucuripe_vs_cidade|pct }} maior que a média de Fortaleza.</li>
+      <li>Em julho de 2026, a Avenida Beira Mar ({{ p.indic.beira_mar.valor|brl }}) valia {{ p.derivados.beira_vs_meireles_jul|pct }} mais que o Meireles ({{ p.indic.meireles.valor_anterior|brl }}) no mesmo levantamento.</li>
+    </ul>
+    <p class="fonte">Cálculo da {{ site.nome }} sobre os valores publicados pelo Sinduscon-CE; não é dado oficial do sindicato.</p>
+  </section>
+
+  <section aria-labelledby="indicadores-internos">
+    <h2 id="indicadores-internos">Quanto tempo leva para vender e quanto valoriza na faixa?</h2>
+    <div class="tabela-rolagem">
+    <table>
+      <caption>Liquidez e valorização de imóveis acima de {{ site.limiar_texto }} na faixa ({{ site.periodo_curto }})</caption>
+      <thead><tr><th scope="col">Bairro</th><th scope="col">Valorização em 12 meses</th><th scope="col">Tempo médio de venda</th><th scope="col">Desconto médio de negociação</th></tr></thead>
+      <tbody>
+        {% for b in bairros %}
+        <tr><th scope="row"><a href="{{ b.path }}">{{ b.nome }}</a></th><td>{{ b.valorizacao_12m|pct }}</td><td>{{ b.tempo_medio_venda }} dias</td><td>{{ b.desconto_negociacao|pct }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="fonte">Fonte: {{ site.fonte_dados }} Esta tabela usa a base própria da {{ site.nome }}, com metodologia diferente da do Sinduscon-CE.</p>
+    {% for b in bairros if b.destaque %}<p>{{ b.destaque }}</p>{% endfor %}
+    <p>A análise completa por bairro está no guia <a href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>.</p>
+  </section>
+
+  <section aria-labelledby="imoveis">
+    <h2 id="imoveis">Quais imóveis da {{ site.nome }} ficam na milha de ouro?</h2>
+    {% if p.imoveis %}
+    <div class="grade">{% for i in p.imoveis %}{{ m.card_imovel(i) }}{% endfor %}</div>
+    {% else %}
+    <p>Nenhum imóvel da carteira está ativo na faixa nesta data. Veja os <a href="/imoveis/">imóveis à venda em outros bairros</a>.</p>
+    {% endif %}
+  </section>
+
+  <section aria-labelledby="empreendimentos">
+    <h2 id="empreendimentos">Quais empreendimentos a imprensa cita na milha de ouro?</h2>
+    <div class="tabela-rolagem">
+    <table>
+      <caption>Empreendimentos citados na imprensa para a milha de ouro de Fortaleza</caption>
+      <thead><tr><th scope="col">Empreendimento</th><th scope="col">Incorporadora</th><th scope="col">Fonte</th></tr></thead>
+      <tbody>
+        {% for e in p.empreendimentos_citados %}
+        <tr><th scope="row">{{ e.nome }}</th><td>{{ e.incorporadora }}</td>
+            <td><a href="{{ p.fontes[e.fonte].url }}" rel="noopener">{{ p.fonte_txt[e.fonte] }}</a></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="fonte">Lista informativa, baseada em reportagem. Não é oferta. Preço, metragem e prazo de entrega devem ser consultados com a incorporadora.</p>
+  </section>
+
+  <section aria-labelledby="orla">
+    <h2 id="orla">Maresia e ruído: o que muda em um imóvel de frente para o mar?</h2>
+    <p>Nas primeiras quadras da orla, a névoa salina acelera a corrosão de esquadrias, ferragens e condensadoras, e o ruído noturno da Avenida Beira Mar e dos eventos na orla exige esquadrias acústicas. Os critérios mensuráveis estão no guia <a href="/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/">maresia, isolamento acústico, portaria blindada e gerador em imóveis de luxo em Fortaleza</a>.</p>
+    <p>Para a estrutura de compra e a sucessão de imóveis na faixa, veja o guia <a href="/guias/holding-familiar-imoveis-alto-padrao/">holding familiar para imóveis de alto padrão no Ceará</a>.</p>
+  </section>
+
+  {{ m.perguntas(p.faq, "perguntas", "Perguntas e respostas sobre a milha de ouro de Fortaleza") }}
+
+  <section aria-labelledby="fontes">
+    <h2 id="fontes">Fontes e metodologia</h2>
+    <ul class="lista-fatos">
+      {% for k, f in p.fontes.items() %}
+      <li>{{ f.veiculo }}, <time datetime="{{ f.publicado }}">{{ f.publicado|data_extenso }}</time>, {{ f.autor }}: <a href="{{ f.url }}" rel="noopener">{{ f.titulo }}</a>.</li>
+      {% endfor %}
+      <li>Mapa, ruas, marcos e distâncias: OpenStreetMap, © colaboradores do OpenStreetMap, licença <a href="https://www.openstreetmap.org/copyright" rel="noopener">ODbL</a>, consulta em {{ g.consulta|data_extenso }}.</li>
+      <li>Liquidez e valorização: {{ site.fonte_dados }}</li>
+    </ul>
+    <p class="aviso">Conteúdo informativo. Valores de mercado variam por levantamento, recorte e data. Confirme preços e condições diretamente com a incorporadora ou a imobiliária antes de decidir.</p>
+  </section>
+</article>
+
+<section aria-labelledby="guias-relacionados">
+  <h2 id="guias-relacionados">Guias relacionados</h2>
+  <div class="grade">{% for a in guias %}{{ m.card_artigo(a) }}{% endfor %}</div>
+</section>
+{% endblock %}

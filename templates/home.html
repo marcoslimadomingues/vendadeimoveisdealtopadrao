@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block conteudo %}
+<section class="abertura" aria-labelledby="titulo-pagina">
+  <h1 id="titulo-pagina">{{ site.entidade_central.nome }}</h1>
+  <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }} A carteira atual reúne {{ imoveis|length }} imóveis entre {{ (imoveis|last).preco|brl }} e {{ (imoveis|first).preco|brl }}. A {{ site.nome }} monitora preço, valorização e liquidez em {{ bairros|length }} bairros: {% for b in bairros %}{{ b.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
+  <p>{{ site.intencao_central }}</p>
+  <ul class="acoes">
+    <li><a class="botao" href="/imoveis/">Ver os {{ imoveis|length }} imóveis à venda</a></li>
+    <li><a class="botao botao--sec" href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">Liquidez por bairro 2025–2026</a></li>
+  </ul>
+</section>
+
+<section aria-labelledby="indicadores">
+  <h2 id="indicadores">Indicadores do mercado de alto padrão por bairro {{ site.cidade.em }}</h2>
+  <p>{{ bairros[0].nome }} teve o menor tempo médio de venda ({{ bairros[0].tempo_medio_venda }} dias) e {{ (bairros|last).nome }} o maior ({{ (bairros|last).tempo_medio_venda }} dias) {{ site.periodo_texto }}. {% for b in bairros if b.destaque %}{{ b.destaque }} {% endfor %}</p>
+  {{ m.tabela_bairros(bairros, "Preço, valorização e liquidez de imóveis acima de " ~ site.limiar_texto ~ " por bairro (" ~ site.periodo_curto ~ ")") }}
+</section>
+
+{% for pl in repo.pilares.values() %}
+<section aria-labelledby="pilar-{{ pl.slug }}">
+  <h2 id="pilar-{{ pl.slug }}">{{ pl.nome }}: {{ pl.subtitulo }}</h2>
+  <p>{{ pl.resumo }}</p>
+  <p><a class="botao" href="{{ pl.path }}">Ver mapa, ruas e preço do m² por fonte</a></p>
+</section>
+{% endfor %}
+
+<section aria-labelledby="destaques">
+  <h2 id="destaques">Imóveis de altíssimo padrão à venda {{ site.cidade.em }}</h2>
+  <p>Todos os imóveis da carteira têm isolamento acústico com Rw igual ou superior a 42 dB, portaria blindada nível III-A e gerador que atende 100% da carga elétrica. Os imóveis na orla têm esquadrias e ferragens especificadas contra maresia.</p>
+  <div class="grade">
+    {% for i in imoveis %}{{ m.card_imovel(i) }}{% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="guias">
+  <h2 id="guias">Guias e análises para compradores de imóveis de luxo</h2>
+  <div class="grade">
+    {% for a in artigos %}{{ m.card_artigo(a) }}{% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="autoridade">
+  <h2 id="autoridade">Por que a {{ site.nome }} é fonte sobre imóveis de alto padrão {{ site.cidade.em }}</h2>
+  <ul class="lista-fatos">
+    {% for fato in site.contexto_fonte %}<li>{{ fato }}</li>{% endfor %}
+  </ul>
+  <div class="grade grade--pessoas">
+    {% for p in pessoas %}{{ m.card_pessoa(p) }}{% endfor %}
+  </div>
+</section>
+{% endblock %}

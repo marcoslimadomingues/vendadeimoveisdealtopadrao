@@ -1,0 +1,182 @@
+{# Componentes reutilizáveis. Todo dado é visível no DOM: sem abas, accordions ou dropdowns. #}
+
+{% macro card_imovel(i, nivel=3) %}
+{% set b = repo.bairros[i.bairro] %}
+<article class="card">
+  <img src="{{ i.imagem }}" alt="{{ i.imagem_alt }}" width="1200" height="800" loading="lazy" decoding="async">
+  <div class="card__corpo">
+    <p class="card__tipo">{{ i.tipo }} · {{ b.nome }} · {{ i.codigo }}</p>
+    <h{{ nivel }} class="card__titulo"><a href="{{ i.path }}">{{ i.titulo }}</a></h{{ nivel }}>
+    <dl class="fatos">
+      <div><dt>Preço</dt><dd>{{ i.preco|brl }}</dd></div>
+      <div><dt>Preço por m²</dt><dd>{{ i.preco_m2|brl }}</dd></div>
+      <div><dt>Área privativa</dt><dd>{{ i.area_privativa|num }} m²</dd></div>
+      <div><dt>Suítes</dt><dd>{{ i.suites }}</dd></div>
+      <div><dt>Vagas</dt><dd>{{ i.vagas }}</dd></div>
+      <div><dt>Custo fixo mensal</dt><dd>{{ i.custo_mensal|brl }}</dd></div>
+    </dl>
+    <p class="card__tec">Rw {{ i.tecnico.rw_db }} dB · Blindagem {{ i.tecnico.blindagem_nivel }} · Gerador {{ i.tecnico.gerador_cobertura_pct }}%</p>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro card_artigo(a, nivel=3) %}
+{% set autor = repo.pessoas[a.autor] %}
+<article class="card card--texto">
+  <p class="card__tipo">{{ a.categoria }}</p>
+  <h{{ nivel }} class="card__titulo"><a href="{{ a.path }}">{{ a.titulo }}</a></h{{ nivel }}>
+  <p>{{ a.descricao }}</p>
+  <p class="meta">Por <a href="{{ autor.path }}">{{ autor.nome }}</a> · atualizado em <time datetime="{{ a.atualizado }}">{{ a.atualizado|data_extenso }}</time></p>
+</article>
+{% endmacro %}
+
+{% macro card_pessoa(p, nivel=3) %}
+<article class="card card--pessoa">
+  <img src="{{ p.foto }}" alt="Foto de {{ p.nome }}" width="160" height="160" loading="lazy" decoding="async">
+  <div>
+    <h{{ nivel }} class="card__titulo"><a href="{{ p.path }}">{{ p.nome }}</a></h{{ nivel }}>
+    <p class="card__tipo">{{ p.cargo }} · {{ p.credencial.nome }}</p>
+    <p>{{ p.resumo }}</p>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro tabela_bairros(bairros, caption) %}
+<div class="tabela-rolagem">
+<table>
+  <caption>{{ caption }}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Bairro</th>
+      <th scope="col">Preço médio por m²</th>
+      <th scope="col">Valorização em 12 meses</th>
+      <th scope="col">Tempo médio de venda</th>
+      <th scope="col">Desconto médio de negociação</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in bairros %}
+    <tr>
+      <th scope="row"><a href="{{ b.path }}">{{ b.nome }}</a></th>
+      <td>{{ b.preco_m2|brl }}</td>
+      <td>{{ b.valorizacao_12m|pct }}</td>
+      <td>{{ b.tempo_medio_venda }} dias</td>
+      <td>{{ b.desconto_negociacao|pct }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="fonte">Fonte: {{ site.fonte_dados }}</p>
+{% endmacro %}
+
+{% macro tabela_tecnica(imoveis, caption) %}
+<div class="tabela-rolagem">
+<table>
+  <caption>{{ caption }}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Imóvel</th>
+      <th scope="col">Isolamento das esquadrias (Rw)</th>
+      <th scope="col">Blindagem da portaria</th>
+      <th scope="col">Potência do gerador</th>
+      <th scope="col">Carga atendida</th>
+      <th scope="col">Autonomia</th>
+      <th scope="col">Proteção contra maresia</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in imoveis %}
+    <tr>
+      <th scope="row"><a href="{{ i.path }}">{{ i.titulo }}</a></th>
+      <td>{{ i.tecnico.rw_db }} dB</td>
+      <td>Nível {{ i.tecnico.blindagem_nivel }}</td>
+      <td>{{ i.tecnico.gerador_kva|num }} kVA</td>
+      <td>{{ i.tecnico.gerador_cobertura_pct }}%</td>
+      <td>{{ i.tecnico.gerador_autonomia_h }} horas</td>
+      <td>{{ i.tecnico.maresia or "—" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endmacro %}
+
+{% macro tabela(t) %}
+<div class="tabela-rolagem">
+<table>
+  <caption>{{ t.caption }}</caption>
+  <thead><tr>{% for c in t.cabecalho %}<th scope="col">{{ c }}</th>{% endfor %}</tr></thead>
+  <tbody>
+    {% for linha in t.linhas %}
+    <tr><th scope="row">{{ linha[0] }}</th>{% for cel in linha[1:] %}<td>{{ cel }}</td>{% endfor %}</tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endmacro %}
+
+{# Vídeos do YouTube incorporados, cada um com apresentador identificado (E-E-A-T) e descrição em texto. #}
+{% macro videos(lista, id_secao, titulo) %}
+<section class="videos" aria-labelledby="{{ id_secao }}">
+  <h2 id="{{ id_secao }}">{{ titulo }}</h2>
+  <div class="videos__grade">
+  {% for v in lista %}
+  {% set p = repo.pessoas[v.apresentador] %}
+  <figure class="video">
+    <div class="video__quadro">
+      <iframe src="https://www.youtube-nocookie.com/embed/{{ v.youtube_id }}" title="{{ v.titulo }}"
+              width="560" height="315" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <figcaption>
+      <span class="card__tipo">{{ v.tipo }} · {{ v.duracao|duracao }}</span>
+      <strong>{{ v.titulo }}</strong>
+      <span>Apresentação: <a href="{{ p.path }}">{{ p.nome }}</a>, {{ p.cargo|lower }} · publicado em
+      <time datetime="{{ v.data_upload }}">{{ v.data_upload|data_extenso }}</time>.</span>
+      <span>{{ v.descricao }} <a href="https://www.youtube.com/watch?v={{ v.youtube_id }}">Assistir no YouTube</a>.</span>
+    </figcaption>
+  </figure>
+  {% endfor %}
+  </div>
+</section>
+{% endmacro %}
+
+{# Respostas curtas a sub-perguntas derivadas (query fan-out), sempre visíveis. #}
+{% macro respostas_rapidas(lista) %}
+<div class="rapidas">
+  <p class="rapidas__titulo">Respostas rápidas</p>
+  <dl>
+    {% for item in lista %}
+    <dt>{{ item.q }}</dt>
+    <dd>{{ item.a }}</dd>
+    {% endfor %}
+  </dl>
+</div>
+{% endmacro %}
+
+{% macro perguntas(faq, id_secao, titulo) %}
+<section class="faq" aria-labelledby="{{ id_secao }}">
+  <h2 id="{{ id_secao }}">{{ titulo }}</h2>
+  {% if faq|selectattr("grupo")|list|length == faq|length %}
+    {% for grupo in faq|map(attribute="grupo")|unique %}
+    <h3 class="faq__grupo">{{ grupo }}</h3>
+    {% for item in faq if item.grupo == grupo %}
+    <article class="faq__item">
+      <h4>{{ item.q }}</h4>
+      <p>{{ item.a }}</p>
+      {% if item.link %}<p class="faq__mais">Aprofunde: <a href="{{ item.link.href }}">{{ item.link.texto }}</a></p>{% endif %}
+    </article>
+    {% endfor %}
+    {% endfor %}
+  {% else %}
+    {% for item in faq %}
+    <article class="faq__item">
+      <h3>{{ item.q }}</h3>
+      <p>{{ item.a }}</p>
+    </article>
+    {% endfor %}
+  {% endif %}
+</section>
+{% endmacro %}
+

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block og_type %}profile{% endblock %}
+{% block og_image %}{{ pessoa.foto }}{% endblock %}
+{% block conteudo %}
+{% set p = pessoa %}
+<article class="perfil" aria-labelledby="nome">
+  <header class="cabecalho-pagina perfil__topo">
+    <img src="{{ p.foto }}" alt="Foto de {{ p.nome }}" width="160" height="160" decoding="async">
+    <div>
+      <h1 id="nome">{{ p.nome }}</h1>
+      <p class="card__tipo">{{ p.cargo }} · {{ site.nome }}</p>
+      <p class="lead">{{ p.resumo }}</p>
+    </div>
+  </header>
+
+  <section aria-labelledby="credenciais">
+    <h2 id="credenciais">Credenciais e experiência</h2>
+    <dl class="fatos">
+      <div><dt>Registro profissional</dt><dd>{{ p.credencial.nome }}</dd></div>
+      <div><dt>Órgão emissor</dt><dd>{{ p.credencial.orgao }}</dd></div>
+      <div><dt>Formação</dt><dd>{{ p.formacao }}</dd></div>
+      <div><dt>Experiência</dt><dd>{{ p.anos_experiencia }} anos</dd></div>
+      {% if p.transacoes %}<div><dt>Transações acima de {{ site.limiar_texto }}</dt><dd>{{ p.transacoes }}</dd></div>{% endif %}
+    </dl>
+  </section>
+
+  <section aria-labelledby="trajetoria">
+    <h2 id="trajetoria">Trajetória</h2>
+    {% for linha in p.bio %}<p>{{ linha }}</p>{% endfor %}
+  </section>
+
+  <section aria-labelledby="areas">
+    <h2 id="areas">Áreas de especialidade</h2>
+    <ul class="etiquetas">{% for a in p.areas %}<li>{{ a }}</li>{% endfor %}</ul>
+  </section>
+
+  <section aria-labelledby="perfis">
+    <h2 id="perfis">Perfis verificados</h2>
+    <ul>
+      <li><a href="{{ p.linkedin }}" rel="me">LinkedIn de {{ p.nome }}</a></li>
+      <li><a href="{{ p.youtube }}" rel="me">Canal da {{ site.nome }} no YouTube</a></li>
+    </ul>
+  </section>
+</article>
+
+{% set videos = repo.videos_por_pessoa(p.slug) %}
+{% if videos %}
+<section aria-labelledby="videos">
+  <h2 id="videos">Vídeos apresentados por {{ p.nome }}</h2>
+  <ul class="lista-videos">
+    {% for v, pg in videos %}
+    <li>
+      <a href="{{ pg.path }}#videos">{{ v.titulo }}</a>
+      <span class="meta">{{ v.tipo }} · {{ v.duracao|duracao }} · <time datetime="{{ v.data_upload }}">{{ v.data_upload|data_extenso }}</time></span>
+      <span>{{ v.descricao }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if imoveis %}
+<section aria-labelledby="carteira">
+  <h2 id="carteira">Imóveis sob responsabilidade de {{ p.nome }}</h2>
+  <div class="grade">{% for i in imoveis %}{{ m.card_imovel(i) }}{% endfor %}</div>
+</section>
+{% endif %}
+
+{% if artigos %}
+<section aria-labelledby="publicacoes">
+  <h2 id="publicacoes">Análises assinadas por {{ p.nome }}</h2>
+  <div class="grade">{% for a in artigos %}{{ m.card_artigo(a) }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

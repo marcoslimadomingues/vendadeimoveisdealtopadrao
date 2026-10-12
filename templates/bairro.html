@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block conteudo %}
+{% set b = bairro %}
+<header class="cabecalho-pagina">
+  <p class="card__tipo">{{ b.zona }} {{ site.cidade.de }}</p>
+  <h1>Imóveis de alto padrão {{ b.em }}: preço por m², valorização e liquidez</h1>
+  <p class="lead">{{ b.resumo }}</p>
+</header>
+
+<section aria-labelledby="indicadores">
+  <h2 id="indicadores">Indicadores do mercado de alto padrão {{ b.em }}</h2>
+  <dl class="fatos fatos--grande">
+    <div><dt>Preço médio por m²</dt><dd>{{ b.preco_m2|brl }}</dd></div>
+    <div><dt>Valorização em 12 meses</dt><dd>{{ b.valorizacao_12m|pct }}</dd></div>
+    <div><dt>Tempo médio de venda</dt><dd>{{ b.tempo_medio_venda }} dias</dd></div>
+    <div><dt>Desconto médio de negociação</dt><dd>{{ b.desconto_negociacao|pct }}</dd></div>
+  </dl>
+  {% if b.destaque %}<p>{{ b.destaque }}</p>{% endif %}
+  <p class="fonte">Fonte: {{ site.fonte_dados }}</p>
+</section>
+
+{% set pl = repo.pilar_do_bairro(b.slug) %}
+{% if pl %}
+<aside class="chamada" aria-labelledby="chamada-pilar">
+  <h2 id="chamada-pilar">{{ b.nome }} na {{ pl.nome|lower }}</h2>
+  <p>{{ b.nome }} faz parte da faixa da Avenida Beira Mar que a imprensa chama de milha de ouro: {{ pl.geo.extensao_km|num(1) }} km de orla entre o Meireles e o Mucuripe. <a href="{{ pl.path }}">Veja o mapa, as ruas, os marcos de referência e o preço do m² por fonte e data</a>.</p>
+</aside>
+{% endif %}
+
+<section aria-labelledby="perfil">
+  <h2 id="perfil">Perfil dos imóveis {{ b.em }}</h2>
+  <p>{{ b.perfil }}</p>
+  {% for p in b.paragrafos %}<p>{{ p }}</p>{% endfor %}
+</section>
+
+<section aria-labelledby="a-venda">
+  <h2 id="a-venda">Imóveis à venda {{ b.em }}</h2>
+  {% if imoveis %}
+  <div class="grade">{% for i in imoveis %}{{ m.card_imovel(i) }}{% endfor %}</div>
+  {% else %}
+  <p>A {{ site.nome }} não tem imóveis ativos {{ b.em }} nesta data. Veja os <a href="/imoveis/">{{ repo.ativos()|length }} imóveis à venda em outros bairros</a>.</p>
+  {% endif %}
+</section>
+
+<section aria-labelledby="comparacao">
+  <h2 id="comparacao">Comparação com outros bairros de alto padrão</h2>
+  {{ m.tabela_bairros(repo.bairros_por_liquidez(), "Bairros de alto padrão " ~ site.cidade.de ~ " ordenados por tempo médio de venda") }}
+</section>
+
+{% if artigos %}
+<section aria-labelledby="analises">
+  <h2 id="analises">Guias para quem compra imóvel {{ b.em }}</h2>
+  <div class="grade">{% for a in artigos %}{{ m.card_artigo(a) }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

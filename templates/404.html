@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block conteudo %}
+<header class="cabecalho-pagina">
+  {% if vendido %}
+  <h1>{{ vendido.titulo }}: imóvel vendido</h1>
+  <p class="lead">O imóvel {{ vendido.codigo }} foi vendido{% if vendido.data_venda %} em <time datetime="{{ vendido.data_venda }}">{{ vendido.data_venda|data_extenso }}</time>{% endif %} e não está mais disponível.</p>
+  {% else %}
+  <h1>Página não encontrada</h1>
+  <p class="lead">O endereço solicitado não existe ou foi removido.</p>
+  {% endif %}
+  <p><a href="/imoveis/">Ver todos os imóveis à venda</a> · <a href="/">Página inicial</a></p>
+</header>
+{% if alternativas %}
+<section aria-labelledby="alternativas">
+  <h2 id="alternativas">Imóveis disponíveis</h2>
+  <div class="grade">{% for i in alternativas %}{{ m.card_imovel(i) }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

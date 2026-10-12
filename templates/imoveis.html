@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block conteudo %}
+<header class="cabecalho-pagina">
+  <h1>Imóveis de altíssimo padrão à venda {{ site.cidade.em }}</h1>
+  <p class="lead">A {{ site.nome }} tem {{ imoveis|length }} imóveis à venda acima de {{ site.limiar_texto }} {{ site.cidade.em }}, de {{ (imoveis|last).preco|brl }} a {{ (imoveis|first).preco|brl }}. Cada ficha exibe preço, preço por m², condomínio, IPTU e as especificações de acústica, proteção contra maresia, blindagem e gerador.</p>
+</header>
+
+<section aria-labelledby="comparativo">
+  <h2 id="comparativo">Comparativo dos imóveis à venda</h2>
+  <div class="tabela-rolagem">
+  <table>
+    <caption>Imóveis de altíssimo padrão à venda {{ site.cidade.em }}, ordenados por preço</caption>
+    <thead>
+      <tr>
+        <th scope="col">Imóvel</th>
+        <th scope="col">Bairro</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Área privativa</th>
+        <th scope="col">Preço por m²</th>
+        <th scope="col">Diferença para a média do bairro</th>
+        <th scope="col">Suítes</th>
+        <th scope="col">Vagas</th>
+        <th scope="col">Custo fixo mensal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in imoveis %}
+      {% set b = repo.bairros[i.bairro] %}
+      <tr>
+        <th scope="row"><a href="{{ i.path }}">{{ i.titulo }}</a></th>
+        <td><a href="{{ b.path }}">{{ b.nome }}</a></td>
+        <td>{{ i.preco|brl }}</td>
+        <td>{{ i.area_privativa|num }} m²</td>
+        <td>{{ i.preco_m2|brl }}</td>
+        <td>{{ i.dif_bairro_pct|pct(true) }}</td>
+        <td>{{ i.suites }}</td>
+        <td>{{ i.vagas }}</td>
+        <td>{{ i.custo_mensal|brl }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section aria-labelledby="catalogo">
+  <h2 id="catalogo">Fichas dos imóveis</h2>
+  <div class="grade">
+    {% for i in imoveis %}{{ m.card_imovel(i) }}{% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="antes-de-comprar">
+  <h2 id="antes-de-comprar">Antes de comprar: guias técnicos, jurídicos e de mercado</h2>
+  <div class="grade">{% for a in repo.artigos_recentes() %}{{ m.card_artigo(a) }}{% endfor %}</div>
+</section>
+
+<section aria-labelledby="por-bairro">
+  <h2 id="por-bairro">Imóveis de alto padrão por bairro</h2>
+  {{ m.tabela_bairros(bairros, "Indicadores de mercado dos bairros atendidos (" ~ site.periodo_curto ~ ")") }}
+</section>
+{% endblock %}

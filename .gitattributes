@@ -1,0 +1,4 @@
+* text=auto
+*.cmd text eol=crlf
+*.svg text eol=lf
+*.json text eol=lf

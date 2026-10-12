@@ -1,0 +1,272 @@
+{
+  "fonte": "OpenStreetMap",
+  "licenca": "ODbL",
+  "consulta": "2026-10-12",
+  "extensao_km": 3.8,
+  "inicio": {
+    "bairro": "Meireles",
+    "lat": -3.7203,
+    "lon": -38.5114
+  },
+  "fim": {
+    "bairro": "Mucuripe",
+    "lat": -3.7219,
+    "lon": -38.479
+  },
+  "centro_aprox": {
+    "lat": -3.724,
+    "lon": -38.495
+  },
+  "transversais": [
+    {
+      "nome": "Rua João Cordeiro",
+      "classe": "via coletora",
+      "extensao_m": 900,
+      "distancia_m": 0,
+      "km": 0.0,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua Ildefonso Albano",
+      "classe": "via coletora",
+      "extensao_m": 900,
+      "distancia_m": 0,
+      "km": 0.2,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Avenida Rui Barbosa",
+      "classe": "via arterial",
+      "extensao_m": 830,
+      "distancia_m": 0,
+      "km": 0.8,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Avenida Barão de Studart",
+      "classe": "via arterial",
+      "extensao_m": 1500,
+      "distancia_m": 0,
+      "km": 1.0,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua José Vilar",
+      "classe": "via local",
+      "extensao_m": 790,
+      "distancia_m": 0,
+      "km": 1.2,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua Nunes Valente",
+      "classe": "via local",
+      "extensao_m": 810,
+      "distancia_m": 0,
+      "km": 1.4,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua Tibúrcio Cavalcante",
+      "classe": "via coletora",
+      "extensao_m": 800,
+      "distancia_m": 0,
+      "km": 1.5,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua Joaquim Nabuco",
+      "classe": "via local",
+      "extensao_m": 800,
+      "distancia_m": 0,
+      "km": 1.6,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua Osvaldo Cruz",
+      "classe": "via local",
+      "extensao_m": 810,
+      "distancia_m": 0,
+      "km": 1.7,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Avenida Desembargador Moreira",
+      "classe": "via arterial",
+      "extensao_m": 780,
+      "distancia_m": 0,
+      "km": 1.9,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua Júlio Ibiapina",
+      "classe": "via arterial",
+      "extensao_m": 620,
+      "distancia_m": 0,
+      "km": 2.3,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua José Napoleão",
+      "classe": "via coletora",
+      "extensao_m": 450,
+      "distancia_m": 0,
+      "km": 2.5,
+      "bairro": "Meireles"
+    },
+    {
+      "nome": "Rua Frei Mansueto",
+      "classe": "via local",
+      "extensao_m": 1320,
+      "distancia_m": 0,
+      "km": 2.6,
+      "bairro": "Meireles"
+    }
+  ],
+  "paralelas": [
+    {
+      "nome": "Avenida Historiador Raimundo Girão",
+      "classe": "via arterial",
+      "extensao_m": 1180,
+      "distancia_m": 70
+    },
+    {
+      "nome": "Avenida da Abolição",
+      "classe": "via arterial",
+      "extensao_m": 5630,
+      "distancia_m": 140
+    },
+    {
+      "nome": "Avenida Monsenhor Tabosa",
+      "classe": "via arterial",
+      "extensao_m": 1150,
+      "distancia_m": 210
+    },
+    {
+      "nome": "Rua Silva Jatahy",
+      "classe": "via coletora",
+      "extensao_m": 1680,
+      "distancia_m": 260
+    },
+    {
+      "nome": "Rua Barão de Aracati",
+      "classe": "via coletora",
+      "extensao_m": 810,
+      "distancia_m": 310
+    },
+    {
+      "nome": "Avenida Antônio Justa",
+      "classe": "via arterial",
+      "extensao_m": 1390,
+      "distancia_m": 370
+    },
+    {
+      "nome": "Rua Deputado Moreira da Rocha",
+      "classe": "via coletora",
+      "extensao_m": 1500,
+      "distancia_m": 440
+    }
+  ],
+  "pontos": [
+    {
+      "nome": "Praia do Meireles",
+      "tipo": "Praia",
+      "km": 1.4,
+      "distancia_m": 160,
+      "bairro": "Meireles",
+      "n": 1
+    },
+    {
+      "nome": "Polo de Artesanato da Beira Mar (Feirinha)",
+      "tipo": "Feira de artesanato",
+      "km": 1.8,
+      "distancia_m": 60,
+      "bairro": "Meireles",
+      "n": 2
+    },
+    {
+      "nome": "Interceptor Oceânico",
+      "tipo": "Monumento",
+      "km": 1.9,
+      "distancia_m": 40,
+      "bairro": "Meireles",
+      "n": 3
+    },
+    {
+      "nome": "Memorial Almirante Tamandaré",
+      "tipo": "Memorial",
+      "km": 2.2,
+      "distancia_m": 30,
+      "bairro": "Meireles",
+      "n": 4
+    },
+    {
+      "nome": "Jardim Japonês Jusaku Fujita",
+      "tipo": "Parque",
+      "km": 2.4,
+      "distancia_m": 20,
+      "bairro": "Meireles",
+      "n": 5
+    },
+    {
+      "nome": "Anfiteatro da Beira Mar Flávio Ponte",
+      "tipo": "Anfiteatro",
+      "km": 2.7,
+      "distancia_m": 30,
+      "bairro": "Mucuripe",
+      "n": 6
+    },
+    {
+      "nome": "Acervo Mucuripe",
+      "tipo": "Museu",
+      "km": 2.9,
+      "distancia_m": 540,
+      "bairro": "Mucuripe",
+      "n": 7
+    },
+    {
+      "nome": "Parque Bisão",
+      "tipo": "Parque",
+      "km": 3.3,
+      "distancia_m": 90,
+      "bairro": "Mucuripe",
+      "n": 8
+    },
+    {
+      "nome": "Monumento ao Jangadeiro",
+      "tipo": "Monumento",
+      "km": 3.4,
+      "distancia_m": 20,
+      "bairro": "Mucuripe",
+      "n": 9
+    },
+    {
+      "nome": "Praia do Mucuripe",
+      "tipo": "Praia",
+      "km": 3.5,
+      "distancia_m": 70,
+      "bairro": "Mucuripe",
+      "n": 10
+    },
+    {
+      "nome": "Mercado dos Peixes",
+      "tipo": "Mercado",
+      "km": 3.7,
+      "distancia_m": 20,
+      "bairro": "Mucuripe",
+      "n": 11
+    },
+    {
+      "nome": "Iate Clube de Fortaleza",
+      "tipo": "Clube náutico",
+      "km": 3.8,
+      "distancia_m": 190,
+      "bairro": null,
+      "n": 12
+    }
+  ],
+  "mapa": {
+    "largura": 1200,
+    "altura": 442
+  }
+}

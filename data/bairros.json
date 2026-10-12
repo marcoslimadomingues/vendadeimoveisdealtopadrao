@@ -1,0 +1,88 @@
+[
+  {
+    "slug": "mucuripe",
+    "nome": "Mucuripe",
+    "em": "no Mucuripe",
+    "de": "do Mucuripe",
+    "zona": "Zona Leste",
+    "perfil": "Torres residenciais novas com vista frontal para o mar, no trecho final da Avenida Beira Mar e próximas ao Iate Clube.",
+    "preco_m2": 16800,
+    "valorizacao_12m": 13.4,
+    "tempo_medio_venda": 118,
+    "desconto_negociacao": 4.9,
+    "resumo": "O Mucuripe tem o maior preço médio entre os bairros de alto padrão de Fortaleza: R$ 16.800 por m² entre julho de 2025 e junho de 2026. O bairro valorizou 13,4% em 12 meses. Imóveis acima de R$ 3 milhões no Mucuripe venderam em 118 dias, o menor prazo da base.",
+    "paragrafos": [
+      "O Mucuripe concentra os lançamentos de alto padrão entregues após 2020 na orla de Fortaleza, com torres acima de 30 andares e unidades de 250 m² a 600 m² com vista frontal para o mar.",
+      "O desconto médio de negociação no Mucuripe foi de 4,9%, o menor entre os 5 bairros analisados. A oferta limitada de terrenos na orla sustenta a liquidez do bairro."
+    ]
+  },
+  {
+    "slug": "meireles",
+    "nome": "Meireles",
+    "em": "no Meireles",
+    "de": "do Meireles",
+    "zona": "Zona Leste",
+    "perfil": "Apartamentos amplos na Avenida Beira Mar e nas quadras próximas, com vista mar e acesso a pé ao calçadão, à Feirinha da Beira Mar e à rede hoteleira.",
+    "preco_m2": 14200,
+    "valorizacao_12m": 11.8,
+    "tempo_medio_venda": 126,
+    "desconto_negociacao": 5.3,
+    "destaque": "Apartamentos com vista frontal para o mar no Meireles valorizaram 15,1% em 12 meses, a maior alta da base.",
+    "resumo": "O Meireles registrou preço médio de R$ 14.200 por m² entre julho de 2025 e junho de 2026. O bairro valorizou 11,8% em 12 meses, e os apartamentos com vista frontal para o mar valorizaram 15,1%. Imóveis acima de R$ 3 milhões no Meireles venderam em 126 dias, em média.",
+    "paragrafos": [
+      "O Meireles é o endereço mais tradicional do alto padrão em Fortaleza. Os apartamentos com vista frontal para o mar valorizaram 15,1% em 12 meses, contra 11,8% da média do bairro.",
+      "O desconto médio de negociação no Meireles foi de 5,3%. A demanda de compradores de outros estados e de estrangeiros que usam o imóvel como segunda residência mantém o prazo de venda abaixo de 130 dias."
+    ]
+  },
+  {
+    "slug": "coco",
+    "nome": "Cocó",
+    "em": "no Cocó",
+    "de": "do Cocó",
+    "zona": "Zona Leste",
+    "perfil": "Apartamentos de alto padrão no entorno do Parque Estadual do Cocó, a maior área verde urbana de Fortaleza.",
+    "preco_m2": 11600,
+    "valorizacao_12m": 10.2,
+    "tempo_medio_venda": 149,
+    "desconto_negociacao": 6.1,
+    "resumo": "O Cocó registrou preço médio de R$ 11.600 por m² entre julho de 2025 e junho de 2026. O bairro valorizou 10,2% em 12 meses. Imóveis acima de R$ 3 milhões no Cocó venderam em 149 dias, em média.",
+    "paragrafos": [
+      "O Cocó atrai famílias que priorizam área verde e proximidade de shoppings e escolas. Os edifícios de alto padrão do bairro ficam a menos de 1 km do Parque Estadual do Cocó.",
+      "O desconto médio de negociação no Cocó foi de 6,1%. O preço por m² 18% menor que o do Meireles compensa a ausência de vista mar para parte dos compradores."
+    ]
+  },
+  {
+    "slug": "aldeota",
+    "nome": "Aldeota",
+    "em": "na Aldeota",
+    "de": "da Aldeota",
+    "zona": "Zona Leste",
+    "perfil": "Apartamentos de alto padrão em bairro central, com comércio, serviços de saúde e escolas tradicionais de Fortaleza a poucas quadras.",
+    "preco_m2": 10900,
+    "valorizacao_12m": 9.6,
+    "tempo_medio_venda": 158,
+    "desconto_negociacao": 6.8,
+    "resumo": "A Aldeota registrou preço médio de R$ 10.900 por m² entre julho de 2025 e junho de 2026. O bairro valorizou 9,6% em 12 meses. Imóveis acima de R$ 3 milhões na Aldeota venderam em 158 dias, em média.",
+    "paragrafos": [
+      "A Aldeota combina apartamentos amplos com a maior oferta de serviços de Fortaleza. Compradores que trabalham nos centros empresariais e hospitais do bairro reduzem deslocamentos diários.",
+      "O desconto médio de negociação na Aldeota foi de 6,8%. Edifícios entregues após 2020 vendem mais rápido que a média do bairro, porque dispensam reforma antes da mudança."
+    ]
+  },
+  {
+    "slug": "guararapes",
+    "nome": "Guararapes",
+    "em": "no Guararapes",
+    "de": "do Guararapes",
+    "zona": "Zona Leste",
+    "perfil": "Casas em condomínios fechados e terrenos amplos, com acesso rápido à Avenida Washington Soares e ao Centro de Eventos do Ceará.",
+    "preco_m2": 9800,
+    "valorizacao_12m": 8.1,
+    "tempo_medio_venda": 196,
+    "desconto_negociacao": 8.4,
+    "resumo": "O Guararapes registrou preço médio de R$ 9.800 por m² entre julho de 2025 e junho de 2026. O bairro valorizou 8,1% em 12 meses. Imóveis acima de R$ 3 milhões no Guararapes venderam em 196 dias, o maior prazo da base.",
+    "paragrafos": [
+      "O Guararapes oferece a maior área construída por real investido entre os 5 bairros analisados: R$ 9.800 por m², contra R$ 16.800 por m² no Mucuripe.",
+      "O desconto médio de negociação no Guararapes foi de 8,4%, o maior da base. Compradores com horizonte de permanência acima de 10 anos encontram no bairro a maior margem de negociação."
+    ]
+  }
+]

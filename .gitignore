@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# artefatos gerados (o GitHub Actions recompila)
+build/
+dist/
+*.zip
+
+# dados e credenciais locais
+logs/
+.ftp.env
+.env
+
+# editor / sistema
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

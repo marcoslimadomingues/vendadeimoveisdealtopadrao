@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block conteudo %}
+<header class="cabecalho-pagina">
+  <h1>Guias e análises sobre imóveis de alto padrão {{ site.cidade.em }}</h1>
+  <p class="lead">A {{ site.nome }} publica {{ artigos|length }} análises sobre o ecossistema do comprador de imóveis de luxo: liquidez por bairro, tributação por holding familiar e critérios técnicos de acústica, maresia, blindagem e gerador. Cada análise é assinada por um especialista identificado e cita a fonte dos dados.</p>
+</header>
+
+<section aria-labelledby="lista">
+  <h2 id="lista">Todas as análises</h2>
+  <div class="grade">{% for a in artigos %}{{ m.card_artigo(a) }}{% endfor %}</div>
+</section>
+{% endblock %}

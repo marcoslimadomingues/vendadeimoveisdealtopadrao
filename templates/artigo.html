@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}{{ artigo.imagem }}{% endblock %}
+{% block conteudo %}
+{% set a = artigo %}
+<article class="artigo" aria-labelledby="titulo-artigo">
+  <header class="cabecalho-pagina">
+    <p class="card__tipo">{{ a.categoria }} · leitura de {{ a.tempo_leitura }} minutos</p>
+    <h1 id="titulo-artigo">{{ a.titulo }}</h1>
+    <p class="meta">Por <a href="{{ autor.path }}" rel="author">{{ autor.nome }}</a>, {{ autor.cargo|lower }} ({{ autor.credencial.nome }}) · publicado em <time datetime="{{ a.publicado }}">{{ a.publicado|data_extenso }}</time> · atualizado em <time datetime="{{ a.atualizado }}">{{ a.atualizado|data_extenso }}</time></p>
+  </header>
+
+  <section class="resumo" aria-labelledby="resumo-executivo">
+    <h2 id="resumo-executivo">Resumo executivo</h2>
+    <p class="lead">{{ a.resumo }}</p>
+  </section>
+
+  <nav class="sumario" aria-labelledby="sumario">
+    <h2 id="sumario">Nesta análise</h2>
+    <ol>
+      {% for s in a.secoes %}<li><a href="#{{ s.id }}">{{ s.h2 }}</a></li>{% endfor %}
+      {% if a.videos %}<li><a href="#videos">Vídeos com os especialistas</a></li>{% endif %}
+      {% if a.faq %}<li><a href="#perguntas">Perguntas relacionadas</a></li>{% endif %}
+    </ol>
+  </nav>
+
+  {% for s in a.secoes %}
+  <section aria-labelledby="{{ s.id }}">
+    <h2 id="{{ s.id }}">{{ s.h2 }}</h2>
+    {% for p in s.paragrafos %}<p>{{ p|safe }}</p>{% endfor %}
+    {% if s.tabela %}{{ m.tabela(s.tabela) }}{% endif %}
+    {% if s.tabela_dinamica == "bairros" %}{{ m.tabela_bairros(repo.bairros_por_liquidez(), "Liquidez de imóveis acima de " ~ site.limiar_texto ~ " por bairro " ~ site.cidade.em ~ " (" ~ site.periodo_curto ~ ")") }}{% endif %}
+    {% if s.tabela_dinamica == "tecnico" %}{{ m.tabela_tecnica(repo.ativos(), "Acústica, blindagem, gerador e maresia dos imóveis da carteira " ~ site.nome) }}{% endif %}
+    {% if s.respostas_rapidas %}{{ m.respostas_rapidas(s.respostas_rapidas) }}{% endif %}
+  </section>
+  {% endfor %}
+
+  {% if a.videos %}{{ m.videos(a.videos, "videos", "Vídeos com os especialistas") }}{% endif %}
+
+  {% if a.faq %}{{ m.perguntas(a.faq, "perguntas", "Perguntas relacionadas") }}{% endif %}
+
+  {% if a.aviso %}<p class="aviso">{{ a.aviso }}</p>{% endif %}
+
+  <aside class="autor" aria-labelledby="sobre-autor">
+    <h2 id="sobre-autor">Quem assina esta análise</h2>
+    {{ m.card_pessoa(autor) }}
+  </aside>
+</article>
+
+{% if relacionados %}
+<section aria-labelledby="imoveis-citados">
+  <h2 id="imoveis-citados">Imóveis citados nesta análise</h2>
+  <div class="grade">{% for i in relacionados %}{{ m.card_imovel(i) }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

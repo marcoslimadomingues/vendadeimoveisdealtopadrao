@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "milha-de-ouro-fortaleza",
+    "nome": "Milha de ouro de Fortaleza",
+    "subtitulo": "Avenida Beira Mar entre Meireles e Mucuripe",
+    "bairros": [
+      "meireles",
+      "mucuripe"
+    ],
+    "autor": "helena-duarte",
+    "revisor": "marina-albuquerque",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "guias": [
+      "liquidez-imoveis-alto-padrao-por-bairro-fortaleza",
+      "isolamento-acustico-blindagem-gerador-imoveis-luxo",
+      "holding-familiar-imoveis-alto-padrao"
+    ],
+    "fontes": {
+      "dn": {
+        "veiculo": "Diário do Nordeste",
+        "titulo": "Dasart mira 'milha de ouro' em Fortaleza, com metro quadrado acima de R$ 20 mil",
+        "autor": "Victor Ximenes",
+        "publicado": "2026-10-08",
+        "url": "https://diariodonordeste.verdesmares.com.br/opiniao/colunistas/victor-ximenes/dasart-mira-milha-de-ouro-em-fortaleza-com-metro-quadrado-acima-de-r-20-mil-1.3796785"
+      },
+      "op": {
+        "veiculo": "O Povo",
+        "titulo": "Praia de Iracema assume topo do m² mais caro de Fortaleza",
+        "autor": "Isabella Pascoal",
+        "publicado": "2026-09-30",
+        "url": "https://www.opovo.com.br/noticias/economia/2026/09/30/praia-de-iracema-assume-topo-do-m-mais-caro-de-fortaleza.html"
+      }
+    },
+    "metodo_sinduscon": "Valor médio ponderado do metro quadrado privativo de imóveis residenciais verticais, levantamento do Sinduscon-CE com a Comissão de Pesquisa de Mercado Imobiliário (Cpes), conforme descrito pela reportagem do O Povo.",
+    "indicadores": [
+      {
+        "id": "milha",
+        "rotulo": "Eixo Meireles/Beira Mar (milha de ouro)",
+        "valor": 25000,
+        "aproximado": true,
+        "fonte": "dn",
+        "origem": "Sinduscon-CE (segundo a coluna)",
+        "referencia": "Não informada",
+        "nota": "A coluna escreve que o m² \"se aproxima da casa dos R$ 25 mil\"; o título da mesma coluna diz \"acima de R$ 20 mil\". O recorte \"milha de ouro\" não aparece no levantamento de agosto de 2026 divulgado pelo Sinduscon-CE: é valor aproximado de reportagem, não de boletim."
+      },
+      {
+        "id": "beira_mar",
+        "rotulo": "Avenida Beira Mar",
+        "valor": 23892,
+        "fonte": "op",
+        "origem": "Sinduscon-CE",
+        "referencia": "2026-07",
+        "nota": "Liderava isoladamente o ranking em julho. Em agosto não houve recorte separado para a Beira Mar: a reportagem informa que as cotações da orla foram reposicionadas, sem novo valor."
+      },
+      {
+        "id": "praia_iracema",
+        "rotulo": "Praia de Iracema",
+        "valor": 21698,
+        "fonte": "op",
+        "origem": "Sinduscon-CE/Cpes",
+        "referencia": "2026-08",
+        "nota": "Bairro vizinho a oeste. Assumiu o topo do ranking de bairros em agosto."
+      },
+      {
+        "id": "mucuripe",
+        "rotulo": "Mucuripe",
+        "valor": 20529,
+        "fonte": "op",
+        "origem": "Sinduscon-CE/Cpes",
+        "referencia": "2026-08",
+        "nota": ""
+      },
+      {
+        "id": "meireles",
+        "rotulo": "Meireles",
+        "valor": 20391,
+        "fonte": "op",
+        "origem": "Sinduscon-CE/Cpes",
+        "referencia": "2026-08",
+        "valor_anterior": 20083,
+        "variacao_mensal": 1.53,
+        "nota": "Alta de 1,53% sobre julho (R$ 20.083)."
+      },
+      {
+        "id": "fortaleza",
+        "rotulo": "Média de Fortaleza",
+        "valor": 12350,
+        "fonte": "op",
+        "origem": "Sinduscon-CE/Cpes",
+        "referencia": "2026-08",
+        "nota": "Média geral do município."
+      }
+    ],
+    "empreendimentos_citados": [
+      {
+        "nome": "Wave Beira-Mar",
+        "incorporadora": "Dasart",
+        "fonte": "dn"
+      },
+      {
+        "nome": "Mansão Diogo",
+        "incorporadora": "Dasart",
+        "fonte": "dn"
+      },
+      {
+        "nome": "DM 210",
+        "incorporadora": "Dasart, em parceria com a Normatel Incorporações",
+        "fonte": "dn"
+      }
+    ],
+    "nome_curto": "Milha de ouro"
+  }
+]
