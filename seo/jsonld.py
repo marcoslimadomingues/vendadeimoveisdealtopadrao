@@ -283,12 +283,14 @@ class Graph:
         path, b = i["path"], self.repo.bairros[i["bairro"]]
         consultor = self.repo.pessoas[i["consultor"]]
         imagem = self.url(i["imagem"])
+        vendido = bool(i.get("vendido"))
+        resumo = i["resumo_vendido"] if vendido else i["resumo"]
 
         residencia = {
             "@type": i["schema_type"],
             **self.ref(path, "imovel"),
             "name": i["titulo"],
-            "description": i["resumo"],
+            "description": resumo,
             "image": imagem,
             "floorSize": {"@type": "QuantitativeValue", "value": i["area_privativa"],
                           "unitCode": "MTK", "unitText": "m²"},
@@ -318,7 +320,11 @@ class Graph:
                     ("Área do terreno", i.get("area_terreno"), "m²"),
                     ("Condomínio mensal", i.get("condominio_mensal"), "BRL"),
                     ("IPTU anual", i["iptu_anual"], "BRL"),
-                    ("Preço por m²", i["preco_m2"], "BRL/m²"),
+                    ("Situação", "Vendido" if vendido else None, None),
+                    ("Data da venda", i["data_venda"] if vendido else None, None),
+                    ("Dias no mercado", i.get("dias_no_mercado") if vendido else None, "dias"),
+                    ("Valor da venda", i.get("preco_venda_publico") if vendido else None, "BRL"),
+                    ("Preço por m²", None if vendido else i["preco_m2"], "BRL/m²"),
                     ("Isolamento acústico das esquadrias (Rw)", i["tecnico"]["rw_db"], "dB"),
                     ("Nível de blindagem da portaria (ABNT NBR 15000)", i["tecnico"]["blindagem_nivel"], None),
                     ("Potência do gerador", i["tecnico"]["gerador_kva"], "kVA"),
@@ -346,20 +352,21 @@ class Graph:
 
         extra = {
             "datePosted": i["data_publicacao"],
-            "dateModified": i["data_atualizacao"],
+            "dateModified": i["data_venda"] if vendido else i["data_atualizacao"],
             "image": imagem,
             "mainEntity": self.ref(path, "imovel"),
-            "offers": self.ref(path, "oferta"),
             "accountablePerson": self.ref(consultor["path"], "pessoa"),
             "hasPart": [{"@id": q["@id"]} for q in self.perguntas(path, i["faq"])],
         }
-        nodes = [residencia, oferta, self.lugar(b), self.pessoa(consultor),
+        if not vendido:  # vendido não tem oferta: nada de Offer, preço ou disponibilidade
+            extra["offers"] = self.ref(path, "oferta")
+        nodes = [residencia, *([] if vendido else [oferta]), self.lugar(b), self.pessoa(consultor),
                  *self.perguntas(path, i["faq"])]
         if i["videos"]:
             video_nodes, extra["video"] = self.videos(path, i["videos"], {consultor["slug"]})
             nodes += video_nodes
 
-        pagina = self.pagina("RealEstateListing", path, i["titulo"], i["resumo"], crumbs, **extra)
+        pagina = self.pagina("RealEstateListing", path, i["titulo"], resumo, crumbs, **extra)
         return self.render(pagina, self.trilha(path, crumbs), *nodes)
 
     def bairro(self, b: dict, crumbs, titulo: str) -> str:

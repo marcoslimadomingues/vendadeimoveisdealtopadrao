@@ -96,22 +96,24 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         return pagina("imoveis.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
                       jsonld=graph.colecao(path, titulo, descricao, crumbs,
                                            [(i["titulo"], i["path"]) for i in lista]),
-                      imoveis=lista, bairros=repo.bairros_por_liquidez())
+                      imoveis=lista, bairros=repo.bairros_por_liquidez(), vendidos=repo.vendidos())
 
     @app.get("/imoveis/<slug>/")
     def imovel(slug: str):
         i = repo.imovel(slug)
         if i is None:
             abort(404)
-        if i["status"] != "ativo":
-            # Imóvel vendido/removido: HTTP 404 real (nunca soft 404), com alternativas úteis.
+        if i["status"] != "ativo" and not i.get("vendido"):
+            # Vendido com ficha completa segue no ar (200, marcado como vendido). Vendido só com registro
+            # mínimo ou removido: HTTP 404 real (nunca soft 404), com alternativas úteis.
             return pagina("404.html", path=request.path, titulo="Imóvel vendido", descricao="",
                           jsonld=None, status=404, vendido=i,
                           alternativas=repo.ativos(i["bairro"]) or repo.ativos()[:3])
         b = repo.bairros[i["bairro"]]
         crumbs = [("Início", "/"), ("Imóveis à venda", "/imoveis/"), (b["nome"], b["path"]), (i["titulo"], i["path"])]
         return pagina("imovel.html", path=i["path"], titulo=titulos[i["path"]],
-                      descricao=i["resumo"][:300], crumbs=crumbs, jsonld=graph.imovel(i, crumbs),
+                      descricao=(i.get("resumo_vendido") or i["resumo"])[:300], crumbs=crumbs,
+                      jsonld=graph.imovel(i, crumbs),
                       imovel=i, bairro=b, consultor=repo.pessoas[i["consultor"]],
                       artigos=repo.artigos_sobre_imovel(slug))
 
@@ -212,6 +214,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         """Resumo em texto para agentes de IA (convenção llmstxt.org): quem somos, fatos e páginas-chave."""
         return Response(render_template("llms.txt", paginas=repo.paginas_indexaveis(), pilares=repo.pilares.values(),
                                         bairros=repo.bairros_por_liquidez(), imoveis=repo.ativos(),
+                                        vendidos=repo.vendidos(),
                                         artigos=repo.artigos_recentes(), faq=repo.faq_institucional()),
                         mimetype="text/plain")
 

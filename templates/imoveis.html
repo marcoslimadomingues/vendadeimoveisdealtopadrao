@@ -51,6 +51,14 @@
   </div>
 </section>
 
+{% if vendidos %}
+<section aria-labelledby="vendidos">
+  <h2 id="vendidos">Vendidos recentemente {{ site.cidade.em }}</h2>
+  <p>Imóveis da carteira da {{ site.nome }} que já foram vendidos. As fichas permanecem no ar com os dados técnicos e o tempo de venda.</p>
+  <div class="grade">{% for i in vendidos %}{{ m.card_vendido(i) }}{% endfor %}</div>
+</section>
+{% endif %}
+
 <section aria-labelledby="antes-de-comprar">
   <h2 id="antes-de-comprar">Antes de comprar: guias técnicos, jurídicos e de mercado</h2>
   <div class="grade">{% for a in repo.artigos_recentes() %}{{ m.card_artigo(a) }}{% endfor %}</div>

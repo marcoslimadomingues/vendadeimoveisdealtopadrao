@@ -27,7 +27,11 @@
 
 {% for i in imoveis %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): {{ i.preco|brl }} · {{ i.area_privativa|num }} m² · {{ i.preco_m2|brl }}/m²
 {% endfor %}
-## Guias
+{% if vendidos %}## Vendidos recentemente
+
+{% for i in vendidos %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): vendido em {{ i.data_venda|data_extenso }}{% if i.dias_no_mercado %} após {{ i.dias_no_mercado|num }} dias no mercado{% endif %}
+{% endfor %}
+{% endif %}## Guias
 
 {% for a in artigos %}- [{{ a.titulo }}]({{ base }}{{ a.path }}): {{ a.descricao }}
 {% endfor %}

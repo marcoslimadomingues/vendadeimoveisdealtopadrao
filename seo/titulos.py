@@ -30,6 +30,7 @@ def titulos_paginas(repo: Repo) -> dict[str, str]:
         "/contato/": f"Contato e endereço da {s['nome']}: WhatsApp, e-mail e {s['endereco']['bairro']}, {cid['nome']}",
     }
     t.update({i["path"]: f"{i['titulo']} — {i['codigo']}" for i in repo.ativos()})
+    t.update({i["path"]: f"{i['titulo']} — {i['codigo']} (vendido)" for i in repo.vendidos()})
     t.update({b["path"]: f"Imóveis de alto padrão {b['em']}: preço por m², valorização e liquidez"
               for b in repo.bairros.values()})
     t.update({a["path"]: a["titulo"] for a in repo.artigos.values()})

@@ -80,7 +80,13 @@ tests/                  testes de contrato (HTTP, JSON-LD, mobile, publicação,
 
 - **Novo imóvel:** `data/imoveis.json` (`referencia`, `tecnico`, `amenidades` com as 3 obrigatórias).
   Preço/m², custos, ITBI e FAQ são calculados; o teste confere o resumo.
-- **Imóvel vendido:** `status: "vendido"` + `data_venda`: a URL passa a dar 404 e sai do sitemap.
+- **Imóvel vendido (ficha mantida):** troque `status` para `"vendido"` e acrescente `data_venda`; o resto da
+  ficha fica como está. A URL segue em 200, indexável e no sitemap, com selo "Vendido", sem preço anunciado,
+  sem `Offer` no JSON-LD, FAQ de situação e alternativas. Opcionais: `dias_no_mercado` e, só com autorização
+  do proprietário, `preco_venda` + `preco_venda_autorizado: true` (mostra o valor e o % do preço anunciado;
+  o percentual revela o valor, por isso segue a mesma autorização). Guias que citam o imóvel continuam válidos.
+- **Imóvel retirado (sem ficha):** `status: "vendido"` só com `codigo`, `titulo`, `bairro` e `data_venda`
+  (sem `resumo`) devolve 404 real e sai do sitemap.
 - **Vídeos:** `videos: [...]` com `youtube_id` (11 caracteres), `tipo`, `apresentador`, `duracao`
   (ISO 8601) e `data_upload`. Os `SUBSTITUA..` são provisórios.
 - **Respostas rápidas:** `secoes[].respostas_rapidas` nos guias; viram `<dl>` visível e `Question` no JSON-LD.

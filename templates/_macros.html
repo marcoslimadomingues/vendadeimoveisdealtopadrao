@@ -1,6 +1,7 @@
 {# Componentes reutilizáveis. Todo dado é visível no DOM: sem abas, accordions ou dropdowns. #}
 
 {% macro card_imovel(i, nivel=3) %}
+{% if i.vendido %}{{ card_vendido(i, nivel) }}{% else %}
 {% set b = repo.bairros[i.bairro] %}
 <article class="card">
   <img src="{{ i.imagem }}" alt="{{ i.imagem_alt }}" width="1200" height="800" loading="lazy" decoding="async">
@@ -16,6 +17,25 @@
       <div><dt>Custo fixo mensal</dt><dd>{{ i.custo_mensal|brl }}</dd></div>
     </dl>
     <p class="card__tec">Rw {{ i.tecnico.rw_db }} dB · Blindagem {{ i.tecnico.blindagem_nivel }} · Gerador {{ i.tecnico.gerador_cobertura_pct }}%</p>
+  </div>
+</article>
+{% endif %}
+{% endmacro %}
+
+{# Imóvel vendido: sem preço anunciado. Valor da venda só se autorizado (preco_venda_autorizado). #}
+{% macro card_vendido(i, nivel=3) %}
+{% set b = repo.bairros[i.bairro] %}
+<article class="card card--vendido">
+  <img src="{{ i.imagem }}" alt="{{ i.imagem_alt }}" width="1200" height="800" loading="lazy" decoding="async">
+  <div class="card__corpo">
+    <p class="card__tipo">Vendido em <time datetime="{{ i.data_venda }}">{{ i.data_venda|data_extenso }}</time> · {{ b.nome }} · {{ i.codigo }}</p>
+    <h{{ nivel }} class="card__titulo"><a href="{{ i.path }}">{{ i.titulo }}</a></h{{ nivel }}>
+    <dl class="fatos">
+      <div><dt>Área privativa</dt><dd>{{ i.area_privativa|num }} m²</dd></div>
+      <div><dt>Suítes</dt><dd>{{ i.suites }}</dd></div>
+      {% if i.dias_no_mercado %}<div><dt>Tempo no mercado</dt><dd>{{ i.dias_no_mercado|num }} dias</dd></div>{% endif %}
+      {% if i.preco_venda_publico %}<div><dt>Valor da venda</dt><dd>{{ i.preco_venda_publico|brl }}</dd></div>{% endif %}
+    </dl>
   </div>
 </article>
 {% endmacro %}
