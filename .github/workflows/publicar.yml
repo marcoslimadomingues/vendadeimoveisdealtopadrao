@@ -2,10 +2,10 @@ name: Testar e publicar no GitHub Pages
 
 # site     : roda em push e em pull request. Testa, confere dados provisórios, descobre o endereço
 #            do Pages, gera o site estático e guarda o artefato.
-# publicar : só em push/dispatch na main. Publica no GitHub Pages quando o Pages já estiver
-#            ativado com origem "GitHub Actions" (senão apenas avisa e termina com sucesso).
+# publicar : só em push/dispatch na main. Garante que a origem do Pages seja "GitHub Actions"
+#            (troca sozinho se estiver em "Deploy from a branch") e publica o site compilado.
 #
-# Uma vez (Settings > Pages): Source = "GitHub Actions"; em "Custom domain", seu domínio.
+# Domínio próprio: Settings > Pages > Custom domain.
 # Variáveis opcionais (Settings > Secrets and variables > Actions > Variables):
 #   SITE_URL            força a URL de build (padrão: a que o próprio Pages informa)
 #   EXIGIR_DADOS_REAIS  "true": bloqueia a publicação enquanto houver dado provisório
@@ -89,7 +89,7 @@ jobs:
 
   publicar:
     needs: site
-    if: github.event_name != 'pull_request' && needs.site.outputs.pages_ativo == 'true'
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -108,6 +108,29 @@ jobs:
             exit 1
           fi
 
+      - name: Garantir a origem "GitHub Actions" no Pages
+        id: origem
+        env:
+          GH_TOKEN: ${{ github.token }}
+          API: https://api.github.com/repos/${{ github.repository }}/pages
+        run: |
+          h=(-H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json")
+          # 204 = atualizado; 404 = Pages ainda não existe (cria); 409/422 costumam indicar que já está assim
+          code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' -X PUT "${h[@]}" "$API" -d '{"build_type":"workflow"}' || echo 000)
+          if [ "$code" = "404" ]; then
+            code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' -X POST "${h[@]}" "$API" -d '{"build_type":"workflow"}' || echo 000)
+          fi
+          echo "resposta da API do Pages: HTTP $code"
+          case "$code" in
+            200|201|204) echo "ok=true" >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "ok=false" >> "$GITHUB_OUTPUT"
+              cat /tmp/pages.json; echo
+              echo "::error::Não consegui trocar a origem do Pages (HTTP $code). Faça uma vez: Settings > Pages > Build and deployment > Source = GitHub Actions."
+              exit 1 ;;
+          esac
+
       - name: Publicar no GitHub Pages
         id: deployment
+        if: steps.origem.outputs.ok == 'true'
         uses: actions/deploy-pages@v4

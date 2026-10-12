@@ -98,7 +98,8 @@ def test_workflow_publica_so_na_main_e_so_com_pages_ativo():
     site, publicar = wf.split("\n  publicar:\n")
     assert "pull_request:" in wf
     assert "secrets." not in wf, "o site é publicado sem segredos"
-    assert "github.event_name != 'pull_request'" in publicar and "pages_ativo == 'true'" in publicar
+    assert "github.event_name != 'pull_request'" in publicar
+    assert '"build_type":"workflow"' in publicar, "o job de publicação troca a origem do Pages sozinho"
     assert "pages: write" in publicar and "pages: write" not in site
     assert "actions/deploy-pages@v4" in publicar and "actions/upload-pages-artifact@v3" in site
     assert "SITE_NOINDEX" in site and "EXIGIR_DADOS_REAIS" in publicar
