@@ -68,6 +68,8 @@ jobs:
           fi
           url="${SITE_URL_VAR:-${url%/}}"
           url="${url:-https://vendadeimoveisdealtopadrao.com.br}"
+          # antes do certificado ficar pronto a API informa http://; o site sempre é publicado em https
+          url="https://${url#*://}"
           echo "ativo=$ativo" >> "$GITHUB_OUTPUT"
           echo "url=${url%/}" >> "$GITHUB_OUTPUT"
           echo "Pages ativo: $ativo | URL de build: ${url%/}"

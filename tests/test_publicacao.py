@@ -102,6 +102,7 @@ def test_workflow_publica_so_na_main_e_so_com_pages_ativo():
     assert "pages: write" in publicar and "pages: write" not in site
     assert "actions/deploy-pages@v4" in publicar and "actions/upload-pages-artifact@v3" in site
     assert "SITE_NOINDEX" in site and "EXIGIR_DADOS_REAIS" in publicar
+    assert 'url="https://${url#*://}"' in site, "a API do Pages pode informar http:// antes do certificado"
     assert "permissions:\n  contents: read" in wf
 
 
