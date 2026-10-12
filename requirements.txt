@@ -1,5 +1,5 @@
 Flask>=3.0,<4
 waitress>=3.0
-pytest>=8
+pytest>=9.1.1
 # Opcional — embeddings densos no tools/semantic_audit.py:
 # sentence-transformers>=3
