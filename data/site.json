@@ -2,16 +2,16 @@
   "_aviso": "DADOS ILUSTRATIVOS. Substitua empresa, CRECI, CNPJ, métricas, preços, perfis sociais e IDs de vídeo por dados reais e verificáveis antes de publicar. Dados fictícios publicados como reais destroem os sinais de E-E-A-T.",
   "base_url": "https://vendadeimoveisdealtopadrao.com.br",
   "nome": "Alto Padrão Imóveis",
-  "razao_social": "Alto Padrão Negócios Imobiliários Ltda.",
+  "razao_social": "Marcos Lima Domingues",
   "descricao": "Imobiliária especializada em imóveis de altíssimo padrão em Fortaleza, com atuação exclusiva em coberturas, apartamentos à beira-mar e casas em condomínio acima de R$ 3 milhões.",
-  "creci": "CRECI-CE J-0000",
+  "creci": "CRECI-CE J-4858",
   "creci_orgao": "CRECI-CE",
-  "cnpj": "00.000.000/0001-00",
+  "cnpj": "42.451.913/0001-74",
   "fundacao": "2011",
-  "telefone": "+55 85 0000-0000",
-  "telefone_link": "+558500000000",
-  "whatsapp": "5585900000000",
-  "email": "contato@altopadrao.example",
+  "telefone": "+55 85 98863-1025",
+  "telefone_link": "+5585988631025",
+  "whatsapp": "5585988631025",
+  "email": "contato@vendadeimoveisdealtopadrao.com.br",
   "horario": "Mo-Fr 09:00-18:00",
   "horario_texto": "Segunda a sexta, das 9h às 18h",
   "faixa_preco": "R$ 3 milhões a R$ 15 milhões",
@@ -36,22 +36,19 @@
     "regra_reducao": "Com o pagamento antecipado nos prazos da Lei Complementar municipal 159/2013 (Código Tributário de Fortaleza), a alíquota é reduzida para 2% e"
   },
   "endereco": {
-    "rua": "Avenida Beira Mar, 0000",
+    "rua": "Avenida Beira Mar, 1497",
     "bairro": "Meireles",
     "cidade": "Fortaleza",
     "uf": "CE",
-    "cep": "60165-121",
+    "cep": "60165-120",
     "pais": "BR"
   },
   "geo": {
-    "lat": -3.7253,
-    "lng": -38.496
+    "lat": -3.7257,
+    "lng": -38.4968
   },
-  "sameAs": [
-    "https://www.linkedin.com/company/exemplo-alto-padrao",
-    "https://www.youtube.com/@exemplo-alto-padrao",
-    "https://www.instagram.com/exemplo.altopadrao"
-  ],
+  "mapa_url": "https://www.openstreetmap.org/?mlat=-3.7257&mlon=-38.4968#map=17/-3.7257/-38.4968",
+  "sameAs": [],
   "entidade_central": {
     "nome": "Imóveis de Alto Padrão em Fortaleza",
     "descricao": "Coberturas, apartamentos à beira-mar e casas em condomínio acima de R$ 3 milhões nos bairros Mucuripe, Meireles, Cocó, Aldeota e Guararapes, em Fortaleza, Ceará."

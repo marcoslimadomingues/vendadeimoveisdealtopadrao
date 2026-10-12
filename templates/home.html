@@ -8,6 +8,7 @@
   <ul class="acoes">
     <li><a class="botao" href="/imoveis/">Ver os {{ imoveis|length }} imóveis à venda</a></li>
     <li><a class="botao botao--sec" href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">Liquidez por bairro 2025–2026</a></li>
+    <li><a class="botao botao--sec" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Olá! Vim pelo site da ' ~ site.nome ~ ' e gostaria de falar com um consultor.')|urlencode }}">Falar com um consultor no WhatsApp</a></li>
   </ul>
 </section>
 
@@ -49,4 +50,7 @@
     {% for p in pessoas %}{{ m.card_pessoa(p) }}{% endfor %}
   </div>
 </section>
+
+{{ m.perguntas(faq, "perguntas-frequentes", "Perguntas frequentes sobre a " ~ site.nome ~ " e o mercado " ~ site.cidade.de) }}
+<p class="fonte">Dúvidas que não estão aqui? <a href="/contato/">Fale com a equipe</a>.</p>
 {% endblock %}

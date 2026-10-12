@@ -94,6 +94,17 @@ indicador sem fonte ou sem data. Mapa e ruas: `python tools/mapa_milha_de_ouro.p
 `baixar` (consulta o OpenStreetMap). Prédios reais só com nome e fonte; preço, metragem e entrega
 exigem dado verificado.
 
+### SEO, GEO, AEO e SXO
+
+- **Entidade e contato:** `data/site.json` alimenta rodapé, `/sobre/`, `/contato/` e o nó `Organization`
+  (`identifier` CNPJ/CRECI, `contactPoint`, `openingHoursSpecification`, `hasMap`). `sameAs` só aparece com perfil real.
+- **AEO:** FAQ da home gerada de `Repo.faq_institucional()` (endereço, contato, ITBI, prazo por bairro), visível
+  na página e em `FAQPage`; guias e pilar já trazem as suas.
+- **GEO:** `/llms.txt` (resumo para agentes de IA, só na raiz do domínio) e `robots.txt` liberando os crawlers de IA.
+- **SXO:** CTA de WhatsApp na abertura da home, barra fixa no celular, `/contato/` com endereço e "Como chegar".
+- **Compartilhamento:** `og:image` em PNG 1200×630 (`static/img/og-marca.png`, gerado de `og-marca.svg`); SVG
+  de página cai na marca pelo filtro `og_png`. Tags `twitter:*`, `hreflang` e `geo.*` em todas as páginas.
+
 ### Celular (mobile-first)
 
 Tabelas com 3+ colunas viram cartões até 40 rem (`rotular_tabelas` + `table.empilhar`); menu em uma linha

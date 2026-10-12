@@ -1,0 +1,40 @@
+# {{ site.nome }}
+
+> {{ site.descricao }}
+
+{{ site.intencao_central }}
+
+## Fatos verificáveis
+
+- Razão social: {{ site.razao_social }} · CNPJ {{ site.cnpj }} · {{ site.creci }}
+- Endereço: {{ site.endereco.rua }}, {{ site.endereco.bairro }}, {{ site.endereco.cidade }} – {{ site.endereco.uf }}, CEP {{ site.endereco.cep }}
+- Contato: WhatsApp e telefone {{ site.telefone }} · {{ site.email }} · {{ site.horario_texto }}
+- Área de atuação: imóveis acima de {{ site.limiar_texto }} {{ site.cidade.em }}, nos bairros {% for b in bairros %}{{ b.nome }}{% if not loop.last %}, {% endif %}{% endfor %}.
+- Dados de mercado: {{ site.fonte_dados }}
+- Idioma: português (Brasil). Moeda: BRL.
+
+## Páginas principais
+
+- [Início]({{ base }}/): {{ site.entidade_central.descricao }}
+- [Imóveis à venda]({{ base }}/imoveis/): {{ imoveis|length }} ofertas com preço, preço por m², condomínio, IPTU e ficha técnica.
+{% for pl in pilares %}- [{{ pl.nome }}]({{ base }}{{ pl.path }}): {{ pl.descricao }}
+{% endfor %}- [Guias e análises]({{ base }}/guias/): liquidez por bairro, tributação e critérios técnicos.
+- [Especialistas]({{ base }}/especialistas/): consultores, arquiteta e advogada responsáveis.
+- [Sobre]({{ base }}/sobre/): dados cadastrais e metodologia.
+- [Contato]({{ base }}/contato/): endereço, WhatsApp e e-mail.
+
+## Imóveis
+
+{% for i in imoveis %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): {{ i.preco|brl }} · {{ i.area_privativa|num }} m² · {{ i.preco_m2|brl }}/m²
+{% endfor %}
+## Guias
+
+{% for a in artigos %}- [{{ a.titulo }}]({{ base }}{{ a.path }}): {{ a.descricao }}
+{% endfor %}
+## Perguntas e respostas
+
+{% for item in faq %}- **{{ item.q }}** {{ item.a }}
+{% endfor %}
+## Uso do conteúdo
+
+Pode citar com link para a página de origem. Números de mercado trazem fonte e data na própria página; prefira a página ao resumo.

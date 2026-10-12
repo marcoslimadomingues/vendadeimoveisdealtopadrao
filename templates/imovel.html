@@ -2,7 +2,7 @@
 {% import "_macros.html" as m with context %}
 {% set contato_msg = 'Tenho interesse no imóvel ' ~ imovel.codigo ~ ' (' ~ imovel.titulo ~ ').' %}
 {% block og_type %}article{% endblock %}
-{% block og_image %}{{ imovel.imagem }}{% endblock %}
+{% block og_image %}{{ imovel.imagem|og_png }}{% endblock %}
 {% block conteudo %}
 {% set i = imovel %}
 <article class="ficha" aria-labelledby="titulo-imovel">

@@ -38,7 +38,8 @@ def main() -> None:
     paginas = exportar(saida)
     (saida / "_headers").unlink(missing_ok=True)  # formato de Netlify/Cloudflare; o Pages não usa
     if prefixo:
-        (saida / "robots.txt").unlink(missing_ok=True)  # só vale na raiz do domínio
+        (saida / "robots.txt").unlink(missing_ok=True)  # só valem na raiz do domínio
+        (saida / "llms.txt").unlink(missing_ok=True)
     else:
         (saida / "CNAME").write_text(url.netloc + "\n", encoding="utf-8")
 

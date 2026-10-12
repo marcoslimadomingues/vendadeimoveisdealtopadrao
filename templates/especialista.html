@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block og_type %}profile{% endblock %}
-{% block og_image %}{{ pessoa.foto }}{% endblock %}
+{% block og_image %}{{ pessoa.foto|og_png }}{% endblock %}
 {% block conteudo %}
 {% set p = pessoa %}
 <article class="perfil" aria-labelledby="nome">

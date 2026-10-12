@@ -240,12 +240,43 @@ class Repo:
     def bairros_por_liquidez(self) -> list[dict]:
         return sorted(self.bairros.values(), key=lambda b: b["tempo_medio_venda"])
 
+    def faq_institucional(self) -> list[dict]:
+        """Perguntas que o comprador faz sobre a empresa e o mercado, respondidas só com dados do site.json.
+
+        Valores (preços, prazos, alíquotas, endereço) saem dos mesmos dados das páginas: nada digitado à mão.
+        """
+        from .formatting import brl
+
+        s, cid, e = self.site, self.site["cidade"], self.site["endereco"]
+        ativos = self.ativos()
+        liquidez = self.bairros_por_liquidez()
+        rapido, lento = liquidez[0], liquidez[-1]
+        nomes = [b["nome"] for b in liquidez]
+        bairros_txt = ", ".join(nomes[:-1]) + " e " + nomes[-1]
+        itbi = s["itbi"]
+        return [
+            {"q": f"O que é a {s['nome']}?",
+             "a": f"{s['contexto_fonte'][0]} Registro {s['creci']}, CNPJ {s['cnpj']}, escritório na {e['rua']}, {e['bairro']}, {e['cidade']} ({e['uf']})."},
+            {"q": f"Onde fica o escritório da {s['nome']} {cid['em']}?",
+             "a": f"Na {e['rua']}, bairro {e['bairro']}, {e['cidade']} – {e['uf']}, CEP {e['cep']}. Atendimento {s['horario_texto'].lower()}."},
+            {"q": "Como falar com um consultor?",
+             "a": f"Pelo WhatsApp e telefone {s['telefone']} ou pelo e-mail {s['email']}. {s['horario_texto']}."},
+            {"q": f"Quais imóveis a {s['nome']} vende {cid['em']}?",
+             "a": f"Imóveis acima de {s['limiar_texto']}: a carteira atual tem {len(ativos)} ofertas entre {brl(ativos[-1]['preco'])} e {brl(ativos[0]['preco'])}, nos bairros {bairros_txt}."},
+            {"q": f"Qual bairro de alto padrão {cid['em']} vende mais rápido?",
+             "a": f"{rapido['nome']}: {rapido['tempo_medio_venda']} dias de prazo médio de venda {s['periodo_texto']}. O maior prazo foi {lento['nome']}, com {lento['tempo_medio_venda']} dias."},
+            {"q": f"Qual a alíquota do ITBI {cid['em']}?",
+             "a": f"A alíquota do ITBI {cid['em']} é de {itbi['aliquota_texto']} sobre o valor do imóvel, conforme os parâmetros deste site. Há alíquota reduzida de {itbi['aliquota_antecipada'] * 100:g}% no pagamento antecipado dentro dos prazos da Lei Complementar municipal 159/2013. Confirme valores e prazos com a Prefeitura ou com seu advogado antes de fechar negócio."},
+            {"q": "Os preços por m² são de que fonte e período?",
+             "a": f"{s['fonte_dados']} No pilar de mercado, cada indicador traz fonte, data e link da publicação original."},
+        ]
+
     def paginas_indexaveis(self) -> list[tuple[str, str | None]]:
         """(path, lastmod) de todas as URLs que devem responder HTTP 200."""
         ult_imovel = max(i["data_atualizacao"] for i in self.ativos())
         ult_artigo = max(a["atualizado"] for a in self.artigos.values())
         paginas = [("/", max(ult_imovel, ult_artigo)), ("/imoveis/", ult_imovel),
-                   ("/guias/", ult_artigo), ("/especialistas/", None), ("/sobre/", None)]
+                   ("/guias/", ult_artigo), ("/especialistas/", None), ("/sobre/", None), ("/contato/", None)]
         paginas += [(i["path"], i["data_atualizacao"]) for i in self.ativos()]
         paginas += [(b["path"], ult_imovel) for b in self.bairros.values()]
         paginas += [(a["path"], a["atualizado"]) for a in self.artigos_recentes()]

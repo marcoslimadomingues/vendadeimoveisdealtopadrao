@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block conteudo %}
+<header class="cabecalho-pagina">
+  <h1>Contato e endereço da {{ site.nome }} {{ site.cidade.em }}</h1>
+  <p class="lead">Fale com um consultor da {{ site.nome }} pelo WhatsApp, telefone ou e-mail. O escritório fica na {{ site.endereco.rua }}, bairro {{ site.endereco.bairro }}, {{ site.endereco.cidade }} – {{ site.endereco.uf }}. {{ site.horario_texto }}.</p>
+  <ul class="acoes">
+    <li><a class="botao" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Olá! Vim pelo site da ' ~ site.nome ~ ' e gostaria de falar com um consultor.')|urlencode }}">Chamar no WhatsApp</a></li>
+    <li><a class="botao botao--sec" href="tel:{{ site.telefone_link }}">Ligar {{ site.telefone|tel }}</a></li>
+  </ul>
+</header>
+
+<section aria-labelledby="canais">
+  <h2 id="canais">Canais de atendimento</h2>
+  <dl class="fatos">
+    <div><dt>WhatsApp e telefone</dt><dd><a href="tel:{{ site.telefone_link }}">{{ site.telefone|tel }}</a></dd></div>
+    <div><dt>E-mail</dt><dd><!--email_off--><a href="mailto:{{ site.email }}">{{ site.email }}</a><!--/email_off--></dd></div>
+    <div><dt>Horário</dt><dd>{{ site.horario_texto }}</dd></div>
+    <div><dt>Idioma</dt><dd>Português (Brasil)</dd></div>
+  </dl>
+</section>
+
+<section aria-labelledby="endereco">
+  <h2 id="endereco">Endereço do escritório</h2>
+  <address>
+    {{ site.razao_social }} ({{ site.nome }})<br>
+    {{ site.endereco.rua }}, {{ site.endereco.bairro }}<br>
+    {{ site.endereco.cidade }} – {{ site.endereco.uf }}, CEP {{ site.endereco.cep }}
+  </address>
+  <p>O escritório está na Avenida Beira Mar, em Fortaleza, a avenida da <a href="/milha-de-ouro-fortaleza/">Milha de ouro</a> (Meireles e Mucuripe). <a href="{{ site.mapa_url }}" rel="noopener">Ver no mapa (OpenStreetMap)</a>.</p>
+</section>
+
+<section aria-labelledby="registro">
+  <h2 id="registro">Registro e dados cadastrais</h2>
+  <dl class="fatos">
+    <div><dt>Registro</dt><dd>{{ site.creci }} ({{ site.creci_orgao }})</dd></div>
+    <div><dt>CNPJ</dt><dd>{{ site.cnpj }}</dd></div>
+    <div><dt>Razão social</dt><dd>{{ site.razao_social }}</dd></div>
+  </dl>
+</section>
+
+<section aria-labelledby="atendimento">
+  <h2 id="atendimento">O que a equipe resolve no primeiro contato</h2>
+  <ul class="lista-fatos">
+    <li>Visita e ficha técnica de qualquer um dos {{ imoveis|length }} imóveis da carteira, com preço, custo fixo mensal e ITBI estimado.</li>
+    <li>Avaliação do seu imóvel com base no preço por m² por bairro e fonte, publicado em <a href="/imoveis/">Imóveis à venda</a> e no <a href="/milha-de-ouro-fortaleza/">pilar Milha de ouro</a>.</li>
+    <li>Dúvidas de compra, tributação e holding, respondidas em <a href="/guias/">Guias e análises</a> ou pelos <a href="/especialistas/">especialistas</a>.</li>
+  </ul>
+</section>
+{% endblock %}

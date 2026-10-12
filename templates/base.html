@@ -11,6 +11,8 @@
 {% else %}
 <meta name="robots" content="{{ meta_robots }}">
 <link rel="canonical" href="{{ canonical }}">
+<link rel="alternate" hreflang="pt-BR" href="{{ canonical }}">
+<link rel="alternate" hreflang="x-default" href="{{ canonical }}">
 {% endif %}
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="{{ site.nome }}">
@@ -18,8 +20,23 @@
 <meta property="og:title" content="{{ titulo }}">
 {% if descricao %}<meta property="og:description" content="{{ descricao }}">{% endif %}
 <meta property="og:url" content="{{ canonical }}">
-<meta property="og:image" content="{{ base }}{% block og_image %}/static/img/og-default.svg{% endblock %}">
+{# WhatsApp, Facebook e LinkedIn não exibem SVG: as páginas passam a imagem por |og_png, que cai na marca (PNG 1200×630) #}
+{% set og_img = self.og_image()|trim %}
+<meta property="og:image" content="{{ base }}{% block og_image %}/static/img/og-marca.png{% endblock %}">
+{% if og_img == '/static/img/og-marca.png' %}
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+{% endif %}
+<meta property="og:image:alt" content="{{ site.nome }}: {{ site.entidade_central.nome }}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ titulo }}">
+{% if descricao %}<meta name="twitter:description" content="{{ descricao }}">{% endif %}
+<meta name="twitter:image" content="{{ base }}{{ og_img }}">
+<meta name="author" content="{{ site.nome }}">
+<meta name="geo.region" content="BR-{{ site.cidade.uf }}">
+<meta name="geo.placename" content="{{ site.cidade.nome }}">
+<meta name="geo.position" content="{{ site.geo.lat }};{{ site.geo.lng }}">
+<meta name="ICBM" content="{{ site.geo.lat }}, {{ site.geo.lng }}">
 <meta name="theme-color" content="#1c1a17">
 <link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/static/css/style.css?v={{ static_v }}">
@@ -45,6 +62,7 @@
         <li><a href="/guias/"{% if path.startswith('/guias/') %} aria-current="page"{% endif %}>Guias e análises</a></li>
         <li><a href="/especialistas/"{% if path.startswith('/especialistas/') %} aria-current="page"{% endif %}>Especialistas</a></li>
         <li><a href="/sobre/"{% if path == '/sobre/' %} aria-current="page"{% endif %}>Sobre</a></li>
+        <li><a href="/contato/"{% if path == '/contato/' %} aria-current="page"{% endif %}>Contato</a></li>
       </ul>
     </nav>
   </div>
@@ -73,7 +91,8 @@
       <address>
         {{ site.endereco.rua }}, {{ site.endereco.bairro }}<br>
         {{ site.endereco.cidade }} – {{ site.endereco.uf }}, CEP {{ site.endereco.cep }}<br>
-        Telefone: <a href="tel:{{ site.telefone_link }}">{{ site.telefone|tel }}</a><br>
+        <a href="{{ site.mapa_url }}" rel="noopener">Como chegar (OpenStreetMap)</a><br>
+        Telefone e WhatsApp: <a href="tel:{{ site.telefone_link }}">{{ site.telefone|tel }}</a><br>
         E-mail: <!--email_off--><a href="mailto:{{ site.email }}">{{ site.email }}</a><!--/email_off--><br>
         {{ site.horario_texto }}
       </address>

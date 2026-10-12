@@ -10,12 +10,27 @@ Os nós se referenciam por @id, formando um grafo de entidades conectado.
 from __future__ import annotations
 
 import json
+import re
 
 from .content import Repo
 
 SCHEMA = "https://schema.org"
 LANG = "pt-BR"
 AMENIDADES_OBRIGATORIAS = ("Isolamento Acústico Europeu", "Portaria Blindada", "Gerador Total")
+
+
+DIAS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+SIGLAS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+
+
+def horario_estruturado(horario: str) -> list[dict]:
+    """'Mo-Fr 09:00-18:00' (formato de openingHours) -> OpeningHoursSpecification."""
+    m = re.fullmatch(r"(Mo|Tu|We|Th|Fr|Sa|Su)(?:-(Mo|Tu|We|Th|Fr|Sa|Su))? (\d\d:\d\d)-(\d\d:\d\d)", horario)
+    if not m:
+        raise ValueError(f"horario fora do formato 'Mo-Fr 09:00-18:00': {horario!r}")
+    ini, fim = SIGLAS.index(m[1]), SIGLAS.index(m[2] or m[1])
+    return [{"@type": "OpeningHoursSpecification", "dayOfWeek": DIAS[ini:fim + 1],
+             "opens": m[3], "closes": m[4]}]
 
 
 class Graph:
@@ -64,8 +79,21 @@ class Graph:
             "image": self.ref("/", "logo"),
             "foundingDate": s["fundacao"],
             "taxID": s["cnpj"],
+            "vatID": s["cnpj"],
+            "identifier": [
+                {"@type": "PropertyValue", "propertyID": "CNPJ", "value": s["cnpj"]},
+                {"@type": "PropertyValue", "propertyID": s["creci_orgao"], "value": s["creci"]},
+            ],
             "telephone": s["telefone"],
             "email": s["email"],
+            "contactPoint": [{
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "telephone": s["telefone"],
+                "email": s["email"],
+                "areaServed": "BR",
+                "availableLanguage": ["pt-BR"],
+            }],
             "address": {
                 "@type": "PostalAddress",
                 "streetAddress": e["rua"],
@@ -75,7 +103,9 @@ class Graph:
                 "addressCountry": e["pais"],
             },
             "geo": {"@type": "GeoCoordinates", "latitude": s["geo"]["lat"], "longitude": s["geo"]["lng"]},
+            "hasMap": s["mapa_url"],
             "openingHours": s["horario"],
+            "openingHoursSpecification": horario_estruturado(s["horario"]),
             "priceRange": s["faixa_preco"],
             "areaServed": self.cidade(),
             "knowsAbout": [s["entidade_central"]["nome"], *(b["nome"] for b in self.repo.bairros.values()),
@@ -87,7 +117,7 @@ class Graph:
                 "recognizedBy": {"@type": "Organization", "name": s["creci_orgao"]},
             },
             "employee": [self.ref(p["path"], "pessoa") for p in self.repo.pessoas.values()],
-            "sameAs": s["sameAs"],
+            **({"sameAs": s["sameAs"]} if s["sameAs"] else {}),
         }
 
     def _website(self) -> dict:
@@ -231,10 +261,17 @@ class Graph:
         imoveis = self.repo.ativos()
         lista = self.lista(path, "destaques", "Imóveis de altíssimo padrão em destaque",
                            [(i["titulo"], i["path"]) for i in imoveis])
-        pagina = self.pagina("WebPage", path, titulo, descricao,
+        perguntas = self.perguntas(path, self.repo.faq_institucional())
+        pagina = self.pagina(["WebPage", "FAQPage"], path, titulo, descricao,
                              mainEntity={"@id": lista["@id"]},
-                             significantLink=[self.url(p) for p in ("/imoveis/", "/guias/", "/especialistas/")])
-        return self.render(pagina, lista)
+                             hasPart=[{"@id": q["@id"]} for q in perguntas],
+                             significantLink=[self.url(p) for p in
+                                              ("/imoveis/", "/guias/", "/especialistas/", "/contato/")])
+        return self.render(pagina, lista, *perguntas)
+
+    def contato(self, path: str, titulo: str, descricao: str, crumbs) -> str:
+        pagina = self.pagina("ContactPage", path, titulo, descricao, crumbs, mainEntity=self.org)
+        return self.render(pagina, self.trilha(path, crumbs))
 
     def colecao(self, path: str, titulo: str, descricao: str, crumbs, itens) -> str:
         lista = self.lista(path, "lista", titulo, itens)

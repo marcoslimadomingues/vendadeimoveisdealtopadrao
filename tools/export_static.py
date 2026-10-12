@@ -52,7 +52,7 @@ def exportar(saida: Path) -> list[str]:
         destino.write_bytes(resp.data)
         gerados.append(path)
 
-    for arquivo in ("robots.txt", "sitemap.xml"):
+    for arquivo in ("robots.txt", "sitemap.xml", "llms.txt"):
         (saida / arquivo).write_bytes(client.get(f"/{arquivo}").data)
 
     resp_404 = client.get("/__pagina-inexistente__/")

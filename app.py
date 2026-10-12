@@ -83,7 +83,8 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         return pagina("home.html", path="/", titulo=titulo, descricao=descricao,
                       jsonld=graph.home("/", titulo, descricao),
                       imoveis=repo.ativos(), artigos=repo.artigos_recentes(),
-                      bairros=repo.bairros_por_liquidez(), pessoas=list(repo.pessoas.values()))
+                      bairros=repo.bairros_por_liquidez(), pessoas=list(repo.pessoas.values()),
+                      faq=repo.faq_institucional())
 
     @app.get("/imoveis/")
     def imoveis():
@@ -179,6 +180,15 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         return pagina("sobre.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
                       jsonld=graph.sobre(path, titulo, descricao, crumbs), pessoas=list(repo.pessoas.values()))
 
+    @app.get("/contato/")
+    def contato():
+        path, crumbs = "/contato/", [("Início", "/"), ("Contato", "/contato/")]
+        titulo, e = titulos[path], s["endereco"]
+        descricao = (f"WhatsApp {s['telefone']}, e-mail e endereço da {s['nome']}: {e['rua']}, {e['bairro']}, "
+                     f"{e['cidade']} ({e['uf']}). {s['horario_texto']}.")
+        return pagina("contato.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
+                      jsonld=graph.contato(path, titulo, descricao, crumbs), imoveis=repo.ativos())
+
     # ------------------------------------------------------- Pilar de mercado
     @app.get("/<slug>/")
     def pilar(slug: str):
@@ -196,6 +206,14 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
     @app.get("/robots.txt")
     def robots():
         return Response(render_template("robots.txt"), mimetype="text/plain")
+
+    @app.get("/llms.txt")
+    def llms():
+        """Resumo em texto para agentes de IA (convenção llmstxt.org): quem somos, fatos e páginas-chave."""
+        return Response(render_template("llms.txt", paginas=repo.paginas_indexaveis(), pilares=repo.pilares.values(),
+                                        bairros=repo.bairros_por_liquidez(), imoveis=repo.ativos(),
+                                        artigos=repo.artigos_recentes(), faq=repo.faq_institucional()),
+                        mimetype="text/plain")
 
     @app.get("/sitemap.xml")
     def sitemap():

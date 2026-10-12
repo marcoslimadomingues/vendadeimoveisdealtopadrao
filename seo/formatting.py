@@ -53,7 +53,16 @@ def tel(texto: str) -> str:
     return texto.replace(" ", " ").replace("-", "‑")
 
 
+OG_MARCA = "/static/img/og-marca.png"
+
+
+def og_png(caminho: str) -> str:
+    """Imagem de compartilhamento: só PNG/JPG/WebP aparecem no WhatsApp, Facebook e LinkedIn; SVG cai na marca."""
+    return caminho if caminho.lower().endswith((".png", ".jpg", ".jpeg", ".webp")) else OG_MARCA
+
+
 def register_filters(app) -> None:
     app.jinja_env.filters.update(
-        num=num, brl=brl, pct=pct, cap=cap, tel=tel, data_extenso=data_extenso, duracao=duracao_iso
+        num=num, brl=brl, pct=pct, cap=cap, tel=tel, data_extenso=data_extenso, duracao=duracao_iso,
+        og_png=og_png,
     )
