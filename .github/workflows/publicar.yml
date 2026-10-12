@@ -64,7 +64,7 @@ jobs:
           python tools/build_cpanel.py --dominio "$SITE_URL"
 
       - name: Guardar o site compilado
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site
           path: build/public_html
