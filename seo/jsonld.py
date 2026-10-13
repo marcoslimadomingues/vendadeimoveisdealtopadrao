@@ -374,6 +374,34 @@ class Graph:
         imoveis = self.repo.ativos(b["slug"])
         lista = self.lista(path, "lista", f"Imóveis de alto padrão à venda {b['em']}",
                            [(i["titulo"], i["path"]) for i in imoveis])
+        s = b.get("sinduscon")
+        if s:  # m² de referência do Sinduscon-CE, com fonte e mês; sem as métricas internas sem fonte pública
+            sd = self.repo.sinduscon
+            variaveis = [{"@type": "PropertyValue", "name": f"Preço médio do m² ({sd['ref_txt']})",
+                          "value": s["m2"], "unitText": "BRL/m²"}]
+            if s["var_mes_pct"] is not None:
+                variaveis.append({"@type": "PropertyValue", "name": f"Variação sobre {sd['ref_ant_txt']}",
+                                  "value": round(s["var_mes_pct"], 2), "unitText": "%"})
+            variaveis += [{"@type": "PropertyValue", "name": rotulo, "value": s[chave], "unitText": unid}
+                          for chave, rotulo, unid in (("estoque", "Unidades em oferta", "unidades"),
+                                                      ("vendas", "Vendas no mês", "unidades"),
+                                                      ("ivv_pct", "Índice de velocidade de vendas", "%"))
+                          if chave in s]
+            dataset = {
+                "@type": "Dataset", **self.ref(path, "indicadores"),
+                "name": f"Preço do m² {b['em']} em {sd['ref_txt']} (Sinduscon-CE)",
+                "description": b["resumo"], "creator": self.org, "isAccessibleForFree": True,
+                "temporalCoverage": sd["referencia"], "spatialCoverage": self.ref(path, "lugar"),
+                "measurementTechnique": sd["metodo"], "variableMeasured": variaveis,
+                "isBasedOn": {"@type": "NewsArticle", "headline": sd["fonte"]["titulo"], "url": sd["fonte"]["url"],
+                              "datePublished": sd["fonte"]["publicado"],
+                              "author": {"@type": "Person", "name": sd["fonte"]["autor"]},
+                              "publisher": {"@type": "Organization", "name": sd["fonte"]["veiculo"]}},
+            }
+            pagina = self.pagina("CollectionPage", path, titulo, b["resumo"], crumbs,
+                                 about=[self.ref(path, "lugar"), self.entidade],
+                                 mainEntity={"@id": lista["@id"]})
+            return self.render(pagina, self.trilha(path, crumbs), self.lugar(b), dataset, lista)
         dataset = {
             "@type": "Dataset",
             **self.ref(path, "indicadores"),

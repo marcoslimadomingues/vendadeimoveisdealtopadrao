@@ -4,10 +4,31 @@
 {% set b = bairro %}
 <header class="cabecalho-pagina">
   <p class="card__tipo">{{ b.zona }} {{ site.cidade.de }}</p>
-  <h1>Imóveis de alto padrão {{ b.em }}: preço por m², valorização e liquidez</h1>
+  <h1>{% if b.sinduscon %}Preço do m² {{ b.em }} em {{ repo.sinduscon.fonte.publicado[:4] }}: Sinduscon-CE e imóveis de alto padrão{% else %}Imóveis de alto padrão {{ b.em }}: preço por m², valorização e liquidez{% endif %}</h1>
   <p class="lead">{{ b.resumo }}</p>
 </header>
 
+{% if b.sinduscon %}
+{% set s = b.sinduscon %}
+{% set sd = repo.sinduscon %}
+<section aria-labelledby="indicadores">
+  <h2 id="indicadores">Quanto custa o m² {{ b.em }}?</h2>
+  <dl class="fatos fatos--grande">
+    <div><dt>Preço médio do m² ({{ sd.ref_txt }})</dt><dd>{{ s.m2|brl }}</dd></div>
+    {% if s.var_mes_pct is not none %}<div><dt>Variação sobre {{ sd.ref_ant_txt }}</dt><dd>{{ s.var_mes_pct|pct(true) }} ({{ s.m2_anterior|brl }})</dd></div>{% endif %}
+    <div><dt>Acima da média de Fortaleza</dt><dd>{{ s.acima_cidade_pct|pct }} (média de {{ sd.fortaleza.m2|brl }})</dd></div>
+    <div><dt>Posição entre os {{ sd.total }} bairros do levantamento</dt><dd>{{ s.posicao }}º</dd></div>
+    {% if s.estoque is defined %}<div><dt>Unidades em oferta</dt><dd>{{ s.estoque|num }}{% if s.estoque_pct is defined %} ({{ s.estoque_pct|pct }} da cidade){% endif %}</dd></div>{% endif %}
+    {% if s.vendas is defined %}<div><dt>Vendas no mês</dt><dd>{{ s.vendas|num }} ({{ s.vendas_pct|pct }} da cidade)</dd></div>
+    {% elif s.vendas_liquidas is defined %}<div><dt>Vendas líquidas no mês</dt><dd>{{ s.vendas_liquidas|num }}</dd></div>{% endif %}
+    {% if s.ivv_pct is defined %}<div><dt>Índice de velocidade de vendas</dt><dd>{{ s.ivv_pct|pct }}</dd></div>{% endif %}
+    {% if s.lancamentos is defined %}<div><dt>Lançamentos no mês</dt><dd>{{ s.lancamentos|num }} ({{ s.lancamentos_pct|pct }} da cidade)</dd></div>{% endif %}
+  </dl>
+  {% if s.nota %}<p>{{ s.nota }}</p>{% endif %}
+  <p class="fonte">Fonte: {{ sd.orgao }}, divulgado por <a href="{{ sd.fonte.url }}" rel="noopener">{{ sd.fonte.veiculo }}</a> em {{ sd.fonte.publicado|data_extenso }}. {{ sd.metodo }}</p>
+  <p>O ranking completo dos {{ sd.total }} bairros está em <a href="/guias/preco-m2-por-bairro-fortaleza/">preço do m² por bairro em Fortaleza em 2026</a>. Para prazo de venda e desconto de negociação, veja <a href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>.</p>
+</section>
+{% else %}
 <section aria-labelledby="indicadores">
   <h2 id="indicadores">Indicadores do mercado de alto padrão {{ b.em }}</h2>
   <dl class="fatos fatos--grande">
@@ -19,6 +40,7 @@
   {% if b.destaque %}<p>{{ b.destaque }}</p>{% endif %}
   <p class="fonte">Fonte: {{ site.fonte_dados }}</p>
 </section>
+{% endif %}
 
 {% set pl = repo.pilar_do_bairro(b.slug) %}
 {% if pl %}
@@ -44,8 +66,12 @@
 </section>
 
 <section aria-labelledby="comparacao">
-  <h2 id="comparacao">Comparação com outros bairros de alto padrão</h2>
+  <h2 id="comparacao">Comparação com outros bairros de Fortaleza</h2>
+  {% if repo.sinduscon %}
+  {{ m.tabela_sinduscon(repo.sinduscon, "Preço do m² por bairro de Fortaleza em " ~ repo.sinduscon.ref_txt ~ " (Sinduscon-CE)", b.slug) }}
+  {% else %}
   {{ m.tabela_bairros(repo.bairros_por_liquidez(), "Bairros de alto padrão " ~ site.cidade.de ~ " ordenados por tempo médio de venda") }}
+  {% endif %}
 </section>
 
 {% if artigos %}

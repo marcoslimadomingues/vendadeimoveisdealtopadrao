@@ -790,5 +790,95 @@
         "a": "Não. O m² é uma média por bairro: vista, andar, idade do edifício, custos mensais e prazo de venda mudam o resultado. Compare imóveis equivalentes nos dois bairros."
       }
     ]
+  },
+  {
+    "slug": "preco-m2-por-bairro-fortaleza",
+    "guia_pilar": "liquidez-imoveis-alto-padrao-por-bairro-fortaleza",
+    "dados": "sinduscon",
+    "titulo": "Preço do m² por bairro em Fortaleza em 2026",
+    "titulo_seo": "Preço do m² por bairro em Fortaleza | Alto Padrão Imóveis",
+    "descricao": "Ranking do preço do m² por bairro em Fortaleza em {sref}, do Sinduscon-CE: de {sm2:praia_iracema} na Praia de Iracema a {sm2:jose_bonifacio} no José Bonifácio.",
+    "categoria": "Mercado e liquidez",
+    "autor": "helena-duarte",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 4,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "Em {sref}, a Praia de Iracema teve o m² mais caro de Fortaleza, com {sm2:praia_iracema}, segundo o Sinduscon-CE divulgado por {sveic}. Mucuripe ({sm2:mucuripe}) e Meireles ({sm2:meireles}) vêm em seguida, e a média da cidade foi de {sm2:fortaleza}. O José Bonifácio, último entre os dez bairros divulgados, marcou {sm2:jose_bonifacio}.",
+    "aviso": "[PREENCHER: valorização em 12 meses por bairro. O levantamento divulgou a variação mensal por bairro e a da cidade ({sfa} em 12 meses), mas não a variação anual de cada bairro.]",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe",
+      "aldeota",
+      "coco",
+      "guararapes"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA16",
+        "tipo": "Análise de mercado",
+        "apresentador": "helena-duarte",
+        "titulo": "Preço do m² por bairro em Fortaleza: como ler o ranking do Sinduscon-CE",
+        "descricao": "[PREENCHER: vídeo gravado explicando o ranking e a diferença entre média do bairro e m² do imóvel.]",
+        "duracao": "PT5M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "ranking",
+        "h2": "Quanto custa o m² em cada bairro de Fortaleza?",
+        "paragrafos": [
+          "O Sinduscon-CE, em parceria com a Comissão de Pesquisa de Mercado Imobiliário (Cpes), divulgou o preço médio do m² privativo de dez bairros em {sref}. {sveic} publicou o levantamento em {sdata}. A média de Fortaleza foi de {sm2:fortaleza}, alta de {sfm} sobre {srefant} e de {sfa} sobre o mesmo mês de 2025."
+        ],
+        "tabela_dinamica": "sinduscon",
+        "respostas_rapidas": [
+          {
+            "q": "Qual bairro de Fortaleza tem o m² mais caro?",
+            "a": "Praia de Iracema, com {sm2:praia_iracema} em {sref}, segundo o Sinduscon-CE divulgado por {sveic}."
+          }
+        ]
+      },
+      {
+        "id": "variacao",
+        "h2": "Quais bairros subiram ou caíram de julho para agosto?",
+        "paragrafos": [
+          "A Praia de Iracema saiu de {sant:praia_iracema} em {srefant} para {sm2:praia_iracema} em {sref}. A reportagem atribui o salto a um estoque de apenas 16 unidades em oferta e à entrada de empreendimentos de alto padrão no levantamento: poucas unidades pesam muito na média ponderada.",
+          "O Mucuripe subiu {svar:mucuripe} ({sant:mucuripe} para {sm2:mucuripe}), o Meireles subiu {svar:meireles} ({sant:meireles} para {sm2:meireles}) e a Aldeota caiu {svar:aldeota} ({sant:aldeota} para {sm2:aldeota}). O levantamento não divulgou os valores de julho dos demais bairros."
+        ]
+      },
+      {
+        "id": "oferta",
+        "h2": "Onde há mais oferta e mais vendas?",
+        "paragrafos": [
+          "A Aldeota concentra a maior oferta entre os bairros com dado divulgado, com 1.279 unidades (11,5% da cidade), e foi a que mais vendeu no mês, com 278 unidades (26,9% das vendas) e índice de velocidade de vendas de 17,9%. Também respondeu por 713 lançamentos, 46,6% do total lançado na cidade.",
+          "O Meireles tinha 478 unidades em oferta (4,3%), com 16 vendas líquidas e índice de 3,2%. O Mucuripe mantinha 6 unidades em estoque e a Praia de Iracema, 16."
+        ],
+        "tabela_dinamica": "sinduscon_oferta"
+      },
+      {
+        "id": "como-ler",
+        "h2": "Como ler o preço do m² por bairro?",
+        "paragrafos": [
+          "O valor é a média ponderada do m² privativo de imóveis residenciais verticais em oferta, não um recorte de imóveis acima de R$ 3 milhões. Use-o como referência do bairro e compare com o preço por m² do imóvel específico, conferindo a data.",
+          "Para a faixa da Avenida Beira Mar entre Meireles e Mucuripe, veja <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza: Avenida Beira Mar entre Meireles e Mucuripe</a> e <a href=\"/milha-de-ouro-fortaleza/preco-m2-beira-mar/\">preço do m² na Beira Mar de Fortaleza em 2026</a>. Para prazo de venda e desconto, leia <a href=\"/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/\">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>.",
+          "Cada bairro da Alto Padrão Imóveis tem página própria: <a href=\"/bairros/meireles/\">preço do m² no Meireles</a>, <a href=\"/bairros/mucuripe/\">preço do m² no Mucuripe</a>, <a href=\"/bairros/aldeota/\">preço do m² na Aldeota</a>, <a href=\"/bairros/coco/\">preço do m² no Cocó</a> e <a href=\"/bairros/guararapes/\">preço do m² no Guararapes</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qual o preço médio do m² em Fortaleza?",
+        "a": "{sm2:fortaleza} em {sref}, segundo o Sinduscon-CE divulgado por {sveic}: alta de {sfm} sobre {srefant} e de {sfa} sobre agosto de 2025."
+      },
+      {
+        "q": "Meireles ou Aldeota: qual tem o m² mais caro?",
+        "a": "O Meireles, por {sdif:meireles:aldeota}, ou {spct:meireles:aldeota}: {sm2:meireles} contra {sm2:aldeota} em {sref}, segundo o Sinduscon-CE."
+      },
+      {
+        "q": "O preço do m² do Sinduscon vale para imóveis acima de R$ 3 milhões?",
+        "a": "Não diretamente. É a média ponderada do m² privativo de imóveis residenciais verticais em oferta no bairro, e não um recorte de imóveis de luxo. Serve de referência para comparar o m² de um imóvel com o do bairro."
+      }
+    ]
   }
 ]

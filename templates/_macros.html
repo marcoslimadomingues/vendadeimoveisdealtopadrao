@@ -68,8 +68,8 @@
   <thead>
     <tr>
       <th scope="col">Bairro</th>
-      <th scope="col">Preço médio por m²</th>
-      <th scope="col">Valorização em 12 meses</th>
+      <th scope="col">{% if repo.sinduscon %}Preço médio do m² (Sinduscon-CE, {{ repo.sinduscon.ref_txt }}){% else %}Preço médio por m²{% endif %}</th>
+      <th scope="col">Valorização em 12 meses (base própria)</th>
       <th scope="col">Tempo médio de venda</th>
       <th scope="col">Desconto médio de negociação</th>
     </tr>
@@ -87,7 +87,68 @@
   </tbody>
 </table>
 </div>
-<p class="fonte">Fonte: {{ site.fonte_dados }}</p>
+<p class="fonte">{% if repo.sinduscon %}Preço do m²: {{ repo.sinduscon.orgao }}, divulgado por <a href="{{ repo.sinduscon.fonte.url }}" rel="noopener">{{ repo.sinduscon.fonte.veiculo }}</a> em {{ repo.sinduscon.fonte.publicado|data_extenso }}. Demais colunas: {{ site.fonte_dados }}{% else %}Fonte: {{ site.fonte_dados }}{% endif %}</p>
+{% endmacro %}
+
+{# Ranking do levantamento do Sinduscon-CE: só valores publicados, com variação sobre o mês anterior quando divulgada. #}
+{% macro tabela_sinduscon(sd, caption, destaque=None) %}
+<div class="tabela-rolagem">
+<table>
+  <caption>{{ caption }}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Posição</th>
+      <th scope="col">Bairro</th>
+      <th scope="col">Preço do m² ({{ sd.ref_txt }})</th>
+      <th scope="col">Variação sobre {{ sd.ref_ant_txt }}</th>
+      <th scope="col">Acima da média de Fortaleza</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in sd.ranking %}
+    <tr{% if destaque == b.id %} aria-current="true"{% endif %}>
+      <th scope="row">{{ b.posicao }}º</th>
+      <td>{% if b.slug_pagina %}<a href="/bairros/{{ b.slug_pagina }}/">{{ b.nome }}</a>{% else %}{{ b.nome }}{% endif %}</td>
+      <td>{{ b.m2|brl }}</td>
+      <td>{% if b.var_mes_pct is not none %}{{ b.var_mes_pct|pct(true) }}{% else %}não divulgada{% endif %}</td>
+      <td>{{ b.acima_cidade_pct|pct }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot><tr><th scope="row">—</th><td>Média de Fortaleza</td><td>{{ sd.fortaleza.m2|brl }}</td><td>{{ sd.fortaleza.var_mes_pct|pct(true) }}</td><td>—</td></tr></tfoot>
+</table>
+</div>
+<p class="fonte">Fonte: {{ sd.orgao }}, divulgado por <a href="{{ sd.fonte.url }}" rel="noopener">{{ sd.fonte.veiculo }}</a> em {{ sd.fonte.publicado|data_extenso }}. {{ sd.metodo }}</p>
+{% endmacro %}
+
+{# Oferta, lançamentos e vendas: só os bairros em que o levantamento divulgou esses números. #}
+{% macro tabela_oferta(sd, caption) %}
+<div class="tabela-rolagem">
+<table>
+  <caption>{{ caption }}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Bairro</th>
+      <th scope="col">Unidades em oferta</th>
+      <th scope="col">Parte da oferta da cidade</th>
+      <th scope="col">Vendas no mês</th>
+      <th scope="col">Índice de velocidade de vendas</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in sd.ranking if b.estoque is defined %}
+    <tr>
+      <th scope="row">{% if b.slug_pagina %}<a href="/bairros/{{ b.slug_pagina }}/">{{ b.nome }}</a>{% else %}{{ b.nome }}{% endif %}</th>
+      <td>{{ b.estoque|num }}</td>
+      <td>{% if b.estoque_pct is defined %}{{ b.estoque_pct|pct }}{% else %}não divulgada{% endif %}</td>
+      <td>{% if b.vendas is defined %}{{ b.vendas|num }}{% elif b.vendas_liquidas is defined %}{{ b.vendas_liquidas|num }} (líquidas){% else %}não divulgadas{% endif %}</td>
+      <td>{% if b.ivv_pct is defined %}{{ b.ivv_pct|pct }}{% else %}não divulgado{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="fonte">Fonte: {{ sd.orgao }}, divulgado por <a href="{{ sd.fonte.url }}" rel="noopener">{{ sd.fonte.veiculo }}</a> em {{ sd.fonte.publicado|data_extenso }}. Valores de {{ sd.ref_txt }}; o levantamento não divulgou esses números para os demais bairros.</p>
 {% endmacro %}
 
 {% macro tabela_tecnica(imoveis, caption) %}

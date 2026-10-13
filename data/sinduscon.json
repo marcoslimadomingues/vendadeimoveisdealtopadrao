@@ -1,0 +1,30 @@
+{
+  "_aviso": "Só valores publicados com fonte. Cada item vem do levantamento do Sinduscon-CE com a Cpes, divulgado pela imprensa; nada aqui é estimado pela Alto Padrão Imóveis. Campos ausentes não foram divulgados.",
+  "referencia": "2026-08",
+  "referencia_anterior": "2026-07",
+  "orgao": "Sinduscon-CE (Sindicato da Indústria da Construção Civil do Ceará), em parceria com a Comissão de Pesquisa de Mercado Imobiliário (Cpes)",
+  "metodo": "Valor médio ponderado do metro quadrado privativo de imóveis residenciais verticais em oferta; não é um recorte de imóveis acima de R$ 3 milhões.",
+  "fonte": {
+    "veiculo": "O Povo",
+    "titulo": "Praia de Iracema assume topo do m² mais caro de Fortaleza",
+    "autor": "Isabella Pascoal",
+    "publicado": "2026-09-30",
+    "url": "https://www.opovo.com.br/noticias/economia/2026/09/30/praia-de-iracema-assume-topo-do-m-mais-caro-de-fortaleza.html"
+  },
+  "fortaleza": {"m2": 12350, "var_mes_pct": 2, "var_ano_pct": 4},
+  "bairros": [
+    {"id": "praia_iracema", "nome": "Praia de Iracema", "m2": 21698, "m2_anterior": 14095, "estoque": 16, "estoque_pct": 0.1,
+     "nota": "Estoque de apenas 16 unidades em oferta e entrada de empreendimentos de alto padrão no levantamento de agosto elevaram a média ponderada."},
+    {"id": "mucuripe", "nome": "Mucuripe", "m2": 20529, "m2_anterior": 20386, "estoque": 6},
+    {"id": "meireles", "nome": "Meireles", "m2": 20391, "m2_anterior": 20083, "estoque": 478, "estoque_pct": 4.3,
+     "vendas_liquidas": 16, "ivv_pct": 3.2},
+    {"id": "aldeota", "nome": "Aldeota", "m2": 16660, "m2_anterior": 16740, "estoque": 1279, "estoque_pct": 11.5,
+     "lancamentos": 713, "lancamentos_pct": 46.6, "vendas": 278, "vendas_pct": 26.9, "ivv_pct": 17.9},
+    {"id": "dionisio_torres", "nome": "Dionísio Torres", "m2": 14811},
+    {"id": "fatima", "nome": "Fátima", "m2": 14386},
+    {"id": "edson_queiroz", "nome": "Edson Queiroz", "m2": 13904},
+    {"id": "coco", "nome": "Cocó", "m2": 13449},
+    {"id": "guararapes", "nome": "Guararapes", "m2": 13346},
+    {"id": "jose_bonifacio", "nome": "José Bonifácio", "m2": 13042}
+  ]
+}

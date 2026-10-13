@@ -171,6 +171,8 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         return pagina("artigo.html", path=a["path"], titulo=titulos[a["path"]], descricao=a["descricao"],
                       crumbs=crumbs, jsonld=graph.artigo(a, crumbs), artigo=a,
                       autor=repo.pessoas[a["autor"]], pilar=pl,
+                      guia_pilar=repo.artigos.get(a.get("guia_pilar", "")),
+                      satelites=repo.satelites_do_guia(a["slug"]),
                       relacionados=[repo.imoveis[s] for s in a.get("imoveis_relacionados", [])])
 
     # ------------------------------------------------------ E-E-A-T / Pessoas

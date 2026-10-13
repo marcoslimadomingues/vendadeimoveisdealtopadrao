@@ -146,6 +146,14 @@ O pilar e seus satélites são o ativo permanente do site; a ficha de imóvel é
 - **Números só dos indicadores:** nos textos do satélite use `{m2:ID}`, `{m2ant:ID}`, `{ref:ID}`, `{acima:A:B}`,
   `{acimaant:A:B}`, `{dif:A:B}`, `{total:ID:AREA}`, `{veiculo:FONTE}`, `{dataf:FONTE}`. Token que aponta para
   indicador inexistente falha o build; valor, fonte e data nunca divergem do pilar.
+- **Preço do m² por bairro (Cluster 2):** a fonte única é `data/sinduscon.json` (Sinduscon-CE, via imprensa,
+  com URL, data e mês de referência). Ela define o `preco_m2` do bairro, o resumo, o título e a tabela de
+  ranking das páginas `/bairros/<slug>/`, e abastece `/guias/preco-m2-por-bairro-fortaleza/`. Mês novo: troque
+  os valores e `referencia`. Em guias com `"dados": "sinduscon"` use `{sm2:ID}`, `{sant:ID}`, `{svar:ID}`,
+  `{sacima:ID}`, `{sdif:A:B}`, `{spct:A:B}`, `{spos:ID}`, `{sref}`, `{srefant}`, `{sveic}`, `{sdata}`, `{sfm}`,
+  `{sfa}`; tabelas `"tabela_dinamica": "sinduscon"` e `"sinduscon_oferta"`. `"guia_pilar": "<slug>"` põe o
+  guia como satélite de outro guia (banner "Parte do guia" e seção "Aprofunde este guia" no pilar).
+  Só entra indicador publicado; prazo de venda e valorização por bairro não têm fonte e não aparecem nessas páginas.
 - **Lacuna de dado:** marque `[PREENCHER: ...]`; o checklist o acusa e o site fica `noindex` até sair.
 - `titulo_seo` (opcional) é o `<title>`; o `titulo` é o H1.
 

@@ -31,7 +31,9 @@ def titulos_paginas(repo: Repo) -> dict[str, str]:
     }
     t.update({i["path"]: f"{i['titulo']} — {i['codigo']}" for i in repo.ativos()})
     t.update({i["path"]: f"{i['titulo']} — {i['codigo']} (indisponível)" for i in repo.encerrados()})
-    t.update({b["path"]: f"Imóveis de alto padrão {b['em']}: preço por m², valorização e liquidez"
+    t.update({b["path"]: (f"Preço do m² {b['em']} em {repo.sinduscon['fonte']['publicado'][:4]} | {s['nome']}"
+                          if b.get("sinduscon") else
+                          f"Imóveis de alto padrão {b['em']}: preço por m², valorização e liquidez")
               for b in repo.bairros.values()})
     t.update({a["path"]: a.get("titulo_seo") or a["titulo"] for a in repo.artigos.values()})
     t.update({p["path"]: f"{p['nome']} — {p['cargo']}" for p in repo.pessoas.values()})
