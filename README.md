@@ -163,6 +163,13 @@ O pilar e seus satélites são o ativo permanente do site; a ficha de imóvel é
 - **Lacuna de dado:** marque `[PREENCHER: ...]`; o checklist o acusa e o site fica `noindex` até sair.
 - `titulo_seo` (opcional) é o `<title>`; o `titulo` é o H1.
 
+### Navegação até o imóvel (home)
+
+Quem chega vê o imóvel primeiro: a vitrine fica logo depois da abertura e o dado de mercado vem abaixo. O botão
+"Ver imóveis disponíveis" (→ `/imoveis/`) aparece na abertura, no fim da vitrine e depois dos guias. O cabeçalho é
+`sticky`: no desktop fica inteiro à vista; no celular a linha da marca rola para fora (`top` negativo) e o menu, com
+"Imóveis", permanece no topo. `scroll-padding-top` evita que âncoras (`#id`) fiquem sob o cabeçalho.
+
 ### Celular (mobile-first)
 
 Tabelas com 3+ colunas viram cartões até 40 rem (`rotular_tabelas` + `table.empilhar`); menu em uma linha

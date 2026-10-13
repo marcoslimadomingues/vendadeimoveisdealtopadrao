@@ -37,7 +37,8 @@ p { margin: 0 0 1em; max-width: 72ch; }
 .pular:focus { left: 1rem; }
 
 /* Topo */
-.topo { background: var(--tinta); color: #fff; }
+.topo { background: var(--tinta); color: #fff; position: sticky; top: 0; z-index: 20; }
+html { scroll-padding-top: 4.75rem; }  /* âncoras (#id) não ficam sob o cabeçalho fixo */
 .topo__interno { max-width: var(--largura); margin: 0 auto; padding: .9rem 1rem; display: flex; flex-wrap: wrap; gap: .75rem 2rem; align-items: center; justify-content: space-between; }
 .marca { display: flex; align-items: center; gap: .6rem; color: #fff; text-decoration: none; font-family: var(--serif); font-size: 1.25rem; }
 .menu { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; }
@@ -206,6 +207,8 @@ tfoot th, tfoot td { font-weight: 700; border-top: 2px solid var(--tinta); }
 @media (max-width: 40rem) {
   /* cabeçalho: marca + menu em uma linha rolável */
   .topo__interno { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 0; padding: .6rem 1rem 0; }
+  .topo { top: -3.15rem; }  /* a linha da marca rola para fora; o menu (Imóveis) fica à vista */
+  html { scroll-padding-top: 3.6rem; }
   .topo nav { min-width: 0; }
   .topo nav { margin: 0 -1rem; padding: 0 1rem; overflow-x: auto; scrollbar-width: none;
               -webkit-mask-image: linear-gradient(to right, #000 90%, transparent); mask-image: linear-gradient(to right, #000 90%, transparent); }
