@@ -92,6 +92,79 @@ def _token(m: re.Match, pilar: dict) -> str:
     return brl(va * int(b))  # total: m² × área (b é a área em m², número)
 
 
+# Tributos (data/site.json: itbi e itcd), em qualquer guia:
+#   {t:itbi} {t:itbi2} {t:sfh} {t:sfhteto} {t:ufirce} {t:ufirceano}   {u:N} = N Ufirces em reais
+#   {ti:VALOR} ITBI geral sobre VALOR   {ta:VALOR} ITBI antecipado sobre VALOR
+#   ITCD sobre VALOR: {ih} herança, {dd} doação, {dn} doação da nua-propriedade; {eh} {ed} {en} = alíquota efetiva
+TOKEN_T = re.compile(r"\{(t|u|ti|ta|ih|eh|dd|ed|dn|en):([a-z0-9_]+)\}")
+
+
+def brl2(valor: float) -> str:
+    return f"R$ {num(valor, 2)}"
+
+
+def _token_t(m: re.Match, site: dict) -> str:
+    kind, a = m.groups()
+    itbi, itcd = site["itbi"], site["itcd"]
+    if kind == "u":
+        return brl(int(a) * itcd["ufirce"])
+    if kind == "ti":
+        return brl(int(a) * itbi["aliquota"])
+    if kind == "ta":
+        return brl(int(a) * itbi["aliquota_antecipada"])
+    if kind in ("ih", "eh", "dd", "ed", "dn", "en"):
+        tipo = "causa_mortis" if kind in ("ih", "eh") else "doacao"
+        r = itcd_calcular(site, int(a), tipo, nua_propriedade=kind in ("dn", "en"))
+        return brl(r["imposto"]) if kind in ("ih", "dd", "dn") else pct(r["efetiva"])
+    try:
+        return {
+            "itbi": f"{itbi['aliquota'] * 100:g}%".replace(".", ","),
+            "itbi2": f"{itbi['aliquota_antecipada'] * 100:g}%".replace(".", ","),
+            "sfh": f"{itbi['sfh_aliquota'] * 100:g}%".replace(".", ","),
+            "sfhteto": brl2(itbi["sfh_teto"]),
+            "sfhano": str(itbi["sfh_ano"]),
+            "ufirce": f"R$ {num(itcd['ufirce'], 5)}",
+            "ufirceano": str(itcd["ufirce_ano"]),
+        }[a]
+    except KeyError:
+        raise ValueError(f"token {m[0]} desconhecido") from None
+
+
+def _expandir_tributos(no, site: dict):
+    if isinstance(no, dict):
+        for k, v in no.items():
+            no[k] = _expandir_tributos(v, site)
+    elif isinstance(no, list):
+        for n, v in enumerate(no):
+            no[n] = _expandir_tributos(v, site)
+    elif isinstance(no, str) and "{" in no:
+        return TOKEN_T.sub(lambda m: _token_t(m, site), no)
+    return no
+
+
+def itcd_calcular(site: dict, valor: float, tipo: str, nua_propriedade: bool = False) -> dict:
+    """ITCD do Ceará por decomposição em faixas (Lei 15.812/2015, arts. 8º, 12, 16 e 17).
+
+    tipo: "causa_mortis" (isenção de 7.000 Ufirces deduzida da base) ou "doacao".
+    nua_propriedade: doação com reserva de usufruto tributa 2/3 do valor venal (art. 12).
+    """
+    c = site["itcd"]
+    base_valor = valor * (2 / 3 if nua_propriedade else 1)
+    ufirces = base_valor / c["ufirce"]
+    if tipo == "causa_mortis":
+        ufirces = max(0.0, ufirces - c["isencao_ufirces"])
+    imposto_u, anterior = 0.0, 0.0
+    for limite, aliq in c[tipo]:
+        topo = ufirces if limite is None else min(ufirces, limite)
+        if topo > anterior:
+            imposto_u += (topo - anterior) * aliq
+        anterior = limite if limite is not None else anterior
+        if limite is None or ufirces <= limite:
+            break
+    imposto = imposto_u * c["ufirce"]
+    return {"base_ufirces": ufirces, "imposto": imposto, "efetiva": imposto / valor * 100 if valor else 0.0}
+
+
 def _expandir_tokens(no, pilar: dict | None = None, sinduscon: dict | None = None):
     """Expande os tokens em todas as strings de um guia, no lugar."""
     if isinstance(no, dict):
@@ -203,6 +276,7 @@ class Repo:
             p["path"] = f"/especialistas/{p['slug']}/"
         for a in self.artigos.values():
             a["path"] = (f"/{a['pilar']}/{a['slug']}/" if a.get("url_sob_pilar") else f"/guias/{a['slug']}/")
+            _expandir_tributos(a, self.site)
             if a.get("pilar") or a.get("dados") == "sinduscon":
                 _expandir_tokens(a, self.pilares.get(a.get("pilar", "")),
                                  self.sinduscon if a.get("dados") == "sinduscon" else None)
@@ -317,10 +391,11 @@ class Repo:
             {
                 "grupo": "Tributos e prazos da compra",
                 "q": f"Quanto é o ITBI na compra d{ref}?",
-                "a": (f"O ITBI d{ref} é de {brl(itbi)}, alíquota de {itbi_cfg['aliquota_texto']} cobrada "
-                      f"{cid['por']} sobre o valor da transação de {brl(i['preco'])}. {itbi_cfg['regra_reducao']} "
-                      f"o imposto cai para {brl(itbi_antecipado)}. O ITBI é pago pelo comprador; escritura e "
-                      f"registro seguem a tabela de emolumentos do Estado {cid['do_estado']}."),
+                "a": (f"O ITBI d{ref} é de {brl(itbi)}, alíquota geral de {itbi_cfg['aliquota_texto']} cobrada "
+                      f"{cid['por']} sobre a base de {brl(i['preco'])} (o maior valor entre o de mercado, o "
+                      f"declarado e o do IPTU). {itbi_cfg['regra_reducao']} o imposto cai para "
+                      f"{brl(itbi_antecipado)}. O ITBI é pago pelo comprador; escritura e registro seguem a "
+                      f"tabela de emolumentos do Estado {cid['do_estado']}."),
             },
             {
                 "grupo": "Tributos e prazos da compra",
@@ -433,6 +508,55 @@ class Repo:
                  if i["status"] == "ativo" and self._tem_ficha(i) and (bairro is None or i["bairro"] == bairro)]
         return sorted(itens, key=lambda i: i["preco"], reverse=True)
 
+    # ---------------------------------------------------- tabelas de tributos (calculadas)
+    VALORES_EXEMPLO = (3_000_000, 5_000_000, 10_000_000)
+
+    def tabela_itbi(self) -> dict:
+        itbi = self.site["itbi"]
+        linhas = []
+        for v in (3_000_000, 5_000_000, 8_000_000, 10_000_000, 15_000_000):
+            geral, antec = v * itbi["aliquota"], v * itbi["aliquota_antecipada"]
+            linhas.append([brl(v), brl(geral), brl(antec), brl(geral - antec)])
+        return {"caption": f"ITBI em Fortaleza por valor do imóvel: alíquota geral de {itbi['aliquota_texto']} e "
+                           f"de {itbi['aliquota_antecipada'] * 100:g}% no pagamento antecipado",
+                "cabecalho": ["Valor do imóvel", f"ITBI a {itbi['aliquota_texto']} (geral)",
+                              f"ITBI a {itbi['aliquota_antecipada'] * 100:g}% (antes da escritura)",
+                              "Economia com o pagamento antecipado"],
+                "linhas": linhas}
+
+    def tabela_itcd_faixas(self) -> dict:
+        c = self.site["itcd"]
+        linhas = []
+        for chave, rotulo in (("causa_mortis", "Herança (causa mortis)"), ("doacao", "Doação")):
+            anterior = 0
+            for limite, aliq in c[chave]:
+                if limite is None:
+                    faixa_u, faixa_r = f"acima de {num(anterior)}", f"acima de {brl(anterior * c['ufirce'])}"
+                else:
+                    faixa_u = f"{num(anterior)} a {num(limite)}" if anterior else f"até {num(limite)}"
+                    faixa_r = (f"{brl(anterior * c['ufirce'])} a {brl(limite * c['ufirce'])}" if anterior
+                               else f"até {brl(limite * c['ufirce'])}")
+                linhas.append([rotulo, faixa_u, faixa_r, f"{aliq * 100:g}%"])
+                anterior = limite or anterior
+        return {"caption": f"Faixas e alíquotas do ITCD no Ceará, em Ufirces e em reais (Ufirce {c['ufirce_ano']}: "
+                           f"R$ {num(c['ufirce'], 5)})",
+                "cabecalho": ["Tipo", "Faixa em Ufirces", f"Faixa em reais (Ufirce {c['ufirce_ano']})", "Alíquota da faixa"],
+                "linhas": linhas}
+
+    def tabela_itcd_exemplos(self) -> dict:
+        linhas = []
+        for v in self.VALORES_EXEMPLO:
+            h = itcd_calcular(self.site, v, "causa_mortis")
+            d = itcd_calcular(self.site, v, "doacao")
+            n = itcd_calcular(self.site, v, "doacao", nua_propriedade=True)
+            linhas.append([brl(v), brl(h["imposto"]), pct(h["efetiva"]), brl(d["imposto"]), pct(d["efetiva"]),
+                           brl(n["imposto"]), pct(n["efetiva"])])
+        return {"caption": "Simulação do ITCD no Ceará para um único imóvel, com a Ufirce de "
+                           f"{self.site['itcd']['ufirce_ano']} (estimativa, sem outras deduções)",
+                "cabecalho": ["Valor do imóvel", "Herança", "Alíquota efetiva", "Doação", "Alíquota efetiva",
+                              "Doação da nua-propriedade (2/3)", "Alíquota efetiva sobre o valor total"],
+                "linhas": linhas}
+
     def encerrados(self) -> list[dict]:
         """Imóveis que saíram da carteira e mantêm a ficha no ar, do mais recente para o mais antigo."""
         itens = [i for i in self.imoveis.values() if i.get("encerrado")]
@@ -520,7 +644,7 @@ class Repo:
              {"q": f"Qual bairro de alto padrão {cid['em']} vende mais rápido?",
               "a": f"{rapido['nome']}: {rapido['tempo_medio_venda']} dias de prazo médio de venda {s['periodo_texto']}. O maior prazo foi {lento['nome']}, com {lento['tempo_medio_venda']} dias."}),
             {"q": f"Qual a alíquota do ITBI {cid['em']}?",
-             "a": f"A alíquota do ITBI {cid['em']} é de {itbi['aliquota_texto']} sobre o valor do imóvel, conforme os parâmetros deste site. Há alíquota reduzida de {itbi['aliquota_antecipada'] * 100:g}% no pagamento antecipado dentro dos prazos da Lei Complementar municipal 159/2013. Confirme valores e prazos com a Prefeitura ou com seu advogado antes de fechar negócio."},
+             "a": f"A alíquota geral do ITBI {cid['em']} é de {itbi['aliquota_texto']} sobre a base de cálculo, segundo a Sefin. Pagando até o dia anterior à lavratura da escritura ou do contrato de financiamento, a alíquota é de {itbi['aliquota_antecipada'] * 100:g}%; na parte financiada pelo SFH, até {brl2(itbi['sfh_teto'])}, é de {itbi['sfh_aliquota'] * 100:g}%. Confirme valores e prazos com a Prefeitura ou com seu advogado antes de fechar negócio."},
             {"q": "Os preços por m² são de que fonte e período?",
              "a": (f"Os valores por bairro vêm do Sinduscon-CE, divulgados por {sd['fonte']['veiculo']} em "
                    f"{data_extenso(sd['fonte']['publicado'])}, com referência em {sd['ref_txt']}. Cada indicador "

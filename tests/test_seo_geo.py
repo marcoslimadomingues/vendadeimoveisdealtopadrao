@@ -98,7 +98,7 @@ def test_home_com_faq_visivel_e_no_json_ld(client):
     for q in perguntas:  # todo texto do JSON-LD também está visível na página
         assert q["name"] in html and q["acceptedAnswer"]["text"][:60] in html
     texto = " ".join(q["acceptedAnswer"]["text"] for q in perguntas)
-    assert "Avenida Beira Mar, 1497" in texto and "3%" in texto and "2%" in texto and CNPJ in texto
+    assert "Avenida Beira Mar, 1497" in texto and "4%" in texto and "2%" in texto and CNPJ in texto
 
 
 def test_llms_txt(client):

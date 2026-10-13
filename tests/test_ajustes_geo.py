@@ -87,7 +87,8 @@ def test_ficha_responde_itbi_prazo_e_medicao(ctx):
     client, repo = ctx
     for i in repo.ativos():
         html = client.get(i["path"]).get_data(as_text=True)
-        assert brl(round(i["preco"] * 0.03)) in html, "ITBI calculado"
+        # alíquotas da Sefin-Fortaleza: 4% geral e 2% pago antes da escritura (data/site.json)
+        assert brl(round(i["preco"] * 0.04)) in html and brl(round(i["preco"] * 0.02)) in html, "ITBI calculado"
         assert "10 dias úteis" in html and "ISO 10140-2" in html
         for grupo in ("Preço e custos", "Tributos e prazos da compra", "Medições técnicas"):
             assert f'<h3 class="faq__grupo">{grupo}</h3>' in html

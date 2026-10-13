@@ -154,6 +154,12 @@ O pilar e seus satélites são o ativo permanente do site; a ficha de imóvel é
   `{sfa}`; tabelas `"tabela_dinamica": "sinduscon"` e `"sinduscon_oferta"`. `"guia_pilar": "<slug>"` põe o
   guia como satélite de outro guia (banner "Parte do guia" e seção "Aprofunde este guia" no pilar).
   Só entra indicador publicado; prazo de venda e valorização por bairro não têm fonte e não aparecem nessas páginas.
+- **Tributos (Clusters 3 e 4):** alíquotas e valores vêm de `data/site.json` (`itbi`: Sefin-Fortaleza; `itcd`: Lei
+  estadual 15.812/2015 e valor da Ufirce da instrução normativa do ano). Em qualquer guia: `{t:itbi}`, `{t:itbi2}`,
+  `{t:sfh}`, `{t:sfhteto}`, `{t:ufirce}`, `{t:ufirceano}`, `{u:N}` (N Ufirces em reais), `{ti:VALOR}`/`{ta:VALOR}`
+  (ITBI geral e antecipado), `{ih|dd|dn:VALOR}` (ITCD herança, doação, nua-propriedade) e `{eh|ed|en:VALOR}`
+  (alíquota efetiva). Tabelas: `"tabela_dinamica": "itbi" | "itcd_faixas" | "itcd_exemplos"`. **Todo ano:** troque
+  `itcd.ufirce`/`ufirce_ano` e `itbi.sfh_teto`/`sfh_ano`; o teste confere o cálculo por um método independente.
 - **Lacuna de dado:** marque `[PREENCHER: ...]`; o checklist o acusa e o site fica `noindex` até sair.
 - `titulo_seo` (opcional) é o `<title>`; o `titulo` é o H1.
 

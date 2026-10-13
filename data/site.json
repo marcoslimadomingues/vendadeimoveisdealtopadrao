@@ -30,10 +30,15 @@
   "periodo_texto": "entre julho de 2025 e junho de 2026",
   "periodo_curto": "jul/2025–jun/2026",
   "itbi": {
-    "aliquota": 0.03,
+    "aliquota": 0.04,
     "aliquota_antecipada": 0.02,
-    "aliquota_texto": "3%",
-    "regra_reducao": "Com o pagamento antecipado nos prazos da Lei Complementar municipal 159/2013 (Código Tributário de Fortaleza), a alíquota é reduzida para 2% e"
+    "aliquota_texto": "4%",
+    "regra_reducao": "Com o pagamento antecipado, até o dia anterior à lavratura da escritura ou do contrato de financiamento, a alíquota é de 2% e",
+    "sfh_aliquota": 0.005,
+    "sfh_teto": 390672.24,
+    "sfh_ano": 2026,
+    "fonte_nome": "Secretaria Municipal das Finanças de Fortaleza (Sefin)",
+    "fonte_url": "https://ibs.sefin.fortaleza.ce.gov.br/Canal/16/Generico/1167/Ler"
   },
   "endereco": {
     "rua": "Avenida Beira Mar, 1497",
@@ -84,5 +89,50 @@
   ],
   "fonte_dados": "Base interna Alto Padrão Imóveis: ofertas e transações de imóveis acima de R$ 3 milhões em Fortaleza, de julho de 2025 a junho de 2026.",
   "periodo_dados": "2025-07/2026-06",
-  "responsavel_tecnico": "marina-albuquerque"
+  "responsavel_tecnico": "marina-albuquerque",
+  "itcd": {
+    "ufirce": 6.29872,
+    "ufirce_ano": 2026,
+    "ufirce_norma": "Instrução Normativa SEFAZ-CE nº 152/2025",
+    "isencao_ufirces": 7000,
+    "causa_mortis": [
+      [
+        10000,
+        0.02
+      ],
+      [
+        20000,
+        0.04
+      ],
+      [
+        40000,
+        0.06
+      ],
+      [
+        null,
+        0.08
+      ]
+    ],
+    "doacao": [
+      [
+        25000,
+        0.02
+      ],
+      [
+        150000,
+        0.04
+      ],
+      [
+        250000,
+        0.06
+      ],
+      [
+        null,
+        0.08
+      ]
+    ],
+    "lei": "Lei estadual 15.812/2015",
+    "fonte_url": "https://belt.al.ce.gov.br/index.php/component/k2/item/3589-lei-n-15-812-de-20-07-15-d-o-23-07-15",
+    "faq_url": "https://servicos.sefaz.ce.gov.br/internet/ITCD/gerados/perguntas_mais_frequentes.asp"
+  }
 }

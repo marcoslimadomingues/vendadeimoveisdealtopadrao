@@ -35,6 +35,9 @@
     {% if s.tabela_dinamica == "bairros" %}{{ m.tabela_bairros(repo.bairros_por_liquidez(), "Liquidez de imóveis acima de " ~ site.limiar_texto ~ " por bairro " ~ site.cidade.em ~ " (" ~ site.periodo_curto ~ ")") }}{% endif %}
     {% if s.tabela_dinamica == "sinduscon" %}{{ m.tabela_sinduscon(repo.sinduscon, "Preço do m² por bairro de Fortaleza em " ~ repo.sinduscon.ref_txt ~ " (Sinduscon-CE)") }}{% endif %}
     {% if s.tabela_dinamica == "sinduscon_oferta" %}{{ m.tabela_oferta(repo.sinduscon, "Oferta, lançamentos e vendas por bairro em " ~ repo.sinduscon.ref_txt ~ " (Sinduscon-CE)") }}{% endif %}
+    {% if s.tabela_dinamica == "itbi" %}{{ m.tabela(repo.tabela_itbi()) }}<p class="fonte">Fonte: <a href="{{ site.itbi.fonte_url }}" rel="noopener">{{ site.itbi.fonte_nome }}</a>. Cálculo ilustrativo sobre o valor do imóvel como base de cálculo.</p>{% endif %}
+    {% if s.tabela_dinamica == "itcd_faixas" %}{{ m.tabela(repo.tabela_itcd_faixas()) }}<p class="fonte">Fonte: {{ site.itcd.lei }}, arts. 16 e 17 (<a href="{{ site.itcd.fonte_url }}" rel="noopener">texto da lei na Assembleia Legislativa</a>); valor da Ufirce: {{ site.itcd.ufirce_norma }}.</p>{% endif %}
+    {% if s.tabela_dinamica == "itcd_exemplos" %}{{ m.tabela(repo.tabela_itcd_exemplos()) }}<p class="fonte">Cálculo por faixas (art. 17), com dedução de {{ site.itcd.isencao_ufirces|num }} Ufirces na herança (art. 8º) e 2/3 do valor na doação da nua-propriedade (art. 12). Estimativa para um único bem, não um lançamento da SEFAZ-CE.</p>{% endif %}
     {% if s.tabela_dinamica == "tecnico" and repo.ativos() %}{{ m.tabela_tecnica(repo.ativos(), "Acústica, blindagem, gerador e maresia dos imóveis da carteira " ~ site.nome) }}{% endif %}
     {% if s.respostas_rapidas %}{{ m.respostas_rapidas(s.respostas_rapidas) }}{% endif %}
   </section>

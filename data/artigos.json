@@ -97,7 +97,7 @@
         "respostas_rapidas": [
           {
             "q": "Quanto custa o ITBI de um imóvel de R$ 5 milhões em Fortaleza?",
-            "a": "R$ 150.000 pela alíquota geral de 3%, ou R$ 100.000 se o imposto for pago antecipadamente nos prazos da Lei Complementar municipal 159/2013, que reduz a alíquota para 2%."
+            "a": "{ti:5000000} pela alíquota geral de {t:itbi}, ou {ta:5000000} se o imposto for pago até o dia anterior à lavratura da escritura, quando a alíquota é de {t:itbi2} (Sefin-Fortaleza)."
           },
           {
             "q": "Quanto tempo leva para registrar a compra após a escritura?",
@@ -172,26 +172,26 @@
         "id": "itbi",
         "h2": "Quanto é o ITBI em Fortaleza e a holding paga ITBI na integralização?",
         "paragrafos": [
-          "O ITBI em Fortaleza tem alíquota geral de 3%. O Código Tributário do Município (Lei Complementar 159/2013) reduz a alíquota para 2% quando o imposto é pago antecipadamente, dentro dos prazos da lei. Nas compras financiadas pelo Sistema Financeiro da Habitação, a alíquota é de 0,5% sobre o valor financiado e 2% sobre o restante.",
-          "A integralização de imóveis ao capital social é imune ao ITBI, conforme o artigo 156, § 2º, inciso I, da Constituição Federal. A imunidade não se aplica quando a atividade preponderante da holding é a compra, a venda ou a locação de imóveis, isto é, quando mais de 50% da receita vem dessas atividades.",
+          "O ITBI em Fortaleza tem alíquota geral de {t:itbi} sobre a base de cálculo e de {t:itbi2} quando o imposto é pago antecipadamente, até o dia anterior à lavratura da escritura ou do contrato de financiamento, segundo a Secretaria Municipal das Finanças. Na parte financiada pelo Sistema Financeiro da Habitação, a alíquota é de {t:sfh} sobre o valor financiado, até o limite de {t:sfhteto} (valor de {t:sfhano}). O cálculo completo está em <a href=\"/guias/itbi-fortaleza-imoveis-alto-padrao/\">ITBI em Fortaleza para imóveis de alto padrão: alíquota, cálculo e antecipação</a>.",
+          "A integralização de imóveis ao capital social é imune ao ITBI, conforme o artigo 156, § 2º, inciso I, da Constituição Federal. O texto constitucional ressalva a imunidade quando a atividade preponderante da empresa é a compra e venda, a locação ou o arrendamento de imóveis. O Supremo Tribunal Federal ainda julga, no Tema 1.348, se essa ressalva vale para a integralização de capital; em maio de 2026 o caso aguardava reinício no Plenário.",
           "O Supremo Tribunal Federal limitou a imunidade no Tema 796 (RE 796.376): o valor dos imóveis que exceder o capital social integralizado está sujeito ao ITBI."
         ],
         "respostas_rapidas": [
           {
             "q": "Qual a alíquota do ITBI em Fortaleza?",
-            "a": "3% sobre o valor da transação, reduzida para 2% com pagamento antecipado nos prazos da Lei Complementar municipal 159/2013."
+            "a": "{t:itbi} sobre a base de cálculo, reduzida para {t:itbi2} quando o imposto é pago antes da lavratura da escritura ou do contrato de financiamento (Sefin-Fortaleza)."
           },
           {
             "q": "Quem paga o ITBI e em que momento?",
-            "a": "O comprador. Pelo Tema 1.124 do STF, o fato gerador do ITBI é o registro da transferência; em Fortaleza, o pagamento antecipado, antes do fato gerador, dá direito à alíquota reduzida de 2%."
+            "a": "O comprador (adquirente). Pelo Tema 1.124 do STF, o fato gerador do ITBI é o registro da transferência; em Fortaleza, o pagamento até o dia anterior à lavratura da escritura ou do contrato de financiamento dá direito à alíquota de {t:itbi2}."
           },
           {
             "q": "Qual a base de cálculo do ITBI?",
-            "a": "O valor declarado da transação, conforme o Tema 1.113 do STJ, e não um valor de referência fixado unilateralmente pela prefeitura."
+            "a": "Pela Sefin, o maior valor entre o de mercado apurado pela administração, o declarado pelo contribuinte e o do IPTU. Pelo Tema 1.113 do STJ, a base é o valor de mercado em condições normais, o valor declarado se presume compatível e o município não pode fixar valor de referência unilateral nem vincular a base ao IPTU; a divergência se resolve em procedimento administrativo."
           },
           {
             "q": "Sobre qual valor a integralização na holding paga ITBI?",
-            "a": "Sobre nenhum valor até o capital subscrito, pela imunidade do art. 156, § 2º, I, da Constituição. O valor que exceder o capital integralizado paga ITBI (Tema 796 do STF)."
+            "a": "Sobre nenhum valor até o capital subscrito, pela imunidade do art. 156, § 2º, I, da Constituição. O valor que exceder o capital integralizado paga ITBI (Tema 796 do STF). A ressalva da atividade imobiliária preponderante aguarda o julgamento do Tema 1.348."
           }
         ]
       },
@@ -200,7 +200,7 @@
         "h2": "Como funciona o ITCD do Ceará na herança e na doação?",
         "paragrafos": [
           "O Ceará chama o imposto sobre heranças e doações de ITCD e cobra alíquotas progressivas de 2% a 8%, conforme o valor transmitido convertido em Ufirce (Lei estadual 15.812/2015).",
-          "Na herança, a alíquota é de 2% até 10.000 Ufirces, 4% até 20.000 Ufirces, 6% até 40.000 Ufirces e 8% acima de 40.000 Ufirces. Com os valores de 2026, transmissões acima de cerca de R$ 174 mil já ficam na faixa de 8%, o que inclui praticamente todo imóvel de alto padrão.",
+          "Na herança, a alíquota é de 2% até 10.000 Ufirces, 4% até 20.000 Ufirces, 6% até 40.000 Ufirces e 8% acima de 40.000 Ufirces. Com a Ufirce de {t:ufirceano} ({t:ufirce}), a faixa de 8% começa acima de {u:40000}, o que inclui praticamente todo imóvel de alto padrão. O quinhão de até 7.000 Ufirces ({u:7000}) é isento. As faixas e simulações estão em <a href=\"/guias/itcd-ceara-imoveis/\">ITCD no Ceará: alíquotas, faixas em Ufirce e prazos para herança e doação de imóveis</a>.",
           "Na doação, as faixas também vão de 2% a 8%, mas são mais largas: a alíquota de 2% vale até 25.000 Ufirces, contra 10.000 Ufirces na herança. Por isso, doações planejadas em vida, como a doação de quotas da holding com reserva de usufruto, podem ser tributadas em faixas menores do que a herança do mesmo patrimônio."
         ],
         "respostas_rapidas": [
@@ -241,12 +241,12 @@
             [
               "Entrada do imóvel",
               "Não se aplica",
-              "Imune ao ITBI, exceto atividade imobiliária preponderante"
+              "Imune ao ITBI até o capital integralizado; ressalva da atividade imobiliária preponderante em julgamento (Tema 1.348 do STF)"
             ],
             [
               "Compra de imóvel",
-              "ITBI de 3% (2% com pagamento antecipado)",
-              "ITBI de 3% (2% com pagamento antecipado)"
+              "ITBI de {t:itbi} ({t:itbi2} com pagamento antecipado)",
+              "ITBI de {t:itbi} ({t:itbi2} com pagamento antecipado)"
             ],
             [
               "Receita de aluguel",
@@ -878,6 +878,683 @@
       {
         "q": "O preço do m² do Sinduscon vale para imóveis acima de R$ 3 milhões?",
         "a": "Não diretamente. É a média ponderada do m² privativo de imóveis residenciais verticais em oferta no bairro, e não um recorte de imóveis de luxo. Serve de referência para comparar o m² de um imóvel com o do bairro."
+      }
+    ]
+  },
+  {
+    "slug": "itbi-fortaleza-imoveis-alto-padrao",
+    "guia_pilar": "holding-familiar-imoveis-alto-padrao",
+    "titulo": "ITBI em Fortaleza para imóveis de alto padrão: alíquota, cálculo e antecipação",
+    "titulo_seo": "ITBI em Fortaleza: alíquota e cálculo | Alto Padrão Imóveis",
+    "descricao": "ITBI em Fortaleza: {t:itbi} no geral e {t:itbi2} se pago antes da escritura. Cálculo para imóveis de R$ 3 a R$ 15 milhões e base de cálculo da Sefin.",
+    "categoria": "Tributação e sucessão",
+    "autor": "carolina-ribeiro",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 5,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "O ITBI em Fortaleza tem alíquota geral de {t:itbi} sobre a base de cálculo e de {t:itbi2} quando o imposto é pago até o dia anterior à lavratura da escritura ou do contrato de financiamento, segundo a Sefin. Em um imóvel de R$ 5 milhões, o imposto é de {ti:5000000}, ou {ta:5000000} com o pagamento antecipado.",
+    "aviso": "Conteúdo informativo, com base em fontes oficiais citadas na página; não substitui parecer jurídico ou contábil individual. Confirme alíquotas, valores e prazos na data da operação.",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA17",
+        "tipo": "Análise técnica",
+        "apresentador": "carolina-ribeiro",
+        "titulo": "ITBI em Fortaleza: como pagar a alíquota de 2%",
+        "descricao": "[PREENCHER: vídeo gravado sobre iTBI em Fortaleza: como pagar a alíquota de 2%.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "aliquota",
+        "h2": "Qual a alíquota do ITBI em Fortaleza?",
+        "paragrafos": [
+          "A Secretaria Municipal das Finanças (Sefin) informa três alíquotas: {t:itbi} como alíquota geral, {t:itbi2} no pagamento antecipado e {t:sfh} sobre o valor financiado pelo Sistema Financeiro da Habitação, até o limite de {t:sfhteto} (valor de {t:sfhano}).",
+          "A alíquota de {t:itbi2} vale para o imposto pago até o dia anterior à lavratura do instrumento que serve de base ao registro, como a escritura ou o contrato de financiamento. A tabela abaixo calcula o ITBI sobre o valor do imóvel como base."
+        ],
+        "tabela_dinamica": "itbi",
+        "respostas_rapidas": [
+          {
+            "q": "Qual a alíquota do ITBI em Fortaleza?",
+            "a": "{t:itbi} no geral e {t:itbi2} quando o imposto é pago antes da lavratura da escritura ou do contrato de financiamento, segundo a Sefin."
+          }
+        ]
+      },
+      {
+        "id": "base",
+        "h2": "Qual é a base de cálculo do ITBI?",
+        "paragrafos": [
+          "Segundo a Sefin, a base é o maior valor entre o valor de mercado apurado pela administração tributária, o valor declarado pelo contribuinte e o valor do IPTU. Valor de mercado é a quantia mais provável de uma negociação voluntária e consciente do bem. Em imóvel na planta, a base é o valor de mercado como se estivesse concluído.",
+          "O Superior Tribunal de Justiça fixou, no Tema 1.113 (REsp 1.937.821/SP), que a base é o valor do imóvel em condições normais de mercado, que o valor declarado se presume compatível e que o município não pode arbitrar valor de referência unilateral nem vincular a base ao IPTU. A página da Sefin ainda lista o valor do IPTU entre os parâmetros: em caso de divergência, a via é a reavaliação ou a contestação administrativa."
+        ]
+      },
+      {
+        "id": "quando-pagar",
+        "h2": "Quando e como o ITBI é pago?",
+        "paragrafos": [
+          "O contribuinte é o adquirente. Em regra, o imposto é pago em até 30 dias da notificação de lançamento, por DAM emitido no site da Sefin. Para a alíquota de {t:itbi2}, o pagamento precisa ocorrer antes da lavratura da escritura ou do contrato de financiamento: por isso o cálculo deve estar pronto antes da assinatura.",
+          "O Supremo Tribunal Federal decidiu, no Tema 1.124, que o fato gerador do ITBI é o registro da transferência. A Sefin permite parcelar em até 3 parcelas mensais sem juros, ou em até 6 com juros pela Selic, e só emite a certidão para o ato translativo depois da quitação.",
+          "Imóveis à venda nos bairros da faixa estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
+        ]
+      },
+      {
+        "id": "holding",
+        "h2": "A holding paga ITBI na compra de um imóvel?",
+        "paragrafos": [
+          "Sim. A compra direta por uma pessoa jurídica paga o ITBI pela mesma regra. A imunidade do art. 156, § 2º, I, da Constituição vale para a integralização de imóveis ao capital social, não para a compra. O tema está em <a href=\"/guias/holding-familiar-imoveis-alto-padrao/\">holding familiar para imóveis de alto padrão em Fortaleza</a> e em <a href=\"/guias/comprar-imovel-pessoa-fisica-ou-holding/\">comprar imóvel: pessoa física ou holding</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Quanto é o ITBI de um imóvel de R$ 3 milhões em Fortaleza?",
+        "a": "{ti:3000000} pela alíquota geral de {t:itbi}, ou {ta:3000000} se o imposto for pago antes da lavratura da escritura, quando a alíquota é de {t:itbi2}."
+      },
+      {
+        "q": "Quem paga o ITBI na compra de um imóvel?",
+        "a": "O adquirente, isto é, o comprador. Segundo a Sefin, o transmitente e os tabeliães respondem solidariamente."
+      },
+      {
+        "q": "O ITBI pode ser parcelado em Fortaleza?",
+        "a": "Sim: em até 3 parcelas mensais sem juros ou em até 6 com juros pela Selic. A certidão para o ato translativo só é emitida depois da quitação de todas as parcelas."
+      }
+    ]
+  },
+  {
+    "slug": "itcd-ceara-imoveis",
+    "guia_pilar": "holding-familiar-imoveis-alto-padrao",
+    "titulo": "ITCD no Ceará: alíquotas, faixas em Ufirce e prazos para herança e doação de imóveis",
+    "titulo_seo": "ITCD no Ceará: alíquotas e prazos | Alto Padrão Imóveis",
+    "descricao": "ITCD no Ceará: alíquotas de 2% a 8% por faixas em Ufirce (Ufirce {t:ufirceano}: {t:ufirce}), isenção até {u:7000} na herança, doação e usufruto.",
+    "categoria": "Tributação e sucessão",
+    "autor": "carolina-ribeiro",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 5,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "O ITCD do Ceará é progressivo, de 2% a 8%, e calculado por faixas em Ufirce. Em {t:ufirceano}, a Ufirce vale {t:ufirce}: na herança, a alíquota de 8% incide sobre o que passa de 40.000 Ufirces ({u:40000}). Na doação, essa faixa começa em 250.000 Ufirces ({u:250000}), e a doação da nua-propriedade tributa 2/3 do valor.",
+    "aviso": "Conteúdo informativo, com base em fontes oficiais citadas na página; não substitui parecer jurídico ou contábil individual. Confirme alíquotas, valores e prazos na data da operação.",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA18",
+        "tipo": "Análise técnica",
+        "apresentador": "carolina-ribeiro",
+        "titulo": "ITCD no Ceará: herança, doação e usufruto",
+        "descricao": "[PREENCHER: vídeo gravado sobre iTCD no Ceará: herança, doação e usufruto.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "faixas",
+        "h2": "Quais são as alíquotas do ITCD no Ceará?",
+        "paragrafos": [
+          "A Lei estadual 15.812/2015 fixa alíquotas de 2% a 8% (art. 16). O imposto é apurado pela decomposição em faixas de valor, convertidas em Ufirce, com a alíquota de cada faixa aplicada à parte correspondente, e as faixas consideram a soma de todos os bens e direitos transmitidos (art. 17).",
+          "Na herança, a primeira faixa vai até 10.000 Ufirces; na doação, até 25.000. As faixas da doação são mais largas, e a de 8% começa em 250.000 Ufirces, contra 40.000 na herança."
+        ],
+        "tabela_dinamica": "itcd_faixas",
+        "respostas_rapidas": [
+          {
+            "q": "Qual a alíquota máxima do ITCD no Ceará?",
+            "a": "8%: na herança, sobre o que excede 40.000 Ufirces ({u:40000}); na doação, sobre o que excede 250.000 Ufirces ({u:250000})."
+          }
+        ]
+      },
+      {
+        "id": "ufirce",
+        "h2": "Quanto vale a Ufirce em {t:ufirceano} e qual a isenção?",
+        "paragrafos": [
+          "A SEFAZ-CE fixou a Ufirce de {t:ufirceano} em {t:ufirce}, pela Instrução Normativa SEFAZ-CE nº 152/2025, publicada no Diário Oficial do Estado de 16 de dezembro de 2025. O valor é atualizado pelo IPCA, conforme a Lei 13.083/2000.",
+          "Na herança, o quinhão ou legado de até 7.000 Ufirces ({u:7000}) é isento, e o valor isento é deduzido da base de cálculo (art. 8º, I, \"a\"). Na doação, não há essa isenção."
+        ]
+      },
+      {
+        "id": "simulacao",
+        "h2": "Quanto de ITCD paga um imóvel de alto padrão?",
+        "paragrafos": [
+          "A simulação abaixo considera um único imóvel, sem outros bens e sem outras deduções, com a Ufirce de {t:ufirceano}. É uma estimativa para comparar caminhos, e não um lançamento da SEFAZ-CE, que avalia o valor venal."
+        ],
+        "tabela_dinamica": "itcd_exemplos"
+      },
+      {
+        "id": "usufruto",
+        "h2": "Como a doação com reserva de usufruto é tributada?",
+        "paragrafos": [
+          "No desmembramento da propriedade, a lei considera 2/3 do valor venal na nua-propriedade e 1/3 nos demais direitos reais (art. 12). Na doação da nua-propriedade com reserva de usufruto, a base do ITCD é, portanto, de 2/3 do valor do imóvel, e a última coluna da simulação mostra o efeito.",
+          "Consulte a SEFAZ-CE sobre o tratamento da consolidação do usufruto com a morte do usufrutuário antes de estruturar a doação. O uso de uma holding familiar está em <a href=\"/guias/holding-familiar-imoveis-alto-padrao/\">holding familiar para imóveis de alto padrão em Fortaleza</a>."
+        ]
+      },
+      {
+        "id": "prazos",
+        "h2": "Quais são os prazos e as multas do ITCD?",
+        "paragrafos": [
+          "Na herança, o imposto é recolhido em até 60 dias da notificação do lançamento; na doação, em até 30 dias da notificação. A doação deve ser comunicada ao Fisco em até 60 dias da sua concretização. O atraso na abertura do inventário ou na comunicação da doação gera multa de 10%, elevada a 20% depois de 180 dias (arts. 22, 23, 34 e 35).",
+          "O contribuinte pode impugnar o valor em 30 dias da ciência da notificação (art. 14). A base é o valor venal, e o Fisco pode desconsiderar o valor declarado quando ele não for compatível com o de mercado. Imóveis à venda nos bairros da faixa estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Qual a alíquota do ITCD sobre uma herança de R$ 5 milhões no Ceará?",
+        "a": "Pelas faixas da Lei 15.812/2015, com a Ufirce de {t:ufirceano} e a isenção de 7.000 Ufirces, o ITCD sobre um único imóvel de R$ 5 milhões é de cerca de {ih:5000000}, uma alíquota efetiva de {eh:5000000}. A SEFAZ-CE faz o lançamento com o valor venal avaliado."
+      },
+      {
+        "q": "ITCD e ITCMD são o mesmo imposto?",
+        "a": "Sim. A SEFAZ-CE usa a sigla ITCD; ITCMD é o nome usado na Constituição e em outros estados."
+      },
+      {
+        "q": "Doar em vida paga menos ITCD que deixar de herança?",
+        "a": "Nas simulações desta página, a doação paga menos que a herança do mesmo valor porque as faixas da doação são mais largas, e a doação da nua-propriedade usa 2/3 do valor. O resultado depende do caso concreto e de outros tributos; peça uma simulação a um advogado ou contador."
+      }
+    ]
+  },
+  {
+    "slug": "comprar-imovel-pessoa-fisica-ou-holding",
+    "guia_pilar": "holding-familiar-imoveis-alto-padrao",
+    "titulo": "Comprar imóvel em Fortaleza: pessoa física ou holding?",
+    "titulo_seo": "Imóvel: pessoa física ou holding? | Alto Padrão Imóveis",
+    "descricao": "Pessoa física ou holding para comprar imóvel de alto padrão em Fortaleza: ITBI na compra, imunidade na integralização, ITCD e ganho de capital.",
+    "categoria": "Tributação e sucessão",
+    "autor": "carolina-ribeiro",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 5,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "Na compra direta, pessoa física e holding pagam o mesmo ITBI: {t:itbi} em Fortaleza, ou {t:itbi2} se pago antes da escritura. A holding muda o que vem depois: a integralização de imóveis ao capital é imune ao ITBI até o limite do capital, e a sucessão passa a ocorrer por doação de quotas, com ITCD em faixas próprias.",
+    "aviso": "Conteúdo informativo, com base em fontes oficiais citadas na página; não substitui parecer jurídico ou contábil individual. Confirme alíquotas, valores e prazos na data da operação.",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA19",
+        "tipo": "Análise técnica",
+        "apresentador": "carolina-ribeiro",
+        "titulo": "Pessoa física ou holding: o que muda na compra do imóvel",
+        "descricao": "[PREENCHER: vídeo gravado sobre pessoa física ou holding: o que muda na compra do imóvel.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "comparativo",
+        "h2": "O que muda entre comprar como pessoa física ou por holding?",
+        "paragrafos": [
+          "A holding é uma ferramenta de gestão e sucessão, e não uma redução automática de imposto. A tabela compara os eventos principais; onde o resultado depende do regime tributário da empresa, a página indica a simulação que falta."
+        ],
+        "tabela": {
+          "caption": "Pessoa física × holding familiar: o que muda em cada evento",
+          "cabecalho": [
+            "Evento",
+            "Pessoa física",
+            "Holding familiar",
+            "Base"
+          ],
+          "linhas": [
+            [
+              "Compra direta do imóvel",
+              "ITBI de {t:itbi} ({t:itbi2} se pago antes da escritura)",
+              "ITBI de {t:itbi} ({t:itbi2} se pago antes da escritura)",
+              "Sefin-Fortaleza"
+            ],
+            [
+              "Entrada de imóvel que já é da família",
+              "Não se aplica",
+              "Imune ao ITBI até o capital integralizado; o excedente paga (Tema 796 do STF)",
+              "Constituição, art. 156, § 2º, I"
+            ],
+            [
+              "Imóvel de empresa com atividade imobiliária preponderante",
+              "Não se aplica",
+              "Ressalva da imunidade em julgamento no STF (Tema 1.348)",
+              "Constituição, art. 156, § 2º, I"
+            ],
+            [
+              "Sucessão",
+              "ITCD na herança, com faixa de 8% acima de {u:40000}, mais inventário do imóvel",
+              "ITCD na doação das quotas, com faixa de 8% acima de {u:250000}",
+              "{t:ufirceano}: Ufirce de {t:ufirce}"
+            ],
+            [
+              "Venda do imóvel",
+              "Ganho de capital de 15% a 22,5%, com isenção ao reinvestir em imóvel residencial em 180 dias",
+              "[PREENCHER: tributação do ganho de capital na holding, conforme o regime e o enquadramento do imóvel]",
+              "Lei 13.259/2016; Lei 11.196/2005, art. 39"
+            ],
+            [
+              "Receita de aluguel",
+              "Tabela progressiva do imposto de renda, com alíquota de até 27,5%",
+              "[PREENCHER: carga efetiva da holding conforme o regime tributário, com simulação do contador]",
+              "Legislação federal"
+            ]
+          ]
+        }
+      },
+      {
+        "id": "itbi",
+        "h2": "A holding paga ITBI na compra?",
+        "paragrafos": [
+          "Sim. A compra direta por pessoa jurídica paga o ITBI pela mesma regra da pessoa física, com {t:itbi} sobre a base de cálculo e {t:itbi2} no pagamento antecipado. A imunidade da Constituição vale quando os sócios integralizam imóveis ao capital social, e não quando a empresa compra de terceiros. O cálculo está em <a href=\"/guias/itbi-fortaleza-imoveis-alto-padrao/\">ITBI em Fortaleza para imóveis de alto padrão: alíquota, cálculo e antecipação</a>."
+        ]
+      },
+      {
+        "id": "integralizacao",
+        "h2": "Como fica a integralização de imóveis que a família já tem?",
+        "paragrafos": [
+          "A Constituição prevê a imunidade do ITBI na integralização de bens ao capital social, mas o STF limitou a imunidade ao valor do capital integralizado (Tema 796) e julga, no Tema 1.348, se a ressalva da atividade imobiliária preponderante vale para a integralização. A pessoa física pode integralizar pelo valor declarado no imposto de renda ou pelo de mercado (art. 23 da Lei 9.249/1995).",
+          "Municípios sustentam que a diferença entre o valor histórico e o de mercado paga ITBI. Por isso, o valor de integralização, o capital e o objeto social devem ser definidos com advogado antes da operação. Veja também <a href=\"/guias/holding-familiar-imoveis-alto-padrao/\">holding familiar para imóveis de alto padrão em Fortaleza</a>."
+        ]
+      },
+      {
+        "id": "sucessao",
+        "h2": "A holding reduz o ITCD da sucessão?",
+        "paragrafos": [
+          "O ITCD da herança e o da doação seguem faixas diferentes: a de 8% começa em 40.000 Ufirces ({u:40000}) na herança e em 250.000 Ufirces ({u:250000}) na doação. A simulação para valores de R$ 3 a R$ 10 milhões está em <a href=\"/guias/itcd-ceara-imoveis/\">ITCD no Ceará: alíquotas, faixas em Ufirce e prazos para herança e doação de imóveis</a>.",
+          "Imóveis à venda nos bairros da faixa estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "A holding paga ITBI na compra de um imóvel?",
+        "a": "Sim. A compra direta por holding paga o ITBI pela mesma regra da pessoa física: {t:itbi} em Fortaleza, ou {t:itbi2} se o imposto for pago antes da lavratura da escritura."
+      },
+      {
+        "q": "Posso transferir meu imóvel para uma holding sem pagar ITBI?",
+        "a": "A Constituição prevê imunidade na integralização de capital, limitada ao valor do capital integralizado (Tema 796 do STF). O STF ainda julga se a ressalva da atividade imobiliária preponderante vale para a integralização (Tema 1.348). Faça a estrutura com advogado."
+      },
+      {
+        "q": "A holding sempre reduz o imposto?",
+        "a": "Não. Ela organiza a gestão e a sucessão, mas o resultado depende do regime tributário, do tipo de renda e do uso do imóvel. Peça uma simulação a contador e advogado com os números do caso."
+      }
+    ]
+  },
+  {
+    "slug": "protecao-contra-maresia-imoveis-fortaleza",
+    "guia_pilar": "isolamento-acustico-blindagem-gerador-imoveis-luxo",
+    "titulo": "Proteção contra maresia em imóveis de Fortaleza: o que exigir",
+    "titulo_seo": "Proteção contra maresia em imóveis | Alto Padrão Imóveis",
+    "descricao": "Como a maresia afeta esquadrias, ferragens e ar-condicionado em Fortaleza e quais documentos e normas (ISO 9223, ABNT NBR 12609) pedir antes de comprar.",
+    "categoria": "Critérios técnicos",
+    "autor": "marina-albuquerque",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 5,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "A maresia leva sais de cloreto que aceleram a corrosão de alumínio, aço e equipamentos, e o efeito é maior perto do mar. A norma ISO 9223 classifica a corrosividade atmosférica de C1 a C5 e CX. Antes de comprar na orla de Fortaleza, peça a especificação das esquadrias, das ferragens e das condensadoras e o certificado do tratamento.",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: espessura mínima da camada anódica por classe, conforme o texto da ABNT NBR 12609:2022.]",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA20",
+        "tipo": "Análise técnica",
+        "apresentador": "marina-albuquerque",
+        "titulo": "Maresia em imóveis de Fortaleza: o que pedir no memorial",
+        "descricao": "[PREENCHER: vídeo gravado sobre maresia em imóveis de Fortaleza: o que pedir no memorial.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "o-que-e",
+        "h2": "O que é a maresia e por que ela corrói?",
+        "paragrafos": [
+          "A maresia é a névoa salina trazida pelo vento do mar. Os cloretos depositados sobre alumínio, aço e componentes elétricos aceleram a corrosão, e a deposição diminui com a distância da costa e com as barreiras de edifícios.",
+          "A norma ISO 9223 classifica a corrosividade atmosférica em categorias de C1 (muito baixa) a C5 (muito alta), e a segunda edição acrescentou a categoria CX, para ambientes extremos. Cada categoria corresponde a uma taxa de corrosão medida em metais padrão."
+        ],
+        "respostas_rapidas": [
+          {
+            "q": "Quantas categorias de corrosividade a ISO 9223 define?",
+            "a": "Seis: de C1 (muito baixa) a C5 (muito alta), mais a categoria CX, para ambientes extremos."
+          }
+        ]
+      },
+      {
+        "id": "o-que-checar",
+        "h2": "Quais itens verificar em um imóvel na orla?",
+        "paragrafos": [
+          "Esquadrias de alumínio: peça o tipo de tratamento (anodização conforme a ABNT NBR 12609, que trata da anodização para fins arquitetônicos, ou pintura com certificação para ambiente marinho) e o certificado do aplicador.",
+          "Ferragens, parafusos e guarda-corpos expostos: o aço inox 316 contém molibdênio, que aumenta a resistência à corrosão por cloretos, e é o especificado em peças expostas à maresia. Condensadoras de ar-condicionado e quadros externos precisam de tratamento anticorrosivo.",
+          "[PREENCHER: espessura mínima da camada anódica por classe da ABNT NBR 12609:2022 e o que cada classe indica para exposição marinha.]"
+        ]
+      },
+      {
+        "id": "documentos",
+        "h2": "Quais documentos pedir antes de comprar?",
+        "paragrafos": [
+          "Peça o memorial descritivo das esquadrias e ferragens com o tipo de tratamento, o certificado do fabricante ou do aplicador, o prazo de garantia contra corrosão e o manual de manutenção do edifício. Compare com o <a href=\"/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/\">guia de critérios técnicos para imóveis de luxo em Fortaleza</a>.",
+          "Imóveis à venda nos bairros da orla estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "A maresia afeta imóveis a quantos metros do mar em Fortaleza?",
+        "a": "Não há distância única: depende do vento, das barreiras de edifícios e da exposição. Como critério interno, a Alto Padrão Imóveis exige especificação para ambiente marinho em imóveis a menos de 500 m do mar."
+      },
+      {
+        "q": "Inox 304 ou 316 em ferragens expostas à maresia?",
+        "a": "O 316 contém molibdênio, que aumenta a resistência à corrosão por cloretos, e é o especificado em ferragens expostas à maresia."
+      },
+      {
+        "q": "A maresia também afeta o ar-condicionado?",
+        "a": "Sim. Condensadoras expostas ao ar salino precisam de tratamento anticorrosivo e de manutenção periódica."
+      }
+    ]
+  },
+  {
+    "slug": "isolamento-acustico-rw-imoveis-fortaleza",
+    "guia_pilar": "isolamento-acustico-blindagem-gerador-imoveis-luxo",
+    "titulo": "Isolamento acústico Rw e D2m,nT,w: como medir em imóveis de luxo",
+    "titulo_seo": "Isolamento acústico Rw em imóveis | Alto Padrão Imóveis",
+    "descricao": "Rw e D2m,nT,w explicados: o que cada índice mede, os mínimos da ABNT NBR 15575-4 para fachadas e o que pedir no laudo de um imóvel de alto padrão.",
+    "categoria": "Critérios técnicos",
+    "autor": "marina-albuquerque",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 5,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "O índice Rw mede, em laboratório, o isolamento sonoro da esquadria; o D2m,nT,w mede o da fachada instalada, em campo. A ABNT NBR 15575-4 exige no mínimo 20, 25 ou 30 dB de D2m,nT,w nos dormitórios, conforme a classe de ruído do local. Um laudo completo traz as duas medições.",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: valores de D2m,nT,w da edição vigente da ABNT NBR 15575-4, se diferirem da edição de 2013.]",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA21",
+        "tipo": "Análise técnica",
+        "apresentador": "marina-albuquerque",
+        "titulo": "Rw ou D2m,nT,w: qual número pedir no laudo acústico",
+        "descricao": "[PREENCHER: vídeo gravado sobre rw ou D2m,nT,w: qual número pedir no laudo acústico.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "rw-d2m",
+        "h2": "Qual a diferença entre Rw e D2m,nT,w?",
+        "paragrafos": [
+          "O Rw é o índice de redução sonora ponderado da esquadria, medido em laboratório pela ISO 10140-2 e expresso em número único pela EN ISO 717-1. Ele avalia o componente isolado.",
+          "O D2m,nT,w é a diferença de nível padronizada da fachada, medida em campo pela ISO 16283-3, com a esquadria já instalada, as frestas e as caixas de persiana. Os dois números não se convertem um no outro: uma esquadria com Rw alto pode ter D2m,nT,w menor por falha de instalação."
+        ],
+        "respostas_rapidas": [
+          {
+            "q": "Rw e D2m,nT,w medem a mesma coisa?",
+            "a": "Não. O Rw é medido em laboratório e avalia a esquadria; o D2m,nT,w é medido em campo e avalia a fachada instalada."
+          }
+        ]
+      },
+      {
+        "id": "minimos",
+        "h2": "O que a ABNT NBR 15575-4 exige para dormitórios?",
+        "paragrafos": [
+          "A norma de desempenho de edificações habitacionais define níveis mínimo (M), intermediário (I) e superior (S) de D2m,nT,w para fachadas, conforme a classe de ruído do local. Os valores abaixo são os da edição de 2013."
+        ],
+        "tabela": {
+          "caption": "D2m,nT,w mínimo da fachada de dormitórios, por classe de ruído (ABNT NBR 15575-4, edição de 2013)",
+          "cabecalho": [
+            "Classe de ruído",
+            "Situação do local",
+            "Mínimo (M)",
+            "Intermediário (I)",
+            "Superior (S)"
+          ],
+          "linhas": [
+            [
+              "I",
+              "Longe de fontes de ruído intenso",
+              "20 dB",
+              "25 dB",
+              "30 dB"
+            ],
+            [
+              "II",
+              "Ruído que não se enquadra nas classes I e III",
+              "25 dB",
+              "30 dB",
+              "35 dB"
+            ],
+            [
+              "III",
+              "Ruído intenso de transporte ou de outras fontes",
+              "30 dB",
+              "35 dB",
+              "40 dB"
+            ]
+          ]
+        }
+      },
+      {
+        "id": "criterio",
+        "h2": "O que pedir no laudo de um imóvel de alto padrão?",
+        "paragrafos": [
+          "Peça o Rw do fabricante da esquadria, com o ensaio de laboratório, e a medição em campo do D2m,nT,w da fachada, assinada por profissional habilitado. A Alto Padrão Imóveis adota, como critério interno, esquadrias com Rw igual ou superior a 42 dB para o selo de isolamento acústico.",
+          "Para os demais critérios, veja o <a href=\"/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/\">guia de critérios técnicos para imóveis de luxo em Fortaleza</a>. Imóveis à venda nos bairros da orla estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Um Rw de 42 dB atende à norma de desempenho?",
+        "a": "Não se pode concluir só pelo Rw: a norma avalia a fachada em campo, pelo D2m,nT,w. O Rw alto da esquadria ajuda, mas só a medição em campo comprova o desempenho da fachada instalada."
+      },
+      {
+        "q": "Quais normas medem o isolamento acústico da fachada?",
+        "a": "A ISO 10140-2 e a EN ISO 717-1 tratam do Rw em laboratório; a ISO 16283-3 trata da medição em campo da fachada, e a ABNT NBR 15575-4 define os níveis de D2m,nT,w para edifícios habitacionais."
+      },
+      {
+        "q": "Isolamento acústico europeu é exigido por lei?",
+        "a": "Não. A norma de desempenho define níveis mínimos de D2m,nT,w; o chamado isolamento acústico europeu é uma especificação superior, adotada por escolha do incorporador ou do proprietário."
+      }
+    ]
+  },
+  {
+    "slug": "blindagem-abnt-nbr-15000-portaria-imoveis",
+    "guia_pilar": "isolamento-acustico-blindagem-gerador-imoveis-luxo",
+    "titulo": "Portaria blindada: níveis da ABNT NBR 15000 em imóveis de alto padrão",
+    "titulo_seo": "Blindagem ABNT NBR 15000 em portarias | Alto Padrão Imóveis",
+    "descricao": "O que cada nível da ABNT NBR 15000 resiste, por que o conjunto importa (vidro, parede, porta, passa-volumes) e o que pedir de certificado antes da compra.",
+    "categoria": "Critérios técnicos",
+    "autor": "marina-albuquerque",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 5,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "A ABNT NBR 15000 classifica a blindagem balística em níveis de I a IV pela munição de ensaio. O nível III-A é ensaiado com 9 mm e .44 Magnum. Em portarias, a proteção vale pelo conjunto: vidro, painéis, porta e passa-volumes precisam do mesmo nível, com certificado do fabricante.",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: níveis e munições conforme a edição vigente da ABNT NBR 15000; a tabela desta página reproduz a edição de 2005.]",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA22",
+        "tipo": "Análise técnica",
+        "apresentador": "marina-albuquerque",
+        "titulo": "Portaria blindada: como ler o certificado da ABNT NBR 15000",
+        "descricao": "[PREENCHER: vídeo gravado sobre portaria blindada: como ler o certificado da ABNT NBR 15000.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "niveis",
+        "h2": "Quais são os níveis de proteção da ABNT NBR 15000?",
+        "paragrafos": [
+          "A norma de blindagens para proteção balística classifica o nível pela munição e pela velocidade de ensaio, e não pelo calibre isolado. A tabela reproduz os níveis da edição de 2005; a norma foi revisada depois."
+        ],
+        "tabela": {
+          "caption": "Níveis de proteção balística da ABNT NBR 15000 (edição de 2005) e munição de ensaio",
+          "cabecalho": [
+            "Nível",
+            "Munição de ensaio",
+            "Uso da arma de ensaio"
+          ],
+          "linhas": [
+            [
+              "I",
+              ".22 LRHV de chumbo e .38 Special RN de chumbo",
+              "Permitido"
+            ],
+            [
+              "II-A",
+              "9 mm FMJ e .357 Magnum JSP",
+              "Permitido"
+            ],
+            [
+              "II",
+              "9 mm FMJ e .357 Magnum JSP, em velocidades maiores",
+              "Permitido"
+            ],
+            [
+              "III-A",
+              "9 mm FMJ e .44 Magnum SWC GC",
+              "Permitido"
+            ],
+            [
+              "III",
+              "7,62 × 51 mm FMJ (.308 Winchester)",
+              "Restrito"
+            ],
+            [
+              "IV",
+              ".30-06 AP",
+              "Restrito"
+            ]
+          ]
+        },
+        "respostas_rapidas": [
+          {
+            "q": "Qual munição ensaia o nível III-A da ABNT NBR 15000?",
+            "a": "Na edição de 2005, 9 mm FMJ e .44 Magnum SWC GC, com cinco impactos de cada uma."
+          }
+        ]
+      },
+      {
+        "id": "conjunto",
+        "h2": "Por que o conjunto da portaria importa?",
+        "paragrafos": [
+          "A blindagem vale pelo elo mais fraco: vidro, painéis opacos, esquadrias, porta e passa-volumes precisam atender ao mesmo nível, com instalação que mantenha o desempenho nas juntas. Uma guarita com vidro blindado e parede comum não tem o nível do vidro no conjunto.",
+          "A eclusa completa a portaria: dois portões intertravados, que nunca abrem ao mesmo tempo, para pedestres e para veículos."
+        ]
+      },
+      {
+        "id": "certificado",
+        "h2": "O que pedir antes de comprar?",
+        "paragrafos": [
+          "Peça o certificado de ensaio do fabricante, com o nível da ABNT NBR 15000 e a edição da norma, o memorial da guarita com os itens blindados e o laudo de instalação. Veja o <a href=\"/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/\">guia de critérios técnicos para imóveis de luxo em Fortaleza</a>.",
+          "Imóveis à venda nos bairros da orla estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "O que significa blindagem nível III-A?",
+        "a": "Na ABNT NBR 15000 (edição de 2005), o nível III-A é ensaiado com 9 mm FMJ e .44 Magnum SWC GC. O certificado do fabricante deve indicar o nível e a edição da norma."
+      },
+      {
+        "q": "Vidro blindado basta para ter portaria blindada?",
+        "a": "Não. Painéis, esquadrias, porta e passa-volumes precisam atender ao mesmo nível, e a instalação deve manter o desempenho nas juntas."
+      },
+      {
+        "q": "Quais níveis são de uso restrito?",
+        "a": "Na edição de 2005, os níveis III (7,62 × 51 mm) e IV (.30-06 AP) são ensaiados com armas de uso restrito."
+      }
+    ]
+  },
+  {
+    "slug": "gerador-100-carga-imoveis-alto-padrao",
+    "guia_pilar": "isolamento-acustico-blindagem-gerador-imoveis-luxo",
+    "titulo": "Gerador com 100% da carga: o que significa em um edifício de luxo",
+    "titulo_seo": "Gerador com 100% da carga em edifícios | Alto Padrão Imóveis",
+    "descricao": "Gerador que atende 100% da carga elétrica: o que entra na conta (ar-condicionado, elevadores, bombas), os dados do memorial e como conferir antes da compra.",
+    "categoria": "Critérios técnicos",
+    "autor": "marina-albuquerque",
+    "publicado": "2026-10-12",
+    "atualizado": "2026-10-12",
+    "tempo_leitura": 5,
+    "imagem": "/static/img/artigo-placeholder.svg",
+    "resumo": "Gerador com 100% da carga é aquele dimensionado para toda a demanda elétrica do edifício, inclusive ar-condicionado, elevadores e bombas, e não só para as áreas comuns. Para conferir, peça o memorial: potência em kVA, demanda atendida, autonomia do tanque, tempo de transferência do quadro automático e o projeto aprovado pela concessionária.",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: tempo máximo de transferência do quadro de transferência automática (QTA) e método de dimensionamento, conforme o projeto elétrico e as normas aplicáveis (ABNT NBR 5410 e NBR 14039).]",
+    "bairros_relacionados": [
+      "meireles",
+      "mucuripe"
+    ],
+    "videos": [
+      {
+        "youtube_id": "SUBSTITUA23",
+        "tipo": "Análise técnica",
+        "apresentador": "marina-albuquerque",
+        "titulo": "Gerador com 100% da carga: o que o memorial precisa mostrar",
+        "descricao": "[PREENCHER: vídeo gravado sobre gerador com 100% da carga: o que o memorial precisa mostrar.]",
+        "duracao": "PT6M00S",
+        "data_upload": "2026-10-12"
+      }
+    ],
+    "secoes": [
+      {
+        "id": "o-que-e",
+        "h2": "O que significa gerador com 100% da carga?",
+        "paragrafos": [
+          "Significa que o grupo gerador foi dimensionado para a demanda máxima do edifício: elevadores, bombas, iluminação, tomadas das unidades e climatização. Em muitos edifícios o gerador atende apenas áreas comuns e cargas essenciais, e as unidades ficam sem ar-condicionado quando falta energia.",
+          "A cobertura do gerador é uma informação de projeto: depende do memorial elétrico, que cita as normas ABNT NBR 5410 (instalações elétricas de baixa tensão) e NBR 14039 (instalações de média tensão) como base."
+        ],
+        "respostas_rapidas": [
+          {
+            "q": "O gerador atende o ar-condicionado das unidades?",
+            "a": "Só se o projeto o incluir. Por definição, o gerador com 100% da carga atende também a climatização; o memorial deve listar os circuitos atendidos."
+          }
+        ]
+      },
+      {
+        "id": "memorial",
+        "h2": "Quais dados o memorial do gerador deve trazer?",
+        "paragrafos": [
+          "Potência em kVA e demanda máxima atendida; lista de circuitos e de cargas atendidas; autonomia do tanque em horas e tipo de combustível; quadro de transferência automática e o tempo de transferência; local de instalação, ventilação e tratamento acústico; e plano de manutenção.",
+          "[PREENCHER: tempo máximo de transferência do QTA e fórmula de dimensionamento, conforme o projeto elétrico e as normas aplicáveis.]"
+        ]
+      },
+      {
+        "id": "conferir",
+        "h2": "Como conferir antes da compra?",
+        "paragrafos": [
+          "Peça o projeto elétrico aprovado pela distribuidora de energia, a ART do responsável técnico, o relatório do último teste do gerador em carga e o contrato de manutenção. Compare com o <a href=\"/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/\">guia de critérios técnicos para imóveis de luxo em Fortaleza</a>.",
+          "Imóveis à venda nos bairros da orla estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "q": "Gerador total e gerador de emergência são a mesma coisa?",
+        "a": "Não necessariamente. O gerador de emergência pode atender só áreas comuns e cargas essenciais; o gerador com 100% da carga atende toda a demanda, inclusive climatização e as unidades."
+      },
+      {
+        "q": "Que documentos comprovam a cobertura do gerador?",
+        "a": "O memorial e o projeto elétrico, com potência em kVA, circuitos atendidos e autonomia, a ART do responsável técnico e o relatório de teste em carga."
+      },
+      {
+        "q": "Quem aprova o projeto de um gerador no edifício?",
+        "a": "A distribuidora de energia pode exigir análise do projeto do grupo gerador antes da instalação; consulte a concessionária local e o engenheiro responsável."
       }
     ]
   }
