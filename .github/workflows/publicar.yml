@@ -102,7 +102,7 @@ jobs:
           echo "${payload:-nada a avisar}" | jq -r '.urlList[]?' 2>/dev/null || echo "${payload:-nada a avisar}"
 
       - name: Guardar o site para o Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: build/pages
 
