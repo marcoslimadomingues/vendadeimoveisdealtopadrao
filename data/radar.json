@@ -293,5 +293,95 @@
         "url": "https://melhorinvestimento.net/noticias/copom-decisao-selic-setembro-2026"
       }
     }
+  },
+  {
+    "slug": "2026-10-19",
+    "publicado": "2026-10-19",
+    "periodo": "13 a 19 de outubro de 2026",
+    "titulo": "Fortaleza terá 20 superprédios até 2030, 11 no Meireles, e MDNE apresenta o Beach Class Essence",
+    "resumo": "Levantamento do Sinduscon-CE publicado pelo Diário do Nordeste conta 20 prédios acima de 100 metros previstos em Fortaleza até 2030: 11 no Meireles, com unidades de R$ 500 mil a R$ 20 milhões. A MDNE apresentou o Beach Class Essence, na Rua Tibúrcio Cavalcante, com studios e apartamentos de um e dois quartos até o 38º andar. O aluguel residencial em Fortaleza subiu 16,59% em 12 meses, a maior alta do país no índice FipeZAP.",
+    "nota_mercado": "O levantamento de superprédios foi feito pelo Sinduscon-CE em setembro, a pedido do Diário do Nordeste, e não divulga os nomes dos prédios. O FipeZAP mede o aluguel anunciado; o preço do m² de venda por bairro segue o <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">boletim do Sinduscon-CE</a>.",
+    "mercado": [
+      {
+        "fato": "Superprédios (acima de 100 m) previstos em Fortaleza até 2030",
+        "numero": "20 · 11 em obra e 9 na planta",
+        "fonte": "dn-2026-10-09"
+      },
+      {
+        "fato": "Superprédios previstos no Meireles",
+        "bairro": "meireles",
+        "numero": "11 de 20 · mais 4 na Beira-Mar",
+        "fonte": "dn-2026-10-09"
+      },
+      {
+        "fato": "Faixa de preço das unidades nos novos superprédios",
+        "numero": "R$ 500 mil a R$ 20 milhões",
+        "fonte": "dn-2026-10-09"
+      },
+      {
+        "fato": "O mais alto: 172,01 m no Meireles, na planta, entrega em 2030",
+        "bairro": "meireles",
+        "numero": "R$ 9 a 16 milhões por unidade",
+        "fonte": "dn-2026-10-09"
+      },
+      {
+        "fato": "O mais caro: na Beira-Mar, em obra, entrega em 2027",
+        "numero": "R$ 18 a 20 milhões por unidade",
+        "fonte": "dn-2026-10-09"
+      },
+      {
+        "fato": "Aluguel residencial em Fortaleza, 12 meses até setembro (maior alta do país; média nacional 9,13%)",
+        "numero": "+16,59% · rentabilidade de 4,92% ao ano",
+        "fonte": "construa-2026-10-14"
+      },
+      {
+        "fato": "Vendas da MDNE em Fortaleza e Região Metropolitana no 3º trimestre, segundo a empresa",
+        "numero": "mais de R$ 200 milhões",
+        "fonte": "portalin-2026-10-14"
+      }
+    ],
+    "lancamentos": [
+      {
+        "nome": "Beach Class Essence",
+        "incorporadora": "MDNE (Moura Dubeux)",
+        "local": "Rua Tibúrcio Cavalcante, 607, Meireles, Fortaleza",
+        "bairro": "meireles",
+        "tipo": "Studios e apartamentos compactos de alto padrão",
+        "descricao": "Studios e apartamentos de quarto e sala do 4º ao 30º andar e 66 apartamentos de dois quartos do 31º ao 38º. Preço, VGV e entrega não divulgados.",
+        "status": "Pré-lançamento apresentado em 14 de outubro de 2026; maquete na CASACOR Ceará a partir de 15 de outubro.",
+        "fonte": [
+          "portalin-2026-10-14",
+          "conexao085-2026-10-14"
+        ]
+      }
+    ],
+    "fontes": {
+      "portalin-2026-10-14": {
+        "veiculo": "Portal IN",
+        "titulo": "MDNE anuncia o Beach Class Essence e celebra R$ 200 mi em vendas no 3TRI26",
+        "publicado": "2026-10-14",
+        "url": "https://www.portalin.com.br/in-loco/mdne-anuncia-o-beach-class-essence-e-celebra-r-200-mi-em-vendas-no-3tri26/"
+      },
+      "conexao085-2026-10-14": {
+        "veiculo": "Conexão 085",
+        "titulo": "Grupo MDNE apresenta BC Essence e Mood Guararapes",
+        "publicado": "2026-10-14",
+        "url": "https://conexao085.com.br/grupo-mdne-apresenta-bc-essence-e-mood-guararapes/"
+      },
+      "dn-2026-10-09": {
+        "veiculo": "Diário do Nordeste",
+        "titulo": "Fortaleza terá mais 20 superprédios até 2030; veja os bairros e valores",
+        "publicado": "2026-10-09",
+        "dados": "levantamento do Sinduscon-CE de setembro de 2026",
+        "url": "https://diariodonordeste.verdesmares.com.br/negocios/fortaleza-tera-mais-20-superpredios-ate-2030-veja-os-bairros-e-valores-1.3795815"
+      },
+      "construa-2026-10-14": {
+        "veiculo": "Revista Construa",
+        "titulo": "Aluguel em Fortaleza lidera altas no país e sobe 16,59%",
+        "publicado": "2026-10-14",
+        "dados": "Índice FipeZAP de aluguel residencial, setembro de 2026",
+        "url": "https://revistaconstrua.com.br/imoveis/aluguel-residencial-fortaleza-alta-fipezap-2026/"
+      }
+    }
   }
 ]
