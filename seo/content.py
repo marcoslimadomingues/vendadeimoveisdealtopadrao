@@ -283,6 +283,20 @@ class Repo:
                     erros.append(f"radar {e['slug']}: fonte '{chave}' exige veiculo, publicado e url https")
                 if chave not in usadas:
                     erros.append(f"radar {e['slug']}: fonte '{chave}' cadastrada e não citada")
+            if "indexar" in e and e["indexar"] is not False:
+                erros.append(f"radar {e['slug']}: 'indexar' só aceita false (fora do índice); omita para indexar")
+        # Indicador de mercado não se repete entre edições: número já publicado fica na edição em que saiu
+        # (e no guia de m² por bairro). Repetir faz as edições parecerem cópias umas das outras.
+        ja_citadas: dict[str, str] = {}
+        for e in sorted(self.radar.values(), key=lambda x: x["publicado"]):
+            for item in e["mercado"]:
+                for chave in _chaves_fonte(item):
+                    url = e["fontes"].get(chave, {}).get("url")
+                    if url in ja_citadas and ja_citadas[url] != e["slug"]:
+                        erros.append(f"radar {e['slug']}: indicador '{item['fato']}' repete fonte já usada na edição "
+                                     f"{ja_citadas[url]}; ligue para o guia em vez de repetir o número")
+                    elif url:
+                        ja_citadas[url] = e["slug"]
         for item in [*self.artigos.values(), *(i for i in self.imoveis.values() if self._tem_ficha(i))]:
             for v in item.get("videos", []):
                 if len(v["youtube_id"]) != 11:
@@ -671,9 +685,13 @@ class Repo:
         paginas += [(p["path"], p["atualizado"]) for p in self.pilares.values()]
         if self.radar:
             edicoes = self.radar_edicoes()
-            paginas += [("/radar/", edicoes[0]["publicado"])]
-            paginas += [(e["path"], e["publicado"]) for e in edicoes]
+            paginas += [("/radar/", max(e.get("atualizado", e["publicado"]) for e in edicoes))]
+            paginas += [(e["path"], e.get("atualizado", e["publicado"])) for e in edicoes if e.get("indexar") is not False]
         return paginas
+
+    def paginas_fora_do_indice(self) -> list[str]:
+        """Páginas no ar (HTTP 200, noindex) mas fora do sitemap: edições antigas do radar sem impressões."""
+        return [e["path"] for e in self.radar_edicoes() if e.get("indexar") is False]
 
     def paginas_redirecionadas(self) -> list[str]:
         """URLs que respondem com a página de redirecionamento (fora do sitemap e do llms.txt)."""

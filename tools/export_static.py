@@ -43,7 +43,8 @@ def exportar(saida: Path) -> list[str]:
     saida.mkdir(parents=True)
     gerados = []
 
-    todas = [p for p, _ in repo.paginas_indexaveis()] + repo.paginas_redirecionadas()
+    todas = ([p for p, _ in repo.paginas_indexaveis()] + repo.paginas_redirecionadas()
+             + repo.paginas_fora_do_indice())
     for path in todas:
         resp = client.get(path)
         if resp.status_code != 200:

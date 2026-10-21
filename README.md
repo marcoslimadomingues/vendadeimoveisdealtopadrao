@@ -174,6 +174,14 @@ uma fonte. Fonte inexistente, fonte não citada, bairro desconhecido ou slug dif
 palavras-chave, proposta comercial e imobiliárias concorrentes. Incorporadora citada em notícia entra, com a
 fonte. Antes de publicar, confira cada número na matéria original.
 
+- **Sem repetição:** um indicador de mercado não volta em outra edição. Se a fonte já apareceu na tabela
+  "Mercado em números" de uma edição anterior, o build falha. Para lembrar o número, use um link para o guia
+  (`nota_mercado`). Empreendimentos podem voltar quando houver fato novo.
+- **Medir antes de crescer:** exporte o relatório de páginas do Search Console (últimos 3 meses) e rode
+  `python tools/radar_desempenho.py Páginas.csv`. Edição com 8 semanas ou mais e sem impressões pode sair
+  do índice com `"indexar": false`. Ela continua no ar com `noindex, follow`, segue listada em `/radar/` e
+  só sai do sitemap.
+
 ### Navegação até o imóvel (home)
 
 Quem chega vê o imóvel primeiro: a vitrine fica logo depois da abertura e o dado de mercado vem abaixo. O botão

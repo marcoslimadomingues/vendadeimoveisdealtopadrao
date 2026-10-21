@@ -80,6 +80,10 @@ def test_indice_aponta_a_edicao_mais_recente(tmp_path):
         e = json.loads(json.dumps(radar[0]))
         e["slug"] = e["publicado"] = "2099-01-01"
         e["titulo"] = "Edição de teste"
+        e["mercado"] = []  # indicador não se repete entre edições; só os empreendimentos voltam
+        citadas = {k for item in e["lancamentos"] for k in ([item["fonte"]] if isinstance(item["fonte"], str)
+                                                            else item["fonte"])}
+        e["fontes"] = {k: v for k, v in e["fontes"].items() if k in citadas}
         radar.append(e)
     client, repo = montar(tmp_path, editar_radar(nova))
     anterior = repo.radar_edicoes()[1]["path"]
@@ -108,6 +112,58 @@ def test_item_com_varias_fontes_cita_todas(tmp_path):
 def test_dado_sem_fonte_quebra_o_build(tmp_path, quebrar, erro):
     with pytest.raises(ValueError, match=erro):
         montar(tmp_path, editar_radar(quebrar))
+
+
+def test_indicador_repetido_de_edicao_anterior_quebra_o_build(tmp_path):
+    def repetir(radar):
+        antiga, nova = sorted(radar, key=lambda e: e["publicado"])[:2]
+        item = antiga["mercado"][0]
+        nova["mercado"].append(dict(item))
+        nova["fontes"][item["fonte"]] = antiga["fontes"][item["fonte"]]
+    with pytest.raises(ValueError, match="repete fonte já usada na edição"):
+        montar(tmp_path, editar_radar(repetir))
+
+
+def test_edicao_fora_do_indice_segue_no_ar_com_noindex_follow(tmp_path):
+    def tirar(radar):
+        sorted(radar, key=lambda e: e["publicado"])[0]["indexar"] = False
+    client, repo = montar(tmp_path, editar_radar(tirar))
+    antiga = sorted(repo.radar.values(), key=lambda e: e["publicado"])[0]
+    r = client.get(antiga["path"])
+    assert r.status_code == 200
+    assert r.headers["X-Robots-Tag"] == "noindex, follow"
+    assert '<meta name="robots" content="noindex, follow">' in r.get_data(as_text=True)
+    assert antiga["path"] not in client.get("/sitemap.xml").get_data(as_text=True)
+    assert antiga["path"] in client.get("/radar/").get_data(as_text=True)  # o índice do radar ainda lista
+    assert repo.paginas_fora_do_indice() == [antiga["path"]]
+    recente = repo.radar_edicoes()[0]
+    assert client.get(recente["path"]).headers["X-Robots-Tag"].startswith("index, follow")
+
+
+def test_desempenho_aponta_edicao_velha_sem_impressoes(tmp_path):
+    from datetime import date
+
+    from tools.radar_desempenho import avaliar, ler_csv
+
+    _, repo = montar(tmp_path)
+    antiga, *_, recente = sorted(repo.radar.values(), key=lambda e: e["publicado"])
+    csv = tmp_path / "Páginas.csv"
+    csv.write_text("Páginas principais,Cliques,Impressões,CTR,Posição\n"
+                   f"https://vendadeimoveisdealtopadrao.com.br{recente['path']},2,1.340,0.15%,8.1\n",
+                   encoding="utf-8-sig")
+    dados = ler_csv(csv)
+    assert dados[recente["path"]] == (1340, 2)
+    hoje = date.fromisoformat(recente["publicado"]).replace(year=2027)  # todas com mais de 8 semanas
+    sit = {l["slug"]: l["situacao"] for l in avaliar(repo, dados, hoje, 8, 1)}
+    assert sit[antiga["slug"]] == "candidata a sair do índice"
+    assert sit[recente["slug"]] == "manter"
+    cedo = {l["slug"]: l["situacao"] for l in avaliar(repo, dados, date.fromisoformat(recente["publicado"]), 8, 1)}
+    assert cedo[recente["slug"]] == "nova demais para avaliar"
+
+
+def test_indexar_so_aceita_false(tmp_path):
+    with pytest.raises(ValueError, match="'indexar' só aceita false"):
+        montar(tmp_path, editar_radar(lambda r: r[0].update(indexar=True)))
 
 
 def test_sem_radar_o_menu_some_e_a_rota_e_404(tmp_path):

@@ -15,7 +15,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
-from flask import Flask, Response, abort, render_template, request, send_from_directory
+from flask import Flask, Response, abort, g, render_template, request, send_from_directory
 
 from seo.bots import BotLogger, client_ip
 from seo.content import Repo
@@ -26,6 +26,7 @@ from seo.titulos import aplicar_titulos, rotular_tabelas, titulos_paginas
 ROOT = Path(__file__).resolve().parent
 INDEXAVEL = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
 NAO_INDEXAVEL = "noindex, nofollow"
+NAO_INDEXAVEL_SEGUE = "noindex, follow"
 
 
 def valor_robots() -> str:
@@ -68,8 +69,11 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
                 "meta_robots": diretiva_robots, "meta_csp": CSP_META}
 
     def pagina(template: str, *, path: str, titulo: str, descricao: str, jsonld: str | None,
-               crumbs: list[tuple[str, str]] | None = None, status: int = 200, **ctx):
+               crumbs: list[tuple[str, str]] | None = None, status: int = 200, fora_do_indice: bool = False, **ctx):
+        if fora_do_indice:  # página segue no ar e passa os links, mas sai do índice (meta e cabeçalho iguais)
+            g.robots = NAO_INDEXAVEL_SEGUE
         html = render_template(template, titulo=titulo, descricao=descricao, path=path,
+                               meta_robots=g.get("robots", diretiva_robots),
                                canonical=base + path, jsonld=jsonld, crumbs=crumbs,
                                status_404=(status == 404), **ctx)
         return html, status
@@ -198,6 +202,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         n = edicoes.index(e)
         return pagina("radar_edicao.html", path=e["path"], titulo=titulos[e["path"]], descricao=e["resumo"],
                       crumbs=crumbs, jsonld=graph.radar(e, crumbs, titulos[e["path"]]), edicao=e,
+                      fora_do_indice=(e.get("indexar") is False and diretiva_robots == INDEXAVEL),
                       anterior=edicoes[n + 1] if n + 1 < len(edicoes) else None,
                       seguinte=edicoes[n - 1] if n > 0 else None)
 
@@ -279,8 +284,9 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
             resp.headers["Content-Language"] = "pt-BR"
             resp.headers["Content-Security-Policy"] = CSP
         if resp.status_code == 200 and resp.mimetype == "text/html":
-            # Declaração explícita de indexação. O servidor NUNCA emite noindex em página 200.
-            resp.headers["X-Robots-Tag"] = diretiva_robots
+            # Declaração explícita de indexação. Página 200 só sai do índice quando os dados mandam
+            # (edição antiga do radar com indexar: false), e então meta e cabeçalho dizem o mesmo.
+            resp.headers["X-Robots-Tag"] = g.get("robots", diretiva_robots)
         if resp.status_code >= 500:
             resp.headers["Cache-Control"] = "no-store"  # CDN não pode cachear erro de origem
         elif resp.status_code == 404:

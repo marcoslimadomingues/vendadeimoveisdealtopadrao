@@ -198,26 +198,17 @@
   {
     "slug": "2026-10-12",
     "publicado": "2026-10-12",
+    "atualizado": "2026-10-21",
     "periodo": "6 a 12 de outubro de 2026",
     "titulo": "Dasart reúne três torres na milha de ouro do Meireles, com entregas de 2027 a 2029",
-    "resumo": "Em coluna do Diário do Nordeste, a Dasart apresentou três empreendimentos no eixo Meireles/Beira-Mar, que chama de milha de ouro: Wave Beira-Mar, com entrega prevista para dezembro de 2027, Mansão Diogo, para outubro de 2029, e DM 210, para dezembro de 2029. A coluna fala em m² acima de R$ 20 mil, perto de R$ 25 mil, atribuído ao Sinduscon-CE; o boletim de agosto do sindicato traz R$ 20.391 no Meireles e R$ 20.529 no Mucuripe. A Selic segue em 13,75% ao ano.",
-    "nota_mercado": "O valor da coluna é aproximado e não aparece no boletim mensal do Sinduscon-CE, que mede bairros inteiros. Ruas, mapa e m² por fonte estão no pilar <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza</a>.",
+    "resumo": "Em coluna do Diário do Nordeste, a Dasart apresentou três empreendimentos no eixo Meireles/Beira-Mar, que chama de milha de ouro: Wave Beira-Mar, com entrega prevista para dezembro de 2027, Mansão Diogo, para outubro de 2029, e DM 210, para dezembro de 2029. A coluna fala em m² acima de R$ 20 mil nesse trecho, perto de R$ 25 mil, atribuído ao Sinduscon-CE.",
+    "nota_mercado": "O valor da coluna é aproximado e não aparece no boletim mensal do Sinduscon-CE, que mede bairros inteiros; o boletim mais recente está em <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">preço do m² por bairro de Fortaleza</a>. Ruas, mapa e m² por fonte estão no pilar <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza</a>.",
     "mercado": [
       {
         "fato": "m² no eixo Meireles/Beira-Mar, segundo a coluna",
         "bairro": "meireles",
         "numero": "acima de R$ 20 mil (título) · perto de R$ 25 mil (texto)",
         "fonte": "dn-2026-10-08"
-      },
-      {
-        "fato": "Último boletim do Sinduscon-CE (agosto): Meireles e Mucuripe",
-        "numero": "R$ 20.391 e R$ 20.529/m²",
-        "fonte": "opovo-2026-09-30"
-      },
-      {
-        "fato": "Selic sem mudança; próxima reunião do Copom em novembro",
-        "numero": "13,75% ao ano",
-        "fonte": "copom-2026-09-16"
       }
     ],
     "lancamentos": [
@@ -277,20 +268,6 @@
         "titulo": "Dasart e Normatel celebram início da gestão do DM 210 com elegância e inovação",
         "publicado": "2024-06-26",
         "url": "https://www.portalin.com.br/coberturas/dasart-e-normatel-celebram-inicio-da-gestao-do-dm-210-com-elegancia-e-inovacao/"
-      },
-      "opovo-2026-09-30": {
-        "veiculo": "O Povo",
-        "titulo": "Praia de Iracema assume topo do m² mais caro de Fortaleza",
-        "publicado": "2026-09-30",
-        "dados": "Sinduscon-CE e Cpes, referência agosto de 2026",
-        "url": "https://www.opovo.com.br/noticias/economia/2026/09/30/praia-de-iracema-assume-topo-do-m-mais-caro-de-fortaleza.html"
-      },
-      "copom-2026-09-16": {
-        "veiculo": "Melhor Investimento",
-        "titulo": "Copom corta a Selic para 13,75% ao ano",
-        "publicado": "2026-09-16",
-        "dados": "Comunicado da 281ª reunião do Copom",
-        "url": "https://melhorinvestimento.net/noticias/copom-decisao-selic-setembro-2026"
       }
     }
   },
