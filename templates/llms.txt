@@ -16,7 +16,7 @@
 ## Páginas principais
 
 - [Início]({{ base }}/): {{ site.entidade_central.descricao }}
-- [Imóveis à venda]({{ base }}/imoveis/): {% if imoveis %}{{ imoveis|length }} oferta{{ 's' if imoveis|length > 1 }} com preço, preço por m², condomínio, IPTU e ficha técnica.{% else %}carteira em atualização.{% endif %}
+- [Imóveis à venda]({{ base }}/imoveis/): {% if imoveis %}{{ imoveis|length }} oferta{{ 's' if imoveis|length > 1 }} com fotos e ficha de cada imóvel.{% else %}carteira em atualização.{% endif %}
 {% for pl in pilares %}- [{{ pl.nome }}]({{ base }}{{ pl.path }}): {{ pl.descricao }}
 {% endfor %}- [Guias e análises]({{ base }}/guias/): preço do m² por bairro, tributação e critérios técnicos.
 {% if repo.radar %}- [Radar de lançamentos]({{ base }}/radar/): edição semanal com lançamentos de alto padrão e indicadores de mercado, cada fato com fonte.
@@ -26,7 +26,7 @@
 
 {% if imoveis %}## Imóveis
 
-{% for i in imoveis %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): {{ i.preco|brl }} · {{ i.area_privativa|num }} m² · {{ i.preco_m2|brl }}/m²
+{% for i in imoveis %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): {% if i.preco %}{{ i.preco|brl }} · {{ i.area_privativa|num }} m² · {{ i.preco_m2|brl }}/m²{% else %}preço sob consulta · {{ i.area_privativa|num }} m² · {{ i.suites }} suítes · {{ i.vagas }} vagas{% endif %}
 {% endfor %}
 {% endif %}{% if encerrados %}## Imóveis que saíram da carteira
 

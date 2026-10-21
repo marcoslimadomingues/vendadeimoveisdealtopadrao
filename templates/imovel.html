@@ -10,6 +10,11 @@
     <p class="card__tipo">{{ i.tipo }} · <a href="{{ bairro.path }}">{{ bairro.nome }}</a>, {{ bairro.zona }} {{ site.cidade.de }} · Código {{ i.codigo }}</p>
     {% if i.encerrado %}<p class="selo-encerrado">Não está mais disponível desde <time datetime="{{ i.data_encerramento }}">{{ i.data_encerramento|data_extenso }}</time></p>{% endif %}
     <h1 id="titulo-imovel">{{ i.titulo }}{% if i.encerrado %} (indisponível){% endif %}</h1>
+    {% set capa = i.galeria[0] %}
+    <figure class="ficha__imagem">
+      <img src="{{ capa.src }}" alt="{{ capa.alt }}" width="{{ capa.w }}" height="{{ capa.h }}" fetchpriority="high" decoding="async">
+      <figcaption>{{ capa.alt }}.</figcaption>
+    </figure>
     <p class="lead">{{ i.resumo_encerrado if i.encerrado else i.resumo }}</p>
     {% if i.encerrado %}
     <p class="meta">Anunciado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · indisponível desde <time datetime="{{ i.data_encerramento }}">{{ i.data_encerramento|data_extenso }}</time></p>
@@ -18,10 +23,17 @@
     {% endif %}
   </header>
 
-  <figure class="ficha__imagem">
-    <img src="{{ i.imagem }}" alt="{{ i.imagem_alt }}" width="1200" height="800" fetchpriority="high" decoding="async">
-    <figcaption>{{ i.imagem_alt }}.</figcaption>
-  </figure>
+  {% if i.galeria|length > 1 %}
+  <section class="galeria" aria-labelledby="fotos">
+    <h2 id="fotos" class="galeria__titulo">Fotos ({{ i.galeria|length }})</h2>
+    <ul class="galeria__grade">
+      {% for f in i.galeria[1:] %}
+      <li><a href="{{ f.src }}"><img src="{{ f.src }}" alt="{{ f.alt }}" width="{{ f.w }}" height="{{ f.h }}" loading="lazy" decoding="async"></a></li>
+      {% endfor %}
+    </ul>
+    {% if i.galeria_nota %}<p class="fonte">{{ i.galeria_nota }}</p>{% endif %}
+  </section>
+  {% endif %}
 
   <section aria-labelledby="dados-principais">
     <h2 id="dados-principais">Dados principais</h2>
@@ -34,22 +46,22 @@
       <div><dt>Em relação ao preço anunciado</dt><dd>{{ i.pct_do_pedido|pct }}</dd></div>
       {% endif %}
       {% else %}
-      <div><dt>Preço de venda</dt><dd>{{ i.preco|brl }}</dd></div>
-      <div><dt>Preço por m²</dt><dd>{{ i.preco_m2|brl }}</dd></div>
+      <div><dt>Preço de venda</dt><dd>{% if i.preco %}{{ i.preco|brl }}{% else %}Sob consulta{% endif %}</dd></div>
+      {% if i.preco_m2 %}<div><dt>Preço por m²</dt><dd>{{ i.preco_m2|brl }}</dd></div>{% endif %}
       {% endif %}
       <div><dt>Área privativa</dt><dd>{{ i.area_privativa|num }} m²</dd></div>
       {% if i.area_terreno %}<div><dt>Área do terreno</dt><dd>{{ i.area_terreno|num }} m²</dd></div>{% endif %}
       <div><dt>Suítes</dt><dd>{{ i.suites }}</dd></div>
-      <div><dt>Banheiros</dt><dd>{{ i.banheiros }}</dd></div>
+      {% if i.banheiros %}<div><dt>Banheiros</dt><dd>{{ i.banheiros }}</dd></div>{% endif %}
       <div><dt>Vagas de garagem</dt><dd>{{ i.vagas }}</dd></div>
       {% if i.andar %}<div><dt>Andar</dt><dd>{{ i.andar }}</dd></div>{% endif %}
-      <div><dt>Condomínio mensal</dt><dd>{% if i.condominio_mensal %}{{ i.condominio_mensal|brl }}{% else %}Não se aplica{% endif %}</dd></div>
-      <div><dt>IPTU anual</dt><dd>{{ i.iptu_anual|brl }}</dd></div>
+      {% if i.condominio_informado %}<div><dt>Condomínio mensal</dt><dd>{% if i.condominio_mensal %}{{ i.condominio_mensal|brl }}{% else %}Não se aplica{% endif %}</dd></div>{% endif %}
+      {% if i.iptu_anual %}<div><dt>IPTU anual</dt><dd>{{ i.iptu_anual|brl }}</dd></div>{% endif %}
       {% set t = i.tecnico %}
       {% if t.rw_db %}<div><dt>Isolamento acústico</dt><dd>Rw {{ t.rw_db }} dB</dd></div>{% endif %}
       {% if t.blindagem_nivel %}<div><dt>Blindagem da portaria</dt><dd>Nível {{ t.blindagem_nivel }}</dd></div>{% endif %}
       {% if t.gerador_kva %}<div><dt>Gerador</dt><dd>{{ t.gerador_kva|num }} kVA{% if t.gerador_cobertura_pct %} · {{ t.gerador_cobertura_pct }}% da carga{% endif %}</dd></div>{% endif %}
-      <div><dt>Ano de construção</dt><dd>{{ i.ano_construcao }}{% if i.ano_reforma %} (reforma em {{ i.ano_reforma }}){% endif %}</dd></div>
+      {% if i.ano_construcao %}<div><dt>Ano de construção</dt><dd>{{ i.ano_construcao }}{% if i.ano_reforma %} (reforma em {{ i.ano_reforma }}){% endif %}</dd></div>{% endif %}
     </dl>
   </section>
 
@@ -80,10 +92,10 @@
         {% if i.area_terreno %}<tr><th scope="row">Área do terreno</th><td>{{ i.area_terreno|num }} m²</td></tr>{% endif %}
         {% if i.pavimentos %}<tr><th scope="row">Pavimentos</th><td>{{ i.pavimentos }}</td></tr>{% endif %}
         <tr><th scope="row">Suítes</th><td>{{ i.suites }}</td></tr>
-        <tr><th scope="row">Banheiros</th><td>{{ i.banheiros }}</td></tr>
+        {% if i.banheiros %}<tr><th scope="row">Banheiros</th><td>{{ i.banheiros }}</td></tr>{% endif %}
         <tr><th scope="row">Vagas de garagem</th><td>{{ i.vagas }}</td></tr>
         {% if i.andar %}<tr><th scope="row">Andar</th><td>{{ i.andar }}</td></tr>{% endif %}
-        <tr><th scope="row">Ano de construção</th><td>{{ i.ano_construcao }}</td></tr>
+        {% if i.ano_construcao %}<tr><th scope="row">Ano de construção</th><td>{{ i.ano_construcao }}</td></tr>{% endif %}
         {% if i.ano_reforma %}<tr><th scope="row">Ano da última reforma</th><td>{{ i.ano_reforma }}</td></tr>{% endif %}
       </tbody>
       {% for g in i.especificacoes %}
@@ -96,7 +108,7 @@
     </div>
   </section>
 
-  {% if not i.encerrado %}
+  {% if not i.encerrado and i.custos %}
   <section aria-labelledby="custos">
     <h2 id="custos">Custos mensais e anuais</h2>
     <p>O custo fixo mensal d{{ i.referencia }} é de {{ i.custo_mensal|brl }}.</p>
@@ -106,12 +118,15 @@
       <thead><tr><th scope="col">Item</th><th scope="col">Valor mensal</th><th scope="col">Valor anual</th></tr></thead>
       <tbody>
         {% for rotulo, valor in i.custos %}<tr><th scope="row">{{ rotulo }}</th><td>{{ valor|brl }}</td><td>{{ (valor * 12)|brl }}</td></tr>{% endfor %}
-        {% if not i.condominio_mensal %}<tr><th scope="row">Condomínio</th><td>Não se aplica</td><td>Não se aplica</td></tr>{% endif %}
+        {% if i.condominio_informado and not i.condominio_mensal %}<tr><th scope="row">Condomínio</th><td>Não se aplica</td><td>Não se aplica</td></tr>{% endif %}
       </tbody>
       <tfoot><tr><th scope="row">Total</th><td>{{ i.custo_mensal|brl }}</td><td>{{ (i.custo_mensal * 12)|brl }}</td></tr></tfoot>
     </table>
     </div>
   </section>
+  {% endif %}
+
+  {% if not i.encerrado and i.preco_m2 %}
 
   <section aria-labelledby="mercado">
     <h2 id="mercado">Comparativo com o mercado {{ bairro.de }}</h2>

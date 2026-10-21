@@ -57,7 +57,7 @@
   "intencao_central": "Comprar, avaliar e investir em imóveis de alto padrão em Fortaleza com base em dados verificáveis de preço por m², tributos e especificação técnica.",
   "contexto_fonte": [
     "A Alto Padrão Imóveis é uma imobiliária de Fortaleza dedicada a imóveis acima de R$ 3 milhões: coberturas, apartamentos à beira-mar e casas em condomínio.",
-    "A carteira reúne poucos imóveis por vez, cada um com ficha de preço, preço por m², custos mensais e dados do edifício.",
+    "A carteira reúne poucos imóveis por vez, cada um com fotos, área, suítes, vagas e os dados que o proprietário e a construtora informaram.",
     "Os preços por m² publicados no site vêm do Sinduscon-CE, com fonte e data em cada número, e o ITBI e o ITCD são calculados com as alíquotas da Prefeitura de Fortaleza e da Lei estadual 15.812/2015."
   ],
   "fonte_dados": "Preço do m² por bairro: Sinduscon-CE com a Comissão de Pesquisa de Mercado Imobiliário (Cpes), divulgado pela imprensa, com fonte e data em cada valor.",

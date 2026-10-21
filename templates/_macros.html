@@ -1,20 +1,25 @@
 {# Componentes reutilizáveis. Todo dado é visível no DOM: sem abas, accordions ou dropdowns. #}
 
-{% macro card_imovel(i, nivel=3) %}
+{# Cartão de imóvel: a foto vem primeiro e leva à ficha. Só aparece o que o imóvel informou. #}
+{% macro card_imovel(i, nivel=3, capa=false) %}
 {% if i.encerrado %}{{ card_encerrado(i, nivel) }}{% else %}
 {% set b = repo.bairros[i.bairro] %}
-<article class="card">
-  <img src="{{ i.imagem }}" alt="{{ i.imagem_alt }}" width="1200" height="800" loading="lazy" decoding="async">
+{% set f = i.galeria[0] %}
+<article class="card card--imovel">
+  <a class="card__foto" href="{{ i.path }}">
+    <img src="{{ f.src }}" alt="{{ f.alt }}" width="{{ f.w }}" height="{{ f.h }}"{% if capa %} fetchpriority="high"{% else %} loading="lazy"{% endif %} decoding="async">
+    {% if i.galeria|length > 1 %}<span class="card__fotos">{{ i.galeria|length }} fotos</span>{% endif %}
+  </a>
   <div class="card__corpo">
     <p class="card__tipo">{{ i.tipo }} · {{ b.nome }} · {{ i.codigo }}</p>
     <h{{ nivel }} class="card__titulo"><a href="{{ i.path }}">{{ i.titulo }}</a></h{{ nivel }}>
+    <p class="card__preco">{% if i.preco %}{{ i.preco|brl }}{% else %}Preço sob consulta{% endif %}</p>
     <dl class="fatos">
-      <div><dt>Preço</dt><dd>{{ i.preco|brl }}</dd></div>
-      <div><dt>Preço por m²</dt><dd>{{ i.preco_m2|brl }}</dd></div>
       <div><dt>Área privativa</dt><dd>{{ i.area_privativa|num }} m²</dd></div>
       <div><dt>Suítes</dt><dd>{{ i.suites }}</dd></div>
       <div><dt>Vagas</dt><dd>{{ i.vagas }}</dd></div>
-      <div><dt>Custo fixo mensal</dt><dd>{{ i.custo_mensal|brl }}</dd></div>
+      {% if i.preco_m2 %}<div><dt>Preço por m²</dt><dd>{{ i.preco_m2|brl }}</dd></div>{% endif %}
+      {% if i.custo_mensal %}<div><dt>Custo fixo mensal</dt><dd>{{ i.custo_mensal|brl }}</dd></div>{% endif %}
     </dl>
     {% set t = i.tecnico %}
     {% set tec = [("Rw " ~ t.rw_db ~ " dB") if t.rw_db else "",

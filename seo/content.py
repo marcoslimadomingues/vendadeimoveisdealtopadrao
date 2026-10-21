@@ -216,6 +216,15 @@ class Repo:
                 erros.append(f"imóvel {i['slug']}: status '{i['status']}' inválido (ativo, vendido ou indisponivel)")
             if i.get("redirecionar_para_bairro") and i["status"] not in ENCERRADOS:
                 erros.append(f"imóvel {i['slug']}: redirecionar_para_bairro só vale para vendido ou indisponivel")
+            if self._tem_ficha(i):
+                fotos = i.get("galeria") or [{"src": i.get("imagem", ""), "alt": i.get("imagem_alt"), "w": 1, "h": 1}]
+                for f in fotos:
+                    if not (STATIC_DIR / f["src"].removeprefix("/static/")).is_file():
+                        erros.append(f"imóvel {i['slug']}: foto '{f['src']}' não existe em static/")
+                    if not f.get("alt") or not f.get("w") or not f.get("h"):
+                        erros.append(f"imóvel {i['slug']}: foto '{f['src']}' sem alt, w ou h")
+                if i.get("preco") is not None and not isinstance(i["preco"], (int, float)):
+                    erros.append(f"imóvel {i['slug']}: preco deve ser número ou ficar de fora (sob consulta)")
             if self._tem_ficha(i) and i["status"] in ENCERRADOS:
                 campo = CAMPO_DATA[i["status"]]
                 if not i.get(campo):
@@ -376,48 +385,74 @@ class Repo:
                 f"({brl(cidade)}).{variacao}")
 
     def _enriquecer_imovel(self, i: dict) -> None:
+        """Cada imóvel entra com o material que chegou: preço, condomínio, IPTU, banheiros e ano são opcionais.
+
+        Campo ausente não aparece (nem na ficha, nem no cartão, nem no JSON-LD). Preço ausente vira "sob
+        consulta": sem preço por m², sem comparativo com o bairro e sem cálculo de ITBI. `condominio_mensal`
+        presente e vazio (null/0) quer dizer "não paga condomínio"; ausente quer dizer "não informado".
+        """
         b = self.bairros[i["bairro"]]
         i.setdefault("videos", [])
         i.setdefault("amenidades", [])
         i.setdefault("especificacoes", [])
+        # Fotos: "galeria" (a primeira é a capa) ou, no formato antigo, uma única "imagem".
+        if i.get("galeria"):
+            i["imagem"], i["imagem_alt"] = i["galeria"][0]["src"], i["galeria"][0]["alt"]
+        else:
+            i["galeria"] = [{"src": i["imagem"], "alt": i["imagem_alt"], "w": 1200, "h": 800}]
         # Dados técnicos só com documento (laudo, memorial, certificado): cada campo é opcional.
         tec = i["tecnico"] = {k: v for k, v in (i.get("tecnico") or {}).items() if v not in (None, "")}
-        i["preco_m2"] = round(i["preco"] / i["area_privativa"])
-        i["dif_bairro_pct"] = round((i["preco_m2"] / b["preco_m2"] - 1) * 100, 1)
-        i["iptu_mensal"] = round(i["iptu_anual"] / 12)
+        i.setdefault("preco", None)
+        i.setdefault("iptu_anual", None)
+        i["preco_m2"] = round(i["preco"] / i["area_privativa"]) if i["preco"] else None
+        i["dif_bairro_pct"] = round((i["preco_m2"] / b["preco_m2"] - 1) * 100, 1) if i["preco_m2"] else None
+        i["iptu_mensal"] = round(i["iptu_anual"] / 12) if i["iptu_anual"] else None
+        i["condominio_informado"] = "condominio_mensal" in i
         custos = [
             ("Condomínio", i.get("condominio_mensal")),
             ("IPTU mensalizado", i["iptu_mensal"]),
             ("Associação de moradores", i.get("taxa_associacao_mensal")),
         ]
         i["custos"] = [(rotulo, valor) for rotulo, valor in custos if valor]
-        i["custo_mensal"] = sum(valor for _, valor in i["custos"])
+        i["custo_mensal"] = sum(valor for _, valor in i["custos"]) or None
 
         ref = i["referencia"]
-        posicao = "acima" if i["dif_bairro_pct"] >= 0 else "abaixo"
-        itens = [f"{rotulo[0].lower() + rotulo[1:] if rotulo[1].islower() else rotulo} de {brl(valor)}"
-                 for rotulo, valor in i["custos"]]
-        partes = itens[0] if len(itens) == 1 else ", ".join(itens[:-1]) + " e " + itens[-1]
-        sem_condominio = " O imóvel não paga condomínio." if not i.get("condominio_mensal") else ""
         s, cid, itbi_cfg = self.site, self.site["cidade"], self.site["itbi"]
-        itbi = round(i["preco"] * itbi_cfg["aliquota"])
-        itbi_antecipado = round(i["preco"] * itbi_cfg["aliquota_antecipada"])
-        i["faq"] = [
-            {
+        faq_preco = []
+        if i["preco"]:
+            posicao = "acima" if i["dif_bairro_pct"] >= 0 else "abaixo"
+            itbi = round(i["preco"] * itbi_cfg["aliquota"])
+            itbi_antecipado = round(i["preco"] * itbi_cfg["aliquota_antecipada"])
+            faq_preco.append({
                 "grupo": "Preço e custos",
                 "q": f"Qual o preço por metro quadrado d{ref}?",
                 "a": (f"{_cap(ref)} custa {brl(i['preco_m2'])} por m² de área privativa "
                       f"({num(i['area_privativa'])} m² por {brl(i['preco'])}). O valor está "
                       f"{pct(abs(i['dif_bairro_pct']))} {posicao} da média de {brl(b['preco_m2'])} "
                       f"por m² {b['de']} ({self.sinduscon['ref_txt']}, Sinduscon-CE)."),
-            },
-            {
+            })
+        else:
+            faq_preco.append({
+                "grupo": "Preço e custos",
+                "q": f"Qual o preço d{ref}?",
+                "a": (f"Sob consulta. Fale com a {s['nome']} pelo WhatsApp ou telefone {s['telefone']} para receber "
+                      f"o valor e as condições. Para referência, o m² médio {b['de']} foi de {brl(b['preco_m2'])} "
+                      f"em {self.sinduscon['ref_txt']}, segundo o Sinduscon-CE."),
+            })
+        if i["custos"]:
+            itens = [f"{rotulo[0].lower() + rotulo[1:] if rotulo[1].islower() else rotulo} de {brl(valor)}"
+                     for rotulo, valor in i["custos"]]
+            partes = itens[0] if len(itens) == 1 else ", ".join(itens[:-1]) + " e " + itens[-1]
+            sem_condominio = (" O imóvel não paga condomínio."
+                              if i["condominio_informado"] and not i.get("condominio_mensal") else "")
+            iptu = f" O IPTU anual é de {brl(i['iptu_anual'])}." if i["iptu_anual"] else ""
+            faq_preco.append({
                 "grupo": "Preço e custos",
                 "q": f"Quanto custa manter {ref} por mês?",
-                "a": (f"O custo fixo mensal d{ref} é de {brl(i['custo_mensal'])}: {partes}. "
-                      f"O IPTU anual é de {brl(i['iptu_anual'])}.{sem_condominio}"),
-            },
-            {
+                "a": f"O custo fixo mensal informado d{ref} é de {brl(i['custo_mensal'])}: {partes}.{iptu}{sem_condominio}",
+            })
+        if i["preco"]:
+            faq_preco.append({
                 "grupo": "Tributos e prazos da compra",
                 "q": f"Quanto é o ITBI na compra d{ref}?",
                 "a": (f"O ITBI d{ref} é de {brl(itbi)}, alíquota geral de {itbi_cfg['aliquota_texto']} cobrada "
@@ -425,7 +460,9 @@ class Repo:
                       f"declarado e o do IPTU). {itbi_cfg['regra_reducao']} o imposto cai para "
                       f"{brl(itbi_antecipado)}. O ITBI é pago pelo comprador; escritura e registro seguem a "
                       f"tabela de emolumentos do Estado {cid['do_estado']}."),
-            },
+            })
+        i["faq"] = [
+            *faq_preco,
             {
                 "grupo": "Tributos e prazos da compra",
                 "q": f"Quanto tempo leva a transferência d{ref} após a escritura?",
@@ -496,11 +533,12 @@ class Repo:
         autorizado = bool(i["status"] == "vendido" and i.get("preco_venda_autorizado") and i.get("preco_venda"))
         i["encerrado"] = True
         i["preco_venda_publico"] = i["preco_venda"] if autorizado else None
-        i["pct_do_pedido"] = round(i["preco_venda"] / i["preco"] * 100, 1) if autorizado else None
+        i["pct_do_pedido"] = round(i["preco_venda"] / i["preco"] * 100, 1) if autorizado and i["preco"] else None
         prazo = f" Ficou {num(dias)} dias no mercado." if dias else ""
+        entregue = f" e foi entregue em {i['ano_construcao']}" if i.get("ano_construcao") else ""
         i["resumo_encerrado"] = (
             f"{_cap(ref)} não está mais disponível desde {data}.{prazo} O imóvel tem {num(i['area_privativa'])} m², "
-            f"{i['suites']} suítes e {i['vagas']} vagas, fica {b['em']} e foi entregue em {i['ano_construcao']}. "
+            f"{i['suites']} suítes e {i['vagas']} vagas, fica {b['em']}{entregue}. "
             f"A {s['nome']} mantém imóveis semelhantes disponíveis {b['em']} e em bairros vizinhos."
         )
         situacao = [
@@ -518,7 +556,8 @@ class Repo:
             situacao.append({
                 "grupo": "Situação do imóvel",
                 "q": f"Por quanto {ref} foi vendido?",
-                "a": (f"{brl(i['preco_venda'])}, {pct(i['pct_do_pedido'])} do preço anunciado de {brl(i['preco'])}."
+                "a": ((f"{brl(i['preco_venda'])}, {pct(i['pct_do_pedido'])} do preço anunciado de {brl(i['preco'])}."
+                       if i["pct_do_pedido"] else f"{brl(i['preco_venda'])}.")
                       if autorizado else "O valor da venda não é divulgado."),
             })
         # preço, ITBI e prazos de compra deixam de valer; medições técnicas e perguntas próprias ficam
@@ -534,7 +573,9 @@ class Repo:
     def ativos(self, bairro: str | None = None) -> list[dict]:
         itens = [i for i in self.imoveis.values()
                  if i["status"] == "ativo" and self._tem_ficha(i) and (bairro is None or i["bairro"] == bairro)]
-        return sorted(itens, key=lambda i: i["preco"], reverse=True)
+        # com preço, do mais caro ao mais barato; "sob consulta" depois, do maior para o menor
+        return sorted(itens, key=lambda i: (i.get("preco") is not None, i.get("preco") or 0, i["area_privativa"]),
+                      reverse=True)
 
     # ---------------------------------------------------- tabelas de tributos (calculadas)
     VALORES_EXEMPLO = (3_000_000, 5_000_000, 10_000_000)
@@ -647,8 +688,11 @@ class Repo:
         nomes = [b["nome"] for b in self.bairros_por_m2()]
         bairros_txt = ", ".join(nomes[:-1]) + " e " + nomes[-1]
         itbi = s["itbi"]
-        carteira = (f"a carteira atual tem {len(ativos)} ofertas entre {brl(ativos[-1]['preco'])} e "
-                    f"{brl(ativos[0]['preco'])}, nos bairros {bairros_txt}." if ativos else
+        precos = [i["preco"] for i in ativos if i["preco"]]
+        faixa = (f" entre {brl(min(precos))} e {brl(max(precos))}" if len(precos) > 1 else
+                 f" de {brl(precos[0])}" if precos else "")
+        n = len(ativos)
+        carteira = (f"a carteira atual tem {n} oferta{'s' if n > 1 else ''}{faixa}, nos bairros {bairros_txt}." if ativos else
                     f"a carteira está em atualização; fale com a equipe sobre os bairros {bairros_txt}.")
         return [
             {"q": f"O que é a {s['nome']}?",

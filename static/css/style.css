@@ -76,6 +76,25 @@ html { scroll-padding-top: 4.75rem; }  /* âncoras (#id) não ficam sob o cabeç
 .card__titulo a:hover { color: var(--ouro); text-decoration: underline; }
 .card__tec { font-size: .85rem; color: var(--ouro); margin: .8rem 0 0; }
 
+/* Cartão de imóvel: a foto é a porta de entrada da ficha */
+.card__foto { position: relative; display: block; }
+.card__foto img { transition: opacity .2s; }
+.card__foto:hover img { opacity: .92; }
+.card__fotos { position: absolute; right: .6rem; bottom: .6rem; padding: .2rem .55rem; border-radius: var(--raio);
+               background: rgba(28, 26, 23, .78); color: #fff; font-size: .78rem; letter-spacing: .02em; }
+.card__preco { font-family: var(--serif); font-size: 1.35rem; margin: 0 0 .8rem; color: var(--tinta); }
+.abertura--vitrine { padding-top: 1.5rem; }
+.abertura--vitrine h1 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); margin-bottom: 1rem; }
+.abertura--vitrine .acoes { margin-top: 1.25rem; }
+.grade--vitrine { grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr)); }
+.grade--vitrine .card img { aspect-ratio: 16 / 10; }
+
+/* Galeria da ficha: todas as fotos visíveis, sem carrossel nem JavaScript */
+.galeria { margin: 1rem 0 0; }
+.galeria__titulo { font-size: 1rem; font-family: var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--tinta-suave); margin: 0 0 .6rem; }
+.galeria__grade { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); }
+.galeria__grade img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--raio); background: var(--ouro-claro); }
+
 /* Fatos (dl) */
 .fatos { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .6rem 1rem; margin: 0; }
 .fatos div { border-top: 1px solid var(--linha); padding-top: .35rem; }
@@ -100,7 +119,7 @@ tr.grupo th { background: var(--ouro-claro); text-transform: uppercase; letter-s
 tfoot th, tfoot td { font-weight: 700; border-top: 2px solid var(--tinta); }
 
 /* Imóvel */
-.ficha__imagem { margin: 1rem 0 0; }
+.ficha__imagem { margin: 1rem 0; }
 .ficha__imagem img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--raio); background: var(--ouro-claro); }
 .ficha__imagem figcaption { font-size: .85rem; color: var(--tinta-suave); margin-top: .4rem; }
 .selo-encerrado { display: inline-block; margin: 0 0 .6rem; padding: .25rem .7rem; background: var(--tinta); color: #fff; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; border-radius: var(--raio); }

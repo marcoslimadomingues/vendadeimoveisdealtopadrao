@@ -164,6 +164,17 @@ O pilar e seus satélites são o ativo permanente do site; a ficha de imóvel é
 - **Lacuna de dado:** marque `[PREENCHER: ...]`; o checklist o acusa e o site fica `noindex` até sair.
 - `titulo_seo` (opcional) é o `<title>`; o `titulo` é o H1.
 
+### Imóveis: cada um com o material que chegar
+
+Não existe ficha padrão obrigatória. Além de identificação (slug, código, título, referência, bairro, tipo),
+área privativa, suítes, vagas, resumo, parágrafos e datas, todo campo é opcional e só aparece quando informado:
+preço (sem ele: "Preço sob consulta", sem preço por m², comparativo nem ITBI), condomínio (ausente = não
+informado; `null` = não paga), IPTU, banheiros, andar, ano de construção, especificações, diferenciais e dados
+técnicos. Fotos: `tools/fotos_imovel.py fotos.json` grava as imagens em `static/img/imoveis/<slug>/` com nome
+descritivo e sem EXIF/GPS, e devolve a lista `galeria` (a primeira foto é a capa do cartão na home).
+`galeria_nota` explica o que falta (ex.: fotos internas sob consulta). Na home, os imóveis com foto vêm logo
+abaixo do título, antes de qualquer texto.
+
 ### Radar de lançamentos (semanal)
 
 `data/radar.json` tem uma edição por semana em `/radar/<AAAA-MM-DD>/`, com índice em `/radar/` e item no menu.

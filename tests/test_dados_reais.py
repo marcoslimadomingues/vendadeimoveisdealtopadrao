@@ -106,3 +106,20 @@ def test_catalogo_com_zero_ou_um_imovel(tmp_path, n, esperado):
     assert esperado in html
     titulo = re.search(r"<title>(.*?)</title>", html)[1]
     assert titulo.endswith("Fortaleza" if n == 0 else "(1 oferta)"), titulo
+
+
+def test_imovel_sem_preco_entra_com_o_que_chegou(tmp_path):
+    """Decisão do dono (2026-10-21): cada imóvel entra com o material recebido; o que falta não aparece."""
+    client, repo = montar(tmp_path, origem=ROOT / "data")
+    sem_preco = [i for i in repo.ativos() if not i["preco"]]
+    assert sem_preco, "a carteira real tem imóvel com preço sob consulta (Epic)"
+    for i in sem_preco:
+        html = client.get(i["path"]).get_data(as_text=True)
+        corpo = html.split('<main id="conteudo"')[1].split("</main>")[0]
+        assert "Sob consulta" in corpo and "None" not in corpo and "R$ 0" not in corpo
+        assert "Quanto é o ITBI na compra" not in corpo  # sem preço não há ITBI calculado
+        assert all(f'src="{f["src"]}"' in corpo for f in i["galeria"])
+        oferta = next(n for n in grafo(html) if n["@type"] == "Offer")
+        assert "price" not in oferta
+        home = client.get("/").get_data(as_text=True)
+        assert "Preço sob consulta" in home and i["galeria"][0]["src"] in home

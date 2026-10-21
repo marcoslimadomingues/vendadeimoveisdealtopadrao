@@ -2,27 +2,25 @@
 {% import "_macros.html" as m with context %}
 {% block conteudo %}
 {% set sd = repo.sinduscon %}
-<section class="abertura" aria-labelledby="titulo-pagina">
+<section class="abertura abertura--vitrine" aria-labelledby="titulo-pagina">
   <h1 id="titulo-pagina">{{ site.entidade_central.nome }}</h1>
-  <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }} {% if imoveis %}A carteira atual reúne {{ imoveis|length }} imóve{{ 'is' if imoveis|length > 1 else 'l' }}{% if imoveis|length > 1 %} entre {{ (imoveis|last).preco|brl }} e {{ (imoveis|first).preco|brl }}{% else %} de {{ (imoveis|first).preco|brl }}{% endif %}.{% else %}A carteira está em atualização: fale com a equipe sobre os imóveis disponíveis.{% endif %} O preço do m² de {{ bairros|length }} bairros vem do Sinduscon-CE: {% for b in bairros %}{{ b.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
-  <p>{{ site.intencao_central }}</p>
+  {% if imoveis %}
+  <div class="grade grade--vitrine">
+    {% for i in imoveis %}{{ m.card_imovel(i, 2, capa=loop.first) }}{% endfor %}
+  </div>
+  {% else %}
+  <p class="lead">A carteira está em atualização: fale com a equipe sobre os imóveis disponíveis.</p>
+  {% endif %}
   <ul class="acoes">
     <li><a class="botao" href="/imoveis/">Ver imóveis disponíveis</a></li>
-    <li><a class="botao botao--sec" href="/guias/preco-m2-por-bairro-fortaleza/">Preço do m² por bairro</a></li>
     <li><a class="botao botao--sec" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Olá! Vim pelo site da ' ~ site.nome ~ ' e gostaria de falar com um consultor.')|urlencode }}">Falar com um consultor no WhatsApp</a></li>
   </ul>
 </section>
 
-<section aria-labelledby="destaques">
-  <h2 id="destaques">Imóveis de altíssimo padrão à venda {{ site.cidade.em }}</h2>
-  <p>Cada ficha traz preço, preço por m² comparado ao do bairro no Sinduscon-CE, condomínio, IPTU e o ITBI calculado. Dados técnicos do edifício, como acústica, blindagem e gerador, aparecem só quando há documento.</p>
-  {% if imoveis %}
-  <div class="grade">
-    {% for i in imoveis %}{{ m.card_imovel(i) }}{% endfor %}
-  </div>
-  {% else %}
-  <p>A carteira está em atualização. Os próximos imóveis entram aqui com ficha completa.</p>
-  {% endif %}
+<section aria-labelledby="sobre-carteira">
+  <h2 id="sobre-carteira">Coberturas, apartamentos à beira-mar e casas acima de {{ site.limiar_texto }}</h2>
+  <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }} O preço do m² de {{ bairros|length }} bairros vem do Sinduscon-CE: {% for b in bairros %}{{ b.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
+  <p>{{ site.intencao_central }} Cada ficha traz fotos, área, suítes e vagas, e o preço por m² comparado ao do bairro quando o preço é divulgado. Dados técnicos do edifício, como acústica, blindagem e gerador, aparecem só quando há documento.</p>
   <p><a class="botao" href="/imoveis/">Ver imóveis disponíveis</a></p>
 </section>
 

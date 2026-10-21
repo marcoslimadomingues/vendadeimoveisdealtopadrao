@@ -1,4 +1,4 @@
-"""Navegação até o imóvel: vitrine logo após a abertura, menu fixo e botões "Ver imóveis disponíveis" na home."""
+"""Navegação até o imóvel: imóveis com foto logo abaixo do título, menu fixo e botões "Ver imóveis disponíveis"."""
 from __future__ import annotations
 
 import re
@@ -28,19 +28,23 @@ def secoes(html: str) -> list[str]:
     return re.findall(r'<section[^>]*aria-labelledby="([^"]+)"', corpo)
 
 
-def test_vitrine_vem_logo_depois_da_abertura_e_antes_dos_indicadores(home):
-    html, _ = home
+def test_imoveis_com_foto_logo_abaixo_do_titulo_antes_de_qualquer_texto(home):
+    """Decisão do dono (2026-10-21): quem abre o site vê os imóveis, com foto, antes das informações."""
+    html, repo = home
+    corpo = html.split('<main id="conteudo"')[1].split("</main>")[0]
     ordem = secoes(html)
-    assert ordem[0] == "titulo-pagina" and ordem[1] == "destaques", ordem
-    assert ordem.index("destaques") < ordem.index("indicadores")
-    # o dado continua na página, só mais abaixo
-    assert "indicadores" in ordem and html.index('id="destaques"') < html.index('id="indicadores"')
+    assert ordem[0] == "titulo-pagina", ordem
+    primeiro_cartao = corpo.index('class="card card--imovel"')
+    assert primeiro_cartao < corpo.index('<p class="lead"'), "nenhum parágrafo antes da vitrine"
+    assert primeiro_cartao < corpo.index('id="sobre-carteira"') < corpo.index('id="indicadores"')
+    capa = repo.ativos()[0]["galeria"][0]["src"]
+    assert re.search(rf'<img src="{re.escape(capa)}"[^>]*fetchpriority="high"', corpo), "a 1ª foto carrega primeiro"
 
 
 def test_conteudo_da_home_nao_foi_removido(home):
     html, repo = home
     ordem = secoes(html)
-    for esperado in ("titulo-pagina", "destaques", "indicadores", "guias", "autoridade", "perguntas-frequentes"):
+    for esperado in ("titulo-pagina", "sobre-carteira", "indicadores", "guias", "autoridade", "perguntas-frequentes"):
         assert esperado in ordem, esperado
     for pl in repo.pilares.values():
         assert f"pilar-{pl.slug}" in ordem if hasattr(pl, "slug") else f"pilar-{pl['slug']}" in ordem
@@ -52,9 +56,9 @@ def test_botao_ver_imoveis_disponiveis_em_pontos_da_pagina(home):
     html, _ = home
     corpo = html.split('<main id="conteudo"')[1].split("</main>")[0]
     botoes = [m.start() for m in re.finditer(r'<a class="botao" href="/imoveis/"[^>]*>Ver imóveis disponíveis</a>', corpo)]
-    assert len(botoes) >= 3, "um no topo, um na vitrine e um mais abaixo"
-    assert botoes[0] < corpo.index('id="destaques"'), "o primeiro fica na abertura"
-    assert corpo.index('id="destaques"') < botoes[1] < corpo.index('id="indicadores"'), "o segundo fecha a vitrine"
+    assert len(botoes) >= 3, "um fechando a vitrine, um no texto da carteira e um mais abaixo"
+    assert botoes[0] < corpo.index('id="sobre-carteira"'), "o primeiro fecha a vitrine"
+    assert corpo.index('id="sobre-carteira"') < botoes[1] < corpo.index('id="indicadores"')
     assert botoes[-1] > corpo.index('id="guias"') and botoes[-1] < corpo.index('id="autoridade"'), "o último fica mais abaixo"
 
 

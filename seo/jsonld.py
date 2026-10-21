@@ -246,7 +246,7 @@ class Graph:
     def imovel(self, i: dict, crumbs) -> str:
         path, b = i["path"], self.repo.bairros[i["bairro"]]
         tec = i["tecnico"]
-        imagem = self.url(i["imagem"])
+        imagem = [self.url(f["src"]) for f in i["galeria"]]
         encerrado = bool(i.get("encerrado"))
         resumo = i["resumo_encerrado"] if encerrado else i["resumo"]
 
@@ -258,10 +258,9 @@ class Graph:
             "image": imagem,
             "floorSize": {"@type": "QuantitativeValue", "value": i["area_privativa"],
                           "unitCode": "MTK", "unitText": "m²"},
-            "numberOfRooms": i["dormitorios"],
-            "numberOfBedrooms": i["dormitorios"],
-            "numberOfBathroomsTotal": i["banheiros"],
-            "yearBuilt": i["ano_construcao"],
+            **{chave: i[campo] for chave, campo in (("numberOfRooms", "dormitorios"), ("numberOfBedrooms", "dormitorios"),
+                                                    ("numberOfBathroomsTotal", "banheiros"),
+                                                    ("yearBuilt", "ano_construcao")) if i.get(campo)},
             "address": {
                 "@type": "PostalAddress",
                 "addressLocality": self.site["cidade"]["nome"],
@@ -283,12 +282,13 @@ class Graph:
                     ("Vagas de garagem", i["vagas"], None),
                     ("Área do terreno", i.get("area_terreno"), "m²"),
                     ("Condomínio mensal", i.get("condominio_mensal"), "BRL"),
-                    ("IPTU anual", i["iptu_anual"], "BRL"),
+                    ("IPTU anual", i.get("iptu_anual"), "BRL"),
                     ("Situação", "Não está mais disponível" if encerrado else None, None),
                     ("Indisponível desde", i["data_encerramento"] if encerrado else None, None),
                     ("Dias no mercado", i.get("dias_no_mercado") if encerrado else None, "dias"),
                     ("Valor da venda", i.get("preco_venda_publico") if encerrado else None, "BRL"),
-                    ("Preço por m²", None if encerrado else i["preco_m2"], "BRL/m²"),
+                    ("Preço por m²", None if encerrado else i.get("preco_m2"), "BRL/m²"),
+                    ("Preço", "Sob consulta" if not encerrado and not i.get("preco") else None, None),
                     ("Isolamento acústico das esquadrias (Rw)", tec.get("rw_db"), "dB"),
                     ("Nível de blindagem da portaria (ABNT NBR 15000)", tec.get("blindagem_nivel"), None),
                     ("Potência do gerador", tec.get("gerador_kva"), "kVA"),
@@ -304,7 +304,7 @@ class Graph:
             "@type": "Offer",
             **self.ref(path, "oferta"),
             "url": self.url(path),
-            **({} if encerrado else {"price": i["preco"], "priceCurrency": "BRL"}),
+            **({"price": i["preco"], "priceCurrency": "BRL"} if not encerrado and i.get("preco") else {}),
             "availability": ("https://schema.org/SoldOut" if i["status"] == "vendido" else
                              "https://schema.org/OutOfStock") if encerrado else "https://schema.org/InStock",
             "businessFunction": "http://purl.org/goodrelations/v1#Sell",

@@ -1,1 +1,225 @@
-[]
+[
+  {
+    "slug": "apartamento-396m2-epic-condominium-meireles",
+    "status": "ativo",
+    "publicacao_autorizada": true,
+    "codigo": "AP-3961",
+    "tipo": "Apartamento",
+    "schema_type": "Apartment",
+    "titulo": "Apartamento de 396 m² com 4 suítes e 6 vagas no Epic Condominium, Meireles",
+    "referencia": "o apartamento de 396 m² no Epic Condominium",
+    "bairro": "meireles",
+    "area_privativa": 396.06,
+    "suites": 4,
+    "dormitorios": 4,
+    "vagas": 6,
+    "ano_construcao": 2025,
+    "data_publicacao": "2026-10-21",
+    "data_atualizacao": "2026-10-21",
+    "galeria": [
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/torre-epic-condominium-meireles-fortaleza.jpg",
+        "alt": "Torre do Epic Condominium entre os prédios do Meireles, em Fortaleza, vista aérea",
+        "w": 1280,
+        "h": 720
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/fachada-curva-epic-condominium.jpg",
+        "alt": "Fachada de vidro com linhas curvas do Epic Condominium vista de baixo",
+        "w": 1280,
+        "h": 720
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/heliponto-topo-epic-condominium-meireles.jpg",
+        "alt": "Topo do Epic Condominium com heliponto, visto do alto sobre o Meireles",
+        "w": 1280,
+        "h": 720
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/vista-orla-fortaleza-meireles.jpg",
+        "alt": "Vista aérea da orla de Fortaleza na altura do Meireles e do Mucuripe",
+        "w": 1280,
+        "h": 720
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/pavimento-lazer-epic-condominium-vista-aerea.jpg",
+        "alt": "Pavimento de lazer do Epic Condominium visto do alto, com piscina de raia, gramado e playground",
+        "w": 1280,
+        "h": 720
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/piscinas-jardins-epic-condominium.jpg",
+        "alt": "Piscinas e jardins do pavimento de lazer do Epic Condominium, vista aérea",
+        "w": 1280,
+        "h": 720
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/piscina-raia-epic-condominium.jpg",
+        "alt": "Piscina de raia do pavimento de lazer do Epic Condominium",
+        "w": 1280,
+        "h": 960
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/jardim-lazer-epic-condominium-vista-mar.jpg",
+        "alt": "Jardim com palmeiras no pavimento de lazer do Epic Condominium, com o mar ao fundo",
+        "w": 1280,
+        "h": 960
+      },
+      {
+        "src": "/static/img/imoveis/apartamento-396m2-epic-condominium-meireles/espaco-gourmet-epic-condominium.jpg",
+        "alt": "Espaço gourmet do Epic Condominium com bancada de pedra e jardim",
+        "w": 1280,
+        "h": 960
+      }
+    ],
+    "galeria_nota": "Fotos do edifício e das áreas comuns do Epic Condominium. Fotos do interior do apartamento e planta sob consulta.",
+    "resumo": "Apartamento de 396,06 m² de área privativa no Epic Condominium, no Meireles, com 4 suítes e 6 vagas de garagem. O edifício da Diagonal Engenharia tem 50 pavimentos, cerca de 170 metros de altura, um apartamento por andar e rooftop panorâmico no 50º andar. Preço sob consulta.",
+    "paragrafos": [
+      "O apartamento tem 396,06 m² de área privativa, 4 suítes e 6 vagas de garagem. A suíte master tem banheiro duplo e closet. A planta inclui estar íntimo, gabinete, sala de home cinema, varanda, ambientes de estar e jantar, cozinha e dependência completa de serviço.",
+      "O Epic Condominium, da Diagonal Engenharia, é uma torre residencial de 50 pavimentos e cerca de 170 metros de altura, com um apartamento por andar. São 3 subsolos, térreo, um pavimento de lazer e 45 pavimentos-tipo, com apartamentos de 384 m² a 444 m². O edifício tem 4 elevadores (3 sociais e 1 de serviço), lobby com pé-direito duplo e heliponto informado no projeto.",
+      "No 50º andar ficam o rooftop com lounge bar e vista de 360 graus para a cidade e a orla, e o skylounge. O pavimento de lazer tem piscina coberta e aquecida com raia de 25 metros, piscina infantil, sauna, academia, salão de festas, espaço gourmet, campo de grama sintética, brinquedoteca, playground, pet place e bosque.",
+      "O edifício fica no Meireles, perto do Ideal Clube e da orla, numa região com restaurantes, supermercados, escolas, farmácias e serviços, e com acesso à Avenida Beira Mar."
+    ],
+    "amenidades": [
+      {
+        "nome": "Um apartamento por andar",
+        "detalhe": "45 pavimentos-tipo com uma única unidade cada"
+      },
+      {
+        "nome": "Rooftop no 50º andar",
+        "detalhe": "Lounge bar panorâmico com vista de 360 graus para a cidade e a orla"
+      },
+      {
+        "nome": "Piscina coberta e aquecida",
+        "detalhe": "Raia de 25 metros no pavimento de lazer"
+      },
+      {
+        "nome": "Heliponto",
+        "detalhe": "Informado no projeto do edifício"
+      }
+    ],
+    "especificacoes": [
+      {
+        "grupo": "O apartamento",
+        "itens": [
+          [
+            "Área privativa",
+            "396,06 m²"
+          ],
+          [
+            "Suítes",
+            "4, com suíte master com banheiro duplo e closet"
+          ],
+          [
+            "Ambientes",
+            "Estar íntimo, gabinete, sala de home cinema, varanda, estar e jantar, cozinha"
+          ],
+          [
+            "Serviço",
+            "Dependência completa de serviço"
+          ],
+          [
+            "Vagas de garagem",
+            "6"
+          ]
+        ]
+      },
+      {
+        "grupo": "O edifício",
+        "itens": [
+          [
+            "Construtora",
+            "Diagonal Engenharia"
+          ],
+          [
+            "Ano de construção informado",
+            "2025"
+          ],
+          [
+            "Torre",
+            "1 torre residencial, 50 pavimentos, cerca de 170 metros de altura"
+          ],
+          [
+            "Pavimentos",
+            "3 subsolos, térreo, 1 pavimento de lazer e 45 pavimentos-tipo"
+          ],
+          [
+            "Unidades",
+            "1 apartamento por andar, de 384 m² a 444 m²"
+          ],
+          [
+            "Elevadores",
+            "4 (3 sociais e 1 de serviço)"
+          ],
+          [
+            "Lobby",
+            "Pé-direito duplo"
+          ],
+          [
+            "Heliponto",
+            "Informado no projeto"
+          ]
+        ]
+      },
+      {
+        "grupo": "Lazer",
+        "itens": [
+          [
+            "Rooftop (50º andar)",
+            "Lounge bar panorâmico, vista de 360 graus, skylounge"
+          ],
+          [
+            "Piscinas",
+            "Adulto coberta e aquecida com raia de 25 m; infantil"
+          ],
+          [
+            "Bem-estar",
+            "Deck com sauna, sauna úmida, academia"
+          ],
+          [
+            "Convivência",
+            "Salão de festas climatizado, espaço gourmet, lounge de convivência"
+          ],
+          [
+            "Crianças e pets",
+            "Espaço kids, brinquedoteca, playground, pet place"
+          ],
+          [
+            "Áreas externas",
+            "Campo de grama sintética, bosque"
+          ]
+        ]
+      },
+      {
+        "grupo": "Segurança",
+        "itens": [
+          [
+            "Portaria",
+            "24 horas, com guarita e eclusa"
+          ],
+          [
+            "Sistemas",
+            "Alarme, cerca elétrica, CFTV e controle de acesso"
+          ],
+          [
+            "Acesso de veículos",
+            "Portão eletrônico"
+          ]
+        ]
+      },
+      {
+        "grupo": "Localização",
+        "itens": [
+          [
+            "Bairro",
+            "Meireles, Fortaleza (CE)"
+          ],
+          [
+            "Referências",
+            "Perto do Ideal Clube e da orla, com acesso à Avenida Beira Mar"
+          ]
+        ]
+      }
+    ]
+  }
+]

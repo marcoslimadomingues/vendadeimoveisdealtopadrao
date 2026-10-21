@@ -4,7 +4,8 @@
 <header class="cabecalho-pagina">
   <h1>Imóveis de altíssimo padrão à venda {{ site.cidade.em }}</h1>
   {% if imoveis %}
-  <p class="lead">{% if imoveis|length > 1 %}A {{ site.nome }} tem {{ imoveis|length }} imóveis à venda acima de {{ site.limiar_texto }} {{ site.cidade.em }}, de {{ (imoveis|last).preco|brl }} a {{ (imoveis|first).preco|brl }}.{% else %}A {{ site.nome }} tem 1 imóvel à venda acima de {{ site.limiar_texto }} {{ site.cidade.em }}, por {{ (imoveis|first).preco|brl }}.{% endif %} Cada ficha exibe preço, preço por m², condomínio, IPTU e os dados técnicos documentados do edifício.</p>
+  {% set precos = imoveis|selectattr("preco")|map(attribute="preco")|list %}
+  <p class="lead">A {{ site.nome }} tem {{ imoveis|length }} imóve{{ 'is' if imoveis|length > 1 else 'l' }} à venda {{ site.cidade.em }}{% if precos|length > 1 %}, de {{ precos|min|brl }} a {{ precos|max|brl }}{% elif precos %}, por {{ precos[0]|brl }}{% endif %}{% if precos|length < imoveis|length %}{{ ',' if precos else '' }} {{ 'com preço sob consulta' if not precos else 'e outros com preço sob consulta' }}{% endif %}. Cada ficha traz fotos, área, suítes, vagas e os dados que o proprietário e a construtora informaram.</p>
   {% else %}
   <p class="lead">A carteira da {{ site.nome }} está em atualização e nenhum imóvel está à venda nesta página agora. <a href="/contato/">Fale com a equipe</a> para saber das próximas ofertas acima de {{ site.limiar_texto }} {{ site.cidade.em }}.</p>
   {% endif %}
@@ -35,13 +36,13 @@
       <tr>
         <th scope="row"><a href="{{ i.path }}">{{ i.titulo }}</a></th>
         <td><a href="{{ b.path }}">{{ b.nome }}</a></td>
-        <td>{{ i.preco|brl }}</td>
+        <td>{% if i.preco %}{{ i.preco|brl }}{% else %}Sob consulta{% endif %}</td>
         <td>{{ i.area_privativa|num }} m²</td>
-        <td>{{ i.preco_m2|brl }}</td>
-        <td>{{ i.dif_bairro_pct|pct(true) }}</td>
+        <td>{% if i.preco_m2 %}{{ i.preco_m2|brl }}{% else %}—{% endif %}</td>
+        <td>{% if i.dif_bairro_pct is not none %}{{ i.dif_bairro_pct|pct(true) }}{% else %}—{% endif %}</td>
         <td>{{ i.suites }}</td>
         <td>{{ i.vagas }}</td>
-        <td>{{ i.custo_mensal|brl }}</td>
+        <td>{% if i.custo_mensal %}{{ i.custo_mensal|brl }}{% else %}Não informado{% endif %}</td>
       </tr>
       {% endfor %}
     </tbody>
