@@ -676,7 +676,9 @@ class Repo:
         """(path, lastmod) de todas as URLs que devem responder HTTP 200."""
         ult_artigo = max(a["atualizado"] for a in self.artigos.values())
         ult_imovel = max((i["data_atualizacao"] for i in self.ativos()), default=ult_artigo)
-        paginas = [("/", max(ult_imovel, ult_artigo)), ("/imoveis/", ult_imovel),
+        # a home lista imóveis, guias e (no menu) o radar: muda quando qualquer um deles muda
+        ult_radar = max((e.get("atualizado", e["publicado"]) for e in self.radar.values()), default=ult_artigo)
+        paginas = [("/", max(ult_imovel, ult_artigo, ult_radar)), ("/imoveis/", ult_imovel),
                    ("/guias/", ult_artigo), ("/sobre/", None), ("/contato/", None)]
         paginas += [(i["path"], i["data_atualizacao"]) for i in self.ativos()]
         paginas += [(i["path"], i["data_encerramento"]) for i in self.encerrados()]

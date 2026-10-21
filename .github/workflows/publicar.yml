@@ -33,6 +33,7 @@ jobs:
     outputs:
       pages_ativo: ${{ steps.pages.outputs.ativo }}
       pendencias: ${{ steps.checklist.outputs.pendencias }}
+      indexnow: ${{ steps.indexnow.outputs.payload }}
     steps:
       - uses: actions/checkout@v4
 
@@ -74,6 +75,15 @@ jobs:
           echo "url=${url%/}" >> "$GITHUB_OUTPUT"
           echo "Pages ativo: $ativo | URL de build: ${url%/}"
 
+      - name: Guardar o sitemap que está no ar (para o IndexNow avisar só o que mudou)
+        id: no_ar
+        run: |
+          url="${{ steps.pages.outputs.url }}"
+          curl -fsS "$url/sitemap.xml" -o /tmp/sitemap-no-ar.xml || : > /tmp/sitemap-no-ar.xml
+          k=$(python -c "from tools.indexnow import chave; print(chave())")
+          # chave ainda não publicada = primeira vez com IndexNow: avisa todas as URLs
+          if curl -fsS "$url/$k.txt" -o /dev/null; then echo "tudo=" >> "$GITHUB_OUTPUT"; else echo "tudo=--tudo" >> "$GITHUB_OUTPUT"; fi
+
       - name: Compilar o site estático
         env:
           # com dado provisório o site vai ao ar com noindex; FORCAR_INDEXACAO=true libera
@@ -81,6 +91,15 @@ jobs:
         run: |
           echo "SITE_NOINDEX=$SITE_NOINDEX"
           python tools/build_pages.py --dominio "${{ steps.pages.outputs.url }}"
+
+      - name: Montar o aviso IndexNow
+        id: indexnow
+        env:
+          SITE_NOINDEX: ${{ steps.checklist.outputs.pendencias == '1' && vars.FORCAR_INDEXACAO != 'true' && '1' || '0' }}
+        run: |
+          payload=$(python tools/indexnow.py --novo build/pages/sitemap.xml --anterior /tmp/sitemap-no-ar.xml ${{ steps.no_ar.outputs.tudo }})
+          echo "payload=$payload" >> "$GITHUB_OUTPUT"
+          echo "${payload:-nada a avisar}" | jq -r '.urlList[]?' 2>/dev/null || echo "${payload:-nada a avisar}"
 
       - name: Guardar o site para o Pages
         uses: actions/upload-pages-artifact@v3
@@ -141,3 +160,20 @@ jobs:
         id: deployment
         if: steps.origem.outputs.ok == 'true'
         uses: actions/deploy-pages@v4
+
+      - name: Avisar o Bing (IndexNow)
+        if: steps.deployment.outcome == 'success' && needs.site.outputs.indexnow != ''
+        continue-on-error: true  # falha no aviso não desfaz a publicação; o sitemap continua valendo
+        env:
+          PAYLOAD: ${{ needs.site.outputs.indexnow }}
+        run: |
+          host=$(echo "$PAYLOAD" | jq -r .host); k=$(echo "$PAYLOAD" | jq -r .key)
+          # o buscador confere a chave no domínio: espera o arquivo novo sair na CDN do Pages
+          for i in $(seq 1 20); do
+            [ "$(curl -fsS "https://$host/$k.txt" 2>/dev/null)" = "$k" ] && break
+            sleep 15
+          done
+          code=$(curl -sS -o /tmp/indexnow.txt -w '%{http_code}' -X POST "https://api.indexnow.org/indexnow" \
+                 -H "Content-Type: application/json; charset=utf-8" --data "$PAYLOAD")
+          echo "IndexNow: HTTP $code ($(echo "$PAYLOAD" | jq '.urlList | length') URLs)"; cat /tmp/indexnow.txt; echo
+          case "$code" in 200|202) ;; *) echo "::warning::IndexNow respondeu HTTP $code"; exit 1 ;; esac
