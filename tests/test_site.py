@@ -13,7 +13,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from app import create_app  # noqa: E402
 from seo.bots import identify  # noqa: E402
 from seo.formatting import brl  # noqa: E402
-from seo.jsonld import AMENIDADES_OBRIGATORIAS  # noqa: E402
 
 AI_BOTS = ["GPTBot", "OAI-SearchBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "Bytespider"]
 
@@ -96,7 +95,7 @@ def test_ficha_do_imovel_exibe_todos_os_dados_criticos_no_html(ctx):
         html = client.get(i["path"]).get_data(as_text=True)
         main = html.split('<main id="conteudo"')[1]
         for valor in (brl(i["preco"]), brl(i["preco_m2"]), brl(i["iptu_anual"]), f"Rw {i['tecnico']['rw_db']} dB",
-                      f"Nível {i['tecnico']['blindagem_nivel']}", *AMENIDADES_OBRIGATORIAS):
+                      f"Nível {i['tecnico']['blindagem_nivel']}", *(a["nome"] for a in i["amenidades"])):
             assert valor in main, f"{i['slug']}: {valor}"
         condominio = brl(i["condominio_mensal"]) if i["condominio_mensal"] else "Não se aplica"
         assert condominio in main
@@ -142,24 +141,21 @@ def test_jsonld_imovel(ctx):
         assert oferta["price"] == i["preco"] and oferta["priceCurrency"] == "BRL"
         assert casa["floorSize"]["unitCode"] == "MTK" and casa["floorSize"]["value"] == i["area_privativa"]
         nomes = {a["name"] for a in casa["amenityFeature"]}
-        assert set(AMENIDADES_OBRIGATORIAS) <= nomes
+        assert {a["nome"] for a in i["amenidades"]} <= nomes
         assert all(a["@type"] == "LocationFeatureSpecification" for a in casa["amenityFeature"])
         assert listing["offers"]["@id"] == oferta["@id"] and oferta["itemOffered"]["@id"] == casa["@id"]
         assert casa["containedInPlace"]["@id"] in {n["@id"] for n in por_tipo(nodes, "Place")}
         assert por_tipo(nodes, "VideoObject") and por_tipo(nodes, "BreadcrumbList")
 
 
-def test_jsonld_artigo_conectado_a_organizacao_e_pessoa(ctx):
+def test_jsonld_artigo_assinado_pela_organizacao(ctx):
     client, repo, _ = ctx
     for a in repo.artigos.values():
         nodes = grafo(client.get(a["path"]).get_data(as_text=True))
         artigo = por_tipo(nodes, "Article")[0]
         org = por_tipo(nodes, "RealEstateAgent")[0]
-        pessoa = por_tipo(nodes, "Person")[0]
-        assert artigo["publisher"]["@id"] == org["@id"]
-        assert artigo["author"]["@id"] == pessoa["@id"]
-        assert pessoa["worksFor"]["@id"] == org["@id"]
-        assert any("linkedin.com" in s for s in pessoa["sameAs"])
+        assert artigo["publisher"]["@id"] == org["@id"] and artigo["author"]["@id"] == org["@id"]
+        assert not por_tipo(nodes, "Person"), "o site não publica pessoas"
 
 
 def test_jsonld_referencias_internas_resolvem(ctx):
@@ -180,8 +176,7 @@ def test_jsonld_referencias_internas_resolvem(ctx):
 
         definidos(nodes)
         refs = set(re.findall(r'\{"@id": "([^"]+)"\}', json.dumps(nodes, ensure_ascii=False)))
-        pendentes = {r for r in refs if r not in ids and "/especialistas/" not in r
-                     and not r.endswith("#webpage")}
+        pendentes = {r for r in refs if r not in ids and not r.endswith("#webpage")}
         assert not pendentes, f"{path}: {pendentes}"
 
 

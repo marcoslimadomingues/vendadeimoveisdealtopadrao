@@ -97,7 +97,7 @@ def test_jsonld_do_pilar(ctx):
     nodes = grafo(client.get(PATH).get_data(as_text=True))
     assert tipos(nodes, "Article") and tipos(nodes, "Place") and tipos(nodes, "Dataset")
     pagina = tipos(nodes, "FAQPage")[0]
-    assert pagina["reviewedBy"]["@id"].endswith("/especialistas/marina-albuquerque/#pessoa")
+    assert pagina["author"]["@id"].endswith("#organizacao") and "reviewedBy" not in pagina
     assert len(tipos(nodes, "Question")) == len(p["faq"]) == 8
     fontes = tipos(nodes, "NewsArticle")
     assert {f["publisher"]["name"] for f in fontes} == {"Diário do Nordeste", "O Povo"}

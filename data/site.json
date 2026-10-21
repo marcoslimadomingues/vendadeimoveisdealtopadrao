@@ -1,5 +1,4 @@
 {
-  "_aviso": "DADOS ILUSTRATIVOS. Substitua empresa, CRECI, CNPJ, métricas, preços, perfis sociais e IDs de vídeo por dados reais e verificáveis antes de publicar. Dados fictícios publicados como reais destroem os sinais de E-E-A-T.",
   "base_url": "https://vendadeimoveisdealtopadrao.com.br",
   "nome": "Alto Padrão Imóveis",
   "razao_social": "Marcos Lima Domingues",
@@ -7,7 +6,6 @@
   "creci": "CRECI-CE J-4858",
   "creci_orgao": "CRECI-CE",
   "cnpj": "42.451.913/0001-74",
-  "fundacao": "2011",
   "telefone": "+55 85 98863-1025",
   "telefone_link": "+5585988631025",
   "whatsapp": "5585988631025",
@@ -27,8 +25,6 @@
   },
   "limiar_preco": 3000000,
   "limiar_texto": "R$ 3 milhões",
-  "periodo_texto": "entre julho de 2025 e junho de 2026",
-  "periodo_curto": "jul/2025–jun/2026",
   "itbi": {
     "aliquota": 0.04,
     "aliquota_antecipada": 0.02,
@@ -58,38 +54,13 @@
     "nome": "Imóveis de Alto Padrão em Fortaleza",
     "descricao": "Coberturas, apartamentos à beira-mar e casas em condomínio acima de R$ 3 milhões nos bairros Mucuripe, Meireles, Cocó, Aldeota e Guararapes, em Fortaleza, Ceará."
   },
-  "intencao_central": "Comprar, avaliar e investir em imóveis de alto padrão em Fortaleza com base em dados verificáveis de preço, liquidez, vista mar e especificação técnica.",
+  "intencao_central": "Comprar, avaliar e investir em imóveis de alto padrão em Fortaleza com base em dados verificáveis de preço por m², tributos e especificação técnica.",
   "contexto_fonte": [
-    "A Alto Padrão Imóveis intermedeia exclusivamente imóveis acima de R$ 3 milhões em Fortaleza desde 2011.",
-    "A Alto Padrão Imóveis concluiu 284 transações, que somam R$ 1,6 bilhão em Valor Geral de Vendas (VGV).",
-    "A equipe técnica da Alto Padrão Imóveis inclui arquiteta registrada no CAU, que revisa laudos acústicos, de proteção contra maresia, de blindagem e de gerador de cada imóvel antes da divulgação.",
-    "A consultoria jurídica da Alto Padrão Imóveis estrutura compras por holding familiar e planejamento sucessório sob as regras do ITCD do Ceará."
+    "A Alto Padrão Imóveis é uma imobiliária de Fortaleza dedicada a imóveis acima de R$ 3 milhões: coberturas, apartamentos à beira-mar e casas em condomínio.",
+    "A carteira reúne poucos imóveis por vez, cada um com ficha de preço, preço por m², custos mensais e dados do edifício.",
+    "Os preços por m² publicados no site vêm do Sinduscon-CE, com fonte e data em cada número, e o ITBI e o ITCD são calculados com as alíquotas da Prefeitura de Fortaleza e da Lei estadual 15.812/2015."
   ],
-  "metricas": [
-    {
-      "rotulo": "Ano de fundação",
-      "valor": "2011"
-    },
-    {
-      "rotulo": "Transações concluídas",
-      "valor": "284"
-    },
-    {
-      "rotulo": "VGV acumulado",
-      "valor": "R$ 1,6 bilhão"
-    },
-    {
-      "rotulo": "Ticket médio por transação",
-      "valor": "R$ 5,6 milhões"
-    },
-    {
-      "rotulo": "Prazo médio de venda da carteira exclusiva",
-      "valor": "104 dias"
-    }
-  ],
-  "fonte_dados": "Base interna Alto Padrão Imóveis: ofertas e transações de imóveis acima de R$ 3 milhões em Fortaleza, de julho de 2025 a junho de 2026.",
-  "periodo_dados": "2025-07/2026-06",
-  "responsavel_tecnico": "marina-albuquerque",
+  "fonte_dados": "Preço do m² por bairro: Sinduscon-CE com a Comissão de Pesquisa de Mercado Imobiliário (Cpes), divulgado pela imprensa, com fonte e data em cada valor.",
   "itcd": {
     "ufirce": 6.29872,
     "ufirce_ano": 2026,

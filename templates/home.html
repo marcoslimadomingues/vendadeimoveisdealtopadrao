@@ -1,33 +1,36 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block conteudo %}
+{% set sd = repo.sinduscon %}
 <section class="abertura" aria-labelledby="titulo-pagina">
   <h1 id="titulo-pagina">{{ site.entidade_central.nome }}</h1>
-  <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }} {% if imoveis %}A carteira atual reúne {{ imoveis|length }} imóveis entre {{ (imoveis|last).preco|brl }} e {{ (imoveis|first).preco|brl }}.{% else %}A carteira está em atualização: fale com a equipe sobre os imóveis disponíveis.{% endif %} A {{ site.nome }} monitora preço, valorização e liquidez em {{ bairros|length }} bairros: {% for b in bairros %}{{ b.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
+  <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }} {% if imoveis %}A carteira atual reúne {{ imoveis|length }} imóve{{ 'is' if imoveis|length > 1 else 'l' }}{% if imoveis|length > 1 %} entre {{ (imoveis|last).preco|brl }} e {{ (imoveis|first).preco|brl }}{% else %} de {{ (imoveis|first).preco|brl }}{% endif %}.{% else %}A carteira está em atualização: fale com a equipe sobre os imóveis disponíveis.{% endif %} O preço do m² de {{ bairros|length }} bairros vem do Sinduscon-CE: {% for b in bairros %}{{ b.nome }}{% if loop.revindex == 2 %} e {% elif not loop.last %}, {% endif %}{% endfor %}.</p>
   <p>{{ site.intencao_central }}</p>
   <ul class="acoes">
     <li><a class="botao" href="/imoveis/">Ver imóveis disponíveis</a></li>
-    <li><a class="botao botao--sec" href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">Liquidez por bairro 2025–2026</a></li>
+    <li><a class="botao botao--sec" href="/guias/preco-m2-por-bairro-fortaleza/">Preço do m² por bairro</a></li>
     <li><a class="botao botao--sec" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Olá! Vim pelo site da ' ~ site.nome ~ ' e gostaria de falar com um consultor.')|urlencode }}">Falar com um consultor no WhatsApp</a></li>
   </ul>
 </section>
 
 <section aria-labelledby="destaques">
   <h2 id="destaques">Imóveis de altíssimo padrão à venda {{ site.cidade.em }}</h2>
-  <p>Todos os imóveis da carteira têm isolamento acústico com Rw igual ou superior a 42 dB, portaria blindada nível III-A e gerador que atende 100% da carga elétrica. Os imóveis na orla têm esquadrias e ferragens especificadas contra maresia.</p>
+  <p>Cada ficha traz preço, preço por m² comparado ao do bairro no Sinduscon-CE, condomínio, IPTU e o ITBI calculado. Dados técnicos do edifício, como acústica, blindagem e gerador, aparecem só quando há documento.</p>
   {% if imoveis %}
   <div class="grade">
     {% for i in imoveis %}{{ m.card_imovel(i) }}{% endfor %}
   </div>
+  {% else %}
+  <p>A carteira está em atualização. Os próximos imóveis entram aqui com ficha completa.</p>
   {% endif %}
   <p><a class="botao" href="/imoveis/">Ver imóveis disponíveis</a></p>
 </section>
 
 
 <section aria-labelledby="indicadores">
-  <h2 id="indicadores">Indicadores do mercado de alto padrão por bairro {{ site.cidade.em }}</h2>
-  <p>{{ bairros[0].nome }} teve o menor tempo médio de venda ({{ bairros[0].tempo_medio_venda }} dias) e {{ (bairros|last).nome }} o maior ({{ (bairros|last).tempo_medio_venda }} dias) {{ site.periodo_texto }}. {% for b in bairros if b.destaque %}{{ b.destaque }} {% endfor %}</p>
-  {{ m.tabela_bairros(bairros, "Preço, valorização e liquidez de imóveis acima de " ~ site.limiar_texto ~ " por bairro (" ~ site.periodo_curto ~ ")") }}
+  <h2 id="indicadores">Preço do m² nos bairros de alto padrão {{ site.cidade.em }}</h2>
+  <p>Entre os bairros atendidos, {{ bairros[0].nome }} tem o m² mais caro ({{ bairros[0].preco_m2|brl }}) e {{ (bairros|last).nome }} o mais baixo ({{ (bairros|last).preco_m2|brl }}), segundo o Sinduscon-CE ({{ sd.ref_txt }}). A média de {{ site.cidade.nome }} foi de {{ sd.fortaleza.m2|brl }}.</p>
+  {{ m.tabela_bairros(bairros, "Preço do m² nos bairros atendidos pela " ~ site.nome ~ " (Sinduscon-CE, " ~ sd.ref_txt ~ ")") }}
 </section>
 
 {% for pl in repo.pilares.values() %}
@@ -51,10 +54,8 @@
   <h2 id="autoridade">Por que a {{ site.nome }} é fonte sobre imóveis de alto padrão {{ site.cidade.em }}</h2>
   <ul class="lista-fatos">
     {% for fato in site.contexto_fonte %}<li>{{ fato }}</li>{% endfor %}
+    <li>Registro {{ site.creci }}, CNPJ {{ site.cnpj }}, escritório na {{ site.endereco.rua }}, {{ site.endereco.bairro }}. <a href="/sobre/">Dados cadastrais e metodologia</a>.</li>
   </ul>
-  <div class="grade grade--pessoas">
-    {% for p in pessoas %}{{ m.card_pessoa(p) }}{% endfor %}
-  </div>
 </section>
 
 {{ m.perguntas(faq, "perguntas-frequentes", "Perguntas frequentes sobre a " ~ site.nome ~ " e o mercado " ~ site.cidade.de) }}

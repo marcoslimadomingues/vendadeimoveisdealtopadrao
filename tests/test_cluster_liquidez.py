@@ -1,4 +1,4 @@
-"""Cluster 2 (liquidez por bairro): só indicadores do Sinduscon-CE, com fonte e mês; sem métrica interna sem fonte."""
+"""Cluster 2 (preço do m² por bairro): só indicadores do Sinduscon-CE, com fonte e mês; sem métrica interna."""
 from __future__ import annotations
 
 import json
@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT))
 from app import create_app  # noqa: E402
 
 GUIA = "/guias/preco-m2-por-bairro-fortaleza/"
-PILAR_GUIA = "/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/"
+GUIA_REMOVIDO = "/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/"  # base interna sem fonte: saiu
 BAIRROS = ("meireles", "mucuripe", "aldeota", "coco", "guararapes")
 DOMINIO = "https://vendadeimoveisdealtopadrao.com.br"
 
@@ -59,7 +59,7 @@ def test_pagina_do_bairro_so_com_indicador_publico(ctx, slug):
     texto = corpo(html)
     assert f"R$ {b['sinduscon']['m2']:,.0f}".replace(",", ".") in texto
     assert 'href="https://www.opovo.com.br/' in texto and "Sinduscon-CE" in texto
-    assert f'href="{GUIA}"' in texto and f'href="{PILAR_GUIA}"' in texto
+    assert f'href="{GUIA}"' in texto and f'href="{GUIA_REMOVIDO}"' not in html
     # o bloco do bairro (antes dos cards de guias, que descrevem outro guia) não tem métrica interna
     bloco = html.split('id="analises"')[0]
     for interno in ("valorizou", "Valorização em 12 meses", "Tempo médio de venda", "Desconto médio de negociação",
@@ -97,15 +97,14 @@ def test_guia_do_ranking_padroes_tecnicos(ctx):
     assert "{" not in corpo(html), "token sem expandir"
     perguntas = [n for n in grafo(html) if n["@type"] == "Question"]
     assert perguntas and all(q["name"] in html for q in perguntas)
-    assert "Parte do guia" in html and f'href="{PILAR_GUIA}"' in html
+    assert "[PREENCHER" not in html
 
 
-def test_guia_pilar_lista_o_satelite_e_sitemap_llms(ctx):
+def test_guia_de_liquidez_saiu_e_ranking_esta_no_sitemap_e_llms(ctx):
     client, repo = ctx
-    pilar = client.get(PILAR_GUIA).get_data(as_text=True)
-    assert "Aprofunde este guia" in pilar and f'href="{GUIA}"' in pilar.split("Aprofunde este guia")[1]
-    assert [a["slug"] for a in repo.satelites_do_guia("liquidez-imoveis-alto-padrao-por-bairro-fortaleza")] == [
-        "preco-m2-por-bairro-fortaleza"]
+    assert client.get(GUIA_REMOVIDO).status_code == 404
+    for path, _ in repo.paginas_indexaveis():
+        assert GUIA_REMOVIDO not in client.get(path).get_data(as_text=True), path
     assert f"{DOMINIO}{GUIA}</loc>" in client.get("/sitemap.xml").get_data(as_text=True)
     assert f"]({DOMINIO}{GUIA})" in client.get("/llms.txt").get_data(as_text=True)
 

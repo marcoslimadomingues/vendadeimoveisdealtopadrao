@@ -33,8 +33,8 @@ VERIFICACOES = [
      "registro profissional falso em página pública é risco jurídico e de reputação"),
     ("Endereço com número fictício", "data/site.json", r"\"rua\": \"[^\"]*0000\"",
      "o endereço entra no JSON-LD e no rodapé"),
-    ("Imagens placeholder em uso", "data/*.json", r"/static/img/(?:imovel|artigo|pessoa)-placeholder\.svg",
-     "o desenho aparece no lugar da foto do imóvel, da pessoa e na prévia ao compartilhar"),
+    ("Imagens placeholder em uso", "data/*.json", r"/static/img/(?:imovel|artigo)-placeholder\.svg",
+     "o desenho aparece no lugar da foto do imóvel ou do guia e na prévia ao compartilhar"),
     ("Imóveis ilustrativos na carteira (marcados \"ilustrativo\": true)", "data/imoveis.json",
      r"\"ilustrativo\": true",
      "imóvel de demonstração com preço publicado como se fosse oferta real; remova o registro ao entrar o imóvel real"),
@@ -47,12 +47,11 @@ VERIFICACOES = [
 ]
 
 MANUAIS = [
-    "Nomes, cargos, fotos e biografias das pessoas (hoje fictícios).",
-    "Métricas da empresa: 284 transações, VGV, ticket médio, prazo médio de venda, fundação.",
-    "Carteira de imóveis, preços, metragens e dados técnicos (laudos acústico, de blindagem e de gerador).",
-    "Indicadores internos por bairro (m², valorização, liquidez): a base interna ilustrativa destoa do Sinduscon-CE.",
+    "Cada imóvel novo: preço, condomínio, IPTU e área conferidos com a documentação; dados técnicos só com laudo.",
+    "Fotos do imóvel: autorização de uso e nenhuma pessoa, placa de carro ou documento visível.",
     "Textos tributários (ITBI, ITCD, ganho de capital, holding): revisão por advogado antes de publicar.",
-    "Vídeos: gravar/publicar no YouTube e trocar os IDs; autorização de imagem das pessoas.",
+    "Vídeos: só com gravação real publicada no YouTube (hoje nenhum guia tem vídeo).",
+    "Pessoas: o site não publica nenhuma; se entrar um corretor, só com nome e CRECI reais e autorização.",
     "Empreendimentos de terceiros citados (Wave Beira-Mar, Mansão Diogo, DM 210): só com dado verificado.",
     "LGPD: política de privacidade, base legal para WhatsApp/telefone e aviso de cookies, se houver medição.",
 ]

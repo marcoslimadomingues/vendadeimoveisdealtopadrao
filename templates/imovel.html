@@ -12,9 +12,9 @@
     <h1 id="titulo-imovel">{{ i.titulo }}{% if i.encerrado %} (indisponível){% endif %}</h1>
     <p class="lead">{{ i.resumo_encerrado if i.encerrado else i.resumo }}</p>
     {% if i.encerrado %}
-    <p class="meta">Anunciado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · indisponível desde <time datetime="{{ i.data_encerramento }}">{{ i.data_encerramento|data_extenso }}</time> · consultor responsável: <a href="{{ consultor.path }}">{{ consultor.nome }}</a></p>
+    <p class="meta">Anunciado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · indisponível desde <time datetime="{{ i.data_encerramento }}">{{ i.data_encerramento|data_extenso }}</time></p>
     {% else %}
-    <p class="meta">Publicado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · atualizado em <time datetime="{{ i.data_atualizacao }}">{{ i.data_atualizacao|data_extenso }}</time> · consultor responsável: <a href="{{ consultor.path }}">{{ consultor.nome }}</a></p>
+    <p class="meta">Publicado em <time datetime="{{ i.data_publicacao }}">{{ i.data_publicacao|data_extenso }}</time> · atualizado em <time datetime="{{ i.data_atualizacao }}">{{ i.data_atualizacao|data_extenso }}</time></p>
     {% endif %}
   </header>
 
@@ -45,9 +45,10 @@
       {% if i.andar %}<div><dt>Andar</dt><dd>{{ i.andar }}</dd></div>{% endif %}
       <div><dt>Condomínio mensal</dt><dd>{% if i.condominio_mensal %}{{ i.condominio_mensal|brl }}{% else %}Não se aplica{% endif %}</dd></div>
       <div><dt>IPTU anual</dt><dd>{{ i.iptu_anual|brl }}</dd></div>
-      <div><dt>Isolamento acústico</dt><dd>Rw {{ i.tecnico.rw_db }} dB</dd></div>
-      <div><dt>Blindagem da portaria</dt><dd>Nível {{ i.tecnico.blindagem_nivel }}</dd></div>
-      <div><dt>Gerador</dt><dd>{{ i.tecnico.gerador_kva|num }} kVA · {{ i.tecnico.gerador_cobertura_pct }}% da carga</dd></div>
+      {% set t = i.tecnico %}
+      {% if t.rw_db %}<div><dt>Isolamento acústico</dt><dd>Rw {{ t.rw_db }} dB</dd></div>{% endif %}
+      {% if t.blindagem_nivel %}<div><dt>Blindagem da portaria</dt><dd>Nível {{ t.blindagem_nivel }}</dd></div>{% endif %}
+      {% if t.gerador_kva %}<div><dt>Gerador</dt><dd>{{ t.gerador_kva|num }} kVA{% if t.gerador_cobertura_pct %} · {{ t.gerador_cobertura_pct }}% da carga{% endif %}</dd></div>{% endif %}
       <div><dt>Ano de construção</dt><dd>{{ i.ano_construcao }}{% if i.ano_reforma %} (reforma em {{ i.ano_reforma }}){% endif %}</dd></div>
     </dl>
   </section>
@@ -57,12 +58,14 @@
     {% for p in i.paragrafos %}<p>{{ p }}</p>{% endfor %}
   </section>
 
+  {% if i.amenidades %}
   <section aria-labelledby="diferenciais">
-    <h2 id="diferenciais">Segurança, acústica e energia</h2>
+    <h2 id="diferenciais">Diferenciais do imóvel e do edifício</h2>
     <ul class="lista-fatos">
       {% for a in i.amenidades %}<li><strong>{{ a.nome }}:</strong> {{ a.detalhe }}.</li>{% endfor %}
     </ul>
   </section>
+  {% endif %}
 
   <section aria-labelledby="ficha-tecnica">
     <h2 id="ficha-tecnica">Ficha técnica completa</h2>
@@ -75,7 +78,7 @@
         <tr><th scope="row">Tipo</th><td>{{ i.tipo }}</td></tr>
         <tr><th scope="row">Área privativa</th><td>{{ i.area_privativa|num }} m²</td></tr>
         {% if i.area_terreno %}<tr><th scope="row">Área do terreno</th><td>{{ i.area_terreno|num }} m²</td></tr>{% endif %}
-        <tr><th scope="row">Pavimentos</th><td>{{ i.pavimentos }}</td></tr>
+        {% if i.pavimentos %}<tr><th scope="row">Pavimentos</th><td>{{ i.pavimentos }}</td></tr>{% endif %}
         <tr><th scope="row">Suítes</th><td>{{ i.suites }}</td></tr>
         <tr><th scope="row">Banheiros</th><td>{{ i.banheiros }}</td></tr>
         <tr><th scope="row">Vagas de garagem</th><td>{{ i.vagas }}</td></tr>
@@ -115,20 +118,15 @@
     <p>{{ i.referencia|cap }} custa {{ i.preco_m2|brl }} por m², valor {{ i.dif_bairro_pct|abs|pct }} {{ 'acima' if i.dif_bairro_pct >= 0 else 'abaixo' }} da média de {{ bairro.preco_m2|brl }} por m² {{ bairro.de }}.</p>
     <div class="tabela-rolagem">
     <table>
-      <caption>{{ i.codigo }} × média do m² {{ bairro.de }}{% if bairro.sinduscon %} ({{ repo.sinduscon.ref_txt }}, Sinduscon-CE){% else %} ({{ site.periodo_curto }}){% endif %}</caption>
+      <caption>{{ i.codigo }} × média do m² {{ bairro.de }} ({{ repo.sinduscon.ref_txt }}, Sinduscon-CE)</caption>
       <thead><tr><th scope="col">Indicador</th><th scope="col">Este imóvel</th><th scope="col">Média {{ bairro.de }}</th></tr></thead>
       <tbody>
         <tr><th scope="row">Preço por m²</th><td>{{ i.preco_m2|brl }}</td><td>{{ bairro.preco_m2|brl }}</td></tr>
         <tr><th scope="row">Diferença</th><td>{{ i.dif_bairro_pct|pct(true) }}</td><td>—</td></tr>
-        {% if not bairro.sinduscon %}
-        <tr><th scope="row">Valorização em 12 meses</th><td>—</td><td>{{ bairro.valorizacao_12m|pct }}</td></tr>
-        <tr><th scope="row">Tempo médio de venda</th><td>—</td><td>{{ bairro.tempo_medio_venda }} dias</td></tr>
-        <tr><th scope="row">Desconto médio de negociação</th><td>—</td><td>{{ bairro.desconto_negociacao|pct }}</td></tr>
-        {% endif %}
       </tbody>
     </table>
     </div>
-    <p class="fonte">{% if bairro.sinduscon %}Fonte da média do bairro: {{ repo.sinduscon.orgao }}, divulgado por <a href="{{ repo.sinduscon.fonte.url }}" rel="noopener">{{ repo.sinduscon.fonte.veiculo }}</a> em {{ repo.sinduscon.fonte.publicado|data_extenso }}. {{ repo.sinduscon.metodo }}{% else %}Fonte: {{ site.fonte_dados }}{% endif %}</p>
+    <p class="fonte">Fonte da média do bairro: {{ repo.sinduscon.orgao }}, divulgado por <a href="{{ repo.sinduscon.fonte.url }}" rel="noopener">{{ repo.sinduscon.fonte.veiculo }}</a> em {{ repo.sinduscon.fonte.publicado|data_extenso }}. {{ repo.sinduscon.metodo }}</p>
     {% set pl = repo.pilar_do_bairro(bairro.slug) %}
     {% if pl %}<p>{{ i.referencia|cap }} fica na <a href="{{ pl.path }}">{{ pl.nome|lower }}</a>, a faixa da Avenida Beira Mar entre o Meireles e o Mucuripe. Veja o preço do m² por fonte e data e os marcos de referência da orla.</p>{% endif %}
   </section>
@@ -136,7 +134,7 @@
   {% set pl = repo.pilar_do_bairro(bairro.slug) %}
   <section aria-labelledby="mercado">
     <h2 id="mercado">Mercado {{ bairro.de }} hoje</h2>
-    <p>{% if bairro.sinduscon %}{{ bairro.resumo }}{% else %}Imóveis acima de {{ site.limiar_texto }} {{ bairro.em }} venderam em {{ bairro.tempo_medio_venda }} dias, em média, com desconto de negociação de {{ bairro.desconto_negociacao|pct }} {{ site.periodo_texto }}.{% endif %} Consulte <a href="{{ bairro.path }}">o preço do m² {{ bairro.de }}</a>{% if pl %} e o <a href="{{ pl.path }}">preço do m² por fonte e data na {{ pl.nome|lower }}</a>{% endif %}.</p>
+    <p>{{ bairro.resumo }} Consulte <a href="{{ bairro.path }}">o preço do m² {{ bairro.de }}</a>{% if pl %} e o <a href="{{ pl.path }}">preço do m² por fonte e data na {{ pl.nome|lower }}</a>{% endif %}.</p>
   </section>
   {% endif %}
 
@@ -148,7 +146,7 @@
   {% if i.encerrado %}
   <aside class="contato" aria-labelledby="contato">
     <h2 id="contato">Tem um imóvel parecido para vender?</h2>
-    <p>{{ i.referencia|cap }} não está mais disponível desde {{ i.data_encerramento|data_extenso }}. Se você tem um imóvel de padrão semelhante {{ bairro.em }} ou na região, <a href="{{ consultor.path }}">{{ consultor.nome }}</a> ({{ consultor.credencial.nome }}) faz uma avaliação com base nos preços de mercado por bairro e fonte.</p>
+    <p>{{ i.referencia|cap }} não está mais disponível desde {{ i.data_encerramento|data_extenso }}. Se você tem um imóvel de padrão semelhante {{ bairro.em }} ou na região, a {{ site.nome }} ({{ site.creci }}) faz uma avaliação com base no preço do m² do bairro, com fonte e data.</p>
     <ul class="acoes">
       <li><a class="botao" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Tenho um imóvel parecido com o ' ~ i.codigo ~ ' e gostaria de avaliar a venda.')|urlencode }}">Avaliar meu imóvel no WhatsApp</a></li>
       <li><a class="botao botao--sec" href="tel:{{ site.telefone_link }}">{{ site.telefone|tel }}</a></li>
@@ -158,7 +156,7 @@
   {% else %}
   <aside class="contato" aria-labelledby="contato">
     <h2 id="contato">Agendar visita</h2>
-    <p><a href="{{ consultor.path }}">{{ consultor.nome }}</a>, {{ consultor.cargo|lower }} ({{ consultor.credencial.nome }}), é responsável por este imóvel.</p>
+    <p>A {{ site.nome }} ({{ site.creci }}) agenda a visita e envia a documentação d{{ i.referencia }}.</p>
     <ul class="acoes">
       <li><a class="botao" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Tenho interesse no imóvel ' ~ i.codigo)|urlencode }}">WhatsApp</a></li>
       <li><a class="botao botao--sec" href="tel:{{ site.telefone_link }}">{{ site.telefone|tel }}</a></li>

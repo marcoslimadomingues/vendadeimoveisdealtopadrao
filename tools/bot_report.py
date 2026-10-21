@@ -36,7 +36,7 @@ COMBINED = re.compile(
     r'(?P<status>\d{3}) (?P<bytes>\S+) "[^"]*" "(?P<ua>[^"]*)"'
 )
 SECOES = (("/milha-de-ouro-", "Pilar · milha de ouro"), ("/imoveis/", "Core · fichas de imóveis"), ("/bairros/", "Core · bairros"),
-          ("/guias/", "Outdoor · guias"), ("/especialistas/", "E-E-A-T · especialistas"))
+          ("/guias/", "Outdoor · guias"), ("/sobre/", "E-E-A-T · sobre"))
 
 
 # ------------------------------------------------------------------ leitura

@@ -16,7 +16,11 @@
       <div><dt>Vagas</dt><dd>{{ i.vagas }}</dd></div>
       <div><dt>Custo fixo mensal</dt><dd>{{ i.custo_mensal|brl }}</dd></div>
     </dl>
-    <p class="card__tec">Rw {{ i.tecnico.rw_db }} dB · Blindagem {{ i.tecnico.blindagem_nivel }} · Gerador {{ i.tecnico.gerador_cobertura_pct }}%</p>
+    {% set t = i.tecnico %}
+    {% set tec = [("Rw " ~ t.rw_db ~ " dB") if t.rw_db else "",
+                  ("Blindagem " ~ t.blindagem_nivel) if t.blindagem_nivel else "",
+                  ("Gerador " ~ t.gerador_cobertura_pct ~ "%") if t.gerador_cobertura_pct else ""]|select|list %}
+    {% if tec %}<p class="card__tec">{{ tec|join(" · ") }}</p>{% endif %}
   </div>
 </article>
 {% endif %}
@@ -41,53 +45,44 @@
 {% endmacro %}
 
 {% macro card_artigo(a, nivel=3) %}
-{% set autor = repo.pessoas[a.autor] %}
 <article class="card card--texto">
   <p class="card__tipo">{{ a.categoria }}</p>
   <h{{ nivel }} class="card__titulo"><a href="{{ a.path }}">{{ a.titulo }}</a></h{{ nivel }}>
   <p>{{ a.descricao }}</p>
-  <p class="meta">Por <a href="{{ autor.path }}">{{ autor.nome }}</a> · atualizado em <time datetime="{{ a.atualizado }}">{{ a.atualizado|data_extenso }}</time></p>
+  <p class="meta">Por {{ site.nome }} · atualizado em <time datetime="{{ a.atualizado }}">{{ a.atualizado|data_extenso }}</time></p>
 </article>
 {% endmacro %}
 
-{% macro card_pessoa(p, nivel=3) %}
-<article class="card card--pessoa">
-  <img src="{{ p.foto }}" alt="Foto de {{ p.nome }}" width="160" height="160" loading="lazy" decoding="async">
-  <div>
-    <h{{ nivel }} class="card__titulo"><a href="{{ p.path }}">{{ p.nome }}</a></h{{ nivel }}>
-    <p class="card__tipo">{{ p.cargo }} · {{ p.credencial.nome }}</p>
-    <p>{{ p.resumo }}</p>
-  </div>
-</article>
-{% endmacro %}
-
+{# Bairros atendidos: só o que o Sinduscon-CE publicou (m², variação sobre o mês anterior, posição e oferta). #}
 {% macro tabela_bairros(bairros, caption) %}
+{% set sd = repo.sinduscon %}
 <div class="tabela-rolagem">
 <table>
   <caption>{{ caption }}</caption>
   <thead>
     <tr>
       <th scope="col">Bairro</th>
-      <th scope="col">{% if repo.sinduscon %}Preço médio do m² (Sinduscon-CE, {{ repo.sinduscon.ref_txt }}){% else %}Preço médio por m²{% endif %}</th>
-      <th scope="col">Valorização em 12 meses (base própria)</th>
-      <th scope="col">Tempo médio de venda</th>
-      <th scope="col">Desconto médio de negociação</th>
+      <th scope="col">Preço médio do m² ({{ sd.ref_txt }})</th>
+      <th scope="col">Variação sobre {{ sd.ref_ant_txt }}</th>
+      <th scope="col">Posição entre os {{ sd.total }} bairros</th>
+      <th scope="col">Unidades em oferta</th>
     </tr>
   </thead>
   <tbody>
     {% for b in bairros %}
+    {% set s = b.sinduscon %}
     <tr>
       <th scope="row"><a href="{{ b.path }}">{{ b.nome }}</a></th>
-      <td>{{ b.preco_m2|brl }}</td>
-      <td>{{ b.valorizacao_12m|pct }}</td>
-      <td>{{ b.tempo_medio_venda }} dias</td>
-      <td>{{ b.desconto_negociacao|pct }}</td>
+      <td>{{ s.m2|brl }}</td>
+      <td>{% if s.var_mes_pct is not none %}{{ s.var_mes_pct|pct(true) }}{% else %}não divulgada{% endif %}</td>
+      <td>{{ s.posicao }}º</td>
+      <td>{% if s.estoque is defined %}{{ s.estoque|num }}{% else %}não divulgado{% endif %}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 </div>
-<p class="fonte">{% if repo.sinduscon %}Preço do m²: {{ repo.sinduscon.orgao }}, divulgado por <a href="{{ repo.sinduscon.fonte.url }}" rel="noopener">{{ repo.sinduscon.fonte.veiculo }}</a> em {{ repo.sinduscon.fonte.publicado|data_extenso }}. Demais colunas: {{ site.fonte_dados }}{% else %}Fonte: {{ site.fonte_dados }}{% endif %}</p>
+<p class="fonte">Fonte: {{ sd.orgao }}, divulgado por <a href="{{ sd.fonte.url }}" rel="noopener">{{ sd.fonte.veiculo }}</a> em {{ sd.fonte.publicado|data_extenso }}. {{ sd.metodo }}</p>
 {% endmacro %}
 
 {# Ranking do levantamento do Sinduscon-CE: só valores publicados, com variação sobre o mês anterior quando divulgada. #}
@@ -168,14 +163,15 @@
   </thead>
   <tbody>
     {% for i in imoveis %}
+    {% set t = i.tecnico %}
     <tr>
       <th scope="row"><a href="{{ i.path }}">{{ i.titulo }}</a></th>
-      <td>{{ i.tecnico.rw_db }} dB</td>
-      <td>Nível {{ i.tecnico.blindagem_nivel }}</td>
-      <td>{{ i.tecnico.gerador_kva|num }} kVA</td>
-      <td>{{ i.tecnico.gerador_cobertura_pct }}%</td>
-      <td>{{ i.tecnico.gerador_autonomia_h }} horas</td>
-      <td>{{ i.tecnico.maresia or "—" }}</td>
+      <td>{% if t.rw_db %}{{ t.rw_db }} dB{% else %}—{% endif %}</td>
+      <td>{% if t.blindagem_nivel %}Nível {{ t.blindagem_nivel }}{% else %}—{% endif %}</td>
+      <td>{% if t.gerador_kva %}{{ t.gerador_kva|num }} kVA{% else %}—{% endif %}</td>
+      <td>{% if t.gerador_cobertura_pct %}{{ t.gerador_cobertura_pct }}%{% else %}—{% endif %}</td>
+      <td>{% if t.gerador_autonomia_h %}{{ t.gerador_autonomia_h }} horas{% else %}—{% endif %}</td>
+      <td>{{ t.maresia or "—" }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -197,13 +193,12 @@
 </div>
 {% endmacro %}
 
-{# Vídeos do YouTube incorporados, cada um com apresentador identificado (E-E-A-T) e descrição em texto. #}
+{# Vídeos do YouTube incorporados, com data e descrição em texto. #}
 {% macro videos(lista, id_secao, titulo) %}
 <section class="videos" aria-labelledby="{{ id_secao }}">
   <h2 id="{{ id_secao }}">{{ titulo }}</h2>
   <div class="videos__grade">
   {% for v in lista %}
-  {% set p = repo.pessoas[v.apresentador] %}
   <figure class="video">
     <div class="video__quadro">
       <iframe src="https://www.youtube-nocookie.com/embed/{{ v.youtube_id }}" title="{{ v.titulo }}"
@@ -213,8 +208,7 @@
     <figcaption>
       <span class="card__tipo">{{ v.tipo }} · {{ v.duracao|duracao }}</span>
       <strong>{{ v.titulo }}</strong>
-      <span>Apresentação: <a href="{{ p.path }}">{{ p.nome }}</a>, {{ p.cargo|lower }} · publicado em
-      <time datetime="{{ v.data_upload }}">{{ v.data_upload|data_extenso }}</time>.</span>
+      <span>{{ site.nome }} · publicado em <time datetime="{{ v.data_upload }}">{{ v.data_upload|data_extenso }}</time>.</span>
       <span>{{ v.descricao }} <a href="https://www.youtube.com/watch?v={{ v.youtube_id }}">Assistir no YouTube</a>.</span>
     </figcaption>
   </figure>

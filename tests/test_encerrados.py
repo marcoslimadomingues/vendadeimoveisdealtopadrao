@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from app import create_app  # noqa: E402
-from seo.content import Repo  # noqa: E402
+from seo.content import DATA_DIR, Repo  # noqa: E402
 from seo.formatting import brl  # noqa: E402
 
 SLUG = "apartamento-aldeota-260m2"
@@ -32,7 +32,7 @@ def desvincular_guias(dados: Path) -> None:
 def montar(tmp_path: Path, status: str = "vendido", minimo: bool = False, **campos):
     """Cópia dos dados com um imóvel ativo encerrado (`minimo`: só código, título, bairro e data)."""
     dados = tmp_path / "data"
-    shutil.copytree(ROOT / "data", dados)
+    shutil.copytree(DATA_DIR, dados)
     arq = dados / "imoveis.json"
     imoveis = json.loads(arq.read_text(encoding="utf-8"))
     base = {"data_venda": "2026-10-01"} if status == "vendido" else {"data_saida": "2026-10-01"}
@@ -179,7 +179,7 @@ def test_redirecionamento_para_o_bairro(tmp_path, minimo):
 def test_redirecionar_exige_status_encerrado(tmp_path):
     with pytest.raises(ValueError, match="redirecionar_para_bairro só vale"):
         dados = tmp_path / "data"
-        shutil.copytree(ROOT / "data", dados)
+        shutil.copytree(DATA_DIR, dados)
         arq = dados / "imoveis.json"
         imoveis = json.loads(arq.read_text(encoding="utf-8"))
         imoveis[0]["redirecionar_para_bairro"] = True
@@ -191,7 +191,7 @@ def test_exportacao_estatica_inclui_a_pagina_de_redirecionamento(tmp_path, monke
     sys.path.insert(0, str(ROOT / "tools"))
     monkeypatch.setenv("SITE_NOINDEX", "0")
     dados = tmp_path / "data"
-    shutil.copytree(ROOT / "data", dados)
+    shutil.copytree(DATA_DIR, dados)
     arq = dados / "imoveis.json"
     imoveis = json.loads(arq.read_text(encoding="utf-8"))
     for i in imoveis:

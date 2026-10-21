@@ -4,7 +4,7 @@
 <header class="cabecalho-pagina">
   <h1>Imóveis de altíssimo padrão à venda {{ site.cidade.em }}</h1>
   {% if imoveis %}
-  <p class="lead">A {{ site.nome }} tem {{ imoveis|length }} imóveis à venda acima de {{ site.limiar_texto }} {{ site.cidade.em }}, de {{ (imoveis|last).preco|brl }} a {{ (imoveis|first).preco|brl }}. Cada ficha exibe preço, preço por m², condomínio, IPTU e as especificações de acústica, proteção contra maresia, blindagem e gerador.</p>
+  <p class="lead">{% if imoveis|length > 1 %}A {{ site.nome }} tem {{ imoveis|length }} imóveis à venda acima de {{ site.limiar_texto }} {{ site.cidade.em }}, de {{ (imoveis|last).preco|brl }} a {{ (imoveis|first).preco|brl }}.{% else %}A {{ site.nome }} tem 1 imóvel à venda acima de {{ site.limiar_texto }} {{ site.cidade.em }}, por {{ (imoveis|first).preco|brl }}.{% endif %} Cada ficha exibe preço, preço por m², condomínio, IPTU e os dados técnicos documentados do edifício.</p>
   {% else %}
   <p class="lead">A carteira da {{ site.nome }} está em atualização e nenhum imóvel está à venda nesta página agora. <a href="/contato/">Fale com a equipe</a> para saber das próximas ofertas acima de {{ site.limiar_texto }} {{ site.cidade.em }}.</p>
   {% endif %}
@@ -72,6 +72,6 @@
 
 <section aria-labelledby="por-bairro">
   <h2 id="por-bairro">Imóveis de alto padrão por bairro</h2>
-  {{ m.tabela_bairros(bairros, "Indicadores de mercado dos bairros atendidos (" ~ site.periodo_curto ~ ")") }}
+  {{ m.tabela_bairros(bairros, "Preço do m² nos bairros atendidos (Sinduscon-CE, " ~ repo.sinduscon.ref_txt ~ ")") }}
 </section>
 {% endblock %}

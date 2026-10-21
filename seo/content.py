@@ -6,13 +6,15 @@ calculados aqui, uma única vez, para que HTML, JSON-LD e FAQ nunca divirjam.
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 
 from . import pilares as _pilares
 from .formatting import brl, cap as _cap, data_extenso, num, pct
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+# SITE_DATA_DIR troca a pasta de dados (os testes usam uma carteira de demonstração fora de data/).
+DATA_DIR = Path(os.environ.get("SITE_DATA_DIR") or Path(__file__).resolve().parent.parent / "data")
 
 
 def _load(path: Path):
@@ -188,11 +190,10 @@ class Repo:
         d = Path(data_dir) if data_dir else DATA_DIR
         self.site: dict = _load(d / "site.json")
         self.bairros = _index(_load(d / "bairros.json"))
-        self.pessoas = _index(_load(d / "especialistas.json"))
         self.imoveis = _index(_load(d / "imoveis.json"))
         self.artigos = _index(_load(d / "artigos.json"))
         self.pilares = _index(_load(d / "pilares.json")) if (d / "pilares.json").exists() else {}
-        self.sinduscon: dict | None = _load(d / "sinduscon.json") if (d / "sinduscon.json").exists() else None
+        self.sinduscon: dict = _load(d / "sinduscon.json")  # m² de referência de todos os bairros
         self._data_dir = d
         self._validar()
         self._enriquecer()
@@ -203,8 +204,6 @@ class Repo:
         for i in self.imoveis.values():
             if i["bairro"] not in self.bairros:
                 erros.append(f"imóvel {i['slug']}: bairro '{i['bairro']}' inexistente")
-            if self._tem_ficha(i) and i["consultor"] not in self.pessoas:
-                erros.append(f"imóvel {i['slug']}: consultor '{i['consultor']}' inexistente")
             if i["status"] not in ("ativo", *ENCERRADOS):
                 erros.append(f"imóvel {i['slug']}: status '{i['status']}' inválido (ativo, vendido ou indisponivel)")
             if i.get("redirecionar_para_bairro") and i["status"] not in ENCERRADOS:
@@ -218,8 +217,6 @@ class Repo:
                 if i["status"] == "indisponivel" and i.get("preco_venda"):
                     erros.append(f"imóvel {i['slug']}: preco_venda não se aplica a imóvel indisponivel")
         for a in self.artigos.values():
-            if a["autor"] not in self.pessoas:
-                erros.append(f"artigo {a['slug']}: autor '{a['autor']}' inexistente")
             for s in a.get("imoveis_relacionados", []):
                 if s not in self.imoveis or not self._tem_ficha(self.imoveis[s]):
                     erros.append(f"artigo {a['slug']}: imóvel relacionado '{s}' inexistente ou sem ficha no ar "
@@ -231,17 +228,12 @@ class Repo:
                 erros.append(f"artigo {a['slug']}: pilar '{a['pilar']}' inexistente")
             if a.get("guia_pilar") and a["guia_pilar"] not in self.artigos:
                 erros.append(f"artigo {a['slug']}: guia_pilar '{a['guia_pilar']}' inexistente")
-            if a.get("dados") == "sinduscon" and not self.sinduscon:
-                erros.append(f"artigo {a['slug']}: dados 'sinduscon' sem data/sinduscon.json")
             if a.get("url_sob_pilar") and not a.get("pilar"):
                 erros.append(f"artigo {a['slug']}: url_sob_pilar exige o campo pilar")
         for p in self.pilares.values():
             for b in p["bairros"]:
                 if b not in self.bairros:
                     erros.append(f"pilar {p['slug']}: bairro '{b}' inexistente")
-            for chave in ("autor", "revisor"):
-                if p[chave] not in self.pessoas:
-                    erros.append(f"pilar {p['slug']}: {chave} '{p[chave]}' inexistente")
             for g in p["guias"]:
                 if g not in self.artigos:
                     erros.append(f"pilar {p['slug']}: guia '{g}' inexistente")
@@ -250,19 +242,19 @@ class Repo:
                     erros.append(f"pilar {p['slug']}: indicador '{ind['id']}' sem fonte cadastrada")
                 if not ind.get("referencia"):
                     erros.append(f"pilar {p['slug']}: indicador '{ind['id']}' sem data de referência")
-        if self.sinduscon:
-            ids = [b["id"] for b in self.sinduscon["bairros"]]
-            if len(ids) != len(set(ids)):
-                erros.append("sinduscon.json: bairro repetido")
-            for b in self.sinduscon["bairros"]:
-                if not b.get("m2"):
-                    erros.append(f"sinduscon.json: '{b['id']}' sem m2")
-            if not self.sinduscon.get("fonte", {}).get("url"):
-                erros.append("sinduscon.json: fonte sem url")
+        ids = [b["id"] for b in self.sinduscon["bairros"]]
+        if len(ids) != len(set(ids)):
+            erros.append("sinduscon.json: bairro repetido")
+        for b in self.sinduscon["bairros"]:
+            if not b.get("m2"):
+                erros.append(f"sinduscon.json: '{b['id']}' sem m2")
+        if not self.sinduscon.get("fonte", {}).get("url"):
+            erros.append("sinduscon.json: fonte sem url")
+        for slug in self.bairros:
+            if slug not in ids:  # sem m² publicado, o bairro não tem número para mostrar
+                erros.append(f"bairro '{slug}' sem preço do m² em sinduscon.json")
         for item in [*self.artigos.values(), *(i for i in self.imoveis.values() if self._tem_ficha(i))]:
             for v in item.get("videos", []):
-                if v.get("apresentador") and v["apresentador"] not in self.pessoas:
-                    erros.append(f"{item['slug']}: apresentador de vídeo '{v['apresentador']}' inexistente")
                 if len(v["youtube_id"]) != 11:
                     erros.append(f"{item['slug']}: youtube_id '{v['youtube_id']}' deve ter 11 caracteres")
         if erros:
@@ -272,8 +264,6 @@ class Repo:
         for b in self.bairros.values():
             b["path"] = f"/bairros/{b['slug']}/"
         self._enriquecer_sinduscon()
-        for p in self.pessoas.values():
-            p["path"] = f"/especialistas/{p['slug']}/"
         for a in self.artigos.values():
             a["path"] = (f"/{a['pilar']}/{a['slug']}/" if a.get("url_sob_pilar") else f"/guias/{a['slug']}/")
             _expandir_tributos(a, self.site)
@@ -285,8 +275,6 @@ class Repo:
                     a["imoveis_relacionados"] = [
                         i["slug"] for i in self.ativos() if i["bairro"] in self.pilares[a["pilar"]]["bairros"]]
             a.setdefault("videos", [])
-            for v in a["videos"]:
-                v.setdefault("apresentador", a["autor"])
             # Respostas rápidas das seções + FAQ final: todas viram Question no JSON-LD.
             a["perguntas_todas"] = [qa for s in a["secoes"] for qa in s.get("respostas_rapidas", [])]
             a["perguntas_todas"] += a.get("faq", [])
@@ -302,12 +290,10 @@ class Repo:
     def _enriquecer_sinduscon(self) -> None:
         """Ranking do levantamento e dados dos bairros do site: o m² de referência é sempre o do Sinduscon-CE.
 
-        Para o bairro com dado publicado, o m² médio, o resumo e o título vêm daqui; as métricas internas sem
-        fonte pública (texto e números de valorização, prazo e desconto) deixam de aparecer na página do bairro.
+        O m² médio e o resumo de cada bairro vêm daqui. O site não publica métrica própria (valorização,
+        prazo de venda, desconto): só o que o levantamento divulgou.
         """
         sd = self.sinduscon
-        if not sd:
-            return
         cidade = sd["fortaleza"]["m2"]
         itens = sorted(sd["bairros"], key=lambda x: x["m2"], reverse=True)
         for pos, it in enumerate(itens, start=1):
@@ -321,13 +307,9 @@ class Repo:
         sd["ref_txt"] = _pilares.mes_ano(sd["referencia"])
         sd["ref_ant_txt"] = _pilares.mes_ano(sd["referencia_anterior"])
         for b in self.bairros.values():
-            it = sd["por_id"].get(b["slug"])
-            if not it:
-                continue
+            it = sd["por_id"][b["slug"]]
             b["sinduscon"] = it
             b["preco_m2"] = it["m2"]
-            b["destaque"] = None
-            b["paragrafos"] = []
             variacao = ""
             if it["var_mes_pct"] is not None:
                 verbo = "subiu" if it["var_mes_pct"] >= 0 else "caiu"
@@ -341,10 +323,10 @@ class Repo:
     def _enriquecer_imovel(self, i: dict) -> None:
         b = self.bairros[i["bairro"]]
         i.setdefault("videos", [])
-        for v in i["videos"]:
-            v.setdefault("apresentador", i["consultor"])
-        tec = i["tecnico"]
-        responsavel = self.pessoas[self.site["responsavel_tecnico"]]
+        i.setdefault("amenidades", [])
+        i.setdefault("especificacoes", [])
+        # Dados técnicos só com documento (laudo, memorial, certificado): cada campo é opcional.
+        tec = i["tecnico"] = {k: v for k, v in (i.get("tecnico") or {}).items() if v not in (None, "")}
         i["preco_m2"] = round(i["preco"] / i["area_privativa"])
         i["dif_bairro_pct"] = round((i["preco_m2"] / b["preco_m2"] - 1) * 100, 1)
         i["iptu_mensal"] = round(i["iptu_anual"] / 12)
@@ -372,7 +354,7 @@ class Repo:
                 "a": (f"{_cap(ref)} custa {brl(i['preco_m2'])} por m² de área privativa "
                       f"({num(i['area_privativa'])} m² por {brl(i['preco'])}). O valor está "
                       f"{pct(abs(i['dif_bairro_pct']))} {posicao} da média de {brl(b['preco_m2'])} "
-                      f"por m² {b['de']}" + (f" ({self.sinduscon['ref_txt']}, Sinduscon-CE)." if b.get("sinduscon") else ".")),
+                      f"por m² {b['de']} ({self.sinduscon['ref_txt']}, Sinduscon-CE)."),
             },
             {
                 "grupo": "Preço e custos",
@@ -380,14 +362,6 @@ class Repo:
                 "a": (f"O custo fixo mensal d{ref} é de {brl(i['custo_mensal'])}: {partes}. "
                       f"O IPTU anual é de {brl(i['iptu_anual'])}.{sem_condominio}"),
             },
-            *([] if b.get("sinduscon") else [{
-                "grupo": "Preço e custos",
-                "q": f"Quanto tempo um imóvel de alto padrão leva para vender {b['em']}?",
-                "a": (f"Imóveis acima de {s['limiar_texto']} {b['em']} venderam em {b['tempo_medio_venda']} dias, "
-                      f"em média, com desconto de negociação de {pct(b['desconto_negociacao'])} "
-                      f"{s['periodo_texto']}."),
-                "link": self._link_guia("liquidez-imoveis-alto-padrao-por-bairro-fortaleza"),
-            }]),
             {
                 "grupo": "Tributos e prazos da compra",
                 "q": f"Quanto é o ITBI na compra d{ref}?",
@@ -411,35 +385,34 @@ class Repo:
                       "para imóveis que o sócio já possui e integraliza no capital social da holding."),
                 "link": self._link_guia("holding-familiar-imoveis-alto-padrao"),
             },
-            {
-                "grupo": "Medições técnicas",
-                "q": f"Como foi medido o isolamento acústico d{ref}?",
-                "a": (f"As esquadrias d{ref} têm índice Rw {tec['rw_db']} dB, medido em laboratório pela "
-                      f"ISO 10140-2 e classificado pela EN ISO 717-1. O laudo de compra inclui a medição em "
-                      f"campo da fachada (índice D2m,nT,w, ISO 16283-3), revisada pela arquiteta {responsavel['nome']}."),
-                "link": self._link_guia("isolamento-acustico-blindagem-gerador-imoveis-luxo"),
-            },
-            {
-                "grupo": "Medições técnicas",
-                "q": f"O gerador d{ref} atende toda a carga elétrica?",
-                "a": (f"Sim. O gerador de {num(tec['gerador_kva'])} kVA atende {tec['gerador_cobertura_pct']}% "
-                      f"da carga elétrica, com autonomia de {tec['gerador_autonomia_h']} horas."),
-            },
-            {
-                "grupo": "Medições técnicas",
-                "q": f"Qual o nível de blindagem da portaria d{ref}?",
-                "a": (f"Nível {tec['blindagem_nivel']} pela ABNT NBR 15000, testado contra disparos de 9 mm "
-                      f"e .44 Magnum."),
-            },
-            *([{
-                "grupo": "Medições técnicas",
-                "q": f"{_cap(ref)} tem proteção contra maresia?",
-                "a": (f"Sim. {tec['maresia']}. A especificação para ambiente marinho é exigida pela "
-                      f"{s['nome']} em imóveis a menos de 500 m do mar."),
-                "link": self._link_guia("isolamento-acustico-blindagem-gerador-imoveis-luxo"),
-            }] if tec.get("maresia") else []),
+            *self._faq_tecnico(i),
             *i.get("perguntas", []),
         ]
+
+    def _faq_tecnico(self, i: dict) -> list[dict]:
+        """Perguntas técnicas só para o que a documentação do imóvel informa."""
+        tec, ref = i["tecnico"], i["referencia"]
+        guia = self._link_guia("isolamento-acustico-blindagem-gerador-imoveis-luxo")
+        faq = []
+        if tec.get("rw_db"):
+            faq.append({"q": f"Qual o isolamento acústico das esquadrias d{ref}?",
+                        "a": (f"Índice Rw {tec['rw_db']} dB, medido em laboratório pela ISO 10140-2 e classificado "
+                              f"pela EN ISO 717-1. O desempenho da fachada instalada é medido em campo pelo índice "
+                              f"D2m,nT,w (ISO 16283-3)."),
+                        "link": guia})
+        if tec.get("gerador_kva"):
+            cobertura = tec.get("gerador_cobertura_pct")
+            autonomia = f", com autonomia de {tec['gerador_autonomia_h']} horas" if tec.get("gerador_autonomia_h") else ""
+            faq.append({"q": f"O gerador d{ref} atende toda a carga elétrica?",
+                        "a": (f"{'Sim. ' if cobertura == 100 else ''}O gerador de {num(tec['gerador_kva'])} kVA "
+                              + (f"atende {cobertura}% da carga elétrica" if cobertura else "atende o edifício")
+                              + f"{autonomia}.")})
+        if tec.get("blindagem_nivel"):
+            faq.append({"q": f"Qual o nível de blindagem da portaria d{ref}?",
+                        "a": f"Nível {tec['blindagem_nivel']} pela ABNT NBR 15000."})
+        if tec.get("maresia"):
+            faq.append({"q": f"{_cap(ref)} tem proteção contra maresia?", "a": f"Sim. {tec['maresia']}.", "link": guia})
+        return [{"grupo": "Medições técnicas", **q} for q in faq]
 
     @staticmethod
     def _tem_ficha(i: dict) -> bool:
@@ -578,8 +551,9 @@ class Repo:
             return i if self._tem_ficha(i) else None
         return i  # registro mínimo de vendido/retirado: o app responde 404 informativo
 
-    def imoveis_por_consultor(self, slug: str) -> list[dict]:
-        return [i for i in self.ativos() if i["consultor"] == slug]
+    def com_dados_tecnicos(self) -> list[dict]:
+        """Imóveis no ar com ao menos um dado técnico documentado."""
+        return [i for i in self.ativos() if i["tecnico"]]
 
     def artigos_recentes(self) -> list[dict]:
         return sorted(self.artigos.values(), key=lambda a: a["publicado"], reverse=True)
@@ -596,33 +570,22 @@ class Repo:
         todos = self.artigos_recentes()
         return sorted(todos, key=lambda a: slug not in a.get("bairros_relacionados", []))
 
-    def artigos_por_autor(self, slug: str) -> list[dict]:
-        return [a for a in self.artigos_recentes() if a["autor"] == slug]
-
-    def videos_por_pessoa(self, slug: str) -> list[tuple[dict, dict]]:
-        """(vídeo, página onde está incorporado) apresentados pela pessoa."""
-        paginas = [*self.ativos(), *self.artigos_recentes()]
-        return [(v, pg) for pg in paginas for v in pg.get("videos", []) if v["apresentador"] == slug]
-
     def pilar_do_bairro(self, slug: str) -> dict | None:
         return next((p for p in self.pilares.values() if slug in p["bairros"]), None)
 
-    def bairros_por_liquidez(self) -> list[dict]:
-        return sorted(self.bairros.values(), key=lambda b: b["tempo_medio_venda"])
+    def bairros_por_m2(self) -> list[dict]:
+        """Bairros atendidos, do m² mais caro ao mais barato (Sinduscon-CE)."""
+        return sorted(self.bairros.values(), key=lambda b: b["preco_m2"], reverse=True)
 
     def faq_institucional(self) -> list[dict]:
         """Perguntas que o comprador faz sobre a empresa e o mercado, respondidas só com dados do site.json.
 
-        Valores (preços, prazos, alíquotas, endereço) saem dos mesmos dados das páginas: nada digitado à mão.
+        Valores (preços, alíquotas, endereço) saem dos mesmos dados das páginas: nada digitado à mão.
         """
-        from .formatting import brl
-
         s, cid, e = self.site, self.site["cidade"], self.site["endereco"]
         ativos = self.ativos()
-        liquidez = self.bairros_por_liquidez()
-        rapido, lento = liquidez[0], liquidez[-1]
         sd = self.sinduscon
-        nomes = [b["nome"] for b in liquidez]
+        nomes = [b["nome"] for b in self.bairros_por_m2()]
         bairros_txt = ", ".join(nomes[:-1]) + " e " + nomes[-1]
         itbi = s["itbi"]
         carteira = (f"a carteira atual tem {len(ativos)} ofertas entre {brl(ativos[-1]['preco'])} e "
@@ -637,19 +600,17 @@ class Repo:
              "a": f"Pelo WhatsApp e telefone {s['telefone']} ou pelo e-mail {s['email']}. {s['horario_texto']}."},
             {"q": f"Quais imóveis a {s['nome']} vende {cid['em']}?",
              "a": f"Imóveis acima de {s['limiar_texto']}: {carteira}"},
-            ({"q": f"Qual bairro {cid['de']} tem o m² mais caro?",
-              "a": (f"{sd['ranking'][0]['nome']}, com {brl(sd['ranking'][0]['m2'])} em {sd['ref_txt']}, segundo o "
-                    f"Sinduscon-CE divulgado por {sd['fonte']['veiculo']}. A média de {cid['nome']} foi de "
-                    f"{brl(sd['fortaleza']['m2'])}.")} if sd else
-             {"q": f"Qual bairro de alto padrão {cid['em']} vende mais rápido?",
-              "a": f"{rapido['nome']}: {rapido['tempo_medio_venda']} dias de prazo médio de venda {s['periodo_texto']}. O maior prazo foi {lento['nome']}, com {lento['tempo_medio_venda']} dias."}),
+            {"q": f"Qual bairro {cid['de']} tem o m² mais caro?",
+             "a": (f"{sd['ranking'][0]['nome']}, com {brl(sd['ranking'][0]['m2'])} em {sd['ref_txt']}, segundo o "
+                   f"Sinduscon-CE divulgado por {sd['fonte']['veiculo']}. A média de {cid['nome']} foi de "
+                   f"{brl(sd['fortaleza']['m2'])}.")},
             {"q": f"Qual a alíquota do ITBI {cid['em']}?",
              "a": f"A alíquota geral do ITBI {cid['em']} é de {itbi['aliquota_texto']} sobre a base de cálculo, segundo a Sefin. Pagando até o dia anterior à lavratura da escritura ou do contrato de financiamento, a alíquota é de {itbi['aliquota_antecipada'] * 100:g}%; na parte financiada pelo SFH, até {brl2(itbi['sfh_teto'])}, é de {itbi['sfh_aliquota'] * 100:g}%. Confirme valores e prazos com a Prefeitura ou com seu advogado antes de fechar negócio."},
             {"q": "Os preços por m² são de que fonte e período?",
              "a": (f"Os valores por bairro vêm do Sinduscon-CE, divulgados por {sd['fonte']['veiculo']} em "
                    f"{data_extenso(sd['fonte']['publicado'])}, com referência em {sd['ref_txt']}. Cada indicador "
-                   "traz fonte, data e link da publicação original." if sd else
-                   f"{s['fonte_dados']} No pilar de mercado, cada indicador traz fonte, data e link da publicação original.")},
+                   f"traz fonte, data e link da publicação original. A {s['nome']} não publica estimativa própria "
+                   "de valorização, prazo de venda ou desconto.")},
         ]
 
     def paginas_indexaveis(self) -> list[tuple[str, str | None]]:
@@ -657,12 +618,11 @@ class Repo:
         ult_artigo = max(a["atualizado"] for a in self.artigos.values())
         ult_imovel = max((i["data_atualizacao"] for i in self.ativos()), default=ult_artigo)
         paginas = [("/", max(ult_imovel, ult_artigo)), ("/imoveis/", ult_imovel),
-                   ("/guias/", ult_artigo), ("/especialistas/", None), ("/sobre/", None), ("/contato/", None)]
+                   ("/guias/", ult_artigo), ("/sobre/", None), ("/contato/", None)]
         paginas += [(i["path"], i["data_atualizacao"]) for i in self.ativos()]
         paginas += [(i["path"], i["data_encerramento"]) for i in self.encerrados()]
         paginas += [(b["path"], ult_imovel) for b in self.bairros.values()]
         paginas += [(a["path"], a["atualizado"]) for a in self.artigos_recentes()]
-        paginas += [(p["path"], None) for p in self.pessoas.values()]
         paginas += [(p["path"], p["atualizado"]) for p in self.pilares.values()]
         return paginas
 

@@ -1,4 +1,4 @@
-"""Vídeos com especialistas, respostas rápidas (fan-out), PageRank interno e relatório de logs."""
+"""Vídeos, respostas rápidas (fan-out), PageRank interno e relatório de logs."""
 from __future__ import annotations
 
 import json
@@ -33,38 +33,29 @@ def tipos(nodes, tipo):
 
 
 # ------------------------------------------------------------------- vídeos
-def test_ficha_tem_tour_e_analise_tecnica_da_arquiteta(ctx):
+def test_videos_da_ficha_no_html_e_no_json_ld(ctx):
     client, repo = ctx
-    for i in repo.ativos():
+    com_video = [i for i in repo.ativos() if i["videos"]]
+    assert com_video
+    for i in com_video:
         html = client.get(i["path"]).get_data(as_text=True)
-        assert html.count("youtube-nocookie.com/embed/") >= 2, i["slug"]
-        assert {v["apresentador"] for v in i["videos"]} >= {i["consultor"], "marina-albuquerque"}
+        assert html.count("youtube-nocookie.com/embed/") == len(i["videos"]), i["slug"]
         videos = tipos(grafo(html), "VideoObject")
-        assert len(videos) == len(i["videos"])
-        pessoas = {p["@id"] for p in tipos(grafo(html), "Person")}
-        assert all(v["actor"]["@id"] in pessoas for v in videos), "apresentador precisa estar no grafo"
+        assert len(videos) == len(i["videos"]) and all("actor" not in v for v in videos)
+        assert not tipos(grafo(html), "Person")
 
 
-def test_guia_de_holding_tem_videos_da_advogada(ctx):
-    client, repo = ctx
-    a = repo.artigos["holding-familiar-imoveis-alto-padrao"]
-    assert len(a["videos"]) >= 2 and all(v["apresentador"] == "carolina-ribeiro" for v in a["videos"])
-    html = client.get(a["path"]).get_data(as_text=True)
-    artigo = tipos(grafo(html), "Article")[0]
-    assert len(artigo["video"]) == len(a["videos"])
-
-
-def test_todos_os_guias_tem_video(ctx):
+def test_guias_sem_video_provisorio(ctx):
+    """Vídeo só com gravação real: nenhum guia publica ID provisório."""
     _, repo = ctx
-    assert all(a["videos"] for a in repo.artigos.values())
+    assert not any("SUBSTITUA" in v["youtube_id"] for a in repo.artigos.values() for v in a["videos"])
 
 
-def test_perfil_lista_videos_apresentados(ctx):
+def test_paginas_de_especialistas_nao_existem(ctx):
     client, repo = ctx
-    html = client.get("/especialistas/marina-albuquerque/").get_data(as_text=True)
-    assert "Vídeos apresentados por Marina Albuquerque" in html
-    pessoa = tipos(grafo(html), "Person")[0]
-    assert len(pessoa["subjectOf"]) == len(repo.videos_por_pessoa("marina-albuquerque")) >= 6
+    assert client.get("/especialistas/").status_code == 404
+    assert not any("/especialistas/" in p for p, _ in repo.paginas_indexaveis())
+    assert 'href="/especialistas/' not in client.get("/").get_data(as_text=True)
 
 
 # ------------------------------------------------------- respostas rápidas

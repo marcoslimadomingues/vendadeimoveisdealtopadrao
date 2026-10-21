@@ -13,12 +13,13 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from app import create_app  # noqa: E402
+from seo.content import DATA_DIR  # noqa: E402
 
 
 def montar(tmp_path: Path, editar, limpar_guias: bool = True):
     """Cópia dos dados; `editar(lista_de_imoveis)` altera os registros in loco."""
     dados = tmp_path / "data"
-    shutil.copytree(ROOT / "data", dados)
+    shutil.copytree(DATA_DIR, dados)
     arq = dados / "imoveis.json"
     imoveis = json.loads(arq.read_text(encoding="utf-8"))
     editar(imoveis)
@@ -34,7 +35,7 @@ def montar(tmp_path: Path, editar, limpar_guias: bool = True):
 
 
 def primeiro_ativo() -> str:
-    imoveis = json.loads((ROOT / "data" / "imoveis.json").read_text(encoding="utf-8"))
+    imoveis = json.loads((DATA_DIR / "imoveis.json").read_text(encoding="utf-8"))
     return next(i["slug"] for i in imoveis if i["status"] == "ativo")
 
 
@@ -85,10 +86,17 @@ def test_vendido_com_ficha_sem_autorizacao_volta_a_ser_404(tmp_path):
 
 
 def test_guia_que_cita_rascunho_falha_o_build_com_mensagem_clara(tmp_path):
-    artigos = json.loads((ROOT / "data" / "artigos.json").read_text(encoding="utf-8"))
-    citado = next(s for a in artigos for s in a.get("imoveis_relacionados", []))
+    citado = primeiro_ativo()
+
+    def editar(imoveis):
+        rascunho(citado, False)(imoveis)
+        guias = tmp_path / "data" / "artigos.json"
+        artigos = json.loads(guias.read_text(encoding="utf-8"))
+        artigos[0]["imoveis_relacionados"] = [citado]
+        guias.write_text(json.dumps(artigos, ensure_ascii=False), encoding="utf-8")
+
     with pytest.raises(ValueError, match="publicacao_autorizada"):
-        montar(tmp_path, rascunho(citado, False), limpar_guias=False)
+        montar(tmp_path, editar, limpar_guias=False)
 
 
 def test_carteira_vazia_nao_quebra_o_site(tmp_path):
@@ -113,7 +121,10 @@ def test_checklist_lista_rascunhos_sem_contar_como_pendencia(tmp_path):
     assert 'Imóveis ilustrativos na carteira' in r.stdout
 
 
-def test_dados_atuais_tem_todos_os_ativos_autorizados_e_marcados_ilustrativos():
-    imoveis = json.loads((ROOT / "data" / "imoveis.json").read_text(encoding="utf-8"))
-    ativos = [i for i in imoveis if i["status"] == "ativo"]
+def test_site_publicado_nao_tem_imovel_ilustrativo():
+    """Demonstração só em tests/dados; data/imoveis.json leva apenas imóveis reais."""
+    reais = json.loads((ROOT / "data" / "imoveis.json").read_text(encoding="utf-8"))
+    assert not any(i.get("ilustrativo") for i in reais)
+    demo = json.loads((ROOT / "tests" / "dados" / "imoveis.json").read_text(encoding="utf-8"))
+    ativos = [i for i in demo if i["status"] == "ativo"]
     assert ativos and all(i["publicacao_autorizada"] is True and i["ilustrativo"] is True for i in ativos)

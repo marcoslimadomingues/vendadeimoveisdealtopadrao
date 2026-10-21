@@ -9,7 +9,7 @@
   <header class="cabecalho-pagina">
     <p class="card__tipo">Pilar de mercado · {{ site.cidade.nome }}, {{ site.cidade.estado }}</p>
     <h1 id="titulo-pilar">{{ p.titulo_h1 }}</h1>
-    <p class="meta">Por <a href="{{ autor.path }}" rel="author">{{ autor.nome }}</a>, {{ autor.cargo|lower }} · revisão técnica de <a href="{{ revisor.path }}">{{ revisor.nome }}</a>, {{ revisor.cargo|lower }} · publicado em <time datetime="{{ p.publicado }}">{{ p.publicado|data_extenso }}</time> · atualizado em <time datetime="{{ p.atualizado }}">{{ p.atualizado|data_extenso }}</time></p>
+    <p class="meta">Por <a href="/sobre/" rel="author">{{ site.nome }}</a> ({{ site.creci }}) · publicado em <time datetime="{{ p.publicado }}">{{ p.publicado|data_extenso }}</time> · atualizado em <time datetime="{{ p.atualizado }}">{{ p.atualizado|data_extenso }}</time></p>
   </header>
 
   <section class="resumo" aria-labelledby="resumo-executivo">
@@ -24,7 +24,6 @@
       <li><a href="#mapa">Mapa e marcos de referência</a></li>
       <li><a href="#ruas">Ruas e trechos</a></li>
       <li><a href="#preco-m2">Preço do m² por fonte e data</a></li>
-      <li><a href="#indicadores-internos">Liquidez e valorização</a></li>
       <li><a href="#imoveis">Imóveis da carteira na faixa</a></li>
       <li><a href="#empreendimentos">Empreendimentos citados na imprensa</a></li>
       <li><a href="#orla">Maresia e ruído na orla</a></li>
@@ -36,7 +35,7 @@
   <section aria-labelledby="delimitacao">
     <h2 id="delimitacao">Onde fica a milha de ouro de Fortaleza?</h2>
     {% for par in p.delimitacao %}<p>{{ par }}</p>{% endfor %}
-    <p>Os bairros da faixa têm páginas próprias com indicadores de liquidez e os imóveis à venda:
+    <p>Os bairros da faixa têm páginas próprias com o preço do m² do Sinduscon-CE e os imóveis à venda:
       {% for b in bairros %}<a href="{{ b.path }}">{{ b.nome }}</a>{% if not loop.last %} e {% endif %}{% endfor %}.</p>
   </section>
 
@@ -125,24 +124,6 @@
     <p class="fonte">Cálculo da {{ site.nome }} sobre os valores publicados pelo Sinduscon-CE; não é dado oficial do sindicato.</p>
   </section>
 
-  <section aria-labelledby="indicadores-internos">
-    <h2 id="indicadores-internos">Quanto tempo leva para vender e quanto valoriza na faixa?</h2>
-    <div class="tabela-rolagem">
-    <table>
-      <caption>Liquidez e valorização de imóveis acima de {{ site.limiar_texto }} na faixa ({{ site.periodo_curto }})</caption>
-      <thead><tr><th scope="col">Bairro</th><th scope="col">Valorização em 12 meses</th><th scope="col">Tempo médio de venda</th><th scope="col">Desconto médio de negociação</th></tr></thead>
-      <tbody>
-        {% for b in bairros %}
-        <tr><th scope="row"><a href="{{ b.path }}">{{ b.nome }}</a></th><td>{{ b.valorizacao_12m|pct }}</td><td>{{ b.tempo_medio_venda }} dias</td><td>{{ b.desconto_negociacao|pct }}</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    </div>
-    <p class="fonte">Fonte: {{ site.fonte_dados }} Esta tabela usa a base própria da {{ site.nome }}, com metodologia diferente da do Sinduscon-CE.</p>
-    {% for b in bairros if b.destaque %}<p>{{ b.destaque }}</p>{% endfor %}
-    <p>A análise completa por bairro está no guia <a href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>.</p>
-  </section>
-
   <section aria-labelledby="imoveis">
     <h2 id="imoveis">Quais imóveis da {{ site.nome }} ficam na milha de ouro?</h2>
     {% if p.imoveis %}
@@ -184,7 +165,6 @@
       <li>{{ f.veiculo }}, <time datetime="{{ f.publicado }}">{{ f.publicado|data_extenso }}</time>, {{ f.autor }}: <a href="{{ f.url }}" rel="noopener">{{ f.titulo }}</a>.</li>
       {% endfor %}
       <li>Mapa, ruas, marcos e distâncias: OpenStreetMap, © colaboradores do OpenStreetMap, licença <a href="https://www.openstreetmap.org/copyright" rel="noopener">ODbL</a>, consulta em {{ g.consulta|data_extenso }}.</li>
-      <li>Liquidez e valorização: {{ site.fonte_dados }}</li>
     </ul>
     <p class="aviso">Conteúdo informativo. Valores de mercado variam por levantamento, recorte e data. Confirme preços e condições diretamente com a incorporadora ou a imobiliária antes de decidir.</p>
   </section>

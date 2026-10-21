@@ -4,11 +4,10 @@
 {% set b = bairro %}
 <header class="cabecalho-pagina">
   <p class="card__tipo">{{ b.zona }} {{ site.cidade.de }}</p>
-  <h1>{% if b.sinduscon %}Preço do m² {{ b.em }} em {{ repo.sinduscon.fonte.publicado[:4] }}: Sinduscon-CE e imóveis de alto padrão{% else %}Imóveis de alto padrão {{ b.em }}: preço por m², valorização e liquidez{% endif %}</h1>
+  <h1>Preço do m² {{ b.em }} em {{ repo.sinduscon.fonte.publicado[:4] }}: Sinduscon-CE e imóveis de alto padrão</h1>
   <p class="lead">{{ b.resumo }}</p>
 </header>
 
-{% if b.sinduscon %}
 {% set s = b.sinduscon %}
 {% set sd = repo.sinduscon %}
 <section aria-labelledby="indicadores">
@@ -26,21 +25,8 @@
   </dl>
   {% if s.nota %}<p>{{ s.nota }}</p>{% endif %}
   <p class="fonte">Fonte: {{ sd.orgao }}, divulgado por <a href="{{ sd.fonte.url }}" rel="noopener">{{ sd.fonte.veiculo }}</a> em {{ sd.fonte.publicado|data_extenso }}. {{ sd.metodo }}</p>
-  <p>O ranking completo dos {{ sd.total }} bairros está em <a href="/guias/preco-m2-por-bairro-fortaleza/">preço do m² por bairro em Fortaleza em 2026</a>. Para prazo de venda e desconto de negociação, veja <a href="/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>.</p>
+  <p>O ranking completo dos {{ sd.total }} bairros está em <a href="/guias/preco-m2-por-bairro-fortaleza/">preço do m² por bairro em Fortaleza em 2026</a>. O levantamento não divulga prazo de venda nem desconto de negociação por bairro, e a {{ site.nome }} não publica estimativa própria.</p>
 </section>
-{% else %}
-<section aria-labelledby="indicadores">
-  <h2 id="indicadores">Indicadores do mercado de alto padrão {{ b.em }}</h2>
-  <dl class="fatos fatos--grande">
-    <div><dt>Preço médio por m²</dt><dd>{{ b.preco_m2|brl }}</dd></div>
-    <div><dt>Valorização em 12 meses</dt><dd>{{ b.valorizacao_12m|pct }}</dd></div>
-    <div><dt>Tempo médio de venda</dt><dd>{{ b.tempo_medio_venda }} dias</dd></div>
-    <div><dt>Desconto médio de negociação</dt><dd>{{ b.desconto_negociacao|pct }}</dd></div>
-  </dl>
-  {% if b.destaque %}<p>{{ b.destaque }}</p>{% endif %}
-  <p class="fonte">Fonte: {{ site.fonte_dados }}</p>
-</section>
-{% endif %}
 
 {% set pl = repo.pilar_do_bairro(b.slug) %}
 {% if pl %}
@@ -53,7 +39,6 @@
 <section aria-labelledby="perfil">
   <h2 id="perfil">Perfil dos imóveis {{ b.em }}</h2>
   <p>{{ b.perfil }}</p>
-  {% for p in b.paragrafos %}<p>{{ p }}</p>{% endfor %}
 </section>
 
 <section aria-labelledby="a-venda">
@@ -67,11 +52,7 @@
 
 <section aria-labelledby="comparacao">
   <h2 id="comparacao">Comparação com outros bairros de Fortaleza</h2>
-  {% if repo.sinduscon %}
   {{ m.tabela_sinduscon(repo.sinduscon, "Preço do m² por bairro de Fortaleza em " ~ repo.sinduscon.ref_txt ~ " (Sinduscon-CE)", b.slug) }}
-  {% else %}
-  {{ m.tabela_bairros(repo.bairros_por_liquidez(), "Bairros de alto padrão " ~ site.cidade.de ~ " ordenados por tempo médio de venda") }}
-  {% endif %}
 </section>
 
 {% if artigos %}

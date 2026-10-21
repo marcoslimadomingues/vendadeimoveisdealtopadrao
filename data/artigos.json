@@ -1,132 +1,9 @@
 [
   {
-    "slug": "liquidez-imoveis-alto-padrao-por-bairro-fortaleza",
-    "titulo": "Liquidez de imóveis de alto padrão por bairro em Fortaleza (2025–2026)",
-    "descricao": "Tempo médio de venda, desconto de negociação, preço por m² e valorização em 12 meses de imóveis acima de R$ 3 milhões no Mucuripe, Meireles, Cocó, Aldeota e Guararapes.",
-    "categoria": "Mercado e liquidez",
-    "autor": "helena-duarte",
-    "publicado": "2026-07-15",
-    "atualizado": "2026-09-28",
-    "tempo_leitura": 7,
-    "imagem": "/static/img/artigo-placeholder.svg",
-    "resumo": "O Mucuripe é o bairro de alto padrão com maior liquidez em Fortaleza: imóveis acima de R$ 3 milhões venderam em 118 dias, em média, entre julho de 2025 e junho de 2026. O Guararapes teve a menor liquidez, com 196 dias. Os apartamentos com vista frontal para o mar no Meireles registraram a maior valorização do período: 15,1% em 12 meses.",
-    "bairros_relacionados": [
-      "mucuripe",
-      "meireles",
-      "coco",
-      "aldeota",
-      "guararapes"
-    ],
-    "imoveis_relacionados": [
-      "cobertura-duplex-mucuripe-480m2",
-      "apartamento-meireles-beira-mar-320m2",
-      "apartamento-aldeota-260m2",
-      "casa-guararapes-condominio-720m2"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA13",
-        "tipo": "Análise de mercado",
-        "apresentador": "helena-duarte",
-        "titulo": "Liquidez por bairro em Fortaleza 2025–2026: análise de Helena Duarte",
-        "descricao": "Análise de 9 minutos sobre tempo médio de venda, desconto de negociação e valorização em 5 bairros de alto padrão de Fortaleza.",
-        "duracao": "PT9M40S",
-        "data_upload": "2026-07-17"
-      }
-    ],
-    "secoes": [
-      {
-        "id": "ranking",
-        "h2": "Qual bairro de alto padrão vende mais rápido em Fortaleza?",
-        "paragrafos": [
-          "O Mucuripe vendeu imóveis acima de R$ 3 milhões em 118 dias, em média. O Meireles ficou em segundo lugar, com 126 dias, seguido pelo Cocó (149 dias), pela Aldeota (158 dias) e pelo Guararapes (196 dias).",
-          "A tabela abaixo reúne os 4 indicadores de cada bairro no mesmo período. Os dados de cada bairro também estão nas páginas de <a href=\"/bairros/mucuripe/\">Mucuripe</a>, <a href=\"/bairros/meireles/\">Meireles</a>, <a href=\"/bairros/coco/\">Cocó</a>, <a href=\"/bairros/aldeota/\">Aldeota</a> e <a href=\"/bairros/guararapes/\">Guararapes</a>."
-        ],
-        "tabela_dinamica": "bairros"
-      },
-      {
-        "id": "metodologia",
-        "h2": "Como a liquidez foi medida?",
-        "paragrafos": [
-          "O tempo médio de venda é o número de dias entre a primeira divulgação do imóvel e a assinatura do compromisso de compra e venda. A base considera ofertas e transações acima de R$ 3 milhões acompanhadas pela Alto Padrão Imóveis em Fortaleza entre julho de 2025 e junho de 2026.",
-          "O desconto de negociação é a diferença percentual entre o último preço anunciado e o preço efetivo de fechamento. A valorização em 12 meses compara o preço médio por m² de junho de 2026 com o de junho de 2025."
-        ],
-        "respostas_rapidas": [
-          {
-            "q": "Os custos de transação entram no desconto de negociação?",
-            "a": "Não. O desconto compara apenas o último preço anunciado e o preço de fechamento. ITBI, escritura, registro e comissão são custos adicionais ao preço."
-          },
-          {
-            "q": "O tempo médio de venda inclui imóveis retirados do mercado?",
-            "a": "Não. A média considera apenas imóveis que chegaram à assinatura do compromisso de compra e venda no período."
-          }
-        ]
-      },
-      {
-        "id": "vista-mar",
-        "h2": "Quanto a vista mar valoriza um imóvel de alto padrão em Fortaleza?",
-        "paragrafos": [
-          "Os apartamentos com vista frontal para o mar no Meireles valorizaram 15,1% em 12 meses, contra 11,8% da média do bairro. A diferença de 3,3 pontos percentuais reflete a oferta limitada de terrenos na primeira quadra da Avenida Beira Mar.",
-          "A <a href=\"/imoveis/cobertura-duplex-mucuripe-480m2/\">cobertura duplex de 480 m² no Mucuripe</a> e o <a href=\"/imoveis/apartamento-meireles-beira-mar-320m2/\">apartamento de 320 m² na Beira Mar do Meireles</a> têm vista frontal para o mar e custam, respectivamente, 21,5% e 18,8% acima da média por m² dos seus bairros."
-        ]
-      },
-      {
-        "id": "casas-vs-apartamentos",
-        "h2": "Por que casas em condomínio demoram mais para vender do que apartamentos à beira-mar?",
-        "paragrafos": [
-          "Casas em condomínio acima de R$ 5 milhões têm um universo menor de compradores e exigem avaliação de terreno, manutenção e segurança do condomínio. No Guararapes, onde predominam casas, o desconto médio de negociação foi de 8,4%, contra 4,9% no Mucuripe, onde predominam apartamentos na orla.",
-          "Apartamentos à beira-mar atraem também compradores de outros estados e do exterior que usam o imóvel como segunda residência, o que amplia a base de demanda e reduz o prazo de venda."
-        ]
-      },
-      {
-        "id": "valorizacao",
-        "h2": "Quais bairros de alto padrão mais valorizaram em Fortaleza em 12 meses?",
-        "paragrafos": [
-          "O Mucuripe valorizou 13,4% em 12 meses, o Meireles 11,8%, o Cocó 10,2%, a Aldeota 9,6% e o Guararapes 8,1%.",
-          "A valorização mais baixa do Guararapes coincide com o menor preço por m² da base, R$ 9.800. Compradores com horizonte acima de 10 anos usam essa diferença como margem de entrada."
-        ]
-      },
-      {
-        "id": "decisao-de-compra",
-        "h2": "Como usar a liquidez na decisão de compra?",
-        "paragrafos": [
-          "Um comprador que pretende revender em até 5 anos deve priorizar bairros com tempo de venda abaixo de 130 dias, como Mucuripe e Meireles.",
-          "Um comprador com horizonte acima de 10 anos pode negociar descontos maiores em bairros de menor liquidez. A <a href=\"/imoveis/casa-guararapes-condominio-720m2/\">casa de 720 m² no Guararapes</a> custa 12,1% abaixo da média por m² do bairro, e o <a href=\"/imoveis/apartamento-aldeota-260m2/\">apartamento de 260 m² na Aldeota</a> é a menor porta de entrada da carteira.",
-          "A estrutura de compra também altera o resultado financeiro de longo prazo. O guia <a href=\"/guias/holding-familiar-imoveis-alto-padrao/\">holding familiar para imóveis de alto padrão no Ceará</a> compara a tributação de aluguel, venda e sucessão."
-        ],
-        "respostas_rapidas": [
-          {
-            "q": "Quanto custa o ITBI de um imóvel de R$ 5 milhões em Fortaleza?",
-            "a": "{ti:5000000} pela alíquota geral de {t:itbi}, ou {ta:5000000} se o imposto for pago até o dia anterior à lavratura da escritura, quando a alíquota é de {t:itbi2} (Sefin-Fortaleza)."
-          },
-          {
-            "q": "Quanto tempo leva para registrar a compra após a escritura?",
-            "a": "O Cartório de Registro de Imóveis tem prazo legal de até 10 dias úteis, contados do protocolo do título (art. 188 da Lei 6.015/1973, com redação da Lei 14.382/2022)."
-          }
-        ]
-      }
-    ],
-    "faq": [
-      {
-        "q": "Quanto tempo leva para vender um imóvel de luxo em Fortaleza?",
-        "a": "Imóveis acima de R$ 3 milhões levaram de 118 a 196 dias para vender em Fortaleza entre julho de 2025 e junho de 2026, conforme o bairro. Na carteira exclusiva da Alto Padrão Imóveis, o prazo médio foi de 104 dias."
-      },
-      {
-        "q": "Qual o desconto médio na compra de imóveis de alto padrão em Fortaleza?",
-        "a": "O desconto médio de negociação variou de 4,9% no Mucuripe a 8,4% no Guararapes entre julho de 2025 e junho de 2026."
-      },
-      {
-        "q": "Qual bairro de Fortaleza tem o metro quadrado mais caro no alto padrão?",
-        "a": "O Mucuripe tem o maior preço médio da base: R$ 16.800 por m² entre julho de 2025 e junho de 2026."
-      }
-    ]
-  },
-  {
     "slug": "holding-familiar-imoveis-alto-padrao",
     "titulo": "Holding familiar para imóveis de alto padrão em Fortaleza: ITBI, ITCD do Ceará e Imposto de Renda",
     "descricao": "Como a holding familiar altera o ITBI de Fortaleza, o ITCD progressivo do Ceará e o imposto de renda sobre imóveis acima de R$ 3 milhões, com tabela comparativa entre pessoa física e holding.",
     "categoria": "Jurídico e tributário",
-    "autor": "carolina-ribeiro",
     "publicado": "2026-05-18",
     "atualizado": "2026-09-28",
     "tempo_leitura": 10,
@@ -134,31 +11,6 @@
     "resumo": "A holding familiar é uma pessoa jurídica que recebe imóveis como capital social para organizar a gestão e a sucessão do patrimônio. No Ceará, o ITCD é progressivo, de 2% a 8%, e patrimônios de alto padrão transmitidos por herança ficam na faixa máxima de 8%. A holding no lucro presumido reduz a tributação de aluguéis de até 27,5% (pessoa física) para cerca de 11,33% da receita, mas não reduz automaticamente o imposto na venda: o ganho de capital na holding é tributado em até 34%.",
     "aviso": "Conteúdo informativo. Não substitui parecer jurídico ou contábil individual. Confirme alíquotas, faixas em Ufirce e regras vigentes na data da operação.",
     "bairros_relacionados": [],
-    "imoveis_relacionados": [
-      "casa-guararapes-condominio-720m2",
-      "cobertura-duplex-mucuripe-480m2",
-      "apartamento-meireles-beira-mar-320m2"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA05",
-        "tipo": "Entrevista",
-        "apresentador": "carolina-ribeiro",
-        "titulo": "Entrevista: holding familiar para imóveis de alto padrão no Ceará",
-        "descricao": "Entrevista de 18 minutos com a advogada tributarista Carolina Ribeiro sobre ITBI em Fortaleza, ITCD progressivo do Ceará e tributação de aluguéis na holding familiar.",
-        "duracao": "PT18M30S",
-        "data_upload": "2026-05-20"
-      },
-      {
-        "youtube_id": "SUBSTITUA11",
-        "tipo": "Análise jurídica",
-        "apresentador": "carolina-ribeiro",
-        "titulo": "ITCD do Ceará na prática: herança × doação de quotas com reserva de usufruto",
-        "descricao": "A advogada tributarista Carolina Ribeiro compara, em 12 minutos, as faixas do ITCD na herança e na doação, a imunidade do ITBI na integralização e os prazos de cada etapa.",
-        "duracao": "PT12M10S",
-        "data_upload": "2026-09-12"
-      }
-    ],
     "secoes": [
       {
         "id": "o-que-e",
@@ -272,7 +124,7 @@
         "paragrafos": [
           "A holding não reduz o imposto na venda na maioria dos casos. O ganho de capital na holding é tributado em até 34% (25% de IRPJ com adicional e 9% de CSLL), enquanto a pessoa física paga de 15% a 22,5%, conforme o valor do ganho.",
           "A integralização pelo valor declarado no Imposto de Renda (artigo 23 da Lei 9.249/1995) evita ganho de capital na entrada do imóvel, mas transfere para a holding o custo histórico baixo. Imóveis destinados à venda em até 5 anos costumam permanecer na pessoa física.",
-          "Para imóveis mantidos por mais de 10 anos, como a <a href=\"/imoveis/casa-guararapes-condominio-720m2/\">casa de 720 m² no Guararapes</a> ou a <a href=\"/imoveis/cobertura-duplex-mucuripe-480m2/\">cobertura duplex de 480 m² no Mucuripe</a>, a holding é avaliada pelo ganho sucessório, e não pelo imposto na venda."
+          "Para imóveis mantidos por mais de 10 anos, como coberturas no <a href=\"/bairros/mucuripe/\">Mucuripe</a> ou casas em condomínio no <a href=\"/bairros/guararapes/\">Guararapes</a>, a holding é avaliada pelo ganho sucessório, e não pelo imposto na venda."
         ],
         "respostas_rapidas": [
           {
@@ -347,7 +199,7 @@
         "h2": "Quando a holding familiar compensa no Ceará?",
         "paragrafos": [
           "A holding tende a compensar quando o patrimônio imobiliário supera R$ 3 milhões, há 2 ou mais herdeiros e parte dos imóveis gera renda de aluguel. No Ceará, a diferença entre as faixas do ITCD na herança e na doação reforça o planejamento em vida.",
-          "A compra direta de um imóvel pela holding, como o <a href=\"/imoveis/apartamento-meireles-beira-mar-320m2/\">apartamento de 320 m² na Beira Mar do Meireles</a>, paga ITBI normalmente, porque não se trata de integralização de capital."
+          "A compra direta de um imóvel pela holding paga ITBI normalmente, porque não se trata de integralização de capital."
         ]
       }
     ],
@@ -371,39 +223,12 @@
     "titulo": "Maresia, isolamento acústico, portaria blindada e gerador: o que exigir em um imóvel de luxo em Fortaleza",
     "descricao": "Critérios técnicos mensuráveis para imóveis de alto padrão em Fortaleza: proteção contra maresia, índice Rw de isolamento acústico, nível de blindagem ABNT NBR 15000 e cobertura do gerador.",
     "categoria": "Arquitetura e engenharia",
-    "autor": "marina-albuquerque",
     "publicado": "2026-06-03",
     "atualizado": "2026-09-28",
     "tempo_leitura": 9,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "Quatro especificações técnicas separam um imóvel de alto padrão em Fortaleza de um imóvel apenas caro: proteção contra maresia nas esquadrias e ferragens, isolamento acústico Rw igual ou superior a 42 dB, portaria blindada com nível mínimo III-A pela ABNT NBR 15000 e gerador que atende 100% da carga elétrica. As 4 especificações podem ser verificadas por laudo técnico antes da compra.",
     "bairros_relacionados": [],
-    "imoveis_relacionados": [
-      "cobertura-duplex-mucuripe-480m2",
-      "apartamento-meireles-beira-mar-320m2",
-      "apartamento-aldeota-260m2",
-      "casa-guararapes-condominio-720m2"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA06",
-        "tipo": "Medição em campo",
-        "apresentador": "marina-albuquerque",
-        "titulo": "Medição de ruído na orla: vidro comum × isolamento acústico europeu",
-        "descricao": "Vídeo de 7 minutos com medição de decibéis em noite de evento na Avenida Beira Mar, comparando uma esquadria comum e uma esquadria Rw 45 dB na mesma fachada.",
-        "duracao": "PT7M10S",
-        "data_upload": "2026-06-05"
-      },
-      {
-        "youtube_id": "SUBSTITUA12",
-        "tipo": "Análise técnica",
-        "apresentador": "marina-albuquerque",
-        "titulo": "Maresia em imóveis de luxo: como avaliar esquadrias, ferragens e ar-condicionado",
-        "descricao": "A arquiteta Marina Albuquerque explica, em 10 minutos, como a maresia de Fortaleza corrói esquadrias e equipamentos e quais especificações exigir no laudo de compra.",
-        "duracao": "PT10M20S",
-        "data_upload": "2026-09-14"
-      }
-    ],
     "secoes": [
       {
         "id": "maresia",
@@ -411,7 +236,7 @@
         "paragrafos": [
           "A maresia é a névoa salina trazida pelo vento do mar. Os cloretos depositados em alumínio, aço e equipamentos aceleram a corrosão, e a agressividade é máxima nas primeiras quadras da orla, como na Avenida Beira Mar do Meireles e do Mucuripe.",
           "A norma ISO 9223 classifica a corrosividade atmosférica de C1 (muito baixa) a CX (extrema). Ambientes costeiros com exposição direta ao vento do mar costumam ser enquadrados nas categorias C4 a C5, que exigem especificação de materiais para ambiente marinho.",
-          "A Alto Padrão Imóveis exige, nos imóveis a menos de 500 m do mar, esquadrias de alumínio com camada anódica de 25 µm ou pintura com certificação para ambiente marinho e ferragens em aço inox 316. A <a href=\"/imoveis/cobertura-duplex-mucuripe-480m2/\">cobertura duplex de 480 m² no Mucuripe</a> e o <a href=\"/imoveis/apartamento-meireles-beira-mar-320m2/\">apartamento de 320 m² na Beira Mar do Meireles</a> seguem essa especificação."
+          "Nas primeiras quadras da orla, como na Avenida Beira Mar do <a href=\"/bairros/meireles/\">Meireles</a> e do <a href=\"/bairros/mucuripe/\">Mucuripe</a>, peça a especificação das esquadrias (anodização ou pintura certificada para ambiente marinho) e das ferragens (aço inox 316)."
         ],
         "respostas_rapidas": [
           {
@@ -433,7 +258,7 @@
         "h2": "O que é isolamento acústico europeu?",
         "paragrafos": [
           "Isolamento acústico europeu é o termo de mercado para esquadrias e vedações classificadas pela norma EN ISO 717-1, que expressa o isolamento sonoro em um número único, o índice Rw, em decibéis. Quanto maior o Rw, menor o ruído externo que chega ao ambiente.",
-          "A Alto Padrão Imóveis classifica como Isolamento Acústico Europeu apenas imóveis com esquadrias de Rw igual ou superior a 42 dB. Em Fortaleza, o isolamento reduz o ruído noturno da Avenida Beira Mar, dos eventos na orla e do tráfego das avenidas da Aldeota.",
+          "Nenhuma norma define um Rw mínimo para chamar uma esquadria de \"isolamento acústico europeu\": peça o valor do Rw em decibéis e o relatório do ensaio. Em Fortaleza, o isolamento reduz o ruído noturno da Avenida Beira Mar, dos eventos na orla e do tráfego das avenidas da Aldeota.",
           "Cada 10 dB a mais de isolamento reduz aproximadamente pela metade a sensação de ruído percebida. Uma esquadria de 42 dB é percebida como cerca de 2 vezes mais silenciosa que uma esquadria comum de vidro simples, com Rw próximo de 31 dB."
         ],
         "tabela": {
@@ -457,12 +282,12 @@
             [
               "Vidro laminado duplo com câmara de 12 mm",
               "42 a 45 dB",
-              "Isolamento Acústico Europeu"
+              "Alto"
             ],
             [
               "Vidro laminado acústico duplo com câmara de 16 mm",
               "46 a 50 dB",
-              "Isolamento Acústico Europeu superior"
+              "Muito alto"
             ]
           ]
         },
@@ -505,7 +330,7 @@
         "paragrafos": [
           "A portaria blindada de um imóvel de alto padrão deve ter nível mínimo III-A pela norma ABNT NBR 15000. O nível III-A resiste a disparos de armas curtas de alto calibre, como 9 mm e .44 Magnum.",
           "A blindagem deve cobrir vidros, portas, paredes da guarita e o passa-volumes. Uma guarita com vidro blindado e parede de alvenaria comum não atinge o nível III-A no conjunto.",
-          "A eclusa completa a portaria blindada: 2 portões intertravados que nunca abrem ao mesmo tempo, para pedestres e para veículos. A <a href=\"/imoveis/casa-guararapes-condominio-720m2/\">casa de 720 m² no Guararapes</a> fica em condomínio com portaria blindada e eclusa de veículos."
+          "A eclusa completa a portaria blindada: 2 portões intertravados que nunca abrem ao mesmo tempo, para pedestres e para veículos."
         ],
         "respostas_rapidas": [
           {
@@ -519,8 +344,7 @@
         "h2": "O que significa gerador total em um edifício?",
         "paragrafos": [
           "Gerador total significa que o gerador atende 100% da carga elétrica do imóvel, incluindo ar-condicionado, elevadores, bombas e tomadas das unidades. Em Fortaleza, onde o ar-condicionado funciona o ano inteiro, um gerador que atende só áreas comuns deixa as unidades sem climatização nas quedas de energia.",
-          "Três números definem um gerador total: potência em kVA compatível com a demanda máxima medida, autonomia do tanque em horas e tempo de transferência automática (QTA) inferior a 15 segundos.",
-          "O <a href=\"/imoveis/apartamento-aldeota-260m2/\">apartamento de 260 m² na Aldeota</a> tem gerador de 400 kVA com autonomia de 24 horas. A <a href=\"/imoveis/casa-guararapes-condominio-720m2/\">casa de 720 m² no Guararapes</a> tem gerador próprio de 150 kVA com autonomia de 72 horas."
+          "Três números definem um gerador total: potência em kVA compatível com a demanda máxima medida, autonomia do tanque em horas e tempo de transferência automática (QTA) inferior a 15 segundos."
         ],
         "tabela_dinamica": "tecnico",
         "respostas_rapidas": [
@@ -539,14 +363,14 @@
         "h2": "Como verificar essas especificações antes da compra?",
         "paragrafos": [
           "O comprador deve solicitar 4 documentos: especificação dos materiais das esquadrias e ferragens com a classe de proteção contra corrosão, laudo de medição acústica em campo emitido por engenheiro ou arquiteto, certificado de blindagem do fabricante com o nível ABNT NBR 15000 e memorial do gerador com potência, autonomia e circuitos atendidos.",
-          "A Alto Padrão Imóveis anexa esses 4 documentos à ficha técnica de cada imóvel da carteira. A <a href=\"/especialistas/marina-albuquerque/\">arquiteta Marina Albuquerque</a> revisa os laudos antes da divulgação."
+          "Nas fichas da Alto Padrão Imóveis, acústica, blindagem e gerador só aparecem quando há documento do condomínio, da construtora ou do fabricante. Sem documento, a ficha não informa o dado."
         ]
       }
     ],
     "faq": [
       {
         "q": "Imóvel a quantos metros do mar sofre com maresia em Fortaleza?",
-        "a": "A agressividade é maior nas primeiras quadras da orla e diminui com a distância e com as barreiras de edifícios. A Alto Padrão Imóveis exige especificação para ambiente marinho em imóveis a menos de 500 m do mar."
+        "a": "A agressividade é maior nas primeiras quadras da orla e diminui com a distância e com as barreiras de edifícios. Perto da orla, peça a especificação para ambiente marinho de esquadrias e ferragens."
       },
       {
         "q": "O gerador total atende o ar-condicionado?",
@@ -566,7 +390,6 @@
     "titulo_seo": "Preço do m² na Beira Mar em Fortaleza | Alto Padrão Imóveis",
     "descricao": "Quanto custa o m² na Avenida Beira Mar de Fortaleza: {m2:beira_mar} em {ref:beira_mar}, e a comparação com Meireles, Mucuripe e a média da cidade.",
     "categoria": "Milha de ouro",
-    "autor": "helena-duarte",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 4,
@@ -576,17 +399,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA14",
-        "tipo": "Análise de mercado",
-        "apresentador": "helena-duarte",
-        "titulo": "Preço do m² na Beira Mar de Fortaleza: como ler os números do Sinduscon-CE",
-        "descricao": "[PREENCHER: vídeo gravado explicando a tabela do m² por recorte e mês de referência.]",
-        "duracao": "PT5M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -665,7 +477,7 @@
         "h2": "Como usar o preço do m² ao avaliar um imóvel?",
         "paragrafos": [
           "Compare o preço por m² do imóvel com o valor do recorte e confira a data da referência: valores de meses diferentes não são diretamente comparáveis. Os imóveis da carteira estão em <a href=\"/imoveis/\">imóveis de altíssimo padrão à venda em Fortaleza</a>. Os dois bairros da faixa têm página própria: <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>.",
-          "Para entender prazo de venda por bairro, leia <a href=\"/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/\">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>. Para comparar os dois bairros da faixa, veja <a href=\"/guias/meireles-ou-mucuripe-investir/\">Meireles ou Mucuripe: onde investir em imóvel de alto padrão em Fortaleza</a>."
+          "Para comparar com os outros bairros da cidade, leia <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">preço do m² por bairro em Fortaleza em 2026</a>. Para comparar os dois bairros da faixa, veja <a href=\"/guias/meireles-ou-mucuripe-investir/\">Meireles ou Mucuripe: onde investir em imóvel de alto padrão em Fortaleza</a>."
         ]
       }
     ],
@@ -691,27 +503,14 @@
     "titulo_seo": "Meireles ou Mucuripe: onde investir | Alto Padrão Imóveis",
     "descricao": "Meireles ou Mucuripe: compare o m² ({m2:meireles} e {m2:mucuripe} em {ref:mucuripe}), a distância para a média de Fortaleza e o que o preço não mostra.",
     "categoria": "Milha de ouro",
-    "autor": "helena-duarte",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 4,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "Meireles e Mucuripe têm preços do m² quase iguais: {m2:meireles} e {m2:mucuripe} em {ref:mucuripe}, segundo o Sinduscon-CE. A diferença é de {dif:mucuripe:meireles}, ou {acima:mucuripe:meireles}. Os dois ficam {acima:meireles:fortaleza} e {acima:mucuripe:fortaleza} acima da média de Fortaleza. A escolha depende de critérios que o m² não mostra.",
-    "aviso": "[PREENCHER: tempo médio de venda, desconto de negociação e valorização em 12 meses de Meireles e Mucuripe, com fonte e período. Sem esses dados, o guia compara apenas o preço do m².]",
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA15",
-        "tipo": "Análise de mercado",
-        "apresentador": "helena-duarte",
-        "titulo": "Meireles ou Mucuripe: o que comparar além do preço do m²",
-        "descricao": "[PREENCHER: vídeo gravado comparando os dois bairros com dados de liquidez e valorização.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -756,8 +555,7 @@
         "h2": "O que o preço do m² não mostra?",
         "paragrafos": [
           "O preço do m² é uma média: não separa vista mar de vista lateral, andar, idade do edifício nem acabamento. Para investir, duas informações pesam além do preço: o prazo para vender e a variação do valor ao longo do tempo.",
-          "[PREENCHER: tempo médio de venda e valorização em 12 meses do Meireles e do Mucuripe, com fonte e período.]",
-          "Enquanto esses dados não estão publicados com fonte, o guia <a href=\"/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/\">liquidez de imóveis de alto padrão por bairro em Fortaleza</a> traz os indicadores da base interna da Alto Padrão Imóveis, que usam metodologia própria."
+          "O Sinduscon-CE não divulga prazo de venda nem valorização em 12 meses por bairro, e este guia não usa estimativa própria. O levantamento traz a oferta: em {ref:mucuripe}, o Mucuripe tinha 6 unidades em estoque e o Meireles, 478. Os números de oferta e vendas estão em <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">preço do m² por bairro em Fortaleza em 2026</a>."
         ]
       },
       {
@@ -793,36 +591,23 @@
   },
   {
     "slug": "preco-m2-por-bairro-fortaleza",
-    "guia_pilar": "liquidez-imoveis-alto-padrao-por-bairro-fortaleza",
     "dados": "sinduscon",
     "titulo": "Preço do m² por bairro em Fortaleza em 2026",
     "titulo_seo": "Preço do m² por bairro em Fortaleza | Alto Padrão Imóveis",
     "descricao": "Ranking do preço do m² por bairro em Fortaleza em {sref}, do Sinduscon-CE: de {sm2:praia_iracema} na Praia de Iracema a {sm2:jose_bonifacio} no José Bonifácio.",
-    "categoria": "Mercado e liquidez",
-    "autor": "helena-duarte",
+    "categoria": "Mercado e preços",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 4,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "Em {sref}, a Praia de Iracema teve o m² mais caro de Fortaleza, com {sm2:praia_iracema}, segundo o Sinduscon-CE divulgado por {sveic}. Mucuripe ({sm2:mucuripe}) e Meireles ({sm2:meireles}) vêm em seguida, e a média da cidade foi de {sm2:fortaleza}. O José Bonifácio, último entre os dez bairros divulgados, marcou {sm2:jose_bonifacio}.",
-    "aviso": "[PREENCHER: valorização em 12 meses por bairro. O levantamento divulgou a variação mensal por bairro e a da cidade ({sfa} em 12 meses), mas não a variação anual de cada bairro.]",
+    "aviso": "O levantamento divulgou a variação mensal por bairro e a da cidade em 12 meses ({sfa}), mas não a variação anual de cada bairro. Os valores mudam a cada mês: confira a data de referência.",
     "bairros_relacionados": [
       "meireles",
       "mucuripe",
       "aldeota",
       "coco",
       "guararapes"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA16",
-        "tipo": "Análise de mercado",
-        "apresentador": "helena-duarte",
-        "titulo": "Preço do m² por bairro em Fortaleza: como ler o ranking do Sinduscon-CE",
-        "descricao": "[PREENCHER: vídeo gravado explicando o ranking e a diferença entre média do bairro e m² do imóvel.]",
-        "duracao": "PT5M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -861,7 +646,7 @@
         "h2": "Como ler o preço do m² por bairro?",
         "paragrafos": [
           "O valor é a média ponderada do m² privativo de imóveis residenciais verticais em oferta, não um recorte de imóveis acima de R$ 3 milhões. Use-o como referência do bairro e compare com o preço por m² do imóvel específico, conferindo a data.",
-          "Para a faixa da Avenida Beira Mar entre Meireles e Mucuripe, veja <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza: Avenida Beira Mar entre Meireles e Mucuripe</a> e <a href=\"/milha-de-ouro-fortaleza/preco-m2-beira-mar/\">preço do m² na Beira Mar de Fortaleza em 2026</a>. Para prazo de venda e desconto, leia <a href=\"/guias/liquidez-imoveis-alto-padrao-por-bairro-fortaleza/\">liquidez de imóveis de alto padrão por bairro em Fortaleza</a>.",
+          "Para a faixa da Avenida Beira Mar entre Meireles e Mucuripe, veja <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza: Avenida Beira Mar entre Meireles e Mucuripe</a> e <a href=\"/milha-de-ouro-fortaleza/preco-m2-beira-mar/\">preço do m² na Beira Mar de Fortaleza em 2026</a>.",
           "Cada bairro da Alto Padrão Imóveis tem página própria: <a href=\"/bairros/meireles/\">preço do m² no Meireles</a>, <a href=\"/bairros/mucuripe/\">preço do m² no Mucuripe</a>, <a href=\"/bairros/aldeota/\">preço do m² na Aldeota</a>, <a href=\"/bairros/coco/\">preço do m² no Cocó</a> e <a href=\"/bairros/guararapes/\">preço do m² no Guararapes</a>."
         ]
       }
@@ -888,7 +673,6 @@
     "titulo_seo": "ITBI em Fortaleza: alíquota e cálculo | Alto Padrão Imóveis",
     "descricao": "ITBI em Fortaleza: {t:itbi} no geral e {t:itbi2} se pago antes da escritura. Cálculo para imóveis de R$ 3 a R$ 15 milhões e base de cálculo da Sefin.",
     "categoria": "Tributação e sucessão",
-    "autor": "carolina-ribeiro",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
@@ -898,17 +682,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA17",
-        "tipo": "Análise técnica",
-        "apresentador": "carolina-ribeiro",
-        "titulo": "ITBI em Fortaleza: como pagar a alíquota de 2%",
-        "descricao": "[PREENCHER: vídeo gravado sobre iTBI em Fortaleza: como pagar a alíquota de 2%.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -973,7 +746,6 @@
     "titulo_seo": "ITCD no Ceará: alíquotas e prazos | Alto Padrão Imóveis",
     "descricao": "ITCD no Ceará: alíquotas de 2% a 8% por faixas em Ufirce (Ufirce {t:ufirceano}: {t:ufirce}), isenção até {u:7000} na herança, doação e usufruto.",
     "categoria": "Tributação e sucessão",
-    "autor": "carolina-ribeiro",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
@@ -983,17 +755,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA18",
-        "tipo": "Análise técnica",
-        "apresentador": "carolina-ribeiro",
-        "titulo": "ITCD no Ceará: herança, doação e usufruto",
-        "descricao": "[PREENCHER: vídeo gravado sobre iTCD no Ceará: herança, doação e usufruto.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -1066,7 +827,6 @@
     "titulo_seo": "Imóvel: pessoa física ou holding? | Alto Padrão Imóveis",
     "descricao": "Pessoa física ou holding para comprar imóvel de alto padrão em Fortaleza: ITBI na compra, imunidade na integralização, ITCD e ganho de capital.",
     "categoria": "Tributação e sucessão",
-    "autor": "carolina-ribeiro",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
@@ -1076,17 +836,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA19",
-        "tipo": "Análise técnica",
-        "apresentador": "carolina-ribeiro",
-        "titulo": "Pessoa física ou holding: o que muda na compra do imóvel",
-        "descricao": "[PREENCHER: vídeo gravado sobre pessoa física ou holding: o que muda na compra do imóvel.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -1189,7 +938,6 @@
     "titulo_seo": "Proteção contra maresia em imóveis | Alto Padrão Imóveis",
     "descricao": "Como a maresia afeta esquadrias, ferragens e ar-condicionado em Fortaleza e quais documentos e normas (ISO 9223, ABNT NBR 12609) pedir antes de comprar.",
     "categoria": "Critérios técnicos",
-    "autor": "marina-albuquerque",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
@@ -1199,17 +947,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA20",
-        "tipo": "Análise técnica",
-        "apresentador": "marina-albuquerque",
-        "titulo": "Maresia em imóveis de Fortaleza: o que pedir no memorial",
-        "descricao": "[PREENCHER: vídeo gravado sobre maresia em imóveis de Fortaleza: o que pedir no memorial.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -1247,7 +984,7 @@
     "faq": [
       {
         "q": "A maresia afeta imóveis a quantos metros do mar em Fortaleza?",
-        "a": "Não há distância única: depende do vento, das barreiras de edifícios e da exposição. Como critério interno, a Alto Padrão Imóveis exige especificação para ambiente marinho em imóveis a menos de 500 m do mar."
+        "a": "Não há distância única: depende do vento, das barreiras de edifícios e da exposição. Perto da orla, peça a especificação para ambiente marinho de esquadrias e ferragens."
       },
       {
         "q": "Inox 304 ou 316 em ferragens expostas à maresia?",
@@ -1266,7 +1003,6 @@
     "titulo_seo": "Isolamento acústico Rw em imóveis | Alto Padrão Imóveis",
     "descricao": "Rw e D2m,nT,w explicados: o que cada índice mede, os mínimos da ABNT NBR 15575-4 para fachadas e o que pedir no laudo de um imóvel de alto padrão.",
     "categoria": "Critérios técnicos",
-    "autor": "marina-albuquerque",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
@@ -1276,17 +1012,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA21",
-        "tipo": "Análise técnica",
-        "apresentador": "marina-albuquerque",
-        "titulo": "Rw ou D2m,nT,w: qual número pedir no laudo acústico",
-        "descricao": "[PREENCHER: vídeo gravado sobre rw ou D2m,nT,w: qual número pedir no laudo acústico.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -1347,7 +1072,7 @@
         "id": "criterio",
         "h2": "O que pedir no laudo de um imóvel de alto padrão?",
         "paragrafos": [
-          "Peça o Rw do fabricante da esquadria, com o ensaio de laboratório, e a medição em campo do D2m,nT,w da fachada, assinada por profissional habilitado. A Alto Padrão Imóveis adota, como critério interno, esquadrias com Rw igual ou superior a 42 dB para o selo de isolamento acústico.",
+          "Peça o Rw do fabricante da esquadria, com o ensaio de laboratório, e a medição em campo do D2m,nT,w da fachada, assinada por profissional habilitado.",
           "Para os demais critérios, veja o <a href=\"/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/\">guia de critérios técnicos para imóveis de luxo em Fortaleza</a>. Imóveis à venda nos bairros da orla estão em <a href=\"/bairros/meireles/\">imóveis de alto padrão no Meireles</a> e <a href=\"/bairros/mucuripe/\">imóveis de alto padrão no Mucuripe</a>."
         ]
       }
@@ -1374,7 +1099,6 @@
     "titulo_seo": "Blindagem ABNT NBR 15000 em portarias | Alto Padrão Imóveis",
     "descricao": "O que cada nível da ABNT NBR 15000 resiste, por que o conjunto importa (vidro, parede, porta, passa-volumes) e o que pedir de certificado antes da compra.",
     "categoria": "Critérios técnicos",
-    "autor": "marina-albuquerque",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
@@ -1384,17 +1108,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA22",
-        "tipo": "Análise técnica",
-        "apresentador": "marina-albuquerque",
-        "titulo": "Portaria blindada: como ler o certificado da ABNT NBR 15000",
-        "descricao": "[PREENCHER: vídeo gravado sobre portaria blindada: como ler o certificado da ABNT NBR 15000.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {
@@ -1489,7 +1202,6 @@
     "titulo_seo": "Gerador com 100% da carga em edifícios | Alto Padrão Imóveis",
     "descricao": "Gerador que atende 100% da carga elétrica: o que entra na conta (ar-condicionado, elevadores, bombas), os dados do memorial e como conferir antes da compra.",
     "categoria": "Critérios técnicos",
-    "autor": "marina-albuquerque",
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
@@ -1499,17 +1211,6 @@
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
-    ],
-    "videos": [
-      {
-        "youtube_id": "SUBSTITUA23",
-        "tipo": "Análise técnica",
-        "apresentador": "marina-albuquerque",
-        "titulo": "Gerador com 100% da carga: o que o memorial precisa mostrar",
-        "descricao": "[PREENCHER: vídeo gravado sobre gerador com 100% da carga: o que o memorial precisa mostrar.]",
-        "duracao": "PT6M00S",
-        "data_upload": "2026-10-12"
-      }
     ],
     "secoes": [
       {

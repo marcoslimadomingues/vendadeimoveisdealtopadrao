@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% block conteudo %}
+{% set sd = repo.sinduscon %}
 <header class="cabecalho-pagina">
   <h1>Sobre a {{ site.nome }}</h1>
   <p class="lead">{{ site.contexto_fonte[0] }} {{ site.contexto_fonte[1] }}</p>
@@ -10,19 +11,7 @@
   <h2 id="atuacao">Atuação em imóveis de altíssimo padrão {{ site.cidade.em }}</h2>
   {% for fato in site.contexto_fonte[2:] %}<p>{{ fato }}</p>{% endfor %}
   <p>{{ site.entidade_central.descricao }}</p>
-</section>
-
-<section aria-labelledby="numeros">
-  <h2 id="numeros">A {{ site.nome }} em números</h2>
-  <div class="tabela-rolagem">
-  <table>
-    <caption>Indicadores de atuação da {{ site.nome }}</caption>
-    <thead><tr><th scope="col">Indicador</th><th scope="col">Valor</th></tr></thead>
-    <tbody>
-      {% for item in site.metricas %}<tr><th scope="row">{{ item.rotulo }}</th><td>{{ item.valor }}</td></tr>{% endfor %}
-    </tbody>
-  </table>
-  </div>
+  <p>A carteira tem poucos imóveis por vez. Quando um imóvel sai, a ficha informa que ele não está mais disponível e indica imóveis parecidos.</p>
 </section>
 
 <section aria-labelledby="dados-legais">
@@ -31,17 +20,24 @@
     <div><dt>Razão social</dt><dd>{{ site.razao_social }}</dd></div>
     <div><dt>CNPJ</dt><dd>{{ site.cnpj }}</dd></div>
     <div><dt>Registro</dt><dd>{{ site.creci }}</dd></div>
-    <div><dt>Fundação</dt><dd>{{ site.fundacao }}</dd></div>
+    <div><dt>Endereço</dt><dd>{{ site.endereco.rua }}, {{ site.endereco.bairro }}, {{ site.endereco.cidade }} – {{ site.endereco.uf }}</dd></div>
   </dl>
 </section>
 
 <section aria-labelledby="metodologia">
-  <h2 id="metodologia">Metodologia dos dados publicados</h2>
-  <p>{{ site.fonte_dados }} Os indicadores de preço por m², valorização, tempo médio de venda e desconto de negociação são recalculados a cada trimestre.</p>
+  <h2 id="metodologia">De onde vêm os números do site</h2>
+  <ul class="lista-fatos">
+    <li>Preço do m² por bairro: {{ sd.orgao }}, divulgado por <a href="{{ sd.fonte.url }}" rel="noopener">{{ sd.fonte.veiculo }}</a> em {{ sd.fonte.publicado|data_extenso }}, com referência em {{ sd.ref_txt }}. {{ sd.metodo }}</li>
+    <li>ITBI: alíquotas da <a href="{{ site.itbi.fonte_url }}" rel="noopener">{{ site.itbi.fonte_nome }}</a>. ITCD: {{ site.itcd.lei }} e Ufirce de {{ site.itcd.ufirce_ano }} ({{ site.itcd.ufirce_norma }}).</li>
+    <li>Preço, condomínio, IPTU e dados técnicos de cada imóvel: documentação do imóvel. Sem documento, a ficha não informa o dado.</li>
+    <li>A {{ site.nome }} não publica estimativa própria de valorização, prazo de venda ou desconto de negociação.</li>
+  </ul>
 </section>
 
-<section aria-labelledby="equipe">
-  <h2 id="equipe">Equipe responsável</h2>
-  <div class="grade grade--pessoas">{% for p in pessoas %}{{ m.card_pessoa(p) }}{% endfor %}</div>
+<section aria-labelledby="bairros-atendidos">
+  <h2 id="bairros-atendidos">Bairros atendidos</h2>
+  <ul class="lista-fatos">
+    {% for b in bairros %}<li><a href="{{ b.path }}">Preço do m² e imóveis {{ b.em }}</a></li>{% endfor %}
+  </ul>
 </section>
 {% endblock %}

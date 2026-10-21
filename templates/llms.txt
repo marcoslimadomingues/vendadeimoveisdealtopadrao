@@ -16,18 +16,17 @@
 ## Páginas principais
 
 - [Início]({{ base }}/): {{ site.entidade_central.descricao }}
-- [Imóveis à venda]({{ base }}/imoveis/): {{ imoveis|length }} ofertas com preço, preço por m², condomínio, IPTU e ficha técnica.
+- [Imóveis à venda]({{ base }}/imoveis/): {% if imoveis %}{{ imoveis|length }} oferta{{ 's' if imoveis|length > 1 }} com preço, preço por m², condomínio, IPTU e ficha técnica.{% else %}carteira em atualização.{% endif %}
 {% for pl in pilares %}- [{{ pl.nome }}]({{ base }}{{ pl.path }}): {{ pl.descricao }}
-{% endfor %}- [Guias e análises]({{ base }}/guias/): liquidez por bairro, tributação e critérios técnicos.
-- [Especialistas]({{ base }}/especialistas/): consultores, arquiteta e advogada responsáveis.
+{% endfor %}- [Guias e análises]({{ base }}/guias/): preço do m² por bairro, tributação e critérios técnicos.
 - [Sobre]({{ base }}/sobre/): dados cadastrais e metodologia.
 - [Contato]({{ base }}/contato/): endereço, WhatsApp e e-mail.
 
-## Imóveis
+{% if imoveis %}## Imóveis
 
 {% for i in imoveis %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): {{ i.preco|brl }} · {{ i.area_privativa|num }} m² · {{ i.preco_m2|brl }}/m²
 {% endfor %}
-{% if encerrados %}## Imóveis que saíram da carteira
+{% endif %}{% if encerrados %}## Imóveis que saíram da carteira
 
 {% for i in encerrados %}- [{{ i.titulo }}]({{ base }}{{ i.path }}): não está mais disponível desde {{ i.data_encerramento|data_extenso }}{% if i.dias_no_mercado %}; ficou {{ i.dias_no_mercado|num }} dias no mercado{% endif %}
 {% endfor %}

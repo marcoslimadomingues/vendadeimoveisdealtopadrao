@@ -4,7 +4,8 @@ Cada página recebe, injetado estaticamente no <head> pelo servidor:
   - nós globais: Organization/RealEstateAgent, WebSite e a Entidade Central;
   - o nó da página (WebPage, RealEstateListing, CollectionPage, ProfilePage...);
   - BreadcrumbList e os nós específicos (Offer, SingleFamilyResidence/Apartment,
-    Article, Person, VideoObject, Dataset, Question...).
+    Article, VideoObject, Dataset, Question...).
+A autoria é sempre da organização (CNPJ e CRECI): o site não publica pessoas.
 Os nós se referenciam por @id, formando um grafo de entidades conectado.
 """
 from __future__ import annotations
@@ -16,7 +17,6 @@ from .content import Repo
 
 SCHEMA = "https://schema.org"
 LANG = "pt-BR"
-AMENIDADES_OBRIGATORIAS = ("Isolamento Acústico Europeu", "Portaria Blindada", "Gerador Total")
 
 
 DIAS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -77,7 +77,7 @@ class Graph:
             "logo": {"@type": "ImageObject", **self.ref("/", "logo"),
                      "url": self.url("/static/img/logo.svg"), "caption": s["nome"]},
             "image": self.ref("/", "logo"),
-            "foundingDate": s["fundacao"],
+            **({"foundingDate": s["fundacao"]} if s.get("fundacao") else {}),
             "taxID": s["cnpj"],
             "vatID": s["cnpj"],
             "identifier": [
@@ -116,7 +116,6 @@ class Graph:
                 "name": s["creci"],
                 "recognizedBy": {"@type": "Organization", "name": s["creci_orgao"]},
             },
-            "employee": [self.ref(p["path"], "pessoa") for p in self.repo.pessoas.values()],
             **({"sameAs": s["sameAs"]} if s["sameAs"] else {}),
         }
 
@@ -178,33 +177,6 @@ class Graph:
             ],
         }
 
-    def pessoa(self, p: dict, completa: bool = False) -> dict:
-        node = {
-            "@type": "Person",
-            **self.ref(p["path"], "pessoa"),
-            "name": p["nome"],
-            "jobTitle": p["cargo"],
-            "url": self.url(p["path"]),
-            "image": self.url(p["foto"]),
-            "worksFor": self.org,
-            "sameAs": [p["linkedin"], p["youtube"]],
-        }
-        if completa:
-            node.update({
-                "description": p["resumo"],
-                "knowsAbout": p["areas"],
-                "knowsLanguage": "pt-BR",
-                "hasOccupation": {"@type": "Occupation", "name": p["cargo"],
-                                  "occupationLocation": self.cidade()},
-                "hasCredential": {
-                    "@type": "EducationalOccupationalCredential",
-                    "credentialCategory": p["credencial"]["categoria"],
-                    "name": p["credencial"]["nome"],
-                    "recognizedBy": {"@type": "Organization", "name": p["credencial"]["orgao"]},
-                },
-            })
-        return node
-
     def lugar(self, b: dict) -> dict:
         return {
             "@type": "Place",
@@ -216,7 +188,6 @@ class Graph:
 
     def video(self, path: str, v: dict, n: int = 1) -> dict:
         vid = v["youtube_id"]
-        apresentador = self.repo.pessoas[v["apresentador"]]
         return {
             "@type": "VideoObject",
             **self.ref(path, f"video-{n}"),
@@ -229,23 +200,14 @@ class Graph:
             "embedUrl": f"https://www.youtube.com/embed/{vid}",
             "contentUrl": f"https://www.youtube.com/watch?v={vid}",
             "inLanguage": LANG,
-            "actor": self.ref(apresentador["path"], "pessoa"),
             "creator": self.org,
             "publisher": self.org,
         }
 
-    def videos(self, path: str, lista: list[dict], ja_presentes: set[str]) -> tuple[list[dict], list[dict]]:
-        """(nós VideoObject + Person dos apresentadores ausentes, refs para a página)."""
-        nodes, refs = [], []
-        for n, v in enumerate(lista, start=1):
-            node = self.video(path, v, n)
-            nodes.append(node)
-            refs.append({"@id": node["@id"]})
-            pessoa = self.repo.pessoas[v["apresentador"]]
-            if pessoa["slug"] not in ja_presentes:
-                nodes.append(self.pessoa(pessoa))
-                ja_presentes.add(pessoa["slug"])
-        return nodes, refs
+    def videos(self, path: str, lista: list[dict]) -> tuple[list[dict], list[dict]]:
+        """(nós VideoObject, refs para a página)."""
+        nodes = [self.video(path, v, n) for n, v in enumerate(lista, start=1)]
+        return nodes, [{"@id": node["@id"]} for node in nodes]
 
     def perguntas(self, path: str, faq: list[dict]) -> list[dict]:
         return [
@@ -268,7 +230,7 @@ class Graph:
                              mainEntity={"@id": lista["@id"]},
                              hasPart=[{"@id": q["@id"]} for q in perguntas],
                              significantLink=[self.url(p) for p in
-                                              ("/imoveis/", "/guias/", "/especialistas/", "/contato/")])
+                                              ("/imoveis/", "/guias/", "/sobre/", "/contato/")])
         return self.render(pagina, lista, *perguntas)
 
     def contato(self, path: str, titulo: str, descricao: str, crumbs) -> str:
@@ -283,7 +245,7 @@ class Graph:
 
     def imovel(self, i: dict, crumbs) -> str:
         path, b = i["path"], self.repo.bairros[i["bairro"]]
-        consultor = self.repo.pessoas[i["consultor"]]
+        tec = i["tecnico"]
         imagem = self.url(i["imagem"])
         encerrado = bool(i.get("encerrado"))
         resumo = i["resumo_encerrado"] if encerrado else i["resumo"]
@@ -327,10 +289,10 @@ class Graph:
                     ("Dias no mercado", i.get("dias_no_mercado") if encerrado else None, "dias"),
                     ("Valor da venda", i.get("preco_venda_publico") if encerrado else None, "BRL"),
                     ("Preço por m²", None if encerrado else i["preco_m2"], "BRL/m²"),
-                    ("Isolamento acústico das esquadrias (Rw)", i["tecnico"]["rw_db"], "dB"),
-                    ("Nível de blindagem da portaria (ABNT NBR 15000)", i["tecnico"]["blindagem_nivel"], None),
-                    ("Potência do gerador", i["tecnico"]["gerador_kva"], "kVA"),
-                    ("Autonomia do gerador", i["tecnico"]["gerador_autonomia_h"], "h"),
+                    ("Isolamento acústico das esquadrias (Rw)", tec.get("rw_db"), "dB"),
+                    ("Nível de blindagem da portaria (ABNT NBR 15000)", tec.get("blindagem_nivel"), None),
+                    ("Potência do gerador", tec.get("gerador_kva"), "kVA"),
+                    ("Autonomia do gerador", tec.get("gerador_autonomia_h"), "h"),
                 )
                 if valor is not None
             ],
@@ -349,7 +311,7 @@ class Graph:
             "validFrom": i["data_publicacao"],
             "itemOffered": self.ref(path, "imovel"),
             "seller": self.org,
-            "offeredBy": self.ref(consultor["path"], "pessoa"),
+            "offeredBy": self.org,
         }
 
         extra = {
@@ -358,12 +320,11 @@ class Graph:
             "image": imagem,
             "mainEntity": self.ref(path, "imovel"),
             "offers": self.ref(path, "oferta"),
-            "accountablePerson": self.ref(consultor["path"], "pessoa"),
             "hasPart": [{"@id": q["@id"]} for q in self.perguntas(path, i["faq"])],
         }
-        nodes = [residencia, oferta, self.lugar(b), self.pessoa(consultor), *self.perguntas(path, i["faq"])]
+        nodes = [residencia, oferta, self.lugar(b), *self.perguntas(path, i["faq"])]
         if i["videos"]:
-            video_nodes, extra["video"] = self.videos(path, i["videos"], {consultor["slug"]})
+            video_nodes, extra["video"] = self.videos(path, i["videos"])
             nodes += video_nodes
 
         pagina = self.pagina("RealEstateListing", path, i["titulo"], resumo, crumbs, **extra)
@@ -374,50 +335,27 @@ class Graph:
         imoveis = self.repo.ativos(b["slug"])
         lista = self.lista(path, "lista", f"Imóveis de alto padrão à venda {b['em']}",
                            [(i["titulo"], i["path"]) for i in imoveis])
-        s = b.get("sinduscon")
-        if s:  # m² de referência do Sinduscon-CE, com fonte e mês; sem as métricas internas sem fonte pública
-            sd = self.repo.sinduscon
-            variaveis = [{"@type": "PropertyValue", "name": f"Preço médio do m² ({sd['ref_txt']})",
-                          "value": s["m2"], "unitText": "BRL/m²"}]
-            if s["var_mes_pct"] is not None:
-                variaveis.append({"@type": "PropertyValue", "name": f"Variação sobre {sd['ref_ant_txt']}",
-                                  "value": round(s["var_mes_pct"], 2), "unitText": "%"})
-            variaveis += [{"@type": "PropertyValue", "name": rotulo, "value": s[chave], "unitText": unid}
-                          for chave, rotulo, unid in (("estoque", "Unidades em oferta", "unidades"),
-                                                      ("vendas", "Vendas no mês", "unidades"),
-                                                      ("ivv_pct", "Índice de velocidade de vendas", "%"))
-                          if chave in s]
-            dataset = {
-                "@type": "Dataset", **self.ref(path, "indicadores"),
-                "name": f"Preço do m² {b['em']} em {sd['ref_txt']} (Sinduscon-CE)",
-                "description": b["resumo"], "creator": self.org, "isAccessibleForFree": True,
-                "temporalCoverage": sd["referencia"], "spatialCoverage": self.ref(path, "lugar"),
-                "measurementTechnique": sd["metodo"], "variableMeasured": variaveis,
-                "isBasedOn": {"@type": "NewsArticle", "headline": sd["fonte"]["titulo"], "url": sd["fonte"]["url"],
-                              "datePublished": sd["fonte"]["publicado"],
-                              "author": {"@type": "Person", "name": sd["fonte"]["autor"]},
-                              "publisher": {"@type": "Organization", "name": sd["fonte"]["veiculo"]}},
-            }
-            pagina = self.pagina("CollectionPage", path, titulo, b["resumo"], crumbs,
-                                 about=[self.ref(path, "lugar"), self.entidade],
-                                 mainEntity={"@id": lista["@id"]})
-            return self.render(pagina, self.trilha(path, crumbs), self.lugar(b), dataset, lista)
+        s, sd = b["sinduscon"], self.repo.sinduscon  # m² do Sinduscon-CE, com fonte e mês
+        variaveis = [{"@type": "PropertyValue", "name": f"Preço médio do m² ({sd['ref_txt']})",
+                      "value": s["m2"], "unitText": "BRL/m²"}]
+        if s["var_mes_pct"] is not None:
+            variaveis.append({"@type": "PropertyValue", "name": f"Variação sobre {sd['ref_ant_txt']}",
+                              "value": round(s["var_mes_pct"], 2), "unitText": "%"})
+        variaveis += [{"@type": "PropertyValue", "name": rotulo, "value": s[chave], "unitText": unid}
+                      for chave, rotulo, unid in (("estoque", "Unidades em oferta", "unidades"),
+                                                  ("vendas", "Vendas no mês", "unidades"),
+                                                  ("ivv_pct", "Índice de velocidade de vendas", "%"))
+                      if chave in s]
         dataset = {
-            "@type": "Dataset",
-            **self.ref(path, "indicadores"),
-            "name": f"Indicadores do mercado de alto padrão {b['em']} ({self.site['periodo_curto']})",
-            "description": b["resumo"],
-            "creator": self.org,
-            "isAccessibleForFree": True,
-            "temporalCoverage": self.site["periodo_dados"],
-            "spatialCoverage": self.ref(path, "lugar"),
-            "measurementTechnique": self.site["fonte_dados"],
-            "variableMeasured": [
-                {"@type": "PropertyValue", "name": "Preço médio por m²", "value": b["preco_m2"], "unitText": "BRL/m²"},
-                {"@type": "PropertyValue", "name": "Valorização em 12 meses", "value": b["valorizacao_12m"], "unitText": "%"},
-                {"@type": "PropertyValue", "name": "Tempo médio de venda", "value": b["tempo_medio_venda"], "unitText": "dias"},
-                {"@type": "PropertyValue", "name": "Desconto médio de negociação", "value": b["desconto_negociacao"], "unitText": "%"},
-            ],
+            "@type": "Dataset", **self.ref(path, "indicadores"),
+            "name": f"Preço do m² {b['em']} em {sd['ref_txt']} (Sinduscon-CE)",
+            "description": b["resumo"], "creator": self.org, "isAccessibleForFree": True,
+            "temporalCoverage": sd["referencia"], "spatialCoverage": self.ref(path, "lugar"),
+            "measurementTechnique": sd["metodo"], "variableMeasured": variaveis,
+            "isBasedOn": {"@type": "NewsArticle", "headline": sd["fonte"]["titulo"], "url": sd["fonte"]["url"],
+                          "datePublished": sd["fonte"]["publicado"],
+                          "author": {"@type": "Person", "name": sd["fonte"]["autor"]},
+                          "publisher": {"@type": "Organization", "name": sd["fonte"]["veiculo"]}},
         }
         pagina = self.pagina("CollectionPage", path, titulo, b["resumo"], crumbs,
                              about=[self.ref(path, "lugar"), self.entidade],
@@ -426,7 +364,6 @@ class Graph:
 
     def artigo(self, a: dict, crumbs) -> str:
         path = a["path"]
-        autor = self.repo.pessoas[a["autor"]]
         perguntas = self.perguntas(path, a["perguntas_todas"])
         artigo = {
             "@type": "Article",
@@ -437,7 +374,7 @@ class Graph:
             "image": self.url(a["imagem"]),
             "datePublished": a["publicado"],
             "dateModified": a["atualizado"],
-            "author": self.ref(autor["path"], "pessoa"),
+            "author": self.org,
             "publisher": self.org,
             "mainEntityOfPage": self.ref(path, "webpage"),
             "isPartOf": self.ref(path, "webpage"),
@@ -452,12 +389,12 @@ class Graph:
                 for s in a.get("imoveis_relacionados", [])
             ],
         }
-        nodes = [artigo, self.pessoa(autor), *perguntas]
+        nodes = [artigo, *perguntas]
         nodes += [self.lugar(self.repo.bairros[s]) for s in a.get("bairros_relacionados", [])]
-        extra = {"mainEntity": self.ref(path, "artigo"), "author": self.ref(autor["path"], "pessoa"),
+        extra = {"mainEntity": self.ref(path, "artigo"), "author": self.org,
                  "datePublished": a["publicado"], "dateModified": a["atualizado"]}
         if a["videos"]:
-            video_nodes, artigo["video"] = self.videos(path, a["videos"], {autor["slug"]})
+            video_nodes, artigo["video"] = self.videos(path, a["videos"])
             nodes += video_nodes
         tipo = ["WebPage", "FAQPage"] if perguntas else "WebPage"
         if perguntas:
@@ -465,24 +402,8 @@ class Graph:
         pagina = self.pagina(tipo, path, a["titulo"], a["descricao"], crumbs, **extra)
         return self.render(pagina, self.trilha(path, crumbs), *nodes)
 
-    def perfil(self, p: dict, crumbs) -> str:
-        path = p["path"]
-        pessoa = self.pessoa(p, completa=True)
-        videos = self.repo.videos_por_pessoa(p["slug"])
-        if videos:
-            # Vídeos vivem nas páginas onde estão incorporados; o perfil só os referencia.
-            pessoa["subjectOf"] = [
-                {"@type": "VideoObject", "@id": f"{self.url(pg['path'])}#video-{pg['videos'].index(v) + 1}",
-                 "name": v["titulo"], "url": self.url(pg["path"])}
-                for v, pg in videos
-            ]
-        pagina = self.pagina("ProfilePage", path, f"{p['nome']} — {p['cargo']}", p["resumo"], crumbs,
-                             mainEntity=self.ref(path, "pessoa"))
-        return self.render(pagina, self.trilha(path, crumbs), pessoa)
-
     def pilar(self, p: dict, crumbs, titulo: str) -> str:
         path, geo = p["path"], p["geo"]
-        autor, revisor = self.repo.pessoas[p["autor"]], self.repo.pessoas[p["revisor"]]
         bairros = [self.repo.bairros[s] for s in p["bairros"]]
         perguntas = self.perguntas(path, p["faq"])
         c = geo["centro_aprox"]
@@ -524,22 +445,21 @@ class Graph:
             "@type": "Article", **self.ref(path, "artigo"), "headline": titulo[:110], "description": p["descricao"],
             "abstract": p["resumo"], "image": self.url("/static/img/mapa-milha-de-ouro.svg"),
             "datePublished": p["publicado"], "dateModified": p["atualizado"],
-            "author": self.ref(autor["path"], "pessoa"), "publisher": self.org,
+            "author": self.org, "publisher": self.org,
             "mainEntityOfPage": self.ref(path, "webpage"), "inLanguage": LANG,
             "about": [self.ref(path, "lugar"), self.entidade],
             "citation": [{"@id": f["@id"]} for f in fontes.values()],
         }
         extra = {
             "mainEntity": self.ref(path, "artigo"), "datePublished": p["publicado"],
-            "dateModified": p["atualizado"], "lastReviewed": p["atualizado"],
-            "reviewedBy": self.ref(revisor["path"], "pessoa"), "author": self.ref(autor["path"], "pessoa"),
+            "dateModified": p["atualizado"], "lastReviewed": p["atualizado"], "author": self.org,
             "hasPart": [{"@id": q["@id"]} for q in perguntas],
             "mentions": [self.ref(b["path"], "lugar") for b in bairros]
                         + [{"@id": self.url(i["path"]) + "#webpage"} for i in p["imoveis"]],
         }
         pagina = self.pagina(["WebPage", "FAQPage"], path, titulo, p["descricao"], crumbs, **extra)
         nodes = [pagina, self.trilha(path, crumbs), artigo, lugar, dataset, lista, *fontes.values(),
-                 *[self.lugar(b) for b in bairros], self.pessoa(autor), self.pessoa(revisor), *perguntas]
+                 *[self.lugar(b) for b in bairros], *perguntas]
         return self.render(*nodes)
 
     def sobre(self, path: str, titulo: str, descricao: str, crumbs) -> str:

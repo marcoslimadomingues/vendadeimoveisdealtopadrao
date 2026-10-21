@@ -103,10 +103,8 @@ def enriquecer(repo, p: dict, data_dir: Path) -> None:
                f"OpenStreetMap. {abolicao}")},
         {"q": "A maresia e o ruído afetam os imóveis da orla de Fortaleza?",
          "a": ("Sim. Nas primeiras quadras da orla, a névoa salina corrói esquadrias e equipamentos, e o ruído noturno da "
-               "Avenida Beira Mar e dos eventos exige esquadrias acústicas. A "
-               f"{s['nome']} só classifica como Isolamento Acústico Europeu esquadrias com Rw de 42 dB ou mais, e exige "
-               "especificação para ambiente marinho em imóveis a menos de 500 m do mar, com laudos revisados pela "
-               "arquiteta Marina Albuquerque."),
+               "Avenida Beira Mar e dos eventos exige esquadrias acústicas. Antes de comprar, peça o índice Rw das "
+               "esquadrias e a especificação para ambiente marinho de esquadrias e ferragens."),
          "link": {"href": "/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo/",
                   "texto": repo.artigos["isolamento-acustico-blindagem-gerador-imoveis-luxo"]["titulo"]}},
         {"q": "Quais empreendimentos a imprensa cita na milha de ouro?",

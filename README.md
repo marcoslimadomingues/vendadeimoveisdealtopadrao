@@ -3,9 +3,10 @@
 Site HTML5 renderizado no servidor (Flask + Jinja2), exportado como site estático e publicado no
 **GitHub Pages**. Sem JavaScript no navegador, sem banco de dados, sem hospedagem paga.
 
-> **Dados ilustrativos.** Empresa, CRECI, CNPJ, pessoas, carteira, vídeos e perfis sociais são de
-> demonstração. `python tools/pre_publicacao.py` lista o que falta trocar; enquanto houver pendência, o
-> site é publicado com `noindex`.
+> **Só dado real.** Empresa, CRECI e CNPJ são reais; o m² por bairro vem do Sinduscon-CE e os tributos da
+> legislação citada. O site não publica pessoas nem métrica própria. Os imóveis de demonstração ficam só em
+> `tests/dados/` (os testes usam essa carteira). `python tools/pre_publicacao.py` lista o que falta;
+> enquanto houver pendência, o site é publicado com `noindex`.
 
 ## Rodar localmente
 
@@ -69,10 +70,10 @@ lista zera, a próxima publicação já sai indexável.
 ```
 app.py                  rotas SSR, cabeçalhos, modo noindex
 seo/                    conteúdo, JSON-LD, títulos em links, tabelas em cartões, pilar
-data/                   site, bairros, imóveis, guias, especialistas, pilar, geo (OpenStreetMap)
+data/                   site, bairros, imóveis, guias, pilar, Sinduscon-CE, geo (OpenStreetMap)
 templates/ static/      HTML5 semântico e CSS único (sem JS, sem webfont)
 tools/                  build_pages, pre_publicacao, varrer_segredos, mapa, auditorias, teste_mobile
-tests/                  testes de contrato (HTTP, JSON-LD, mobile, publicação, scanner)
+tests/                  testes de contrato (HTTP, JSON-LD, mobile, publicação, scanner); tests/dados: carteira de demonstração
 .github/                workflow do Pages, Dependabot
 ```
 

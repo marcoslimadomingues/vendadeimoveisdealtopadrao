@@ -21,22 +21,20 @@ ANCORAS = {"#conteudo": "Pular para o conteúdo principal"}
 
 def titulos_paginas(repo: Repo) -> dict[str, str]:
     s, cid = repo.site, repo.site["cidade"]
+    n = len(repo.ativos())
+    ofertas = f" ({n} oferta{'s' if n > 1 else ''})" if n else ""
     t = {
         "/": f"{s['entidade_central']['nome']} | {s['nome']}",
-        "/imoveis/": f"Imóveis de altíssimo padrão à venda {cid['em']} ({len(repo.ativos())} ofertas)",
+        "/imoveis/": f"Imóveis de altíssimo padrão à venda {cid['em']}{ofertas}",
         "/guias/": f"Guias e análises do mercado de imóveis de alto padrão {cid['em']}",
-        "/especialistas/": f"Especialistas da {s['nome']}: consultores, arquiteta e advogada",
-        "/sobre/": f"Sobre a {s['nome']}: imóveis de altíssimo padrão {cid['em']} desde {s['fundacao']}",
+        "/sobre/": f"Sobre a {s['nome']}: imobiliária de alto padrão {cid['em']} ({s['creci']})",
         "/contato/": f"Contato e endereço da {s['nome']}: WhatsApp, e-mail e {s['endereco']['bairro']}, {cid['nome']}",
     }
     t.update({i["path"]: f"{i['titulo']} — {i['codigo']}" for i in repo.ativos()})
     t.update({i["path"]: f"{i['titulo']} — {i['codigo']} (indisponível)" for i in repo.encerrados()})
-    t.update({b["path"]: (f"Preço do m² {b['em']} em {repo.sinduscon['fonte']['publicado'][:4]} | {s['nome']}"
-                          if b.get("sinduscon") else
-                          f"Imóveis de alto padrão {b['em']}: preço por m², valorização e liquidez")
+    t.update({b["path"]: f"Preço do m² {b['em']} em {repo.sinduscon['fonte']['publicado'][:4]} | {s['nome']}"
               for b in repo.bairros.values()})
     t.update({a["path"]: a.get("titulo_seo") or a["titulo"] for a in repo.artigos.values()})
-    t.update({p["path"]: f"{p['nome']} — {p['cargo']}" for p in repo.pessoas.values()})
     t.update({p["path"]: f"{p['titulo_h1']}: m², ruas e mapa ({p['geo']['extensao_km']:.1f} km)".replace(".", ",")
               for p in repo.pilares.values()})
     return t

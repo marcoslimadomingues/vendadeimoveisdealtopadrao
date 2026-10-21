@@ -78,13 +78,12 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
     @app.get("/")
     def home():
         titulo = titulos["/"]
-        descricao = (f"Casas, coberturas e apartamentos acima de {s['limiar_texto']} {cid['em']}, com preço por m², "
-                     "liquidez por bairro e ficha técnica completa de acústica, maresia, blindagem e gerador.")
+        descricao = (f"Casas, coberturas e apartamentos acima de {s['limiar_texto']} {cid['em']}, com preço por m² "
+                     "do Sinduscon-CE por bairro, ITBI calculado e ficha técnica de cada imóvel.")
         return pagina("home.html", path="/", titulo=titulo, descricao=descricao,
                       jsonld=graph.home("/", titulo, descricao),
                       imoveis=repo.ativos(), artigos=repo.artigos_recentes(),
-                      bairros=repo.bairros_por_liquidez(), pessoas=list(repo.pessoas.values()),
-                      faq=repo.faq_institucional())
+                      bairros=repo.bairros_por_m2(), faq=repo.faq_institucional())
 
     @app.get("/imoveis/")
     def imoveis():
@@ -92,11 +91,11 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         lista = repo.ativos()
         titulo = titulos[path]
         descricao = (f"Catálogo de casas, coberturas e apartamentos acima de {s['limiar_texto']} {cid['em']}, "
-                     "com preço, preço por m², condomínio, IPTU e especificação técnica.")
+                     "com preço, preço por m², condomínio, IPTU e dados técnicos documentados.")
         return pagina("imoveis.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
                       jsonld=graph.colecao(path, titulo, descricao, crumbs,
                                            [(i["titulo"], i["path"]) for i in lista]),
-                      imoveis=lista, bairros=repo.bairros_por_liquidez(), encerrados=repo.encerrados())
+                      imoveis=lista, bairros=repo.bairros_por_m2(), encerrados=repo.encerrados())
 
     @app.get("/imoveis/<slug>/")
     def imovel(slug: str):
@@ -121,8 +120,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         return pagina("imovel.html", path=i["path"], titulo=titulos[i["path"]],
                       descricao=(i.get("resumo_encerrado") or i["resumo"])[:300], crumbs=crumbs,
                       jsonld=graph.imovel(i, crumbs),
-                      imovel=i, bairro=b, consultor=repo.pessoas[i["consultor"]],
-                      artigos=repo.artigos_sobre_imovel(slug))
+                      imovel=i, bairro=b, artigos=repo.artigos_sobre_imovel(slug))
 
     @app.get("/bairros/<slug>/")
     def bairro(slug: str):
@@ -141,8 +139,8 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         path, crumbs = "/guias/", [("Início", "/"), ("Guias e análises", "/guias/")]
         lista = repo.artigos_recentes()
         titulo = titulos[path]
-        descricao = ("Análises de liquidez por bairro, tributação por holding familiar e critérios técnicos "
-                     "de acústica, blindagem e gerador para compradores de imóveis de luxo.")
+        descricao = ("Preço do m² por bairro, ITBI, ITCD e holding familiar, e critérios técnicos de acústica, "
+                     "maresia, blindagem e gerador para compradores de imóveis de luxo.")
         return pagina("guias.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
                       jsonld=graph.colecao(path, titulo, descricao, crumbs,
                                            [(a["titulo"], a["path"]) for a in lista]),
@@ -169,33 +167,10 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         else:
             crumbs = [("Início", "/"), ("Guias e análises", "/guias/"), (a["titulo"], a["path"])]
         return pagina("artigo.html", path=a["path"], titulo=titulos[a["path"]], descricao=a["descricao"],
-                      crumbs=crumbs, jsonld=graph.artigo(a, crumbs), artigo=a,
-                      autor=repo.pessoas[a["autor"]], pilar=pl,
+                      crumbs=crumbs, jsonld=graph.artigo(a, crumbs), artigo=a, pilar=pl,
                       guia_pilar=repo.artigos.get(a.get("guia_pilar", "")),
                       satelites=repo.satelites_do_guia(a["slug"]),
                       relacionados=[repo.imoveis[s] for s in a.get("imoveis_relacionados", [])])
-
-    # ------------------------------------------------------ E-E-A-T / Pessoas
-    @app.get("/especialistas/")
-    def especialistas():
-        path, crumbs = "/especialistas/", [("Início", "/"), ("Especialistas", "/especialistas/")]
-        lista = list(repo.pessoas.values())
-        titulo = titulos[path]
-        descricao = "Consultores imobiliários, arquiteta e advogada tributarista responsáveis pelas ofertas e análises."
-        return pagina("especialistas.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
-                      jsonld=graph.colecao(path, titulo, descricao, crumbs,
-                                           [(p["nome"], p["path"]) for p in lista]),
-                      pessoas=lista)
-
-    @app.get("/especialistas/<slug>/")
-    def especialista(slug: str):
-        p = repo.pessoas.get(slug)
-        if p is None:
-            abort(404)
-        crumbs = [("Início", "/"), ("Especialistas", "/especialistas/"), (p["nome"], p["path"])]
-        return pagina("especialista.html", path=p["path"], titulo=titulos[p["path"]],
-                      descricao=p["resumo"], crumbs=crumbs, jsonld=graph.perfil(p, crumbs), pessoa=p,
-                      imoveis=repo.imoveis_por_consultor(slug), artigos=repo.artigos_por_autor(slug))
 
     @app.get("/sobre/")
     def sobre():
@@ -203,7 +178,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         titulo = titulos[path]
         descricao = repo.site["contexto_fonte"][0] + " " + repo.site["contexto_fonte"][1]
         return pagina("sobre.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
-                      jsonld=graph.sobre(path, titulo, descricao, crumbs), pessoas=list(repo.pessoas.values()))
+                      jsonld=graph.sobre(path, titulo, descricao, crumbs), bairros=repo.bairros_por_m2())
 
     @app.get("/contato/")
     def contato():
@@ -223,7 +198,6 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
         crumbs = [("Início", "/"), (p["nome"], p["path"])]
         return pagina("pilar.html", path=p["path"], titulo=titulos[p["path"]], descricao=p["descricao"],
                       crumbs=crumbs, jsonld=graph.pilar(p, crumbs, p["titulo_h1"]), pilar=p,
-                      autor=repo.pessoas[p["autor"]], revisor=repo.pessoas[p["revisor"]],
                       bairros=[repo.bairros[s] for s in p["bairros"]],
                       guias=[repo.artigos[s] for s in p["guias"]])
 
@@ -236,7 +210,7 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
     def llms():
         """Resumo em texto para agentes de IA (convenção llmstxt.org): quem somos, fatos e páginas-chave."""
         return Response(render_template("llms.txt", paginas=repo.paginas_indexaveis(), pilares=repo.pilares.values(),
-                                        bairros=repo.bairros_por_liquidez(), imoveis=repo.ativos(),
+                                        bairros=repo.bairros_por_m2(), imoveis=repo.ativos(),
                                         encerrados=repo.encerrados(),
                                         artigos=repo.artigos_recentes(), faq=repo.faq_institucional()),
                         mimetype="text/plain")

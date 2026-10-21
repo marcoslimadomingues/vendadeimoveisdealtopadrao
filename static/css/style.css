@@ -67,7 +67,6 @@ html { scroll-padding-top: 4.75rem; }  /* âncoras (#id) não ficam sob o cabeç
 
 /* Grades e cards */
 .grade { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); }
-.grade--pessoas { grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr)); }
 .card { background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio); overflow: hidden; display: flex; flex-direction: column; }
 .card img { aspect-ratio: 3 / 2; object-fit: cover; width: 100%; background: var(--ouro-claro); }
 .card__corpo, .card--texto { padding: 1.1rem 1.2rem 1.2rem; }
@@ -76,8 +75,6 @@ html { scroll-padding-top: 4.75rem; }  /* âncoras (#id) não ficam sob o cabeç
 .card__titulo a { color: var(--tinta); text-decoration: none; }
 .card__titulo a:hover { color: var(--ouro); text-decoration: underline; }
 .card__tec { font-size: .85rem; color: var(--ouro); margin: .8rem 0 0; }
-.card--pessoa { flex-direction: row; gap: 1rem; padding: 1.1rem; align-items: flex-start; }
-.card--pessoa img { width: 96px; height: 96px; aspect-ratio: 1; border-radius: 50%; flex: none; }
 
 /* Fatos (dl) */
 .fatos { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .6rem 1rem; margin: 0; }
@@ -166,7 +163,6 @@ tfoot th, tfoot td { font-weight: 700; border-top: 2px solid var(--tinta); }
 @media (max-width: 40rem) {
   body { font-size: 1rem; }
   th, td { padding: .5rem .7rem; }
-  .card--pessoa { flex-direction: column; }
 }
 
 @media print {
@@ -229,12 +225,10 @@ tfoot th, tfoot td { font-weight: 700; border-top: 2px solid var(--tinta); }
   .acoes { flex-direction: column; }
   .acoes li, .acoes .botao { width: 100%; }
   .botao { text-align: center; padding: .85rem 1rem; }
-  .grade, .grade--pessoas { gap: 1rem; grid-template-columns: 1fr; }
+  .grade { gap: 1rem; grid-template-columns: 1fr; }
   .fatos--grande { grid-template-columns: repeat(2, 1fr); padding: .8rem .9rem; }
   .fatos--grande dd { font-size: 1.12rem; }
   .fatos { grid-template-columns: repeat(2, 1fr); }
-  .card--pessoa { flex-direction: row; }
-  .card--pessoa img { width: 72px; height: 72px; }
   .sumario { padding: .9rem 1rem; }
   .rodape a { display: inline-block; padding: .25rem 0; }
   .contato { padding: 1rem; }
