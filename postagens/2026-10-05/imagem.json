@@ -1,0 +1,27 @@
+{
+  "tipo": "blocos",
+  "titulo": "Lançamentos na Grande Fortaleza",
+  "subtitulo": "Janeiro a agosto de 2026, comparado ao mesmo período de 2025",
+  "blocos": [
+    {
+      "rotulo": "Padrão elevado",
+      "valor": "482",
+      "unidade": "unidades lançadas",
+      "destaque": "−32%",
+      "atendido": true
+    },
+    {
+      "rotulo": "Padrão econômico (MCMV)",
+      "valor": "4.338",
+      "unidade": "unidades lançadas",
+      "destaque": "+119%"
+    },
+    {
+      "rotulo": "Estoque de imóveis novos",
+      "valor": "15.548",
+      "unidade": "unidades em agosto",
+      "destaque": "+30%"
+    }
+  ],
+  "fonte": "Fonte: Sinduscon-CE, divulgado por O Povo (01/10/2026) e Portas (02/10/2026). Fortaleza, Aquiraz, Caucaia, Eusébio e Maracanaú."
+}

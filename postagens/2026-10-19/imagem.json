@@ -1,0 +1,37 @@
+{
+  "tipo": "barras",
+  "titulo": "20 superprédios em Fortaleza até 2030",
+  "subtitulo": "Prédios acima de 100 m previstos, por bairro · 11 em obra e 9 na planta",
+  "nota": "Em dourado, os bairros atendidos pela Alto Padrão Imóveis",
+  "barras": [
+    {
+      "nome": "Meireles",
+      "valor": 11,
+      "atendido": true
+    },
+    {
+      "nome": "Beira-Mar",
+      "valor": 4
+    },
+    {
+      "nome": "Aldeota",
+      "valor": 2,
+      "atendido": true
+    },
+    {
+      "nome": "Varjota",
+      "valor": 1
+    },
+    {
+      "nome": "Mucuripe",
+      "valor": 1,
+      "atendido": true
+    },
+    {
+      "nome": "Cocó",
+      "valor": 1,
+      "atendido": true
+    }
+  ],
+  "fonte": "Fonte: Sinduscon-CE, levantamento de setembro de 2026 divulgado pelo Diário do Nordeste (09/10/2026). Unidades de R$ 500 mil a R$ 20 milhões."
+}
