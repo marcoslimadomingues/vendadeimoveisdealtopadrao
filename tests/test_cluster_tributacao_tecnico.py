@@ -167,11 +167,13 @@ def test_guia_itcd_traz_ufirce_isencao_prazos_e_multas(ctx):
         assert esperado in txt, esperado
 
 
-def test_guia_pf_ou_holding_nao_inventa_numero_da_holding(ctx):
+def test_guia_pf_ou_holding_traz_a_carga_da_holding_com_base_legal(ctx):
     client, _ = ctx
     txt = corpo(client.get(TRIBUTACAO[2]).get_data(as_text=True))
-    assert txt.count("[PREENCHER") >= 2, "carga da holding fica como lacuna marcada, sem número inventado"
-    assert "Tema 796" in txt and "Tema 1.348" in txt and "Lei 9.249/1995" in txt
+    assert "[PREENCHER" not in txt
+    for esperado in ("Tema 796", "Tema 1.348", "Lei 9.249/1995", "34%", "Solução de Consulta Cosit 95/2026",
+                     "5,93% a 6,73%", "11,33%", "14,53%", "Lei Complementar 224/2025", "lucro presumido"):
+        assert esperado in txt, esperado
 
 
 @pytest.mark.parametrize("path,termos", [
@@ -187,7 +189,25 @@ def test_guias_tecnicos_citam_as_normas(ctx, path, termos):
         assert termo in txt, (path, termo)
 
 
-def test_lacunas_dos_guias_tecnicos_estao_marcadas(ctx):
+@pytest.mark.parametrize("path,termos", [
+    (TECNICOS[0], ("A13 (11 a 15 µm)", "A18 (16 a 20 µm)", "A23 (21 a 25 µm)", "edição de 2022")),
+    (TECNICOS[1], ("edição de 2021", "Tabela 20", "Linc", "de 61 a 65 dB")),
+    (TECNICOS[2], ("reeditada em 2020", "Parte 2", "II-A", "edição de 2005")),
+    (TECNICOS[3], ("até 0,15 s", "até 0,5 s", "até 15 s", "fator de potência", "NBR 14039")),
+])
+def test_guias_tecnicos_sem_lacuna_e_com_a_edicao_da_norma(ctx, path, termos):
     client, _ = ctx
-    for path in TECNICOS:
-        assert "[PREENCHER" in client.get(path).get_data(as_text=True), path
+    html = client.get(path).get_data(as_text=True)
+    assert "[PREENCHER" not in html, path
+    for termo in termos:
+        assert termo in html, (path, termo)
+
+
+def test_serie_da_beira_mar_com_fonte_de_cada_valor(ctx):
+    client, _ = ctx
+    html = client.get("/milha-de-ouro-fortaleza/preco-m2-beira-mar/").get_data(as_text=True)
+    assert "[PREENCHER" not in html
+    tabela = html.split('id="serie"')[1].split("</table>")[0]
+    for esperado in ("R$ 23.183", "R$ 23.699", "R$ 23.892", "Diário do Nordeste", "O Povo"):
+        assert esperado in tabela, esperado
+    assert "diariodonordeste.verdesmares.com.br" in html and "2026/07/29" in html

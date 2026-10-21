@@ -136,8 +136,8 @@ def test_json_ld_da_organizacao_sem_thing_e_com_tipo_unico(ctx):
     assert about in ids, "about aponta para um nó existente (Service)"
 
 
-def test_marcadores_preencher_sao_pendencia_de_publicacao():
+def test_checklist_sem_marcador_preencher():
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "pre_publicacao.py")],
                        capture_output=True, text=True, encoding="utf-8")
-    assert "✗ Marcadores [PREENCHER: ...] em guias e páginas" in r.stdout
+    assert "✓ Marcadores [PREENCHER: ...] em guias e páginas" in r.stdout
     assert TOKEN.pattern  # tokens não vazam para o checklist

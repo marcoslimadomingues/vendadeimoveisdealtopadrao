@@ -245,7 +245,7 @@
           },
           {
             "q": "Qual espessura de anodização é indicada para ambiente marinho?",
-            "a": "Camada anódica de 25 µm, a classe mais espessa usada em arquitetura, indicada para exposição marinha severa. Camadas de 10 a 15 µm são adequadas apenas para ambientes internos ou pouco agressivos."
+            "a": "Classe A23 da ABNT NBR 12609, de 21 a 25 µm, indicada para atmosfera marinha ou industrial. A classe A13, de 11 a 15 µm, serve a áreas urbanas e rurais."
           },
           {
             "q": "A maresia também afeta o ar-condicionado?",
@@ -354,7 +354,7 @@
           },
           {
             "q": "Qual o tempo máximo aceitável de transferência do QTA?",
-            "a": "Até 15 segundos. Circuitos críticos com nobreak (UPS) não sofrem nenhuma interrupção durante a transferência."
+            "a": "Depende do circuito. A ABNT NBR 5410 chama de interrupção média a comutação em até 15 segundos, faixa típica de gerador; circuitos que não podem parar usam nobreak (UPS), sem interrupção."
           }
         ]
       },
@@ -395,7 +395,7 @@
     "tempo_leitura": 4,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "O metro quadrado na Avenida Beira Mar, em Fortaleza, foi de {m2:beira_mar} em {ref:beira_mar}, o maior valor do ranking do Sinduscon-CE, segundo {veiculo:op}. Em {ref:meireles}, o Mucuripe marcou {m2:mucuripe} e o Meireles {m2:meireles}, contra {m2:fortaleza} da média de Fortaleza.",
-    "aviso": "[PREENCHER: série mensal do m² da Beira Mar nos boletins anteriores do Sinduscon-CE (meses antes de julho de 2026), com fonte e data de cada valor.]",
+    "aviso": "Levantamentos diferentes (trimestral e mensal) não são diretamente comparáveis: confira a fonte e a data de cada valor.",
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
@@ -471,6 +471,43 @@
           "Multiplicando a área privativa pelo valor médio do m² em {ref:beira_mar}, um apartamento de 300 m² teria referência de {total:beira_mar:300} na Avenida Beira Mar. É uma ordem de grandeza, não uma avaliação: andar, vista, idade do edifício e acabamento mudam o valor.",
           "O mesmo cálculo com o m² do Meireles ({m2:meireles}) resulta em {total:meireles:300}, e com o do Mucuripe ({m2:mucuripe}), em {total:mucuripe:300}."
         ]
+      },
+      {
+        "id": "serie",
+        "h2": "Como o m² da Beira Mar mudou desde 2025?",
+        "paragrafos": [
+          "O Sinduscon-CE divulga dois levantamentos. O trimestral, feito com a Brain, colocou a Avenida Beira Mar em R$ 23.183 por m² em 2025, segundo o <a href=\"https://diariodonordeste.verdesmares.com.br/negocios/imoveis-em-fortaleza-ficam-mais-caros-em-2025-e-preco-do-metro-quadrado-passa-de-r-11-mil-1.3737842\" rel=\"noopener\">Diário do Nordeste de 2 de fevereiro de 2026</a>, e em R$ 23.699 no 2º trimestre de 2026, segundo <a href=\"https://www.opovo.com.br/noticias/economia/2026/07/29/preco-medio-do-m-em-fortaleza-aumenta-46-e-chega-a-rs-119-mil.html\" rel=\"noopener\">O Povo de 29 de julho de 2026</a>. O mensal registrou {m2:beira_mar} em {ref:beira_mar}.",
+          "Nos três valores, a Beira Mar fica acima de R$ 23 mil por m² e à frente do Meireles e do Mucuripe. Como as bases são diferentes, a variação entre um levantamento e outro não mede valorização."
+        ],
+        "tabela": {
+          "caption": "Preço médio do m² na Avenida Beira Mar por levantamento do Sinduscon-CE",
+          "cabecalho": [
+            "Referência",
+            "Valor do m²",
+            "Levantamento",
+            "Divulgação"
+          ],
+          "linhas": [
+            [
+              "2025",
+              "R$ 23.183",
+              "Trimestral, com a Brain",
+              "Diário do Nordeste, 2 de fevereiro de 2026"
+            ],
+            [
+              "2º trimestre de 2026",
+              "R$ 23.699",
+              "Trimestral, com a Brain",
+              "O Povo, 29 de julho de 2026"
+            ],
+            [
+              "{ref:beira_mar}",
+              "{m2:beira_mar}",
+              "Mensal",
+              "{veiculo:op}, {dataf:op}"
+            ]
+          ]
+        }
       },
       {
         "id": "como-usar",
@@ -842,7 +879,7 @@
         "id": "comparativo",
         "h2": "O que muda entre comprar como pessoa física ou por holding?",
         "paragrafos": [
-          "A holding é uma ferramenta de gestão e sucessão, e não uma redução automática de imposto. A tabela compara os eventos principais; onde o resultado depende do regime tributário da empresa, a página indica a simulação que falta."
+          "A holding é uma ferramenta de gestão e sucessão, e não uma redução automática de imposto. A tabela compara os eventos principais; os números da holding valem para o lucro presumido, e outro regime muda a conta. A simulação do caso concreto é do contador."
         ],
         "tabela": {
           "caption": "Pessoa física × holding familiar: o que muda em cada evento",
@@ -880,14 +917,14 @@
             [
               "Venda do imóvel",
               "Ganho de capital de 15% a 22,5%, com isenção ao reinvestir em imóvel residencial em 180 dias",
-              "[PREENCHER: tributação do ganho de capital na holding, conforme o regime e o enquadramento do imóvel]",
-              "Lei 13.259/2016; Lei 11.196/2005, art. 39"
+              "Imóvel do ativo imobilizado (alugado ou de uso): ganho de capital tributado em até 34% (IRPJ de 15% com adicional de 10% e CSLL de 9%), mesmo se depois passar ao estoque. Imóvel em estoque de empresa de compra e venda: de 5,93% a 6,73% da receita da venda",
+              "Pessoa física: Lei 13.259/2016 e Lei 11.196/2005, art. 39. Holding: IN RFB 1.700/2017 e Solução de Consulta Cosit 95/2026"
             ],
             [
               "Receita de aluguel",
               "Tabela progressiva do imposto de renda, com alíquota de até 27,5%",
-              "[PREENCHER: carga efetiva da holding conforme o regime tributário, com simulação do contador]",
-              "Legislação federal"
+              "Cerca de 11,33% da receita (IRPJ 4,8%, CSLL 2,88%, PIS e Cofins 3,65%), até 14,53% com o adicional de IRPJ. Desde 2026, a presunção sobe 10% na receita anual acima de R$ 5 milhões",
+              "Lei 9.249/1995, arts. 15 e 20; Lei Complementar 224/2025"
             ]
           ]
         }
@@ -943,7 +980,7 @@
     "tempo_leitura": 5,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "A maresia leva sais de cloreto que aceleram a corrosão de alumínio, aço e equipamentos, e o efeito é maior perto do mar. A norma ISO 9223 classifica a corrosividade atmosférica de C1 a C5 e CX. Antes de comprar na orla de Fortaleza, peça a especificação das esquadrias, das ferragens e das condensadoras e o certificado do tratamento.",
-    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: espessura mínima da camada anódica por classe, conforme o texto da ABNT NBR 12609:2022.]",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. As faixas de espessura das classes vêm de fabricantes de perfis e da ABNT NBR 14718 (guarda-corpos), que remetem à NBR 12609: confira na edição de 2022.",
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
@@ -969,7 +1006,7 @@
         "paragrafos": [
           "Esquadrias de alumínio: peça o tipo de tratamento (anodização conforme a ABNT NBR 12609, que trata da anodização para fins arquitetônicos, ou pintura com certificação para ambiente marinho) e o certificado do aplicador.",
           "Ferragens, parafusos e guarda-corpos expostos: o aço inox 316 contém molibdênio, que aumenta a resistência à corrosão por cloretos, e é o especificado em peças expostas à maresia. Condensadoras de ar-condicionado e quadros externos precisam de tratamento anticorrosivo.",
-          "[PREENCHER: espessura mínima da camada anódica por classe da ABNT NBR 12609:2022 e o que cada classe indica para exposição marinha.]"
+          "A ABNT NBR 12609 classifica a anodização pela espessura da camada: A13 (11 a 15 µm), para ambientes de agressividade baixa ou média, como áreas urbanas e rurais; A18 (16 a 20 µm), para agressividade alta, como a orla; e A23 (21 a 25 µm), para agressividade excessiva, como atmosfera marinha ou industrial. Na primeira quadra da Beira Mar, peça a classe A23 no certificado do aplicador."
         ]
       },
       {
@@ -1008,7 +1045,7 @@
     "tempo_leitura": 5,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "O índice Rw mede, em laboratório, o isolamento sonoro da esquadria; o D2m,nT,w mede o da fachada instalada, em campo. A ABNT NBR 15575-4 exige no mínimo 20, 25 ou 30 dB de D2m,nT,w nos dormitórios, conforme a classe de ruído do local. Um laudo completo traz as duas medições.",
-    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: valores de D2m,nT,w da edição vigente da ABNT NBR 15575-4, se diferirem da edição de 2013.]",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. A edição de 2021 da ABNT NBR 15575-4 (Tabela 20) manteve os mínimos de 20, 25 e 30 dB para dormitórios e passou a definir a classe pelo ruído incidente na fachada (Linc): até 60 dB, de 61 a 65 dB e de 66 a 70 dB.",
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
@@ -1104,7 +1141,7 @@
     "tempo_leitura": 5,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "A ABNT NBR 15000 classifica a blindagem balística em níveis de I a IV pela munição de ensaio. O nível III-A é ensaiado com 9 mm e .44 Magnum. Em portarias, a proteção vale pelo conjunto: vidro, painéis, porta e passa-volumes precisam do mesmo nível, com certificado do fabricante.",
-    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: níveis e munições conforme a edição vigente da ABNT NBR 15000; a tabela desta página reproduz a edição de 2005.]",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. A ABNT NBR 15000 foi reeditada em 2020 e dividida em partes; a Parte 2 (classificação e ensaio de materiais planos, outubro de 2020, confirmada em janeiro de 2025) mantém os níveis I, II-A, II, III-A, III e IV. A tabela de munições desta página reproduz a edição de 2005: confira as velocidades de ensaio na edição vigente.",
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
@@ -1207,7 +1244,7 @@
     "tempo_leitura": 5,
     "imagem": "/static/img/artigo-placeholder.svg",
     "resumo": "Gerador com 100% da carga é aquele dimensionado para toda a demanda elétrica do edifício, inclusive ar-condicionado, elevadores e bombas, e não só para as áreas comuns. Para conferir, peça o memorial: potência em kVA, demanda atendida, autonomia do tanque, tempo de transferência do quadro automático e o projeto aprovado pela concessionária.",
-    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. [PREENCHER: tempo máximo de transferência do quadro de transferência automática (QTA) e método de dimensionamento, conforme o projeto elétrico e as normas aplicáveis (ABNT NBR 5410 e NBR 14039).]",
+    "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. A instalação segue a ABNT NBR 5410 (baixa tensão) e a ABNT NBR 14039 (média tensão); o tempo de comutação de cada circuito é definido no projeto elétrico.",
     "bairros_relacionados": [
       "meireles",
       "mucuripe"
@@ -1232,7 +1269,7 @@
         "h2": "Quais dados o memorial do gerador deve trazer?",
         "paragrafos": [
           "Potência em kVA e demanda máxima atendida; lista de circuitos e de cargas atendidas; autonomia do tanque em horas e tipo de combustível; quadro de transferência automática e o tempo de transferência; local de instalação, ventilação e tratamento acústico; e plano de manutenção.",
-          "[PREENCHER: tempo máximo de transferência do QTA e fórmula de dimensionamento, conforme o projeto elétrico e as normas aplicáveis.]"
+          "A ABNT NBR 5410 classifica a alimentação automática dos serviços de segurança pelo tempo de comutação: sem interrupção, interrupção muito breve (até 0,15 s), breve (até 0,5 s), média (até 15 s) e longa (acima de 15 s). Nenhuma norma fixa um único tempo para o gerador de um edifício residencial: o projeto define a classe de cada circuito, e o que não pode parar usa nobreak. Na potência, os kVA são os kW da demanda divididos pelo fator de potência, mais a partida dos motores de elevadores, bombas e ar-condicionado."
         ]
       },
       {
