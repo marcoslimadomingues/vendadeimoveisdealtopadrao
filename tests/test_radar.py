@@ -78,14 +78,23 @@ def test_edicao_cita_fonte_de_cada_fato_e_nao_vaza_estrategia_interna(tmp_path):
 def test_indice_aponta_a_edicao_mais_recente(tmp_path):
     def nova(radar):
         e = json.loads(json.dumps(radar[0]))
-        e["slug"] = e["publicado"] = "2026-10-08"
+        e["slug"] = e["publicado"] = "2099-01-01"
         e["titulo"] = "Edição de teste"
         radar.append(e)
     client, repo = montar(tmp_path, editar_radar(nova))
+    anterior = repo.radar_edicoes()[1]["path"]
     html = client.get("/radar/").get_data(as_text=True)
-    assert html.index("/radar/2026-10-08/") < html.index("/radar/2026-10-01/")
-    antiga = client.get("/radar/2026-10-01/").get_data(as_text=True)
-    assert 'href="/radar/2026-10-08/"' in antiga
+    assert html.index("/radar/2099-01-01/") < html.index(anterior)
+    assert 'href="/radar/2099-01-01/"' in client.get(anterior).get_data(as_text=True)
+
+
+def test_item_com_varias_fontes_cita_todas(tmp_path):
+    client, repo = montar(tmp_path)
+    for e in repo.radar_edicoes():
+        corpo = client.get(e["path"]).get_data(as_text=True).split('<main id="conteudo"')[1]
+        for item in [*e["lancamentos"], *e["mercado"]]:
+            for k in item["fontes_item"]:
+                assert f'[{e["fonte_n"][k]}]' in corpo and f'href="{e["fontes"][k]["url"]}"' in corpo
 
 
 @pytest.mark.parametrize("quebrar, erro", [

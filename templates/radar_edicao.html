@@ -24,8 +24,7 @@
         <p class="meta">{{ l.incorporadora }} · {% if l.bairro %}<a href="{{ repo.bairros[l.bairro].path }}">{{ l.local }}</a>{% else %}{{ l.local }}{% endif %}</p>
         <p>{{ l.descricao }}</p>
         <p><strong>Situação:</strong> {{ l.status }}</p>
-        {% set f = e.fontes[l.fonte] %}
-        <p class="fonte">Fonte [{{ e.fonte_n[l.fonte] }}]: <a href="{{ f.url }}" rel="noopener">{{ f.veiculo }}, {{ f.publicado|data_extenso }}</a></p>
+        <p class="fonte">Fonte{{ 's' if l.fontes_item|length > 1 }}: {% for k in l.fontes_item %}{% set f = e.fontes[k] %}[{{ e.fonte_n[k] }}] <a href="{{ f.url }}" rel="noopener">{{ f.veiculo }}, {{ f.publicado|data_extenso }}</a>{{ '; ' if not loop.last }}{% endfor %}</p>
       </article>
       {% endfor %}
     </div>
@@ -39,15 +38,14 @@
       <thead><tr><th scope="col">Fato</th><th scope="col">Número</th><th scope="col">Fonte</th></tr></thead>
       <tbody>
         {% for m in e.mercado %}
-        {% set f = e.fontes[m.fonte] %}
         <tr><th scope="row">{{ m.fato }}{% if m.bairro %} (<a href="{{ repo.bairros[m.bairro].path }}">{{ repo.bairros[m.bairro].nome }}</a>){% endif %}</th>
             <td>{{ m.numero }}</td>
-            <td><a href="{{ f.url }}" rel="noopener">[{{ e.fonte_n[m.fonte] }}] {{ f.veiculo }}</a></td></tr>
+            <td>{% for k in m.fontes_item %}{% set f = e.fontes[k] %}<a href="{{ f.url }}" rel="noopener">[{{ e.fonte_n[k] }}] {{ f.veiculo }}</a>{{ '; ' if not loop.last }}{% endfor %}</td></tr>
         {% endfor %}
       </tbody>
     </table>
     </div>
-    <p class="fonte">Preço do m² de imóveis novos em oferta, levantamento do Sinduscon-CE com a Cpes. Ranking completo em <a href="/guias/preco-m2-por-bairro-fortaleza/">preço do m² por bairro de Fortaleza</a>.</p>
+    {% if e.nota_mercado %}<p class="fonte">{{ e.nota_mercado|safe }}</p>{% endif %}
   </section>
 
   <section aria-labelledby="fontes">

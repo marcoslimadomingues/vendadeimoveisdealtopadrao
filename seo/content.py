@@ -168,6 +168,11 @@ def itcd_calcular(site: dict, valor: float, tipo: str, nua_propriedade: bool = F
     return {"base_ufirces": ufirces, "imposto": imposto, "efetiva": imposto / valor * 100 if valor else 0.0}
 
 
+def _chaves_fonte(item: dict) -> list[str]:
+    """Item do radar cita uma fonte ("fonte": "chave") ou várias ("fonte": ["a", "b"])."""
+    return [item["fonte"]] if isinstance(item["fonte"], str) else list(item["fonte"])
+
+
 def _expandir_tokens(no, pilar: dict | None = None, sinduscon: dict | None = None):
     """Expande os tokens em todas as strings de um guia, no lugar."""
     if isinstance(no, dict):
@@ -267,9 +272,10 @@ class Repo:
                 erros.append(f"radar {e['slug']}: slug deve ser a data de publicação (AAAA-MM-DD)")
             usadas = set()
             for item in [*e["mercado"], *e["lancamentos"]]:
-                usadas.add(item["fonte"])
-                if item["fonte"] not in e["fontes"]:
-                    erros.append(f"radar {e['slug']}: fonte '{item['fonte']}' não cadastrada")
+                for chave in _chaves_fonte(item):
+                    usadas.add(chave)
+                    if chave not in e["fontes"]:
+                        erros.append(f"radar {e['slug']}: fonte '{chave}' não cadastrada")
                 if item.get("bairro") and item["bairro"] not in self.bairros:
                     erros.append(f"radar {e['slug']}: bairro '{item['bairro']}' inexistente")
             for chave, f in e["fontes"].items():
@@ -316,7 +322,9 @@ class Repo:
         for e in self.radar.values():
             e["path"] = f"/radar/{e['slug']}/"
             # fontes na ordem em que aparecem na edição, numeradas para a nota de rodapé
-            ordem = list(dict.fromkeys(item["fonte"] for item in [*e["lancamentos"], *e["mercado"]]))
+            ordem = list(dict.fromkeys(k for item in [*e["lancamentos"], *e["mercado"]] for k in _chaves_fonte(item)))
+            for item in [*e["lancamentos"], *e["mercado"]]:
+                item["fontes_item"] = _chaves_fonte(item)
             e["fontes_lista"] = [{"chave": k, "n": n, **e["fontes"][k]} for n, k in enumerate(ordem, start=1)]
             e["fonte_n"] = {f["chave"]: f["n"] for f in e["fontes_lista"]}
 

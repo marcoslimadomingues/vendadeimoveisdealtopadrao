@@ -6,60 +6,193 @@
     "titulo": "Praia de Iracema passa à frente no m² e CVPAR leva hotel com residências ao Meireles",
     "resumo": "A Praia de Iracema tem o m² mais caro de Fortaleza em agosto, segundo o Sinduscon-CE. A CVPAR anunciou um hotel cinco estrelas com 92 apartamentos residenciais e um complexo misto no Meireles com lançamento previsto para 2027. O Copom cortou a Selic para 13,75% ao ano.",
     "mercado": [
-      {"fato": "Praia de Iracema passa a ter o m² mais caro de Fortaleza, com estoque de 16 unidades em oferta",
-       "numero": "R$ 21.698/m² · +53,9% sobre julho", "fonte": "opovo-2026-09-30"},
-      {"fato": "Mucuripe e Meireles vêm logo atrás no preço do m²",
-       "numero": "R$ 20.529 e R$ 20.391/m²", "fonte": "opovo-2026-09-30"},
-      {"fato": "Meireles tem a maior oferta da beira-mar e venda lenta em agosto",
-       "numero": "478 un. em oferta · 16 vendas · IVV 3,2%", "bairro": "meireles", "fonte": "opovo-2026-09-30"},
-      {"fato": "Aldeota concentra os lançamentos do mês e vende mais rápido",
-       "numero": "713 lançamentos (46,6%) · IVV 17,9%", "bairro": "aldeota", "fonte": "opovo-2026-09-30"},
-      {"fato": "Média do m² em Fortaleza",
-       "numero": "R$ 12.350/m² · +4% em 12 meses", "fonte": "opovo-2026-09-30"},
-      {"fato": "Vendas de imóveis novos em Fortaleza no acumulado até julho",
-       "numero": "R$ 4,2 bilhões · +19%", "fonte": "economicnews-2026-09-24"},
-      {"fato": "Copom corta a Selic em 0,25 ponto, sem calendário para novos cortes",
-       "numero": "13,75% ao ano", "fonte": "copom-2026-09-16"}
+      {
+        "fato": "Praia de Iracema passa a ter o m² mais caro de Fortaleza, com estoque de 16 unidades em oferta",
+        "numero": "R$ 21.698/m² · +53,9% sobre julho",
+        "fonte": "opovo-2026-09-30"
+      },
+      {
+        "fato": "Mucuripe e Meireles vêm logo atrás no preço do m²",
+        "numero": "R$ 20.529 e R$ 20.391/m²",
+        "fonte": "opovo-2026-09-30"
+      },
+      {
+        "fato": "Meireles tem a maior oferta da beira-mar e venda lenta em agosto",
+        "numero": "478 un. em oferta · 16 vendas · IVV 3,2%",
+        "bairro": "meireles",
+        "fonte": "opovo-2026-09-30"
+      },
+      {
+        "fato": "Aldeota concentra os lançamentos do mês e vende mais rápido",
+        "numero": "713 lançamentos (46,6%) · IVV 17,9%",
+        "bairro": "aldeota",
+        "fonte": "opovo-2026-09-30"
+      },
+      {
+        "fato": "Média do m² em Fortaleza",
+        "numero": "R$ 12.350/m² · +4% em 12 meses",
+        "fonte": "opovo-2026-09-30"
+      },
+      {
+        "fato": "Vendas de imóveis novos em Fortaleza no acumulado até julho",
+        "numero": "R$ 4,2 bilhões · +19%",
+        "fonte": "economicnews-2026-09-24"
+      },
+      {
+        "fato": "Copom corta a Selic em 0,25 ponto, sem calendário para novos cortes",
+        "numero": "13,75% ao ano",
+        "fonte": "copom-2026-09-16"
+      }
     ],
     "lancamentos": [
-      {"nome": "Hotel cinco estrelas com residências (nome não divulgado)",
-       "incorporadora": "CVPAR",
-       "local": "Fortaleza (bairro não informado na matéria)",
-       "tipo": "Hotel com apartamentos residenciais",
-       "descricao": "Torre única com 80 unidades hoteleiras e 92 apartamentos residenciais, VGV de R$ 150 milhões.",
-       "status": "Em obras; estrutura prevista para dezembro de 2028 e hotel em operação no 1º trimestre de 2029.",
-       "fonte": "dn-2026-09-16"},
-      {"nome": "Complexo misto no Meireles (nome não divulgado)",
-       "incorporadora": "CVPAR",
-       "local": "Meireles, Fortaleza", "bairro": "meireles",
-       "tipo": "Hotelaria, residencial e mall de alto padrão",
-       "descricao": "VGV estimado em cerca de R$ 1 bilhão.",
-       "status": "Em estruturação; lançamento previsto para o 2º semestre de 2027.",
-       "fonte": "dn-2026-09-16"},
-      {"nome": "BS Botanic",
-       "incorporadora": "BSPAR",
-       "local": "Eusébio, CE-010 km 9 (Região Metropolitana de Fortaleza)",
-       "tipo": "Loteamento de alto padrão",
-       "descricao": "339 unidades em área total acima de 220 mil m², lotes a partir de 300 m², em frente ao BS Gran Parc. No lançamento, o m² partia de cerca de R$ 1.300.",
-       "status": "À venda desde 14 de dezembro de 2024; não é lançamento desta semana, voltou ao noticiário com a divulgação do eixo CE-010 pela incorporadora.",
-       "fonte": "economicnews-2024-12-27"}
+      {
+        "nome": "Hotel cinco estrelas com residências (nome não divulgado)",
+        "incorporadora": "CVPAR",
+        "local": "Fortaleza (bairro não informado na matéria)",
+        "tipo": "Hotel com apartamentos residenciais",
+        "descricao": "Torre única com 80 unidades hoteleiras e 92 apartamentos residenciais, VGV de R$ 150 milhões.",
+        "status": "Em obras; estrutura prevista para dezembro de 2028 e hotel em operação no 1º trimestre de 2029.",
+        "fonte": "dn-2026-09-16"
+      },
+      {
+        "nome": "Complexo misto no Meireles (nome não divulgado)",
+        "incorporadora": "CVPAR",
+        "local": "Meireles, Fortaleza",
+        "bairro": "meireles",
+        "tipo": "Hotelaria, residencial e mall de alto padrão",
+        "descricao": "VGV estimado em cerca de R$ 1 bilhão.",
+        "status": "Em estruturação; lançamento previsto para o 2º semestre de 2027.",
+        "fonte": "dn-2026-09-16"
+      },
+      {
+        "nome": "BS Botanic",
+        "incorporadora": "BSPAR",
+        "local": "Eusébio, CE-010 km 9 (Região Metropolitana de Fortaleza)",
+        "tipo": "Loteamento de alto padrão",
+        "descricao": "339 unidades em área total acima de 220 mil m², lotes a partir de 300 m², em frente ao BS Gran Parc. No lançamento, o m² partia de cerca de R$ 1.300.",
+        "status": "À venda desde 14 de dezembro de 2024; não é lançamento desta semana, voltou ao noticiário com a divulgação do eixo CE-010 pela incorporadora.",
+        "fonte": "economicnews-2024-12-27"
+      }
     ],
     "fontes": {
-      "opovo-2026-09-30": {"veiculo": "O Povo", "titulo": "Praia de Iracema assume topo do m² mais caro de Fortaleza",
-                           "publicado": "2026-09-30", "dados": "Sinduscon-CE e Cpes, referência agosto de 2026",
-                           "url": "https://www.opovo.com.br/noticias/economia/2026/09/30/praia-de-iracema-assume-topo-do-m-mais-caro-de-fortaleza.html"},
-      "economicnews-2026-09-24": {"veiculo": "Economic News Brasil", "titulo": "Imóveis de classe média crescem em Fortaleza",
-                                  "publicado": "2026-09-24", "dados": "Sinduscon-CE com a Brain Inteligência Estratégica",
-                                  "url": "https://economicnewsbrasil.com.br/2026/09/24/imoveis-classe-media-fortaleza/"},
-      "copom-2026-09-16": {"veiculo": "Melhor Investimento", "titulo": "Copom corta a Selic para 13,75% ao ano",
-                           "publicado": "2026-09-16", "dados": "Comunicado da 281ª reunião do Copom",
-                           "url": "https://melhorinvestimento.net/noticias/copom-decisao-selic-setembro-2026"},
-      "dn-2026-09-16": {"veiculo": "Diário do Nordeste", "titulo": "CVPAR mira mais de R$ 1 bilhão com empreendimentos de luxo no Ceará",
-                        "publicado": "2026-09-16",
-                        "url": "https://diariodonordeste.verdesmares.com.br/opiniao/colunistas/victor-ximenes/cvpar-mira-mais-de-r-1-bilhao-com-empreendimentos-de-luxo-no-ceara-1.3791748"},
-      "economicnews-2024-12-27": {"veiculo": "Economic News Brasil", "titulo": "BSPAR inicia vendas do loteamento BS Botanic no Eusébio",
-                                  "publicado": "2024-12-27",
-                                  "url": "https://economicnewsbrasil.com.br/2024/12/27/bspar-inicia-vendas-do-loteamento-bs-botanic-no-eusebio/"}
+      "opovo-2026-09-30": {
+        "veiculo": "O Povo",
+        "titulo": "Praia de Iracema assume topo do m² mais caro de Fortaleza",
+        "publicado": "2026-09-30",
+        "dados": "Sinduscon-CE e Cpes, referência agosto de 2026",
+        "url": "https://www.opovo.com.br/noticias/economia/2026/09/30/praia-de-iracema-assume-topo-do-m-mais-caro-de-fortaleza.html"
+      },
+      "economicnews-2026-09-24": {
+        "veiculo": "Economic News Brasil",
+        "titulo": "Imóveis de classe média crescem em Fortaleza",
+        "publicado": "2026-09-24",
+        "dados": "Sinduscon-CE com a Brain Inteligência Estratégica",
+        "url": "https://economicnewsbrasil.com.br/2026/09/24/imoveis-classe-media-fortaleza/"
+      },
+      "copom-2026-09-16": {
+        "veiculo": "Melhor Investimento",
+        "titulo": "Copom corta a Selic para 13,75% ao ano",
+        "publicado": "2026-09-16",
+        "dados": "Comunicado da 281ª reunião do Copom",
+        "url": "https://melhorinvestimento.net/noticias/copom-decisao-selic-setembro-2026"
+      },
+      "dn-2026-09-16": {
+        "veiculo": "Diário do Nordeste",
+        "titulo": "CVPAR mira mais de R$ 1 bilhão com empreendimentos de luxo no Ceará",
+        "publicado": "2026-09-16",
+        "url": "https://diariodonordeste.verdesmares.com.br/opiniao/colunistas/victor-ximenes/cvpar-mira-mais-de-r-1-bilhao-com-empreendimentos-de-luxo-no-ceara-1.3791748"
+      },
+      "economicnews-2024-12-27": {
+        "veiculo": "Economic News Brasil",
+        "titulo": "BSPAR inicia vendas do loteamento BS Botanic no Eusébio",
+        "publicado": "2024-12-27",
+        "url": "https://economicnewsbrasil.com.br/2024/12/27/bspar-inicia-vendas-do-loteamento-bs-botanic-no-eusebio/"
+      }
+    },
+    "nota_mercado": "Preço do m² de imóveis novos em oferta, levantamento do Sinduscon-CE com a Cpes. Ranking completo em <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">preço do m² por bairro de Fortaleza</a>."
+  },
+  {
+    "slug": "2026-10-05",
+    "publicado": "2026-10-05",
+    "periodo": "1º a 5 de outubro de 2026",
+    "titulo": "Lançamentos de padrão elevado caem 32% na Grande Fortaleza e estoque de novos sobe 30%",
+    "resumo": "O balanço do Sinduscon-CE de janeiro a agosto mostra queda de 32% nos lançamentos de padrão elevado em Fortaleza e em quatro cidades vizinhas, enquanto os do padrão econômico subiram 119%. As vendas somaram R$ 5,81 bilhões, alta de 13,8%, e o estoque de imóveis novos chegou a 15.548 unidades. Na Aldeota, a Mota Machado mantém em campanha o Aura, na Rua Leonardo Mota.",
+    "nota_mercado": "Acumulado de janeiro a agosto de 2026, comparado ao mesmo período de 2025, em Fortaleza, Aquiraz, Caucaia, Eusébio e Maracanaú (levantamento do Sinduscon-CE). O levantamento não divulgou a faixa de preço do padrão elevado. Para o preço do m² por bairro, veja o <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">ranking do Sinduscon-CE</a>.",
+    "mercado": [
+      {
+        "fato": "Lançamentos de padrão elevado",
+        "numero": "482 un. · −32%",
+        "fonte": "opovo-2026-10-01"
+      },
+      {
+        "fato": "Lançamentos do padrão econômico (Minha Casa Minha Vida)",
+        "numero": "4.338 un. · +119%",
+        "fonte": "opovo-2026-10-01"
+      },
+      {
+        "fato": "Lançamentos de todos os padrões",
+        "numero": "12.751 un. · +40%",
+        "fonte": "portas-2026-10-02"
+      },
+      {
+        "fato": "Vendas nas cinco cidades",
+        "numero": "R$ 5,81 bi · 11.610 un. · +13,8% em valor",
+        "fonte": "opovo-2026-10-01"
+      },
+      {
+        "fato": "Vendas em Fortaleza",
+        "numero": "R$ 4,876 bi · 7.816 un. · +17% em valor",
+        "fonte": "opovo-2026-10-01"
+      },
+      {
+        "fato": "Estoque de imóveis novos em agosto",
+        "numero": "15.548 un. · +30% em 12 meses",
+        "fonte": "portas-2026-10-02"
+      }
+    ],
+    "lancamentos": [
+      {
+        "nome": "Aura",
+        "incorporadora": "Mota Machado",
+        "local": "Rua Leonardo Mota, Aldeota, Fortaleza",
+        "bairro": "aldeota",
+        "tipo": "Residencial vertical, torre única",
+        "descricao": "28 pavimentos e 56 apartamentos de 139 m² e 167 m², com duas a três vagas. VGV estimado em R$ 151,2 milhões. A incorporadora não divulgou preço.",
+        "status": "Apresentado em novembro de 2025 e em nova campanha na imprensa em setembro de 2026. Entrega não informada.",
+        "fonte": [
+          "portalin-2025-11-26",
+          "gcmais-2026-09-17"
+        ]
+      }
+    ],
+    "fontes": {
+      "opovo-2026-10-01": {
+        "veiculo": "O Povo",
+        "titulo": "Fortaleza e mais quatro cidades movimentam R$ 5,81 bi em venda de imóveis",
+        "publicado": "2026-10-01",
+        "dados": "Sinduscon-CE, janeiro a agosto de 2026",
+        "url": "https://www.opovo.com.br/noticias/economia/2026/10/01/fortaleza-e-mais-quatro-cidades-movimentam-rs-581-bi-em-venda-de-imoveis.html"
+      },
+      "portas-2026-10-02": {
+        "veiculo": "Portas",
+        "titulo": "Mercado imobiliário movimenta R$ 5,8 bi em Fortaleza",
+        "publicado": "2026-10-02",
+        "dados": "Sinduscon-CE, via O Estado",
+        "url": "https://portas.com.br/noticias/mercado-imobiliario-movimenta-r-58-bi-em-fortaleza/"
+      },
+      "portalin-2025-11-26": {
+        "veiculo": "Portal IN",
+        "titulo": "Mota Machado lança Aura e reafirma sua excelência no mercado imobiliário do CE",
+        "publicado": "2025-11-26",
+        "url": "https://www.portalin.com.br/negocios/mota-machado-lanca-aura-e-reafirma-sua-excelencia-no-mercado-imobiliario-do-ce/"
+      },
+      "gcmais-2026-09-17": {
+        "veiculo": "GC Mais",
+        "titulo": "Novo empreendimento da Mota Machado aposta em arquitetura contemporânea e localização estratégica na Aldeota",
+        "publicado": "2026-09-17",
+        "dados": "conteúdo patrocinado, com informações da incorporadora",
+        "url": "https://gcmais.com.br/noticias/2026/09/17/novo-empreendimento-da-mota-machado-aposta-em-arquitetura-contemporanea-e-localizacao-estrategica-na-aldeota-7"
+      }
     }
   }
 ]
