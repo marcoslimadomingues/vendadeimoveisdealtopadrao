@@ -194,5 +194,104 @@
         "url": "https://gcmais.com.br/noticias/2026/09/17/novo-empreendimento-da-mota-machado-aposta-em-arquitetura-contemporanea-e-localizacao-estrategica-na-aldeota-7"
       }
     }
+  },
+  {
+    "slug": "2026-10-12",
+    "publicado": "2026-10-12",
+    "periodo": "6 a 12 de outubro de 2026",
+    "titulo": "Dasart reúne três torres na milha de ouro do Meireles, com entregas de 2027 a 2029",
+    "resumo": "Em coluna do Diário do Nordeste, a Dasart apresentou três empreendimentos no eixo Meireles/Beira-Mar, que chama de milha de ouro: Wave Beira-Mar, com entrega prevista para dezembro de 2027, Mansão Diogo, para outubro de 2029, e DM 210, para dezembro de 2029. A coluna fala em m² acima de R$ 20 mil, perto de R$ 25 mil, atribuído ao Sinduscon-CE; o boletim de agosto do sindicato traz R$ 20.391 no Meireles e R$ 20.529 no Mucuripe. A Selic segue em 13,75% ao ano.",
+    "nota_mercado": "O valor da coluna é aproximado e não aparece no boletim mensal do Sinduscon-CE, que mede bairros inteiros. Ruas, mapa e m² por fonte estão no pilar <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza</a>.",
+    "mercado": [
+      {
+        "fato": "m² no eixo Meireles/Beira-Mar, segundo a coluna",
+        "bairro": "meireles",
+        "numero": "acima de R$ 20 mil (título) · perto de R$ 25 mil (texto)",
+        "fonte": "dn-2026-10-08"
+      },
+      {
+        "fato": "Último boletim do Sinduscon-CE (agosto): Meireles e Mucuripe",
+        "numero": "R$ 20.391 e R$ 20.529/m²",
+        "fonte": "opovo-2026-09-30"
+      },
+      {
+        "fato": "Selic sem mudança; próxima reunião do Copom em novembro",
+        "numero": "13,75% ao ano",
+        "fonte": "copom-2026-09-16"
+      }
+    ],
+    "lancamentos": [
+      {
+        "nome": "Wave Beira-Mar",
+        "incorporadora": "Dasart",
+        "local": "Avenida Beira Mar, Meireles, Fortaleza",
+        "bairro": "meireles",
+        "tipo": "Residencial vertical de alto padrão",
+        "descricao": "Torre de 50 andares e 172 m de altura, com 37 apartamentos de cerca de 436 m² e cobertura. VGV acima de R$ 300 milhões.",
+        "status": "Entrega prevista para dezembro de 2027.",
+        "fonte": "dn-2026-10-08"
+      },
+      {
+        "nome": "Mansão Diogo",
+        "incorporadora": "Dasart",
+        "local": "Meireles, Fortaleza",
+        "bairro": "meireles",
+        "tipo": "Residencial vertical de alto padrão",
+        "descricao": "Torre de 50 andares com dois apartamentos por andar, de 256 m², quatro suítes e quatro vagas. Em março, o Diário do Nordeste informou valor médio de R$ 4,6 milhões por apartamento.",
+        "status": "Entrega prevista para outubro de 2029.",
+        "fonte": [
+          "dn-2026-10-08",
+          "dn-2026-03-18"
+        ]
+      },
+      {
+        "nome": "DM 210",
+        "incorporadora": "Dasart e Normatel Incorporações",
+        "local": "Avenida Desembargador Moreira, Meireles, Fortaleza",
+        "bairro": "meireles",
+        "tipo": "Studios e apartamentos compactos",
+        "descricao": "Torre de 40 pavimentos com studios de 40 m² e apartamentos de 60 m², para morar ou investir, e rooftop a 140 m de altura. Preço não divulgado.",
+        "status": "Entrega prevista para dezembro de 2029.",
+        "fonte": [
+          "dn-2026-10-08",
+          "portalin-2024-06-26"
+        ]
+      }
+    ],
+    "fontes": {
+      "dn-2026-10-08": {
+        "veiculo": "Diário do Nordeste",
+        "titulo": "Dasart mira 'milha de ouro' em Fortaleza, com metro quadrado acima de R$ 20 mil",
+        "publicado": "2026-10-08",
+        "dados": "coluna de Victor Ximenes, com m² atribuído ao Sinduscon-CE",
+        "url": "https://diariodonordeste.verdesmares.com.br/opiniao/colunistas/victor-ximenes/dasart-mira-milha-de-ouro-em-fortaleza-com-metro-quadrado-acima-de-r-20-mil-1.3796785"
+      },
+      "dn-2026-03-18": {
+        "veiculo": "Diário do Nordeste",
+        "titulo": "Conheça o futuro prédio mais alto de Fortaleza",
+        "publicado": "2026-03-18",
+        "url": "https://diariodonordeste.verdesmares.com.br/negocios/conheca-o-futuro-predio-mais-alto-de-fortaleza-1.3749797"
+      },
+      "portalin-2024-06-26": {
+        "veiculo": "Portal IN",
+        "titulo": "Dasart e Normatel celebram início da gestão do DM 210 com elegância e inovação",
+        "publicado": "2024-06-26",
+        "url": "https://www.portalin.com.br/coberturas/dasart-e-normatel-celebram-inicio-da-gestao-do-dm-210-com-elegancia-e-inovacao/"
+      },
+      "opovo-2026-09-30": {
+        "veiculo": "O Povo",
+        "titulo": "Praia de Iracema assume topo do m² mais caro de Fortaleza",
+        "publicado": "2026-09-30",
+        "dados": "Sinduscon-CE e Cpes, referência agosto de 2026",
+        "url": "https://www.opovo.com.br/noticias/economia/2026/09/30/praia-de-iracema-assume-topo-do-m-mais-caro-de-fortaleza.html"
+      },
+      "copom-2026-09-16": {
+        "veiculo": "Melhor Investimento",
+        "titulo": "Copom corta a Selic para 13,75% ao ano",
+        "publicado": "2026-09-16",
+        "dados": "Comunicado da 281ª reunião do Copom",
+        "url": "https://melhorinvestimento.net/noticias/copom-decisao-selic-setembro-2026"
+      }
+    }
   }
 ]
