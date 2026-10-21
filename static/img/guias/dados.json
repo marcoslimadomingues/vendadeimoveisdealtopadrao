@@ -1,0 +1,182 @@
+{
+  "preco-m2-por-bairro-fortaleza": {
+    "tipo": "ranking",
+    "titulo": "Preço do m² por bairro em Fortaleza",
+    "subtitulo": "Agosto de 2026 · R$ por m² privativo · média da cidade: R$ 12.350",
+    "fonte": "Fonte: Sinduscon-CE, divulgado por O Povo em 30 de setembro de 2026.",
+    "barras": [
+      [
+        "Praia de Iracema",
+        21698,
+        false
+      ],
+      [
+        "Mucuripe",
+        20529,
+        true
+      ],
+      [
+        "Meireles",
+        20391,
+        true
+      ],
+      [
+        "Aldeota",
+        16660,
+        true
+      ],
+      [
+        "Dionísio Torres",
+        14811,
+        false
+      ],
+      [
+        "Fátima",
+        14386,
+        false
+      ],
+      [
+        "Edson Queiroz",
+        13904,
+        false
+      ],
+      [
+        "Cocó",
+        13449,
+        true
+      ],
+      [
+        "Guararapes",
+        13346,
+        true
+      ],
+      [
+        "José Bonifácio",
+        13042,
+        false
+      ]
+    ],
+    "referencia": [
+      "Média de Fortaleza",
+      12350
+    ],
+    "legenda": "Em dourado, os bairros atendidos pela Alto Padrão Imóveis"
+  },
+  "preco-m2-beira-mar": {
+    "tipo": "colunas",
+    "titulo": "Preço do m² na Avenida Beira Mar",
+    "subtitulo": "R$ por m² privativo, por levantamento do Sinduscon-CE",
+    "fonte": "Fontes: 2025, Diário do Nordeste, 2 de fevereiro de 2026; 2º trimestre de 2026, O Povo, 29 de julho de 2026; julho de 2026, O Povo, 30 de setembro de 2026.",
+    "barras": [
+      [
+        "2025\n(trimestral)",
+        23183,
+        true
+      ],
+      [
+        "2º trimestre de 2026\n(trimestral)",
+        23699,
+        true
+      ],
+      [
+        "julho de 2026\n(mensal)",
+        23892,
+        true
+      ]
+    ],
+    "legenda": "Levantamentos trimestral e mensal têm bases diferentes: a diferença não mede valorização"
+  },
+  "meireles-ou-mucuripe-investir": {
+    "tipo": "colunas",
+    "titulo": "Meireles × Mucuripe: preço do m²",
+    "subtitulo": "Agosto de 2026 · R$ por m² privativo",
+    "fonte": "Fonte: Sinduscon-CE, divulgado por O Povo em 30 de setembro de 2026.",
+    "barras": [
+      [
+        "Mucuripe",
+        20529,
+        true
+      ],
+      [
+        "Meireles",
+        20391,
+        true
+      ],
+      [
+        "Média de Fortaleza",
+        12350,
+        false
+      ]
+    ],
+    "legenda": "Diferença entre os dois bairros: R$ 138 por m²"
+  },
+  "itbi-fortaleza-imoveis-alto-padrao": {
+    "tipo": "grupos",
+    "titulo": "ITBI em Fortaleza por valor do imóvel",
+    "subtitulo": "Alíquota geral de 4% e de 2% com pagamento antes da escritura",
+    "fonte": "Fonte: Secretaria Municipal das Finanças de Fortaleza (Sefin) (alíquotas de 2026). Base de cálculo igual ao valor do imóvel.",
+    "grupos": [
+      "R$ 3 mi",
+      "R$ 5 mi",
+      "R$ 8 mi",
+      "R$ 10 mi",
+      "R$ 15 mi"
+    ],
+    "series": [
+      [
+        "ITBI geral (4%)",
+        [
+          120000,
+          200000,
+          320000,
+          400000,
+          600000
+        ]
+      ],
+      [
+        "Pago antes da escritura (2%)",
+        [
+          60000,
+          100000,
+          160000,
+          200000,
+          300000
+        ]
+      ]
+    ]
+  },
+  "itcd-ceara-imoveis": {
+    "tipo": "grupos",
+    "titulo": "ITCD no Ceará: herança × doação",
+    "subtitulo": "Imposto sobre um único imóvel · Ufirce de 2026 (R$ 6,29872)",
+    "fonte": "Fonte: Lei estadual 15.812/2015 e Instrução Normativa SEFAZ-CE nº 152/2025. Estimativa sem outras deduções.",
+    "grupos": [
+      "Imóvel de R$ 3 mi",
+      "Imóvel de R$ 5 mi",
+      "Imóvel de R$ 10 mi"
+    ],
+    "series": [
+      [
+        "Herança",
+        [
+          227655,
+          387655,
+          787655
+        ]
+      ],
+      [
+        "Doação",
+        [
+          186461,
+          346461,
+          746461
+        ]
+      ]
+    ],
+    "valores_base": [
+      3000000,
+      5000000,
+      10000000
+    ]
+  }
+}

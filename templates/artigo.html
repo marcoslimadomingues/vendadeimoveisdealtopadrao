@@ -13,6 +13,13 @@
     <p class="meta">Por <a href="/sobre/" rel="author">{{ site.nome }}</a> ({{ site.creci }}) · publicado em <time datetime="{{ a.publicado }}">{{ a.publicado|data_extenso }}</time> · atualizado em <time datetime="{{ a.atualizado }}">{{ a.atualizado|data_extenso }}</time></p>
   </header>
 
+  {% if a.imagem_alt %}
+  <figure class="artigo__imagem">
+    <img src="{{ a.imagem }}" alt="{{ a.imagem_alt }}" width="1600" height="900" fetchpriority="high" decoding="async">
+    {% if a.imagem_legenda %}<figcaption>{{ a.imagem_legenda }}</figcaption>{% endif %}
+  </figure>
+  {% endif %}
+
   <section class="resumo" aria-labelledby="resumo-executivo">
     <h2 id="resumo-executivo">Resumo executivo</h2>
     <p class="lead">{{ a.resumo }}</p>

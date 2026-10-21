@@ -393,7 +393,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 4,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/preco-m2-beira-mar-16x9.png",
     "resumo": "O metro quadrado na Avenida Beira Mar, em Fortaleza, foi de {m2:beira_mar} em {ref:beira_mar}, o maior valor do ranking do Sinduscon-CE, segundo {veiculo:op}. Em {ref:meireles}, o Mucuripe marcou {m2:mucuripe} e o Meireles {m2:meireles}, contra {m2:fortaleza} da média de Fortaleza.",
     "aviso": "Levantamentos diferentes (trimestral e mensal) não são diretamente comparáveis: confira a fonte e a data de cada valor.",
     "bairros_relacionados": [
@@ -531,7 +531,9 @@
         "q": "O preço do m² da Beira Mar é um valor oficial?",
         "a": "Não. É um levantamento de mercado do Sinduscon-CE com a Comissão de Pesquisa de Mercado Imobiliário (Cpes), divulgado pela imprensa, e não uma tabela oficial de preços."
       }
-    ]
+    ],
+    "imagem_alt": "Gráfico de colunas com o preço do m² na Avenida Beira Mar em três levantamentos do Sinduscon-CE: R$ 23.183 em 2025, R$ 23.699 no 2º trimestre de 2026 e {m2:beira_mar} em {ref:beira_mar}",
+    "imagem_legenda": "Preço do m² na Avenida Beira Mar por levantamento. Fontes: Diário do Nordeste e {veiculo:op}."
   },
   {
     "slug": "meireles-ou-mucuripe-investir",
@@ -543,7 +545,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 4,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/meireles-ou-mucuripe-investir-16x9.png",
     "resumo": "Meireles e Mucuripe têm preços do m² quase iguais: {m2:meireles} e {m2:mucuripe} em {ref:mucuripe}, segundo o Sinduscon-CE. A diferença é de {dif:mucuripe:meireles}, ou {acima:mucuripe:meireles}. Os dois ficam {acima:meireles:fortaleza} e {acima:mucuripe:fortaleza} acima da média de Fortaleza. A escolha depende de critérios que o m² não mostra.",
     "bairros_relacionados": [
       "meireles",
@@ -624,7 +626,9 @@
         "q": "O preço do m² é suficiente para decidir onde comprar?",
         "a": "Não. O m² é uma média por bairro: vista, andar, idade do edifício, custos mensais e prazo de venda mudam o resultado. Compare imóveis equivalentes nos dois bairros."
       }
-    ]
+    ],
+    "imagem_alt": "Gráfico de colunas com o preço do m² em {ref:mucuripe}: Mucuripe {m2:mucuripe}, Meireles {m2:meireles} e média de Fortaleza {m2:fortaleza}",
+    "imagem_legenda": "Preço do m² no Meireles, no Mucuripe e em Fortaleza em {ref:mucuripe}. Fonte: Sinduscon-CE, divulgado por {veiculo:op}."
   },
   {
     "slug": "preco-m2-por-bairro-fortaleza",
@@ -636,7 +640,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 4,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/preco-m2-por-bairro-fortaleza-16x9.png",
     "resumo": "Em {sref}, a Praia de Iracema teve o m² mais caro de Fortaleza, com {sm2:praia_iracema}, segundo o Sinduscon-CE divulgado por {sveic}. Mucuripe ({sm2:mucuripe}) e Meireles ({sm2:meireles}) vêm em seguida, e a média da cidade foi de {sm2:fortaleza}. O José Bonifácio, último entre os dez bairros divulgados, marcou {sm2:jose_bonifacio}.",
     "aviso": "O levantamento divulgou a variação mensal por bairro e a da cidade em 12 meses ({sfa}), mas não a variação anual de cada bairro. Os valores mudam a cada mês: confira a data de referência.",
     "bairros_relacionados": [
@@ -701,7 +705,9 @@
         "q": "O preço do m² do Sinduscon vale para imóveis acima de R$ 3 milhões?",
         "a": "Não diretamente. É a média ponderada do m² privativo de imóveis residenciais verticais em oferta no bairro, e não um recorte de imóveis de luxo. Serve de referência para comparar o m² de um imóvel com o do bairro."
       }
-    ]
+    ],
+    "imagem_alt": "Gráfico de barras com o preço do m² de dez bairros de Fortaleza em {sref}, do maior para o menor: Praia de Iracema ({sm2:praia_iracema}), Mucuripe ({sm2:mucuripe}) e Meireles ({sm2:meireles}) lideram, e José Bonifácio ({sm2:jose_bonifacio}) fecha a lista; a média da cidade é {sm2:fortaleza}",
+    "imagem_legenda": "Preço do m² por bairro em {sref}. Fonte: Sinduscon-CE, divulgado por {sveic} em {sdata}."
   },
   {
     "slug": "itbi-fortaleza-imoveis-alto-padrao",
@@ -713,7 +719,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/itbi-fortaleza-imoveis-alto-padrao-16x9.png",
     "resumo": "O ITBI em Fortaleza tem alíquota geral de {t:itbi} sobre a base de cálculo e de {t:itbi2} quando o imposto é pago até o dia anterior à lavratura da escritura ou do contrato de financiamento, segundo a Sefin. Em um imóvel de R$ 5 milhões, o imposto é de {ti:5000000}, ou {ta:5000000} com o pagamento antecipado.",
     "aviso": "Conteúdo informativo, com base em fontes oficiais citadas na página; não substitui parecer jurídico ou contábil individual. Confirme alíquotas, valores e prazos na data da operação.",
     "bairros_relacionados": [
@@ -774,7 +780,9 @@
         "q": "O ITBI pode ser parcelado em Fortaleza?",
         "a": "Sim: em até 3 parcelas mensais sem juros ou em até 6 com juros pela Selic. A certidão para o ato translativo só é emitida depois da quitação de todas as parcelas."
       }
-    ]
+    ],
+    "imagem_alt": "Gráfico de colunas com o ITBI em Fortaleza para imóveis de R$ 3 milhões a R$ 15 milhões: de {ti:3000000} a {ti:15000000} pela alíquota geral de {t:itbi}, e de {ta:3000000} a {ta:15000000} com pagamento antes da escritura ({t:itbi2})",
+    "imagem_legenda": "ITBI por valor do imóvel, com base de cálculo igual ao valor. Fonte: Sefin-Fortaleza."
   },
   {
     "slug": "itcd-ceara-imoveis",
@@ -786,7 +794,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/itcd-ceara-imoveis-16x9.png",
     "resumo": "O ITCD do Ceará é progressivo, de 2% a 8%, e calculado por faixas em Ufirce. Em {t:ufirceano}, a Ufirce vale {t:ufirce}: na herança, a alíquota de 8% incide sobre o que passa de 40.000 Ufirces ({u:40000}). Na doação, essa faixa começa em 250.000 Ufirces ({u:250000}), e a doação da nua-propriedade tributa 2/3 do valor.",
     "aviso": "Conteúdo informativo, com base em fontes oficiais citadas na página; não substitui parecer jurídico ou contábil individual. Confirme alíquotas, valores e prazos na data da operação.",
     "bairros_relacionados": [
@@ -855,7 +863,9 @@
         "q": "Doar em vida paga menos ITCD que deixar de herança?",
         "a": "Nas simulações desta página, a doação paga menos que a herança do mesmo valor porque as faixas da doação são mais largas, e a doação da nua-propriedade usa 2/3 do valor. O resultado depende do caso concreto e de outros tributos; peça uma simulação a um advogado ou contador."
       }
-    ]
+    ],
+    "imagem_alt": "Gráfico de colunas com o ITCD do Ceará sobre um único imóvel: na herança, {ih:3000000} para R$ 3 milhões, {ih:5000000} para R$ 5 milhões e {ih:10000000} para R$ 10 milhões; na doação, {dd:3000000}, {dd:5000000} e {dd:10000000}",
+    "imagem_legenda": "ITCD na herança e na doação, com a Ufirce de {t:ufirceano}. Fonte: Lei estadual 15.812/2015."
   },
   {
     "slug": "comprar-imovel-pessoa-fisica-ou-holding",

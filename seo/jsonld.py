@@ -371,7 +371,7 @@ class Graph:
             "headline": a["titulo"][:110],
             "description": a["descricao"],
             "abstract": a["resumo"],
-            "image": self.url(a["imagem"]),
+            "image": [self.url(img) for img in a["imagens"]],
             "datePublished": a["publicado"],
             "dateModified": a["atualizado"],
             "author": self.org,

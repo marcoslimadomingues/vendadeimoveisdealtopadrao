@@ -145,6 +145,9 @@ tfoot th, tfoot td { font-weight: 700; border-top: 2px solid var(--tinta); }
 .resumo { border-left: 3px solid var(--ouro); padding-left: 1.2rem; }
 .resumo h2 { margin-top: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: .08em; font-family: var(--sans); color: var(--tinta-suave); }
 .autor { margin-top: 2.5rem; }
+.artigo__imagem { margin: 0 0 2rem; }
+.artigo__imagem img { width: 100%; border: 1px solid var(--linha); border-radius: var(--raio); background: #fff; }
+.artigo__imagem figcaption { margin-top: .5rem; font-size: .875rem; color: var(--tinta-suave); }
 
 /* Perfil */
 .perfil__topo { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }

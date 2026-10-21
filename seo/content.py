@@ -13,6 +13,7 @@ from pathlib import Path
 from . import pilares as _pilares
 from .formatting import brl, cap as _cap, data_extenso, num, pct
 
+STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
 # SITE_DATA_DIR troca a pasta de dados (os testes usam uma carteira de demonstração fora de data/).
 DATA_DIR = Path(os.environ.get("SITE_DATA_DIR") or Path(__file__).resolve().parent.parent / "data")
 
@@ -228,6 +229,10 @@ class Repo:
                 erros.append(f"artigo {a['slug']}: pilar '{a['pilar']}' inexistente")
             if a.get("guia_pilar") and a["guia_pilar"] not in self.artigos:
                 erros.append(f"artigo {a['slug']}: guia_pilar '{a['guia_pilar']}' inexistente")
+            if not (STATIC_DIR / a["imagem"].removeprefix("/static/")).is_file():
+                erros.append(f"artigo {a['slug']}: imagem '{a['imagem']}' não existe em static/")
+            if "placeholder" not in a["imagem"] and not a.get("imagem_alt"):
+                erros.append(f"artigo {a['slug']}: imagem sem imagem_alt")
             if a.get("url_sob_pilar") and not a.get("pilar"):
                 erros.append(f"artigo {a['slug']}: url_sob_pilar exige o campo pilar")
         for p in self.pilares.values():
@@ -266,6 +271,9 @@ class Repo:
         self._enriquecer_sinduscon()
         for a in self.artigos.values():
             a["path"] = (f"/{a['pilar']}/{a['slug']}/" if a.get("url_sob_pilar") else f"/guias/{a['slug']}/")
+            # gráfico gerado por tools/imagens_guias.py: recortes 16:9, 4:3 e 1:1 para o Google
+            a["imagens"] = ([a["imagem"].replace("-16x9.", f"-{r}.") for r in ("16x9", "4x3", "1x1")]
+                            if "-16x9." in a["imagem"] else [a["imagem"]])
             _expandir_tributos(a, self.site)
             if a.get("pilar") or a.get("dados") == "sinduscon":
                 _expandir_tokens(a, self.pilares.get(a.get("pilar", "")),

@@ -72,7 +72,7 @@ app.py                  rotas SSR, cabeçalhos, modo noindex
 seo/                    conteúdo, JSON-LD, títulos em links, tabelas em cartões, pilar
 data/                   site, bairros, imóveis, guias, pilar, Sinduscon-CE, geo (OpenStreetMap)
 templates/ static/      HTML5 semântico e CSS único (sem JS, sem webfont)
-tools/                  build_pages, pre_publicacao, varrer_segredos, mapa, auditorias, teste_mobile
+tools/                  build_pages, pre_publicacao, imagens_guias (gráficos dos guias), varrer_segredos, mapa, auditorias, teste_mobile
 tests/                  testes de contrato (HTTP, JSON-LD, mobile, publicação, scanner); tests/dados: carteira de demonstração
 .github/                workflow do Pages, Dependabot
 ```
