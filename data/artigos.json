@@ -7,7 +7,7 @@
     "publicado": "2026-05-18",
     "atualizado": "2026-09-28",
     "tempo_leitura": 10,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/holding-familiar-imoveis-alto-padrao-16x9.jpg",
     "resumo": "A holding familiar é uma pessoa jurídica que recebe imóveis como capital social para organizar a gestão e a sucessão do patrimônio. No Ceará, o ITCD é progressivo, de 2% a 8%, e patrimônios de alto padrão transmitidos por herança ficam na faixa máxima de 8%. A holding no lucro presumido reduz a tributação de aluguéis de até 27,5% (pessoa física) para cerca de 11,33% da receita, mas não reduz automaticamente o imposto na venda: o ganho de capital na holding é tributado em até 34%.",
     "aviso": "Conteúdo informativo. Não substitui parecer jurídico ou contábil individual. Confirme alíquotas, faixas em Ufirce e regras vigentes na data da operação.",
     "bairros_relacionados": [],
@@ -216,7 +216,10 @@
         "q": "Quanto tempo leva para constituir uma holding familiar?",
         "a": "A constituição de uma holding familiar leva de 30 a 90 dias, incluindo o registro na Junta Comercial e a averbação da integralização na matrícula de cada imóvel."
       }
-    ]
+    ],
+    "imagem_alt": "Ilustração de maquete de edifício residencial sobre mesa de escritório, com chaves, caneta e pasta de couro",
+    "imagem_legenda": "Ilustração gerada por inteligência artificial; não retrata um imóvel ou local real.",
+    "imagem_ia": true
   },
   {
     "slug": "isolamento-acustico-blindagem-gerador-imoveis-luxo",
@@ -226,7 +229,7 @@
     "publicado": "2026-06-03",
     "atualizado": "2026-09-28",
     "tempo_leitura": 9,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo-16x9.jpg",
     "resumo": "Quatro especificações técnicas separam um imóvel de alto padrão em Fortaleza de um imóvel apenas caro: proteção contra maresia nas esquadrias e ferragens, isolamento acústico Rw igual ou superior a 42 dB, portaria blindada com nível mínimo III-A pela ABNT NBR 15000 e gerador que atende 100% da carga elétrica. As 4 especificações podem ser verificadas por laudo técnico antes da compra.",
     "bairros_relacionados": [],
     "secoes": [
@@ -380,7 +383,10 @@
         "q": "Isolamento acústico europeu é obrigatório por lei?",
         "a": "Não. A norma ABNT NBR 15575 define o desempenho acústico mínimo de fachadas no Brasil; o isolamento acústico europeu é uma especificação superior, adotada por escolha do incorporador ou do proprietário."
       }
-    ]
+    ],
+    "imagem_alt": "Ilustração de sala de estar de apartamento alto com esquadrias de vidro do piso ao teto e vista para o mar ao entardecer",
+    "imagem_legenda": "Ilustração gerada por inteligência artificial; não retrata um imóvel ou local real.",
+    "imagem_ia": true
   },
   {
     "slug": "preco-m2-beira-mar",
@@ -877,7 +883,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/comprar-imovel-pessoa-fisica-ou-holding-16x9.jpg",
     "resumo": "Na compra direta, pessoa física e holding pagam o mesmo ITBI: {t:itbi} em Fortaleza, ou {t:itbi2} se pago antes da escritura. A holding muda o que vem depois: a integralização de imóveis ao capital é imune ao ITBI até o limite do capital, e a sucessão passa a ocorrer por doação de quotas, com ITCD em faixas próprias.",
     "aviso": "Conteúdo informativo, com base em fontes oficiais citadas na página; não substitui parecer jurídico ou contábil individual. Confirme alíquotas, valores e prazos na data da operação.",
     "bairros_relacionados": [
@@ -976,7 +982,10 @@
         "q": "A holding sempre reduz o imposto?",
         "a": "Não. Ela organiza a gestão e a sucessão, mas o resultado depende do regime tributário, do tipo de renda e do uso do imóvel. Peça uma simulação a contador e advogado com os números do caso."
       }
-    ]
+    ],
+    "imagem_alt": "Ilustração de dois chaveiros de apartamento lado a lado sobre mármore, com duas pastas de couro ao fundo",
+    "imagem_legenda": "Ilustração gerada por inteligência artificial; não retrata um imóvel ou local real.",
+    "imagem_ia": true
   },
   {
     "slug": "protecao-contra-maresia-imoveis-fortaleza",
@@ -988,7 +997,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/protecao-contra-maresia-imoveis-fortaleza-16x9.jpg",
     "resumo": "A maresia leva sais de cloreto que aceleram a corrosão de alumínio, aço e equipamentos, e o efeito é maior perto do mar. A norma ISO 9223 classifica a corrosividade atmosférica de C1 a C5 e CX. Antes de comprar na orla de Fortaleza, peça a especificação das esquadrias, das ferragens e das condensadoras e o certificado do tratamento.",
     "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. As faixas de espessura das classes vêm de fabricantes de perfis e da ABNT NBR 14718 (guarda-corpos), que remetem à NBR 12609: confira na edição de 2022.",
     "bairros_relacionados": [
@@ -1041,7 +1050,10 @@
         "q": "A maresia também afeta o ar-condicionado?",
         "a": "Sim. Condensadoras expostas ao ar salino precisam de tratamento anticorrosivo e de manutenção periódica."
       }
-    ]
+    ],
+    "imagem_alt": "Ilustração de guarda-corpo de aço inox e caixilho de alumínio de uma varanda, com gotas de névoa salina e o mar ao fundo",
+    "imagem_legenda": "Ilustração gerada por inteligência artificial; não retrata um imóvel ou local real.",
+    "imagem_ia": true
   },
   {
     "slug": "isolamento-acustico-rw-imoveis-fortaleza",
@@ -1053,7 +1065,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/isolamento-acustico-rw-imoveis-fortaleza-16x9.jpg",
     "resumo": "O índice Rw mede, em laboratório, o isolamento sonoro da esquadria; o D2m,nT,w mede o da fachada instalada, em campo. A ABNT NBR 15575-4 exige no mínimo 20, 25 ou 30 dB de D2m,nT,w nos dormitórios, conforme a classe de ruído do local. Um laudo completo traz as duas medições.",
     "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. A edição de 2021 da ABNT NBR 15575-4 (Tabela 20) manteve os mínimos de 20, 25 e 30 dB para dormitórios e passou a definir a classe pelo ruído incidente na fachada (Linc): até 60 dB, de 61 a 65 dB e de 66 a 70 dB.",
     "bairros_relacionados": [
@@ -1137,7 +1149,10 @@
         "q": "Isolamento acústico europeu é exigido por lei?",
         "a": "Não. A norma de desempenho define níveis mínimos de D2m,nT,w; o chamado isolamento acústico europeu é uma especificação superior, adotada por escolha do incorporador ou do proprietário."
       }
-    ]
+    ],
+    "imagem_alt": "Ilustração de quarto à noite com janela de vidro duplo em caixilho de alumínio e as luzes de uma orla ao fundo",
+    "imagem_legenda": "Ilustração gerada por inteligência artificial; não retrata um imóvel ou local real.",
+    "imagem_ia": true
   },
   {
     "slug": "blindagem-abnt-nbr-15000-portaria-imoveis",
@@ -1149,7 +1164,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/blindagem-abnt-nbr-15000-portaria-imoveis-16x9.jpg",
     "resumo": "A ABNT NBR 15000 classifica a blindagem balística em níveis de I a IV pela munição de ensaio. O nível III-A é ensaiado com 9 mm e .44 Magnum. Em portarias, a proteção vale pelo conjunto: vidro, painéis, porta e passa-volumes precisam do mesmo nível, com certificado do fabricante.",
     "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. A ABNT NBR 15000 foi reeditada em 2020 e dividida em partes; a Parte 2 (classificação e ensaio de materiais planos, outubro de 2020, confirmada em janeiro de 2025) mantém os níveis I, II-A, II, III-A, III e IV. A tabela de munições desta página reproduz a edição de 2005: confira as velocidades de ensaio na edição vigente.",
     "bairros_relacionados": [
@@ -1240,7 +1255,10 @@
         "q": "Quais níveis são de uso restrito?",
         "a": "Na edição de 2005, os níveis III (7,62 × 51 mm) e IV (.30-06 AP) são ensaiados com armas de uso restrito."
       }
-    ]
+    ],
+    "imagem_alt": "Ilustração de portaria de condomínio com guarita envidraçada e dois portões em sequência formando uma eclusa",
+    "imagem_legenda": "Ilustração gerada por inteligência artificial; não retrata um imóvel ou local real.",
+    "imagem_ia": true
   },
   {
     "slug": "gerador-100-carga-imoveis-alto-padrao",
@@ -1252,7 +1270,7 @@
     "publicado": "2026-10-12",
     "atualizado": "2026-10-12",
     "tempo_leitura": 5,
-    "imagem": "/static/img/artigo-placeholder.svg",
+    "imagem": "/static/img/guias/gerador-100-carga-imoveis-alto-padrao-16x9.jpg",
     "resumo": "Gerador com 100% da carga é aquele dimensionado para toda a demanda elétrica do edifício, inclusive ar-condicionado, elevadores e bombas, e não só para as áreas comuns. Para conferir, peça o memorial: potência em kVA, demanda atendida, autonomia do tanque, tempo de transferência do quadro automático e o projeto aprovado pela concessionária.",
     "aviso": "Conteúdo informativo. Normas técnicas são revisadas: confira a edição vigente da ABNT e das normas ISO antes de especificar ou comprar, e peça laudo de profissional habilitado. A instalação segue a ABNT NBR 5410 (baixa tensão) e a ABNT NBR 14039 (média tensão); o tempo de comutação de cada circuito é definido no projeto elétrico.",
     "bairros_relacionados": [
@@ -1304,6 +1322,9 @@
         "q": "Quem aprova o projeto de um gerador no edifício?",
         "a": "A distribuidora de energia pode exigir análise do projeto do grupo gerador antes da instalação; consulte a concessionária local e o engenheiro responsável."
       }
-    ]
+    ],
+    "imagem_alt": "Ilustração de sala de gerador no subsolo de um edifício, com grupo gerador a diesel sobre base de concreto e quadros de transferência automática",
+    "imagem_legenda": "Ilustração gerada por inteligência artificial; não retrata um imóvel ou local real.",
+    "imagem_ia": true
   }
 ]

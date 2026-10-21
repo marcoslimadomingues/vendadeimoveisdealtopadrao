@@ -233,6 +233,8 @@ class Repo:
                 erros.append(f"artigo {a['slug']}: imagem '{a['imagem']}' não existe em static/")
             if "placeholder" not in a["imagem"] and not a.get("imagem_alt"):
                 erros.append(f"artigo {a['slug']}: imagem sem imagem_alt")
+            if a.get("imagem_ia") and "inteligência artificial" not in a.get("imagem_legenda", ""):
+                erros.append(f"artigo {a['slug']}: imagem gerada por IA precisa dizer isso na legenda")
             if a.get("url_sob_pilar") and not a.get("pilar"):
                 erros.append(f"artigo {a['slug']}: url_sob_pilar exige o campo pilar")
         for p in self.pilares.values():

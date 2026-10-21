@@ -44,6 +44,8 @@ VERIFICACOES = [
      "marcador de que o conteúdo ainda é de demonstração"),
     ("og:image em SVG (WhatsApp, Facebook e LinkedIn não exibem)", "templates/base.html", r"og-default\.svg",
      "o link compartilhado sai sem imagem; use PNG ou JPG de 1200×630"),
+    ("Indexação ainda não liberada pelo responsável", "data/site.json", r"\"indexacao_liberada\": false",
+     "o site só sai do noindex com a confirmação do dono; troque para true em data/site.json quando ele liberar"),
 ]
 
 MANUAIS = [

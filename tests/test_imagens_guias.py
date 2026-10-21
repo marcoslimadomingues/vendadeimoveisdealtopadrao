@@ -67,17 +67,57 @@ def test_guia_mostra_o_grafico_e_declara_os_recortes(ctx, slug):
     assert f'src="/static/img/guias/{slug}-16x9.png"' in figura and "{" not in alt and "R$" in alt
     assert "<figcaption>" in figura and "Fonte" in figura
     artigo = next(n for n in grafo(html) if n["@type"] == "Article")
-    assert [u.rsplit("-", 1)[1] for u in artigo["image"]] == ["16x9.png", "4x3.png", "1x1.png"]
+    assert [i["url"].rsplit("-", 1)[1] for i in artigo["image"]] == ["16x9.png", "4x3.png", "1x1.png"]
     assert re.search(rf'<meta property="og:image" content="[^"]+/{slug}-16x9\.png">', html)
 
 
-def test_guias_sem_grafico_nao_exibem_imagem_provisoria(ctx):
+def tamanho_jpeg(arq: Path) -> tuple[int, int]:
+    b = arq.read_bytes()
+    i = 2
+    while i < len(b):
+        marca, comp = b[i + 1], struct.unpack(">H", b[i + 2:i + 4])[0]
+        if 0xC0 <= marca <= 0xCF and marca not in (0xC4, 0xC8, 0xCC):  # SOFn
+            h, w = struct.unpack(">HH", b[i + 5:i + 9])
+            return w, h
+        i += 2 + comp
+    raise AssertionError(f"{arq.name}: sem cabeçalho SOF")
+
+
+def test_todos_os_guias_tem_imagem_propria(ctx):
+    _, repo = ctx
+    assert not any("placeholder" in a["imagem"] for a in repo.artigos.values())
+
+
+def test_ilustracoes_de_ia_marcadas_no_arquivo_na_legenda_e_no_json_ld(ctx):
     client, repo = ctx
-    for a in repo.artigos.values():
-        if a["slug"] in GUIAS:
-            continue
+    ilustrados = [a for a in repo.artigos.values() if a.get("imagem_ia")]
+    assert len(ilustrados) == 7
+    for a in ilustrados:
+        jpg = PASTA / f"{a['slug']}-16x9.jpg"
+        assert tamanho_jpeg(jpg) == (1600, 900), a["slug"]
+        for recorte, (rw, rh) in (("4x3", (4, 3)), ("1x1", (1, 1))):
+            w, h = tamanho_jpeg(PASTA / f"{a['slug']}-{recorte}.jpg")
+            assert abs(w / h - rw / rh) < 0.01 and w >= 900, (a["slug"], recorte)
+        for recorte in ("16x9", "4x3", "1x1"):
+            arq = PASTA / f"{a['slug']}-{recorte}.jpg"
+            assert b"trainedAlgorithmicMedia" in arq.read_bytes(), arq.name
+            assert arq.stat().st_size < 400_000, arq.name
         html = client.get(a["path"]).get_data(as_text=True)
-        assert 'class="artigo__imagem"' not in html, a["slug"]
+        figura = html.split('<figure class="artigo__imagem">')[1].split("</figure>")[0]
+        assert "gerada por inteligência artificial" in figura and 'alt="Ilustração de ' in figura
+        artigo = next(n for n in grafo(html) if n["@type"] == "Article")
+        assert all(i["creditText"] == "Ilustração gerada por inteligência artificial" for i in artigo["image"])
+
+
+def test_indexacao_so_com_liberacao_do_responsavel():
+    """Checklist zerado não basta: o noindex só sai com indexacao_liberada: true no site.json."""
+    import subprocess
+
+    site = json.loads((ROOT / "data" / "site.json").read_text(encoding="utf-8"))
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "pre_publicacao.py"), "--estrito"],
+                       capture_output=True, text=True, encoding="utf-8")
+    if site["indexacao_liberada"] is not True:
+        assert r.returncode == 1 and "✗ Indexação ainda não liberada pelo responsável" in r.stdout
 
 
 def test_imagem_inexistente_falha_o_build(tmp_path):

@@ -371,7 +371,9 @@ class Graph:
             "headline": a["titulo"][:110],
             "description": a["descricao"],
             "abstract": a["resumo"],
-            "image": [self.url(img) for img in a["imagens"]],
+            "image": [{"@type": "ImageObject", "url": self.url(img), "caption": a.get("imagem_legenda") or a["titulo"],
+                       **({"creditText": "Ilustração gerada por inteligência artificial"} if a.get("imagem_ia") else {})}
+                      for img in a["imagens"]],
             "datePublished": a["publicado"],
             "dateModified": a["atualizado"],
             "author": self.org,
