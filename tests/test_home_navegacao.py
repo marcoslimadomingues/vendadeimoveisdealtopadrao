@@ -76,5 +76,5 @@ def test_nenhuma_pagina_nova():
     tracked = (ROOT / "templates").glob("*.html")
     nomes = {p.name for p in tracked}
     assert nomes == {"404.html", "_macros.html", "artigo.html", "bairro.html", "base.html", "contato.html",
-                     "guias.html", "home.html", "imovel.html", "imoveis.html", "pilar.html", "redirect.html",
-                     "sobre.html"}
+                     "guias.html", "home.html", "imovel.html", "imoveis.html", "pilar.html", "radar.html",
+                     "radar_edicao.html", "redirect.html", "sobre.html"}

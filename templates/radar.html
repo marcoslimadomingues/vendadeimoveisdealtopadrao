@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block conteudo %}
+{% set ultima = edicoes[0] %}
+<header class="cabecalho-pagina">
+  <h1>Radar de lançamentos de alto padrão {{ site.cidade.em }}</h1>
+  <p class="lead">Toda semana, a {{ site.nome }} reúne os lançamentos de alto padrão {{ site.cidade.em }} e região, o preço do m² do Sinduscon-CE e os movimentos do mercado que afetam quem compra ou vende um imóvel de luxo. Cada fato traz a publicação de origem e a data.</p>
+</header>
+
+<section aria-labelledby="ultima">
+  <h2 id="ultima">Edição mais recente</h2>
+  <article class="card card--texto">
+    <p class="card__tipo">Edição de <time datetime="{{ ultima.publicado }}">{{ ultima.publicado|data_extenso }}</time> · fatos de {{ ultima.periodo }}</p>
+    <h3 class="card__titulo"><a href="{{ ultima.path }}">{{ ultima.titulo }}</a></h3>
+    <p>{{ ultima.resumo }}</p>
+    <p class="meta">{{ ultima.lancamentos|length }} empreendimento{{ 's' if ultima.lancamentos|length > 1 }} · {{ ultima.mercado|length }} indicadores · {{ ultima.fontes_lista|length }} fontes</p>
+  </article>
+</section>
+
+{% if edicoes|length > 1 %}
+<section aria-labelledby="anteriores">
+  <h2 id="anteriores">Edições anteriores</h2>
+  <ul>
+    {% for e in edicoes[1:] %}
+    <li><a href="{{ e.path }}"><time datetime="{{ e.publicado }}">{{ e.publicado|data_extenso }}</time>: {{ e.titulo }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<section aria-labelledby="como">
+  <h2 id="como">Como o radar é feito</h2>
+  <p>Entram só fatos publicados pela imprensa, por órgãos do setor ou pelas próprias incorporadoras, com link para a fonte. Preço do m² por bairro vem do levantamento do Sinduscon-CE. Quando a matéria não informa um dado (bairro, preço, nome do empreendimento), o radar diz que não foi informado em vez de estimar. O radar não é recomendação de investimento.</p>
+  <p>Para comparar os bairros mês a mês, veja o <a href="/guias/preco-m2-por-bairro-fortaleza/">preço do m² por bairro de Fortaleza</a>.</p>
+</section>
+{% endblock %}

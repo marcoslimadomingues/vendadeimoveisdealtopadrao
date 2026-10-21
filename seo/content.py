@@ -195,6 +195,8 @@ class Repo:
         self.artigos = _index(_load(d / "artigos.json"))
         self.pilares = _index(_load(d / "pilares.json")) if (d / "pilares.json").exists() else {}
         self.sinduscon: dict = _load(d / "sinduscon.json")  # m² de referência de todos os bairros
+        # Radar de lançamentos: uma edição por semana, cada fato com fonte publicada
+        self.radar = _index(_load(d / "radar.json")) if (d / "radar.json").exists() else {}
         self._data_dir = d
         self._validar()
         self._enriquecer()
@@ -260,6 +262,21 @@ class Repo:
         for slug in self.bairros:
             if slug not in ids:  # sem m² publicado, o bairro não tem número para mostrar
                 erros.append(f"bairro '{slug}' sem preço do m² em sinduscon.json")
+        for e in self.radar.values():
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", e["slug"]) or e["slug"] != e["publicado"]:
+                erros.append(f"radar {e['slug']}: slug deve ser a data de publicação (AAAA-MM-DD)")
+            usadas = set()
+            for item in [*e["mercado"], *e["lancamentos"]]:
+                usadas.add(item["fonte"])
+                if item["fonte"] not in e["fontes"]:
+                    erros.append(f"radar {e['slug']}: fonte '{item['fonte']}' não cadastrada")
+                if item.get("bairro") and item["bairro"] not in self.bairros:
+                    erros.append(f"radar {e['slug']}: bairro '{item['bairro']}' inexistente")
+            for chave, f in e["fontes"].items():
+                if not f.get("url", "").startswith("https://") or not f.get("veiculo") or not f.get("publicado"):
+                    erros.append(f"radar {e['slug']}: fonte '{chave}' exige veiculo, publicado e url https")
+                if chave not in usadas:
+                    erros.append(f"radar {e['slug']}: fonte '{chave}' cadastrada e não citada")
         for item in [*self.artigos.values(), *(i for i in self.imoveis.values() if self._tem_ficha(i))]:
             for v in item.get("videos", []):
                 if len(v["youtube_id"]) != 11:
@@ -296,6 +313,12 @@ class Repo:
                     self._enriquecer_encerrado(i)
         for p in self.pilares.values():
             _pilares.enriquecer(self, p, self._data_dir)
+        for e in self.radar.values():
+            e["path"] = f"/radar/{e['slug']}/"
+            # fontes na ordem em que aparecem na edição, numeradas para a nota de rodapé
+            ordem = list(dict.fromkeys(item["fonte"] for item in [*e["lancamentos"], *e["mercado"]]))
+            e["fontes_lista"] = [{"chave": k, "n": n, **e["fontes"][k]} for n, k in enumerate(ordem, start=1)]
+            e["fonte_n"] = {f["chave"]: f["n"] for f in e["fontes_lista"]}
 
     def _enriquecer_sinduscon(self) -> None:
         """Ranking do levantamento e dados dos bairros do site: o m² de referência é sempre o do Sinduscon-CE.
@@ -568,6 +591,10 @@ class Repo:
     def artigos_recentes(self) -> list[dict]:
         return sorted(self.artigos.values(), key=lambda a: a["publicado"], reverse=True)
 
+    def radar_edicoes(self) -> list[dict]:
+        """Edições do radar, da mais recente para a mais antiga."""
+        return sorted(self.radar.values(), key=lambda e: e["publicado"], reverse=True)
+
     def satelites_do_guia(self, slug: str) -> list[dict]:
         """Guias que declaram `guia_pilar: <slug>`, do mais recente para o mais antigo."""
         return [a for a in self.artigos_recentes() if a.get("guia_pilar") == slug]
@@ -634,6 +661,10 @@ class Repo:
         paginas += [(b["path"], ult_imovel) for b in self.bairros.values()]
         paginas += [(a["path"], a["atualizado"]) for a in self.artigos_recentes()]
         paginas += [(p["path"], p["atualizado"]) for p in self.pilares.values()]
+        if self.radar:
+            edicoes = self.radar_edicoes()
+            paginas += [("/radar/", edicoes[0]["publicado"])]
+            paginas += [(e["path"], e["publicado"]) for e in edicoes]
         return paginas
 
     def paginas_redirecionadas(self) -> list[str]:

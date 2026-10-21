@@ -362,6 +362,34 @@ class Graph:
                              mainEntity={"@id": lista["@id"]})
         return self.render(pagina, self.trilha(path, crumbs), self.lugar(b), dataset, lista)
 
+    def radar(self, e: dict, crumbs, titulo: str) -> str:
+        """Edição do radar: NewsArticle da empresa, com cada publicação usada como citation."""
+        path = e["path"]
+        bairros = sorted({i["bairro"] for i in [*e["mercado"], *e["lancamentos"]] if i.get("bairro")})
+        artigo = {
+            "@type": "NewsArticle",
+            **self.ref(path, "artigo"),
+            "headline": e["titulo"][:110],
+            "description": e["resumo"],
+            "datePublished": e["publicado"],
+            "dateModified": e.get("atualizado", e["publicado"]),
+            "author": self.org,
+            "publisher": self.org,
+            "mainEntityOfPage": self.ref(path, "webpage"),
+            "isPartOf": self.ref("/radar/", "webpage"),
+            "articleSection": "Radar de lançamentos",
+            "inLanguage": LANG,
+            "about": [self.entidade, *(self.ref(self.repo.bairros[s]["path"], "lugar") for s in bairros)],
+            "citation": [{"@type": "NewsArticle", "headline": f["titulo"], "url": f["url"],
+                          "datePublished": f["publicado"],
+                          "publisher": {"@type": "Organization", "name": f["veiculo"]}}
+                         for f in e["fontes_lista"]],
+        }
+        pagina = self.pagina("WebPage", path, titulo, e["resumo"], crumbs, mainEntity=self.ref(path, "artigo"),
+                             datePublished=e["publicado"])
+        return self.render(pagina, self.trilha(path, crumbs), artigo,
+                           *(self.lugar(self.repo.bairros[s]) for s in bairros))
+
     def artigo(self, a: dict, crumbs) -> str:
         path = a["path"]
         perguntas = self.perguntas(path, a["perguntas_todas"])

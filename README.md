@@ -164,6 +164,16 @@ O pilar e seus satélites são o ativo permanente do site; a ficha de imóvel é
 - **Lacuna de dado:** marque `[PREENCHER: ...]`; o checklist o acusa e o site fica `noindex` até sair.
 - `titulo_seo` (opcional) é o `<title>`; o `titulo` é o H1.
 
+### Radar de lançamentos (semanal)
+
+`data/radar.json` tem uma edição por semana em `/radar/<AAAA-MM-DD>/`, com índice em `/radar/` e item no menu.
+Cada edição traz `titulo`, `resumo`, `periodo`, `lancamentos` (nome, incorporadora, local, tipo, descrição,
+situação), `mercado` (fato, número) e `fontes` (veículo, título, data, URL https). Cada item aponta a chave de
+uma fonte. Fonte inexistente, fonte não citada, bairro desconhecido ou slug diferente da data quebram o build.
+É a versão pública da pesquisa de segunda-feira. Fica de fora tudo o que é estratégia interna: concorrentes,
+palavras-chave, proposta comercial e imobiliárias concorrentes. Incorporadora citada em notícia entra, com a
+fonte. Antes de publicar, confira cada número na matéria original.
+
 ### Navegação até o imóvel (home)
 
 Quem chega vê o imóvel primeiro: a vitrine fica logo depois da abertura e o dado de mercado vem abaixo. O botão

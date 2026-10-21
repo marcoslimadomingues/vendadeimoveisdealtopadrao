@@ -37,7 +37,15 @@ def titulos_paginas(repo: Repo) -> dict[str, str]:
     t.update({a["path"]: a.get("titulo_seo") or a["titulo"] for a in repo.artigos.values()})
     t.update({p["path"]: f"{p['titulo_h1']}: m², ruas e mapa ({p['geo']['extensao_km']:.1f} km)".replace(".", ",")
               for p in repo.pilares.values()})
+    if repo.radar:
+        t["/radar/"] = f"Radar de lançamentos de alto padrão {cid['em']}: edições semanais"
+        t.update({e["path"]: f"Radar {_data_curta(e['publicado'])}: {e['titulo']}" for e in repo.radar.values()})
     return t
+
+
+def _data_curta(iso: str) -> str:
+    a, m, d = iso.split("-")
+    return f"{d}/{m}/{a}"
 
 
 def _texto(fragmento: str) -> str:

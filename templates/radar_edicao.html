@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block og_type %}article{% endblock %}
+{% block conteudo %}
+{% set e = edicao %}
+<article class="artigo" aria-labelledby="titulo-edicao">
+  <header class="cabecalho-pagina">
+    <p class="card__tipo">Radar de lançamentos · fatos de {{ e.periodo }}</p>
+    <h1 id="titulo-edicao">{{ e.titulo }}</h1>
+    <p class="meta">Por <a href="/sobre/" rel="author">{{ site.nome }}</a> ({{ site.creci }}) · edição de <time datetime="{{ e.publicado }}">{{ e.publicado|data_extenso }}</time></p>
+  </header>
+
+  <section class="resumo" aria-labelledby="resumo-semana">
+    <h2 id="resumo-semana">Resumo da semana</h2>
+    <p class="lead">{{ e.resumo }}</p>
+  </section>
+
+  <section aria-labelledby="lancamentos">
+    <h2 id="lancamentos">Lançamentos e empreendimentos</h2>
+    <div class="grade">
+      {% for l in e.lancamentos %}
+      <article class="card card--texto">
+        <p class="card__tipo">{{ l.tipo }}</p>
+        <h3 class="card__titulo">{{ l.nome }}</h3>
+        <p class="meta">{{ l.incorporadora }} · {% if l.bairro %}<a href="{{ repo.bairros[l.bairro].path }}">{{ l.local }}</a>{% else %}{{ l.local }}{% endif %}</p>
+        <p>{{ l.descricao }}</p>
+        <p><strong>Situação:</strong> {{ l.status }}</p>
+        {% set f = e.fontes[l.fonte] %}
+        <p class="fonte">Fonte [{{ e.fonte_n[l.fonte] }}]: <a href="{{ f.url }}" rel="noopener">{{ f.veiculo }}, {{ f.publicado|data_extenso }}</a></p>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section aria-labelledby="mercado">
+    <h2 id="mercado">Mercado em números</h2>
+    <div class="tabela-rolagem">
+    <table>
+      <caption>Indicadores publicados no período, com a fonte de cada um</caption>
+      <thead><tr><th scope="col">Fato</th><th scope="col">Número</th><th scope="col">Fonte</th></tr></thead>
+      <tbody>
+        {% for m in e.mercado %}
+        {% set f = e.fontes[m.fonte] %}
+        <tr><th scope="row">{{ m.fato }}{% if m.bairro %} (<a href="{{ repo.bairros[m.bairro].path }}">{{ repo.bairros[m.bairro].nome }}</a>){% endif %}</th>
+            <td>{{ m.numero }}</td>
+            <td><a href="{{ f.url }}" rel="noopener">[{{ e.fonte_n[m.fonte] }}] {{ f.veiculo }}</a></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="fonte">Preço do m² de imóveis novos em oferta, levantamento do Sinduscon-CE com a Cpes. Ranking completo em <a href="/guias/preco-m2-por-bairro-fortaleza/">preço do m² por bairro de Fortaleza</a>.</p>
+  </section>
+
+  <section aria-labelledby="fontes">
+    <h2 id="fontes">Fontes</h2>
+    <ol>
+      {% for f in e.fontes_lista %}
+      <li><a href="{{ f.url }}" rel="noopener">{{ f.veiculo }}: {{ f.titulo }}</a> (<time datetime="{{ f.publicado }}">{{ f.publicado|data_extenso }}</time>){% if f.dados %}. Dados: {{ f.dados }}{% endif %}.</li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <p class="aviso">O radar reúne fatos publicados por terceiros e não é recomendação de investimento. Preços, prazos e condições dos empreendimentos devem ser confirmados com a incorporadora.</p>
+
+  <nav aria-label="Outras edições do radar">
+    <p class="meta">
+      {% if anterior %}<a href="{{ anterior.path }}">← Edição de {{ anterior.publicado|data_extenso }}</a> · {% endif %}
+      <a href="/radar/">Todas as edições</a>
+      {% if seguinte %} · <a href="{{ seguinte.path }}">Edição de {{ seguinte.publicado|data_extenso }} →</a>{% endif %}
+    </p>
+  </nav>
+</article>
+{% endblock %}

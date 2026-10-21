@@ -172,6 +172,35 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
                       satelites=repo.satelites_do_guia(a["slug"]),
                       relacionados=[repo.imoveis[s] for s in a.get("imoveis_relacionados", [])])
 
+    # ------------------------------------------------------ Radar de lançamentos
+    @app.get("/radar/")
+    def radar():
+        edicoes = repo.radar_edicoes()
+        if not edicoes:
+            abort(404)
+        path, crumbs = "/radar/", [("Início", "/"), ("Radar de lançamentos", "/radar/")]
+        titulo = titulos[path]
+        descricao = (f"Edição semanal com lançamentos de alto padrão {cid['em']} e região, preço do m² do "
+                     "Sinduscon-CE e movimentos do mercado, cada fato com fonte e data.")
+        return pagina("radar.html", path=path, titulo=titulo, descricao=descricao, crumbs=crumbs,
+                      jsonld=graph.colecao(path, titulo, descricao, crumbs,
+                                           [(titulos[e["path"]], e["path"]) for e in edicoes]),
+                      edicoes=edicoes)
+
+    @app.get("/radar/<slug>/")
+    def radar_edicao(slug: str):
+        e = repo.radar.get(slug)
+        if e is None:
+            abort(404)
+        data_br = "/".join(reversed(e["publicado"].split("-")))
+        crumbs = [("Início", "/"), ("Radar de lançamentos", "/radar/"), (f"Edição de {data_br}", e["path"])]
+        edicoes = repo.radar_edicoes()
+        n = edicoes.index(e)
+        return pagina("radar_edicao.html", path=e["path"], titulo=titulos[e["path"]], descricao=e["resumo"],
+                      crumbs=crumbs, jsonld=graph.radar(e, crumbs, titulos[e["path"]]), edicao=e,
+                      anterior=edicoes[n + 1] if n + 1 < len(edicoes) else None,
+                      seguinte=edicoes[n - 1] if n > 0 else None)
+
     @app.get("/sobre/")
     def sobre():
         path, crumbs = "/sobre/", [("Início", "/"), ("Sobre", "/sobre/")]

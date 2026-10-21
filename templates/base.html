@@ -60,6 +60,7 @@
         <li><a href="/imoveis/"{% if path.startswith('/imoveis/') or path.startswith('/bairros/') %} aria-current="page"{% endif %}>Imóveis</a></li>
         {% for pl in repo.pilares.values() %}<li><a href="{{ pl.path }}"{% if path == pl.path %} aria-current="page"{% endif %}>{{ pl.nome_curto or pl.nome }}</a></li>{% endfor %}
         <li><a href="/guias/"{% if path.startswith('/guias/') %} aria-current="page"{% endif %}>Guias e análises</a></li>
+        {% if repo.radar %}<li><a href="/radar/"{% if path.startswith('/radar/') %} aria-current="page"{% endif %}>Radar de lançamentos</a></li>{% endif %}
         <li><a href="/sobre/"{% if path == '/sobre/' %} aria-current="page"{% endif %}>Sobre</a></li>
         <li><a href="/contato/"{% if path == '/contato/' %} aria-current="page"{% endif %}>Contato</a></li>
       </ul>
