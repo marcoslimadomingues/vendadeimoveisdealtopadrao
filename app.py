@@ -15,7 +15,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
-from flask import Flask, Response, abort, render_template, request
+from flask import Flask, Response, abort, render_template, request, send_from_directory
 
 from seo.bots import BotLogger, client_ip
 from seo.content import Repo
@@ -214,6 +214,11 @@ def create_app(data_dir: str | Path | None = None, bot_log: str | Path | None = 
                                         encerrados=repo.encerrados(),
                                         artigos=repo.artigos_recentes(), faq=repo.faq_institucional()),
                         mimetype="text/plain")
+
+    # raiz/: arquivos de verificação de buscadores (ex.: BingSiteAuth.xml), servidos como estão
+    for arq in sorted((ROOT / "raiz").glob("*")):
+        app.add_url_rule(f"/{arq.name}", f"raiz_{arq.stem}",
+                         lambda nome=arq.name: send_from_directory(ROOT / "raiz", nome))
 
     @app.get("/sitemap.xml")
     def sitemap():

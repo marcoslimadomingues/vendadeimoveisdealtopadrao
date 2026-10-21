@@ -61,6 +61,10 @@ def exportar(saida: Path) -> list[str]:
     (saida / "404.html").write_bytes(resp_404.data)
 
     shutil.copytree(ROOT / "static", saida / "static")
+    # raiz/: arquivos de verificação (Bing, Google, IndexNow) servidos na raiz do domínio, sem alteração
+    for arq in sorted((ROOT / "raiz").glob("*")):
+        if arq.is_file():
+            shutil.copy(arq, saida / arq.name)
     # _headers: formato aceito por Cloudflare Pages e Netlify.
     (saida / "_headers").write_text(HEADERS_CDN.format(csp=CSP, robots=valor_robots()), encoding="utf-8")
     return gerados

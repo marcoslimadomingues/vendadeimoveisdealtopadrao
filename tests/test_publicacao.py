@@ -121,3 +121,12 @@ def test_dependabot_e_politica_de_seguranca():
     assert 'package-ecosystem: "pip"' in dep and 'package-ecosystem: "github-actions"' in dep
     seg = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
     assert "Report a vulnerability" in seg and "@" not in seg, "sem e-mail pessoal na política pública"
+
+
+def test_verificacao_do_bing_na_raiz_do_dominio(tmp_path):
+    c = create_app(bot_log=tmp_path / "b.jsonl").test_client()
+    r = c.get("/BingSiteAuth.xml")
+    assert r.status_code == 200 and b"2CCC2314A04DC7BA3852F3C1DADECAAB" in r.data
+    saida = tmp_path / "pages"
+    assert build_pages("--dominio", "https://vendadeimoveisdealtopadrao.com.br", "--saida", str(saida)).returncode == 0
+    assert (saida / "BingSiteAuth.xml").read_bytes() == (ROOT / "raiz" / "BingSiteAuth.xml").read_bytes()

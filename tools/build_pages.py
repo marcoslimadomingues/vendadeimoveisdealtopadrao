@@ -40,6 +40,8 @@ def main() -> None:
     if prefixo:
         (saida / "robots.txt").unlink(missing_ok=True)  # só valem na raiz do domínio
         (saida / "llms.txt").unlink(missing_ok=True)
+        for arq in (ROOT / "raiz").glob("*"):  # verificação de buscadores também só vale na raiz
+            (saida / arq.name).unlink(missing_ok=True)
     else:
         (saida / "CNAME").write_text(url.netloc + "\n", encoding="utf-8")
 
