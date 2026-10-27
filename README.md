@@ -185,6 +185,12 @@ uma fonte. Fonte inexistente, fonte não citada, bairro desconhecido ou slug dif
 palavras-chave, proposta comercial e imobiliárias concorrentes. Incorporadora citada em notícia entra, com a
 fonte. Antes de publicar, confira cada número na matéria original.
 
+- **Rodar na sua máquina (sem a nuvem):** `radar_semanal.bat` (duplo clique). Ele confere os pré-requisitos,
+  atualiza o repositório e chama o Claude Code em modo automático com o roteiro de `tools/radar_prompt.md`:
+  pesquisa, confere cada fato na fonte, publica a edição na main, grava `postagens/<data>/` e o relatório
+  interno em `radar_interno/` (pasta local, no `.gitignore`: o repositório é público). No fim abre a
+  postagem do Google, a imagem, o relatório e a edição no ar. `radar_semanal.bat simular` só confere tudo.
+  O repositório precisa estar limpo (só a pasta `epic/` pode ficar de fora).
 - **Sem repetição:** um indicador de mercado não volta em outra edição. Se a fonte já apareceu na tabela
   "Mercado em números" de uma edição anterior, o build falha. Para lembrar o número, use um link para o guia
   (`nota_mercado`). Empreendimentos podem voltar quando houver fato novo.
