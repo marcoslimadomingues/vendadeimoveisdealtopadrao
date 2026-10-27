@@ -360,5 +360,81 @@
         "url": "https://revistaconstrua.com.br/imoveis/aluguel-residencial-fortaleza-alta-fipezap-2026/"
       }
     }
+  },
+  {
+    "slug": "2026-10-26",
+    "publicado": "2026-10-26",
+    "periodo": "13 a 26 de outubro de 2026",
+    "titulo": "Ranking reúne 50 prédios acima de 100 m em Fortaleza; BSPAR lança torre corporativa na Aldeota",
+    "resumo": "Um ranking de uma imobiliária local, divulgado pelo GCMais, conta 50 prédios acima de 100 metros em Fortaleza; o mais alto é o Ivens Monumental, com 173 m. A BSPAR lançou o BS Steel, torre corporativa de quase 120 m na Aldeota, com entrega prevista para 2030. O Mar del Prado, da Xampoo Participações, tem 162,8 m e foi apresentado como próximo lançamento. Mais de dez projetos estão em aprovação para possíveis lançamentos em 2027.",
+    "nota_mercado": "Ranking elaborado por uma imobiliária local e divulgado pelo GCMais em 22/10/2026. A contagem de construtoras refere-se a presenças no ranking, não a prédios. A altura do Wave Beira-Mar varia entre as fontes: 170,9 m neste ranking e 172 m na <a href=\"/radar/2026-10-12/\">edição de 12/10</a>. O levantamento do Sinduscon-CE sobre os <a href=\"/radar/2026-10-19/\">20 superprédios previstos até 2030</a> é outra fonte, sem relação com este ranking.",
+    "mercado": [
+      {
+        "fato": "Prédios acima de 100 m de altura em Fortaleza, no ranking divulgado pelo GCMais",
+        "numero": "50 prédios",
+        "fonte": "gcmais-2026-10-22"
+      },
+      {
+        "fato": "Os três mais altos do ranking",
+        "numero": "Ivens Monumental 173 m · Ponta Mar Condominium 171 m · Wave Beira-Mar 170,9 m",
+        "fonte": "gcmais-2026-10-22"
+      },
+      {
+        "fato": "Presenças de construtoras no ranking: Moura Dubeux, Normatel e Diagonal",
+        "numero": "9, 8 e 7",
+        "fonte": "gcmais-2026-10-22"
+      },
+      {
+        "fato": "Projetos em aprovação para possíveis lançamentos em 2027",
+        "numero": "mais de 10",
+        "fonte": "gcmais-2026-10-22"
+      }
+    ],
+    "lancamentos": [
+      {
+        "nome": "BS Steel",
+        "incorporadora": "BSPAR",
+        "local": "Aldeota, Fortaleza",
+        "bairro": "aldeota",
+        "tipo": "Torre corporativa (uso comercial)",
+        "descricao": "Quase 120 m de altura, estrutura híbrida de aço e concreto e certificação LEED Gold, com espaços corporativos executivos a partir de 300 m². Arquitetura de Daniel Arruda. Endereço e preço não divulgados.",
+        "status": "Lançado em 15 de outubro de 2026, em evento na Praça do BS Design. Entrega prevista para 2030, podendo antecipar em 19 meses em relação a um prédio convencional de concreto, segundo a matéria.",
+        "fonte": "trendsce-2026-10-16"
+      },
+      {
+        "nome": "Mar del Prado",
+        "incorporadora": "Xampoo Participações",
+        "local": "Orla de Fortaleza",
+        "tipo": "Torre na orla",
+        "descricao": "Ocupa a 8ª posição no ranking de prédios acima de 100 m, com 162,8 m de altura. As matérias não trazem endereço, metragens, preço nem prazo de entrega.",
+        "status": "Apresentado como próximo lançamento da incorporadora em 13 de outubro de 2026; sem data de lançamento divulgada.",
+        "fonte": [
+          "todahorace-2026-10-13",
+          "gcmais-2026-10-22"
+        ]
+      }
+    ],
+    "fontes": {
+      "gcmais-2026-10-22": {
+        "veiculo": "GCMais",
+        "titulo": "Ranking reúne os 50 prédios mais altos de Fortaleza; veja a lista completa",
+        "publicado": "2026-10-22",
+        "dados": "levantamento de uma imobiliária local, divulgado pelo GCMais",
+        "url": "https://gcmais.com.br/noticias/2026/10/22/ranking-reune-os-50-predios-mais-altos-de-fortaleza-veja-a-lista-completa"
+      },
+      "trendsce-2026-10-16": {
+        "veiculo": "TrendsCE",
+        "titulo": "Beto Studart reúne 500 convidados e lança o edifício BS Steel",
+        "publicado": "2026-10-16",
+        "url": "https://www.trendsce.com.br/2026/10/16/beto-studart-reune-500-convidados-e-lanca-o-edificio-bs-steel/"
+      },
+      "todahorace-2026-10-13": {
+        "veiculo": "Toda Hora CE",
+        "titulo": "De vila de pescadores ao metro quadrado mais valorizado da cidade: a metamorfose da Beira-Mar de Fortaleza",
+        "publicado": "2026-10-13",
+        "dados": "matéria com fala do diretor comercial da incorporadora, sem selo de publicidade",
+        "url": "https://www.todahorace.com.br/2026/10/de-vila-de-pescadores-ao-metro-quadrado.html"
+      }
+    }
   }
 ]

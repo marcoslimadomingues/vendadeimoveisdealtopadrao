@@ -1,0 +1,23 @@
+{
+  "tipo": "blocos",
+  "titulo": "Superprédios de Fortaleza",
+  "subtitulo": "Prédios acima de 100 m, segundo ranking divulgado pelo GCMais (22/10/2026)",
+  "blocos": [
+    {
+      "rotulo": "Prédios acima de 100 m em Fortaleza",
+      "valor": "50",
+      "unidade": "no ranking",
+      "atendido": true
+    },
+    {
+      "rotulo": "O mais alto: Ivens Monumental",
+      "valor": "173 m",
+      "unidade": "inauguração prevista para 2027"
+    },
+    {
+      "rotulo": "Projetos em aprovação para possíveis lançamentos em 2027",
+      "valor": "Mais de 10"
+    }
+  ],
+  "fonte": "Fonte: ranking de uma imobiliária local, divulgado pelo GCMais em 22/10/2026."
+}
