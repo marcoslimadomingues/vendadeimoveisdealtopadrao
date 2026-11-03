@@ -49,7 +49,11 @@
     "lng": -38.4968
   },
   "mapa_url": "https://www.openstreetmap.org/?mlat=-3.7257&mlon=-38.4968#map=17/-3.7257/-38.4968",
-  "sameAs": [],
+  "sameAs": [
+    "https://www.youtube.com/channel/UC-z36_CEZORPJy-2tBnMnGA",
+    "https://www.facebook.com/vendadeimoveisdealtopadraemfortaleza",
+    "https://www.instagram.com/imoveisdealtopadraoemfortaleza"
+  ],
   "entidade_central": {
     "nome": "Imóveis de Alto Padrão em Fortaleza",
     "descricao": "Coberturas, apartamentos à beira-mar e casas em condomínio acima de R$ 3 milhões nos bairros Mucuripe, Meireles, Cocó, Aldeota e Guararapes, em Fortaleza, Ceará."

@@ -46,7 +46,10 @@ def test_dados_da_empresa_no_json_ld(client):
     assert org["contactPoint"][0]["email"] == EMAIL
     assert org["openingHoursSpecification"][0]["dayOfWeek"][0] == "Monday"
     assert org["openingHoursSpecification"][0]["dayOfWeek"][-1] == "Friday"
-    assert "sameAs" not in org, "sem perfil real, não publicar sameAs de exemplo"
+    # só perfis reais da empresa: perfil pessoal (linkedin.com/in/) não identifica a organização
+    assert org["sameAs"] == ["https://www.youtube.com/channel/UC-z36_CEZORPJy-2tBnMnGA",
+                             "https://www.facebook.com/vendadeimoveisdealtopadraemfortaleza",
+                             "https://www.instagram.com/imoveisdealtopadraoemfortaleza"]
 
 
 def test_nenhum_dado_provisorio_da_empresa_em_nenhuma_pagina(client):
