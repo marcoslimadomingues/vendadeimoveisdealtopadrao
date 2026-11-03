@@ -227,8 +227,18 @@
     "descricao": "Critérios técnicos mensuráveis para imóveis de alto padrão em Fortaleza: proteção contra maresia, índice Rw de isolamento acústico, nível de blindagem ABNT NBR 15000 e cobertura do gerador.",
     "categoria": "Arquitetura e engenharia",
     "publicado": "2026-06-03",
-    "atualizado": "2026-09-28",
+    "atualizado": "2026-11-03",
     "tempo_leitura": 9,
+    "videos": [
+      {
+        "youtube_id": "QqkaN5AOKYA",
+        "titulo": "Do projeto ao imóvel pronto: a imagem mostra o projeto, o documento comprova",
+        "descricao": "Animação gerada por inteligência artificial; não retrata um imóvel à venda nem um local real. Os critérios desta página são comprovados pelos documentos, e não pela imagem.",
+        "tipo": "Animação ilustrativa",
+        "data_upload": "2026-11-03",
+        "duracao": "PT39S"
+      }
+    ],
     "imagem": "/static/img/guias/isolamento-acustico-blindagem-gerador-imoveis-luxo-16x9.jpg",
     "resumo": "Quatro especificações técnicas separam um imóvel de alto padrão em Fortaleza de um imóvel apenas caro: proteção contra maresia nas esquadrias e ferragens, isolamento acústico Rw igual ou superior a 42 dB, portaria blindada com nível mínimo III-A pela ABNT NBR 15000 e gerador que atende 100% da carga elétrica. As 4 especificações podem ser verificadas por laudo técnico antes da compra.",
     "bairros_relacionados": [],

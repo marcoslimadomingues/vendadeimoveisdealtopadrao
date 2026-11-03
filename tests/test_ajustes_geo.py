@@ -46,9 +46,18 @@ def test_videos_da_ficha_no_html_e_no_json_ld(ctx):
 
 
 def test_guias_sem_video_provisorio(ctx):
-    """Vídeo só com gravação real: nenhum guia publica ID provisório."""
+    """Vídeo só com ID real: nenhum guia publica ID provisório."""
     _, repo = ctx
     assert not any("SUBSTITUA" in v["youtube_id"] for a in repo.artigos.values() for v in a["videos"])
+
+
+def test_video_gerado_por_ia_no_guia_avisa_que_nao_e_imovel_real(ctx):
+    client, repo = ctx
+    guia = repo.artigos["isolamento-acustico-blindagem-gerador-imoveis-luxo"]
+    html = client.get(guia["path"]).get_data(as_text=True)
+    assert html.count("youtube-nocookie.com/embed/QqkaN5AOKYA") == 1
+    assert "não retrata um imóvel à venda" in html
+    assert [v["duration"] for v in tipos(grafo(html), "VideoObject")] == ["PT39S"]
 
 
 def test_paginas_de_especialistas_nao_existem(ctx):
