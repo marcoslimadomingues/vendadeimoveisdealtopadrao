@@ -102,6 +102,8 @@ def test_jsonld_do_pilar(ctx):
     fontes = tipos(nodes, "NewsArticle")
     assert {f["publisher"]["name"] for f in fontes} == {"Diário do Nordeste", "O Povo"}
     dataset = tipos(nodes, "Dataset")[0]
+    assert "Sinduscon-CE" in dataset["creator"][0]["name"] and dataset["publisher"]["@id"].endswith("#organizacao")
+    assert dataset["url"].endswith(PATH)
     assert len(dataset["variableMeasured"]) == len(p["indicadores"])
     assert all(v["unitText"] == "BRL/m²" for v in dataset["variableMeasured"])
     lugar = [n for n in tipos(nodes, "Place") if n["@id"].endswith(f"{PATH}#lugar")][0]

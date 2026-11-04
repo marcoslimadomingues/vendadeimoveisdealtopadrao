@@ -26,7 +26,7 @@ def pct(valor: float | None, sinal: bool = False) -> str:
 
 
 def data_extenso(iso: str) -> str:
-    d = date.fromisoformat(iso)
+    d = date.fromisoformat(iso[:10])  # aceita também data e hora (uploadDate com fuso)
     return f"{d.day} de {MESES[d.month - 1]} de {d.year}"
 
 

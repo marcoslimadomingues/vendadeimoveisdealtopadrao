@@ -191,6 +191,8 @@ fonte. Antes de publicar, confira cada número na matéria original.
   interno em `radar_interno/` (pasta local, no `.gitignore`: o repositório é público). No fim abre a
   postagem do Google, a imagem, o relatório e a edição no ar. `radar_semanal.bat simular` só confere tudo.
   O repositório precisa estar limpo (só a pasta `epic/` pode ficar de fora).
+- **Imagem da edição:** `postagens/<data>/imagem-4x3.png` é publicada pelo build em `/static/img/radar/<data>-4x3.png`
+  e vira a imagem do JSON-LD e do compartilhamento. Sem postagem, a edição usa `og-marca.png`.
 - **Sem repetição:** um indicador de mercado não volta em outra edição. Se a fonte já apareceu na tabela
   "Mercado em números" de uma edição anterior, o build falha. Para lembrar o número, use um link para o guia
   (`nota_mercado`). Empreendimentos podem voltar quando houver fato novo.

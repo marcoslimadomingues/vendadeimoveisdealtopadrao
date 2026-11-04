@@ -11,9 +11,10 @@ import re
 from pathlib import Path
 
 from . import pilares as _pilares
-from .formatting import brl, cap as _cap, data_extenso, num, pct
+from .formatting import OG_MARCA, brl, cap as _cap, data_extenso, num, pct
 
 STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
+POSTAGENS_DIR = Path(__file__).resolve().parent.parent / "postagens"
 # SITE_DATA_DIR troca a pasta de dados (os testes usam uma carteira de demonstração fora de data/).
 DATA_DIR = Path(os.environ.get("SITE_DATA_DIR") or Path(__file__).resolve().parent.parent / "data")
 
@@ -344,6 +345,9 @@ class Repo:
             _pilares.enriquecer(self, p, self._data_dir)
         for e in self.radar.values():
             e["path"] = f"/radar/{e['slug']}/"
+            # a imagem da postagem do Google vira a da edição (tools/export_static.py a publica); sem ela, a marca
+            tem_imagem = (POSTAGENS_DIR / e["slug"] / "imagem-4x3.png").is_file()
+            e["imagem"] = f"/static/img/radar/{e['slug']}-4x3.png" if tem_imagem else OG_MARCA
             # fontes na ordem em que aparecem na edição, numeradas para a nota de rodapé
             ordem = list(dict.fromkeys(k for item in [*e["lancamentos"], *e["mercado"]] for k in _chaves_fonte(item)))
             for item in [*e["lancamentos"], *e["mercado"]]:

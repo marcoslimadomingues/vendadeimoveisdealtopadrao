@@ -161,6 +161,17 @@ def test_desempenho_aponta_edicao_velha_sem_impressoes(tmp_path):
     assert cedo[recente["slug"]] == "nova demais para avaliar"
 
 
+def test_imagem_da_edicao_vem_da_postagem_ou_cai_na_marca(tmp_path):
+    client, repo = montar(tmp_path)
+    for e in repo.radar.values():
+        tem = (ROOT / "postagens" / e["slug"] / "imagem-4x3.png").is_file()
+        esperada = f"/static/img/radar/{e['slug']}-4x3.png" if tem else "/static/img/og-marca.png"
+        html = client.get(e["path"]).get_data(as_text=True)
+        artigo = next(n for n in grafo(html) if n["@type"] == "NewsArticle" and n["@id"].endswith("#artigo"))
+        assert artigo["image"][0].endswith(esperada), e["slug"]
+        assert re.search(rf'<meta property="og:image" content="[^"]*{re.escape(esperada)}">', html), e["slug"]
+
+
 def test_indexar_so_aceita_false(tmp_path):
     with pytest.raises(ValueError, match="'indexar' só aceita false"):
         montar(tmp_path, editar_radar(lambda r: r[0].update(indexar=True)))

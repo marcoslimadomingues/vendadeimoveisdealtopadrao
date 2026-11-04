@@ -57,7 +57,9 @@ def test_video_gerado_por_ia_no_guia_avisa_que_nao_e_imovel_real(ctx):
     html = client.get(guia["path"]).get_data(as_text=True)
     assert html.count("youtube-nocookie.com/embed/QqkaN5AOKYA") == 1
     assert "não retrata um imóvel à venda" in html
-    assert [v["duration"] for v in tipos(grafo(html), "VideoObject")] == ["PT39S"]
+    video = tipos(grafo(html), "VideoObject")[0]
+    assert video["duration"] == "PT39S" and video["uploadDate"] == "2026-11-03T15:58:39-03:00", "data com fuso"
+    assert "3 de novembro de 2026" in html
 
 
 def test_paginas_de_especialistas_nao_existem(ctx):

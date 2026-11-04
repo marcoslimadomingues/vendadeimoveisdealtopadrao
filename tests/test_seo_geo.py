@@ -86,6 +86,14 @@ def test_og_image_em_png_e_etiquetas_sociais(client):
     assert (ROOT / "static" / "img" / "og-marca.png").read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
 
 
+def test_logo_em_png_e_cnpj_sem_campo_repetido(client):
+    org = organizacao(client.get("/").get_data(as_text=True))
+    assert org["logo"]["url"].endswith("/static/img/logo.png") and org["logo"]["width"] == 512
+    png = (ROOT / "static" / "img" / "logo.png").read_bytes()
+    assert png[:8] == b"\x89PNG\r\n\x1a\n" and int.from_bytes(png[16:20], "big") == 512  # largura no cabeçalho IHDR
+    assert "vatID" not in org and org["taxID"] == CNPJ
+
+
 def test_404_sem_hreflang_nem_canonical(client):
     html = client.get("/nao-existe/").get_data(as_text=True)
     assert "hreflang" not in html and "canonical" not in html

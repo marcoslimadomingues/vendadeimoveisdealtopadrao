@@ -68,6 +68,9 @@ def test_pagina_do_bairro_so_com_indicador_publico(ctx, slug):
     assert re.search(r"<title>Preço do m² (no|na) .+ em 2026 \| Alto Padrão Imóveis</title>", html)
     dataset = next(n for n in grafo(html) if n["@type"] == "Dataset")
     assert dataset["isBasedOn"]["publisher"]["name"] == "O Povo" and dataset["temporalCoverage"] == "2026-08"
+    # o dado é do Sinduscon-CE: a empresa publica, não é a autora do número
+    assert "Sinduscon-CE" in dataset["creator"][0]["name"] and dataset["publisher"]["@id"].endswith("#organizacao")
+    assert dataset["url"].endswith(f"/bairros/{slug}/")
     valores = {v["name"]: v["value"] for v in dataset["variableMeasured"]}
     assert valores["Preço médio do m² (agosto de 2026)"] == b["sinduscon"]["m2"]
 

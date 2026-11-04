@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block og_type %}article{% endblock %}
+{% block og_image %}{{ edicao.imagem }}{% endblock %}
 {% block conteudo %}
 {% set e = edicao %}
 <article class="artigo" aria-labelledby="titulo-edicao">

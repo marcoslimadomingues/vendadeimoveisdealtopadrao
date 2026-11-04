@@ -17,6 +17,11 @@ from .content import Repo
 
 SCHEMA = "https://schema.org"
 LANG = "pt-BR"
+# Os números de m² são do levantamento deles; a empresa só publica (Dataset.creator ≠ publisher).
+CRIADORES_SINDUSCON = [
+    {"@type": "Organization", "name": "Sindicato da Indústria da Construção Civil do Ceará (Sinduscon-CE)"},
+    {"@type": "Organization", "name": "Comissão de Pesquisa de Mercado Imobiliário (Cpes)"},
+]
 
 
 DIAS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -75,11 +80,10 @@ class Graph:
             "description": s["descricao"],
             "url": self.url("/"),
             "logo": {"@type": "ImageObject", **self.ref("/", "logo"),
-                     "url": self.url("/static/img/logo.svg"), "caption": s["nome"]},
+                     "url": self.url("/static/img/logo.png"), "width": 512, "height": 512, "caption": s["nome"]},
             "image": self.ref("/", "logo"),
             **({"foundingDate": s["fundacao"]} if s.get("fundacao") else {}),
             "taxID": s["cnpj"],
-            "vatID": s["cnpj"],
             "identifier": [
                 {"@type": "PropertyValue", "propertyID": "CNPJ", "value": s["cnpj"]},
                 {"@type": "PropertyValue", "propertyID": s["creci_orgao"], "value": s["creci"]},
@@ -349,7 +353,8 @@ class Graph:
         dataset = {
             "@type": "Dataset", **self.ref(path, "indicadores"),
             "name": f"Preço do m² {b['em']} em {sd['ref_txt']} (Sinduscon-CE)",
-            "description": b["resumo"], "creator": self.org, "isAccessibleForFree": True,
+            "description": b["resumo"], "url": self.url(path), "creator": CRIADORES_SINDUSCON,
+            "publisher": self.org, "isAccessibleForFree": True,
             "temporalCoverage": sd["referencia"], "spatialCoverage": self.ref(path, "lugar"),
             "measurementTechnique": sd["metodo"], "variableMeasured": variaveis,
             "isBasedOn": {"@type": "NewsArticle", "headline": sd["fonte"]["titulo"], "url": sd["fonte"]["url"],
@@ -371,6 +376,7 @@ class Graph:
             **self.ref(path, "artigo"),
             "headline": e["titulo"][:110],
             "description": e["resumo"],
+            "image": [self.url(e["imagem"])],
             "datePublished": e["publicado"],
             "dateModified": e.get("atualizado", e["publicado"]),
             "author": self.org,
@@ -465,7 +471,8 @@ class Graph:
         dataset = {
             "@type": "Dataset", **self.ref(path, "dataset"),
             "name": f"Preço do m² na {p['nome']} e nos bairros vizinhos, por fonte e data",
-            "description": p["metodo_sinduscon"], "creator": self.org, "isAccessibleForFree": True,
+            "description": p["metodo_sinduscon"], "url": self.url(path), "creator": CRIADORES_SINDUSCON,
+            "publisher": self.org, "isAccessibleForFree": True,
             "temporalCoverage": "2026-07/2026-08", "spatialCoverage": self.ref(path, "lugar"),
             "isBasedOn": [{"@id": f["@id"]} for f in fontes.values()], "variableMeasured": medidas,
         }

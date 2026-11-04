@@ -62,6 +62,10 @@ def exportar(saida: Path) -> list[str]:
     (saida / "404.html").write_bytes(resp_404.data)
 
     shutil.copytree(ROOT / "static", saida / "static")
+    # imagem de cada edição do radar: a mesma da postagem do Google, sem passo extra na rotina semanal
+    (saida / "static" / "img" / "radar").mkdir(parents=True, exist_ok=True)
+    for arq in sorted((ROOT / "postagens").glob("*/imagem-4x3.png")):
+        shutil.copy(arq, saida / "static" / "img" / "radar" / f"{arq.parent.name}-4x3.png")
     # raiz/: arquivos de verificação (Bing, Google, IndexNow) servidos na raiz do domínio, sem alteração
     for arq in sorted((ROOT / "raiz").glob("*")):
         if arq.is_file():

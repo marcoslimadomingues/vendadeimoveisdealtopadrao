@@ -75,6 +75,8 @@ def test_build_para_pages_na_raiz_do_dominio(tmp_path):
     home = (saida / "index.html").read_text(encoding="utf-8")
     assert f'<link rel="canonical" href="{DOMINIO}/">' in home and 'href="/imoveis/"' in home
     assert f"<loc>{DOMINIO}/milha-de-ouro-fortaleza/</loc>" in (saida / "sitemap.xml").read_text(encoding="utf-8")
+    for postagem in (ROOT / "postagens").glob("*/imagem-4x3.png"):  # a imagem da edição vai junto, sem passo manual
+        assert (saida / "static" / "img" / "radar" / f"{postagem.parent.name}-4x3.png").is_file()
 
 
 def test_build_para_pages_em_subcaminho_prefixa_links(tmp_path):
