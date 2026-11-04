@@ -15,7 +15,7 @@ setlocal EnableExtensions
 chcp 65001 >nul
 cd /d "%~dp0"
 
-set "MODELO=opus"
+set "MODELO=claude-haiku-5-5"
 set "PY=py -3.14"
 set "FERRAMENTAS=Read Write Edit Glob Grep WebSearch WebFetch Bash(git *) Bash(py *) Bash(python *) Bash(curl *) Bash(TZ=America/Fortaleza date *) Bash(date *) Bash(ls *) Bash(cat *) Bash(mkdir *) Bash(sleep *) Bash(head *) Bash(grep *) Bash(rtk *)"
 
