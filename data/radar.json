@@ -436,5 +436,98 @@
         "url": "https://www.todahorace.com.br/2026/10/de-vila-de-pescadores-ao-metro-quadrado.html"
       }
     }
+  },
+  {
+    "slug": "2026-11-04",
+    "publicado": "2026-11-04",
+    "periodo": "27 de outubro a 3 de novembro de 2026",
+    "titulo": "BSPAR lidera o alto padrão em Fortaleza no 3º trimestre e Sinduscon-CE conta 53 superprédios acima de 100 m",
+    "resumo": "O Sinduscon-CE colocou Fortaleza como 3º maior mercado imobiliário do Brasil no 3º trimestre, com R$ 2,04 bilhões em vendas e R$ 2,4 bilhões em lançamentos. No Flash Imobiliário, levantamento de uma imobiliária local pôs a BSPAR no topo dos rankings geral e de médio e alto padrão em Fortaleza e Região Metropolitana, seguida por Moura Dubeux e Diagonal. A cidade passa a somar 53 torres acima de 100 metros, 41 delas no Meireles e na Aldeota. A Colmeia marcou para 5 de novembro o pré-lançamento de um edifício de 115 metros no Meireles, da linha iHome.",
+    "nota_mercado": "Dois levantamentos convivem no trimestre: o oficial do Sinduscon-CE com a Brain (Fortaleza isolada) e outro, de uma imobiliária local, com Fortaleza e Região Metropolitana somadas, apresentado no Flash Imobiliário. Os números não se somam. Para o preço do m² por bairro, veja o <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">ranking do Sinduscon-CE</a>; para o eixo Meireles/Beira-Mar, o pilar <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza</a>.",
+    "mercado": [
+      {
+        "fato": "Fortaleza é o 3º maior mercado imobiliário do Brasil no 3T, empatada com Curitiba e atrás de São Paulo e Rio",
+        "numero": "R$ 2,04 bi vendidos · 3.543 un. · +30% sobre o 2T",
+        "fonte": "opovo-2026-10-27"
+      },
+      {
+        "fato": "Lançamentos em Fortaleza no 3T",
+        "numero": "R$ 2,4 bi · 3.753 un. · +62,5% sobre o 2T",
+        "fonte": "opovo-2026-10-27"
+      },
+      {
+        "fato": "Fortaleza e Região Metropolitana no 3T, segundo levantamento de uma imobiliária local apresentado no Flash Imobiliário",
+        "numero": "R$ 2,33 bi · 4.550 un. · +33% sobre o 2T",
+        "fonte": "gcmais-2026-10-30"
+      },
+      {
+        "fato": "Ranking geral de construtoras em Fortaleza e Região Metropolitana no 3T",
+        "numero": "1º BSPAR · 2º Diagonal · 3º MDNE",
+        "fonte": "economicnews-2026-11-03"
+      },
+      {
+        "fato": "Ranking de construtoras no segmento de médio e alto padrão em Fortaleza e Região Metropolitana no 3T",
+        "numero": "1º BSPAR · 2º Moura Dubeux · 3º Diagonal",
+        "fonte": "economicnews-2026-11-03"
+      },
+      {
+        "fato": "Torres acima de 100 metros em Fortaleza",
+        "numero": "53 · 10 entregues, 29 em obra e 14 na planta",
+        "fonte": "gcmais-2026-11-03"
+      },
+      {
+        "fato": "Concentração dos superprédios no Meireles e na Aldeota",
+        "numero": "41 das 53 torres",
+        "fonte": "gcmais-2026-11-03"
+      }
+    ],
+    "lancamentos": [
+      {
+        "nome": "Edifício de 115 metros da linha iHome (nome não divulgado)",
+        "incorporadora": "Colmeia",
+        "local": "Meireles, Fortaleza (próximo à Beira-Mar)",
+        "bairro": "meireles",
+        "tipo": "Residencial vertical com unidades em formato studio",
+        "descricao": "Edifício de 115 metros de altura, apontado como projeto de maior destaque da linha iHome e entre os 50 prédios mais altos de Fortaleza. Metragens, número de unidades, preço e VGV não divulgados.",
+        "status": "Pré-lançamento marcado para 5 de novembro de 2026, em evento restrito a convidados.",
+        "fonte": "gcmais-2026-11-04"
+      }
+    ],
+    "fontes": {
+      "opovo-2026-10-27": {
+        "veiculo": "O Povo",
+        "titulo": "Mercado imobiliário de Fortaleza é o 3º maior do Brasil, aponta Sinduscon-CE",
+        "publicado": "2026-10-27",
+        "dados": "Sinduscon-CE com a Brain, amostra de 420 empreendimentos de 149 empresas (214 em Fortaleza e 206 na Região Metropolitana), referência 3º trimestre de 2026",
+        "url": "https://www.opovo.com.br/noticias/economia/2026/10/27/mercado-imobiliario-de-fortaleza-e-o-3-maior-do-brasil.html"
+      },
+      "gcmais-2026-10-30": {
+        "veiculo": "GCMais",
+        "titulo": "Mercado imobiliário de Fortaleza movimenta R$ 2,33 bilhões no 3º trimestre e registra melhor resultado do ano",
+        "publicado": "2026-10-30",
+        "dados": "levantamento de uma imobiliária local, apresentado no Flash Imobiliário",
+        "url": "https://gcmais.com.br/noticias/2026/10/30/mercado-imobiliario-de-fortaleza-movimenta-r-2-33-bilhoes-no-3-trimestre-e-registra-melhor-resultado-do-ano"
+      },
+      "economicnews-2026-11-03": {
+        "veiculo": "Economic News Brasil",
+        "titulo": "BSPAR lidera vendas do mercado imobiliário de Fortaleza",
+        "publicado": "2026-11-03",
+        "dados": "levantamento de uma imobiliária local, apresentado no Flash Imobiliário na última semana de outubro",
+        "url": "https://economicnewsbrasil.com.br/2026/11/03/bspar-lidera-vendas-mercado-imobiliario-fortaleza/"
+      },
+      "gcmais-2026-11-03": {
+        "veiculo": "GCMais",
+        "titulo": "Superprédios mudam a paisagem de Fortaleza; cidade tem 53 torres com mais de 100 metros",
+        "publicado": "2026-11-03",
+        "dados": "Sinduscon-CE, com levantamento adicional de uma imobiliária local",
+        "url": "https://gcmais.com.br/noticias/2026/11/03/superpredios-mudam-a-paisagem-de-fortaleza-cidade-tem-53-torres-com-mais-de-100-metros"
+      },
+      "gcmais-2026-11-04": {
+        "veiculo": "GCMais",
+        "titulo": "Lopes Immobilis e Construtora Colmeia anunciam pré-lançamento de prédio de 115 metros em Fortaleza",
+        "publicado": "2026-11-04",
+        "url": "https://gcmais.com.br/noticias/2026/11/04/lopes-immobilis-e-construtora-colmeia-anunciam-pre-lancamento-de-predio-de-115-metros-em-fortaleza"
+      }
+    }
   }
 ]

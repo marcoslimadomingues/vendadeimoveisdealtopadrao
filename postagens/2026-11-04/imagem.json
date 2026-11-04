@@ -1,0 +1,26 @@
+{
+  "tipo": "blocos",
+  "titulo": "Fortaleza no 3º trimestre",
+  "subtitulo": "Sinduscon-CE: 3º maior mercado imobiliário do Brasil e 53 superprédios acima de 100 m",
+  "blocos": [
+    {
+      "rotulo": "Vendas em Fortaleza no 3T",
+      "valor": "R$ 2,04 bi",
+      "unidade": "3.543 unidades",
+      "destaque": "+30%",
+      "atendido": true
+    },
+    {
+      "rotulo": "Torres acima de 100 m em Fortaleza",
+      "valor": "53",
+      "unidade": "10 entregues, 29 em obra, 14 na planta"
+    },
+    {
+      "rotulo": "Superprédios no Meireles e na Aldeota",
+      "valor": "41",
+      "unidade": "de 53 torres",
+      "atendido": true
+    }
+  ],
+  "fonte": "Fontes: O Povo, com dados do Sinduscon-CE (3T 2026), e GCMais, com levantamento do Sinduscon-CE e de uma imobiliária local (03/11/2026)."
+}
