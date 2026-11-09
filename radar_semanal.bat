@@ -15,6 +15,15 @@ setlocal EnableExtensions
 chcp 65001 >nul
 cd /d "%~dp0"
 
+rem DESATIVADO em 09/11/2026: o radar agora sai do relatorio que o Marcos cola no Claude Code
+rem (link do artifact), sem pesquisa automatica. Para religar, apague as linhas abaixo ate o "exit /b 0".
+echo.
+echo O radar_semanal.bat esta DESATIVADO desde 09/11/2026.
+echo Para publicar o radar, cole o link do relatorio no Claude Code.
+echo.
+pause
+exit /b 0
+
 set "MODELO=claude-haiku-5-5"
 set "PY=py -3.14"
 set "FERRAMENTAS=Read Write Edit Glob Grep WebSearch WebFetch Bash(git *) Bash(py *) Bash(python *) Bash(curl *) Bash(TZ=America/Fortaleza date *) Bash(date *) Bash(ls *) Bash(cat *) Bash(mkdir *) Bash(sleep *) Bash(head *) Bash(grep *) Bash(rtk *)"
