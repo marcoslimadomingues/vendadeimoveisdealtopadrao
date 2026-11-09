@@ -56,6 +56,12 @@ class Graph:
         return self.ref("/", "organizacao")
 
     @property
+    def org_publicadora(self) -> dict:
+        # Dataset.publisher: o Google só aceita Organization ou Person e não herda o tipo do nó global
+        # (RealEstateAgent) pelo @id, então o tipo vai explícito; o @id liga ao mesmo nó.
+        return {"@type": "Organization", **self.org, "name": self.site["nome"], "url": self.url("/")}
+
+    @property
     def entidade(self) -> dict:
         return self.ref("/", "entidade-central")
 
@@ -354,7 +360,7 @@ class Graph:
             "@type": "Dataset", **self.ref(path, "indicadores"),
             "name": f"Preço do m² {b['em']} em {sd['ref_txt']} (Sinduscon-CE)",
             "description": b["resumo"], "url": self.url(path), "creator": CRIADORES_SINDUSCON,
-            "publisher": self.org, "isAccessibleForFree": True,
+            "publisher": self.org_publicadora, "isAccessibleForFree": True,
             "temporalCoverage": sd["referencia"], "spatialCoverage": self.ref(path, "lugar"),
             "measurementTechnique": sd["metodo"], "variableMeasured": variaveis,
             "isBasedOn": {"@type": "NewsArticle", "headline": sd["fonte"]["titulo"], "url": sd["fonte"]["url"],
@@ -472,7 +478,7 @@ class Graph:
             "@type": "Dataset", **self.ref(path, "dataset"),
             "name": f"Preço do m² na {p['nome']} e nos bairros vizinhos, por fonte e data",
             "description": p["metodo_sinduscon"], "url": self.url(path), "creator": CRIADORES_SINDUSCON,
-            "publisher": self.org, "isAccessibleForFree": True,
+            "publisher": self.org_publicadora, "isAccessibleForFree": True,
             "temporalCoverage": "2026-07/2026-08", "spatialCoverage": self.ref(path, "lugar"),
             "isBasedOn": [{"@id": f["@id"]} for f in fontes.values()], "variableMeasured": medidas,
         }
