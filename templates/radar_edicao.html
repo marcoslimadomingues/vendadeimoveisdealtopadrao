@@ -15,6 +15,7 @@
     <p class="lead">{{ e.resumo }}</p>
   </section>
 
+  {% if e.lancamentos %}
   <section aria-labelledby="lancamentos">
     <h2 id="lancamentos">Lançamentos e empreendimentos</h2>
     <div class="grade">
@@ -30,6 +31,7 @@
       {% endfor %}
     </div>
   </section>
+  {% endif %}
 
   <section aria-labelledby="mercado">
     <h2 id="mercado">Mercado em números</h2>

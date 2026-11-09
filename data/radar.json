@@ -529,5 +529,60 @@
         "url": "https://gcmais.com.br/noticias/2026/11/04/lopes-immobilis-e-construtora-colmeia-anunciam-pre-lancamento-de-predio-de-115-metros-em-fortaleza"
       }
     }
+  },
+  {
+    "slug": "2026-11-09",
+    "publicado": "2026-11-09",
+    "periodo": "4 a 9 de novembro de 2026",
+    "titulo": "Copom mantém a Selic em 13,75% e preço de venda dos imóveis em Fortaleza sobe 1,11% em outubro no FipeZAP",
+    "resumo": "O Copom manteve a Selic em 13,75% ao ano em 4 de novembro e interrompeu a sequência de cortes nos juros; a próxima reunião está marcada para 8 e 9 de dezembro. No Índice FipeZAP de outubro, o preço de venda de imóveis residenciais em Fortaleza subiu 1,11% no mês, acima da média nacional de 0,48%. No acumulado de 2026, Fortaleza soma alta de 8,57%, a 5ª maior entre as capitais acompanhadas pelo índice.",
+    "nota_mercado": "O FipeZAP mede o preço anunciado de venda de imóveis residenciais na cidade inteira, sem recorte de bairro nem de padrão. Para o preço do m² por bairro, veja o <a href=\"/guias/preco-m2-por-bairro-fortaleza/\">ranking do Sinduscon-CE</a>; para o eixo Meireles/Beira-Mar, o pilar <a href=\"/milha-de-ouro-fortaleza/\">Milha de ouro de Fortaleza</a>.",
+    "mercado": [
+      {
+        "fato": "Taxa Selic mantida pelo Copom em 4 de novembro, fim da sequência de cortes",
+        "numero": "13,75% ao ano · próxima reunião em 8 e 9 de dezembro",
+        "fonte": "seudinheiro-2026-11-04"
+      },
+      {
+        "fato": "Preço de venda de imóveis residenciais em Fortaleza em outubro (FipeZAP)",
+        "numero": "+1,11% no mês · média nacional +0,48%",
+        "fonte": [
+          "portas-2026-11-05",
+          "bpmoney-2026-11-05"
+        ]
+      },
+      {
+        "fato": "Alta acumulada do preço de venda em Fortaleza em 2026 (FipeZAP, até outubro)",
+        "numero": "+8,57% · 5ª maior entre as capitais · média nacional +4,54%",
+        "fonte": [
+          "portas-2026-11-05",
+          "bpmoney-2026-11-05"
+        ]
+      }
+    ],
+    "lancamentos": [],
+    "fontes": {
+      "seudinheiro-2026-11-04": {
+        "veiculo": "Seu Dinheiro",
+        "titulo": "Copom segura Selic em 13,75% e interrompe ciclo de cortes nos juros",
+        "publicado": "2026-11-04",
+        "dados": "comunicado do Copom de 4 de novembro de 2026",
+        "url": "https://www.seudinheiro.com/2026/economia/copom-segura-selic-em-1375-e-interrompe-ciclo-de-cortes-nos-juros-mlim/"
+      },
+      "portas-2026-11-05": {
+        "veiculo": "Portas",
+        "titulo": "Preço de imóveis residenciais desacelera em outubro, mas fica acima da inflação mensal, diz FipeZAP",
+        "publicado": "2026-11-05",
+        "dados": "Índice FipeZAP de venda residencial, outubro de 2026",
+        "url": "https://portas.com.br/noticias/preco-de-imoveis-residenciais-desacelera-em-outubro-mas-fica-acima-da-inflacao-mensal-diz-fipezap/"
+      },
+      "bpmoney-2026-11-05": {
+        "veiculo": "BPMoney",
+        "titulo": "Preço dos imóveis sobe 0,48% em outubro; veja as cidades mais caras, segundo o FipeZAP",
+        "publicado": "2026-11-05",
+        "dados": "Índice FipeZAP de venda residencial, outubro de 2026",
+        "url": "https://bpmoney.com.br/educacao-financeira/preco-imoveis-sobe-048-outubro-cidades-mais-caras-fipezap/"
+      }
+    }
   }
 ]

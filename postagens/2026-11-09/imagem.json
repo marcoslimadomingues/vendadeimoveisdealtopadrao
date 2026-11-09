@@ -1,0 +1,25 @@
+{
+  "tipo": "blocos",
+  "titulo": "Fortaleza em outubro",
+  "subtitulo": "FipeZAP: preço de venda sobe acima da média nacional; Copom mantém a Selic",
+  "blocos": [
+    {
+      "rotulo": "Preço de venda em Fortaleza, outubro",
+      "valor": "+1,11%",
+      "unidade": "Brasil: +0,48%",
+      "atendido": true
+    },
+    {
+      "rotulo": "Alta de Fortaleza em 2026",
+      "valor": "+8,57%",
+      "unidade": "5ª maior entre as capitais",
+      "atendido": true
+    },
+    {
+      "rotulo": "Selic mantida pelo Copom (04/11)",
+      "valor": "13,75%",
+      "unidade": "ao ano"
+    }
+  ],
+  "fonte": "Fontes: Portas e BPMoney, com o Índice FipeZAP de outubro de 2026 (05/11/2026), e Seu Dinheiro, com o comunicado do Copom (04/11/2026)."
+}
